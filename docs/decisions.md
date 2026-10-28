@@ -24,12 +24,11 @@ Les options explorées sont dans [`brainstorm.md`](brainstorm.md).
 | 2026-10-28 | Nom | Chaîne **Matou**, pseudo `@matou.ai` partout | La mascotte est la marque |
 | 2026-10-28 | Service TTS | OpenRouter (`/api/v1/audio/speech`) + alignement local pour l'horodatage des mots | Choix de l'utilisateur ; couvre aussi le clonage de voix pour la V2 |
 | 2026-10-28 | Durée par série | Flash ~30 s, Décrypté jusqu'à 45 s | Un article de blog demande un peu plus de place |
-
 | 2026-10-28 | Qui parle | Matou lui-même, voix masculine | La voix est Matou ; en V2, la voix de l'utilisateur devient la sienne |
 | 2026-10-28 | Phrases signatures | « ☝️ En fait… » pour lancer l'explication ; « C'était Matou, et c'est tout. » pour finir | Rituel reconnaissable |
 | 2026-10-28 | Fond | Papier crème quadrillé façon cahier d'écolier, jaune utilisé comme surligneur (choix de Claude, à valider sur maquette) | Raconte la pédagogie, cohérent avec le trait fait main, se démarque des comptes IA sombres |
 | 2026-10-28 | Séries de lancement | Flash (~30 s) + Décrypté (≤ 45 s). Récap et Mot de l'IA plus tard | Roder le pipeline sur un seul squelette |
-| 2026-10-28 | Moteur vidéo | Remotion (licence à vérifier en phase 3) | Vidéo = code React, rendu MP4 sans interface |
+| 2026-10-28 | Moteur vidéo | Remotion (licence gratuite pour un particulier ou une structure ≤ 3 personnes). Plan B : HyperFrames | Mature, outils intégrés pour les sous-titres mot par mot et l'alignement local (whisper.cpp), scènes typées et validées |
 
 ## À trancher
 

@@ -257,9 +257,20 @@ Article (texte ou URL)
   → Livrables : vidéo + miniature + description + hashtags par plateforme
 ```
 
-**Moteur vidéo** ⭐ [Remotion](https://www.remotion.dev) : les vidéos sont du code
-(React), le rendu MP4 se fait sans interface. Licence gratuite pour les particuliers
-et petites structures (à vérifier pour ton cas). Alternatives : Motion Canvas, FFmpeg.
+**Moteur vidéo** ✅ [Remotion](https://www.remotion.dev) : les vidéos sont du code
+(React), le rendu MP4 se fait sans interface. Licence gratuite pour un particulier
+ou une structure de 3 personnes maximum ([licence](https://github.com/remotion-dev/remotion/blob/main/LICENSE.md)).
+Ce qui le fait gagner pour nous :
+- des briques prêtes pour les **sous-titres mot par mot** façon TikTok et pour
+  l'**alignement local avec whisper.cpp**, l'étape qu'OpenRouter ne fait pas ;
+- les paramètres d'une vidéo peuvent être **typés et validés** : notre fichier de
+  scènes est vérifié avant le rendu ;
+- un outil mûr, très utilisé, avec un aperçu en direct (Remotion Studio).
+
+Plan B : [HyperFrames](https://themenonlab.blog/blog/heygen-hyperframes-video-as-code)
+(HeyGen, open source sous licence Apache 2.0, 2026) : la vidéo est une simple page
+HTML, pensé pour les agents IA. Prometteur mais plus jeune, avec moins d'outils
+autour (sous-titres, audio).
 
 ### La voix : une brique interchangeable
 
