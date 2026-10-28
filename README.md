@@ -33,9 +33,11 @@ par le script dès qu'ils sont connectés. Clé d'API dans la variable `POSTIZ_E
 
 ## Produire un épisode à la main
 
-Dans une session Claude Code : donner le lien de l'article. Claude suit le skill
-`episode` (source → script → relectures → voix → rendu → contrôles → publication →
-brouillons Postiz).
+Dans une session `agy` (Antigravity CLI) : donner le lien de l'article. L'agent suit le
+skill `episode` (source → script → relectures → voix → rendu → contrôles → publication →
+brouillons Postiz). Le contexte du projet est `AGENTS.md`, les skills et sous-agents vivent
+dans `.agents/` (migration depuis Claude Code : `CLAUDE.md` et `.claude/` restent en copie
+jusqu'à validation).
 
 ```bash
 npm ci
