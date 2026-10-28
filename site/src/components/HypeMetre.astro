@@ -1,0 +1,62 @@
+---
+import tokens from '../../../brand/tokens.json';
+import {surligner, type Verdict} from '../lib/episodes';
+
+type Props = {verdict?: Verdict; raison?: string};
+const {verdict, raison} = Astro.props;
+const crans = Object.entries(tokens.hypeMetre) as [Verdict, {label: string; fluo: string}][];
+---
+
+<div class="hype">
+  <p class="titre">Le Hype-mètre</p>
+  <ol>
+    {
+      crans.map(([id, c]) => (
+        <li class:list={{choisi: id === verdict}} style={`--fluo: ${c.fluo}`} aria-current={id === verdict ? 'true' : undefined}>
+          {c.label}
+        </li>
+      ))
+    }
+  </ol>
+  {raison && <p class="raison" set:html={surligner(raison)} />}
+</div>
+
+<style>
+  .hype {
+    text-align: center;
+  }
+  .titre {
+    font-family: var(--font-titre);
+    font-size: 1.4rem;
+    margin: 0 0 0.75rem;
+  }
+  ol {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  li {
+    padding: 0.4rem 0.9rem;
+    border: 3px solid var(--encre);
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    background: var(--fluo);
+    font-family: var(--font-main);
+    font-weight: 800;
+    opacity: 0.45;
+  }
+  li.choisi {
+    opacity: 1;
+    outline: 4px solid var(--rouge);
+    outline-offset: 4px;
+    border-radius: 50%;
+    padding-inline: 1.2rem;
+  }
+  .raison {
+    margin: 1rem 0 0;
+    font-family: var(--font-main);
+  }
+</style>

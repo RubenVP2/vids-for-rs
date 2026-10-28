@@ -44,7 +44,8 @@ La seule étape humaine : relire les brouillons, puis les programmer.
 
 - Skills (`.claude/skills/`) : `episode` (la recette), `ecriture-matou` (voix et
   scènes), `publication` (descriptions, hashtags), `veille-ia` (choisir un sujet),
-  `programmation` (brouillons Postiz, puis programmation sur feu vert),
+  `programmation` (brouillons Postiz, puis programmation sur feu vert), `article`
+  (version blog de l'épisode),
   `episode-du-jour` et `bilan` (les routines) et `postiz` (skill officiel de Postiz,
   copié tel quel).
 - Ce qui marche chez Matou (chiffres) : `docs/apprentissages.md`. Sujets d'avance :
@@ -53,6 +54,8 @@ La seule étape humaine : relire les brouillons, puis les programmer.
   `verificateur-faits` (script contre source), `spectateur` (test grand public),
   `controleur-visuel` (images rendues).
 - Moteur (Remotion + scripts) : `docs/moteur.md`. Commandes : `package.json`.
+- Site (Astro, statique sur Cloudflare Workers) : `site/`, doc `docs/site.md`. Chaque épisode
+  y gagne un article (skill `article`), mis en ligne seul une fois la vidéo programmée.
 
 ## Conventions
 

@@ -1,0 +1,247 @@
+---
+import tokens from '../../../brand/tokens.json';
+import CarteArticle from '../components/CarteArticle.astro';
+import Matou from '../components/Matou.astro';
+import Reseaux from '../components/Reseaux.astro';
+import Tampon from '../components/Tampon.astro';
+import {MARQUE} from '../config';
+import Base from '../layouts/Base.astro';
+import {articles} from '../lib/episodes';
+
+const derniers = (await articles()).slice(0, 3);
+const site = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: MARQUE.nomComplet,
+  url: new URL('/', Astro.site).href,
+  inLanguage: 'fr-FR',
+  publisher: {'@id': new URL('/#matou', Astro.site).href},
+};
+const hype = tokens.hypeMetre;
+---
+
+<Base titre={MARQUE.nom} description={MARQUE.description} jsonLd={[site]}>
+  <section class="hero">
+    <div class="accroche">
+      <p class="sur"><mark>Matou</mark> · l'IA expliquée</p>
+      <h1>L'actu de l'IA en <mark>30 secondes</mark>. Un chat t'explique.</h1>
+      <p class="chapo">
+        Chaque jour, Matou lit les annonces des grandes boîtes de l'IA et te les résume en une vidéo : une seule idée, toujours la
+        source, zéro jargon.
+      </p>
+      <div class="actions">
+        <a class="bouton" href="#suivre">Suivre Matou</a>
+        <a class="bouton secondaire" href="/blog/">Lire le blog</a>
+      </div>
+    </div>
+    <div class="portrait">
+      <Matou expression="enFait" />
+      <p class="bulle">☝️ En fait…</p>
+    </div>
+  </section>
+
+  <section aria-labelledby="programme">
+    <h2 id="programme">Le <mark>programme</mark></h2>
+    <ul class="trois">
+      <li class="feuille">
+        <h3>Une idée par vidéo</h3>
+        <p>Une annonce, une explication. Pas de fourre-tout : tu repars avec l'essentiel, en une trentaine de secondes.</p>
+      </li>
+      <li class="feuille">
+        <h3>Toujours la source</h3>
+        <p>L'entreprise ou le média d'origine est cité à l'écran et dans la description. Rien n'est inventé.</p>
+      </li>
+      <li class="feuille">
+        <h3>Zéro jargon</h3>
+        <p>Écrit pour le grand public. Si un mot technique s'invite, Matou l'explique.</p>
+      </li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="tampons" class="bandeau">
+    <h2 id="tampons">Annoncé, disponible ou <mark>rumeur</mark> ?</h2>
+    <p>Chaque info reçoit son tampon. Tu sais tout de suite si tu peux l'essayer aujourd'hui, si c'est une promesse, ou si c'est du bruit de couloir.</p>
+    <ul class="tampons">
+      <li><Tampon statut="annonce" /> <span>Présenté, pas encore entre tes mains.</span></li>
+      <li><Tampon statut="disponible" /> <span>Tu peux l'utiliser (parfois en payant).</span></li>
+      <li><Tampon statut="rumeur" /> <span>Pas confirmé par l'entreprise.</span></li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="hype" class="hype">
+    <div>
+      <h2 id="hype">Le <mark>Hype-mètre</mark></h2>
+      <p>À la fin de chaque vidéo, Matou tranche. Ça va changer quelque chose, ou c'est juste du bruit ?</p>
+      <ul class="crans">
+        <li style={`--fluo:${hype.buzz.fluo}`}><strong>{hype.buzz.label}</strong> : beaucoup de bruit, peu de concret.</li>
+        <li style={`--fluo:${hype.prometteur.fluo}`}><strong>{hype.prometteur.label}</strong> : intéressant, à surveiller.</li>
+        <li style={`--fluo:${hype.gameChanger.fluo}`}><strong>{hype.gameChanger.label}</strong> : ça change vraiment la donne.</li>
+      </ul>
+    </div>
+    <Matou expression="sceptique" class="hype-matou" decoratif />
+  </section>
+
+  {
+    derniers.length > 0 && (
+      <section aria-labelledby="derniers">
+        <h2 id="derniers">
+          Les derniers <mark>décryptages</mark>
+        </h2>
+        <div class="liste">
+          {derniers.map((a) => (
+            <CarteArticle article={a} titre="h3" />
+          ))}
+        </div>
+        <p>
+          <a href="/blog/">Tous les articles →</a>
+        </p>
+      </section>
+    )
+  }
+
+  <section id="suivre" aria-labelledby="titre-suivre" class="suivre feuille">
+    <h2 id="titre-suivre">Une vidéo par jour, là où tu scrolles</h2>
+    <p>Matou publie sur TikTok, Instagram, YouTube Shorts et Threads. Abonne-toi : au dîner, c'est toi qui expliqueras l'IA aux autres.</p>
+    <Reseaux source="accueil" />
+  </section>
+</Base>
+
+<style>
+  .hero {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 2rem;
+    align-items: center;
+    padding-block: 2rem 3rem;
+  }
+  .sur {
+    font-family: var(--font-main);
+    font-weight: 800;
+    margin: 0;
+  }
+  h1 {
+    font-size: clamp(2.3rem, 6vw, 4rem);
+    margin: 0.5rem 0 1rem;
+  }
+  .chapo {
+    font-family: var(--font-main);
+    font-size: 1.2rem;
+    max-width: 34rem;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  .portrait {
+    position: relative;
+    max-width: 380px;
+    justify-self: center;
+    width: 100%;
+  }
+  .bulle {
+    position: absolute;
+    top: -0.5rem;
+    right: 0;
+    margin: 0;
+    padding: 0.4rem 0.9rem;
+    background: var(--blanc);
+    border: 3px solid var(--encre);
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    font-family: var(--font-titre);
+    font-size: 1.3rem;
+    transform: rotate(4deg);
+  }
+  section {
+    margin-block: 3.5rem;
+  }
+  h2 {
+    font-size: clamp(1.7rem, 4vw, 2.4rem);
+    margin: 0 0 1.5rem;
+  }
+  .trois {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: 2rem 1.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .trois h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.3rem;
+  }
+  .trois p {
+    margin: 0;
+  }
+  .bandeau > p,
+  .hype p {
+    max-width: var(--lecture);
+  }
+  .tampons {
+    display: grid;
+    gap: 1rem;
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0 0;
+  }
+  .tampons li {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .tampons :global(.tampon) {
+    min-width: 8.5rem;
+    text-align: center;
+  }
+  .hype {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 2rem;
+    align-items: center;
+  }
+  .crans {
+    display: grid;
+    gap: 0.75rem;
+    list-style: none;
+    padding: 0;
+  }
+  .crans strong {
+    background: var(--fluo);
+    padding: 0.1em 0.5em;
+    border: 2px solid var(--encre);
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    font-family: var(--font-main);
+  }
+  .hype-matou {
+    max-width: 300px;
+    justify-self: center;
+    width: 100%;
+  }
+  .liste {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+  }
+  .suivre {
+    padding: 2rem;
+  }
+  .suivre h2 {
+    margin-bottom: 0.75rem;
+  }
+  @media (max-width: 48rem) {
+    .hero,
+    .hype {
+      grid-template-columns: 1fr;
+    }
+    .portrait {
+      max-width: 260px;
+      grid-row: 1;
+    }
+    .hype-matou {
+      max-width: 200px;
+    }
+  }
+</style>

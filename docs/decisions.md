@@ -51,6 +51,8 @@ Les options explorées sont dans [`brainstorm.md`](brainstorm.md).
 | 2026-10-28 | 5e canal | **Page LinkedIn « Matou AI »** connectée à Postiz (texte d'Instagram). #000 et #002, déjà partis ailleurs, rattrapés le soir même (`--reseaux linkedin`) | Choix de l'utilisateur |
 | 2026-10-28 | Branche | Le code et la mémoire des routines vivent sur **`main`** (les routines y poussent) | Choix de l'utilisateur |
 | 2026-10-28 | Industrialisation | Skills `episode`, `ecriture-matou`, `publication`, `veille-ia` + sous-agents `documentaliste`, `verificateur-faits`, `spectateur`, `controleur-visuel` | Une recette unique et des relectures indépendantes à chaque épisode |
+| 2026-10-28 | Site | Astro 7 en statique sur Cloudflare Workers (`site/`) : accueil, blog, page « lien en bio ». Un article par épisode (`article.md`), publié seulement si la vidéo est programmée et sa date passée | Demande de l'utilisateur : rediriger le trafic des réseaux, être trouvé sur Google, créer de la valeur plus tard. Statique = rapide et gratuit ; la règle de publication garde la relecture humaine sans étape en plus |
+| 2026-10-28 | Pseudo réel | Les comptes sont **`@matou_ai`** (TikTok, Instagram, Threads, YouTube), vérifiés sur chaque réseau ; `@matou.ai` sur TikTok est un autre compte | Le site doit renvoyer vers les bons comptes |
 
 ## À trancher
 

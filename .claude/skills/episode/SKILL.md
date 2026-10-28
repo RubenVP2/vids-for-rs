@@ -78,12 +78,19 @@ YouTube, et le texte court de Threads, X et Bluesky). Puis `npm run check -- NNN
 
 **Fait quand** `npm run check` affiche « Prêt pour la relecture humaine. »
 
+## 6 bis. Article du blog
+
+Suivre le skill **`article`** pour écrire `article.md` (version texte pour le site). Le
+site le publie seul une fois la vidéo programmée et sa date passée.
+
+**Fait quand** le `verificateur-faits` rend « OK » sur `article.md`.
+
 ## 7. Livrer
 
 1. Envoyer à l'utilisateur la vidéo (`rendu/NNN-slug.mp4`) et la miniature.
 2. Dans la réponse : le texte de `publication.md` prêt à copier, l'idée de l'épisode
    en une phrase, le verdict du Hype-mètre et les points que tu n'as pas pu vérifier.
-3. `git add` du dossier (les rendus sont ignorés par git), commit, push.
+3. `git add` du dossier (avec `article.md` et `miniature.jpg` ; les rendus sont ignorés par git), commit, push.
 
 L'utilisateur relit toujours avant de publier : ne présente jamais l'épisode comme publié.
 

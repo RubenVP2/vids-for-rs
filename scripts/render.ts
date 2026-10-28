@@ -1,4 +1,4 @@
-// Étape « rendu » : scenes.json + timings.json + voix.mp3 → MP4 + miniature.
+// Étape « rendu » : scenes.json + timings.json + voix.mp3 → MP4 + miniature (+ miniature.jpg pour le site).
 // Usage : npm run render -- <épisode> [--brouillon]   (brouillon = demi-résolution, plus rapide)
 import {execFileSync} from 'node:child_process';
 import fs from 'node:fs';
@@ -51,3 +51,7 @@ const stillComp = await selectComposition({serveUrl, id: 'Miniature', inputProps
 const png = path.join(sortie, `${nom}-miniature.png`);
 await renderStill({serveUrl, composition: stillComp, inputProps: props, output: png, browserExecutable, logLevel: 'error'});
 console.log(`Miniature : ${path.relative(RACINE, png)}`);
+// version légère pour le site (versionnée, contrairement à rendu/) : le blog l'affiche en tête d'article
+const web = path.join(dossier, 'miniature.jpg');
+await renderStill({serveUrl, composition: stillComp, inputProps: props, output: web, imageFormat: 'jpeg', jpegQuality: 82, scale: 0.5, browserExecutable, logLevel: 'error'});
+console.log(`Miniature du site : ${path.relative(RACINE, web)}`);
