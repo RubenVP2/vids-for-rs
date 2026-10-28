@@ -15,12 +15,17 @@ en respectant le design system du projet.
 
 - **Audience** : grand public + pros hors tech. Aucun jargon non expliqué.
 - **Plateformes** : TikTok, Instagram Reels, YouTube Shorts (vertical 1080×1920).
-- **Format** : ~30 secondes, une seule idée par vidéo, ~75–85 mots de script.
+- **Format** : ~30 secondes (Décrypté : jusqu'à 45 s), une seule idée, ~75–85 mots.
 - **Ton** : pédagogie grand public avant tout, avec une touche de fun. Inspiration :
   Fireship (densité, rythme, humour pince-sans-rire), adapté au format court.
-- **Voix** : V1 en synthèse vocale (TTS) ; V2 avec la voix de l'utilisateur. La voix
-  doit rester une brique interchangeable (script → audio + horodatage des mots).
-- **À l'écran** : jamais l'utilisateur. Seulement la voix et la mascotte (un chat).
+- **Voix** : V1 en synthèse vocale via OpenRouter ; V2 avec la voix de l'utilisateur.
+  La voix doit rester une brique interchangeable (script → audio + horodatage des
+  mots). OpenRouter ne fournit pas l'horodatage : il vient d'un alignement local.
+- **À l'écran** : jamais l'utilisateur. Seulement la voix et la mascotte.
+- **Marque** : la chaîne s'appelle **Matou** (`@matou.ai`). Matou est un chat blanc
+  dessiné à la main, avec de grosses lunettes et un doigt levé jaune ☝️. Son
+  dessin de référence (`brand/references/`) n'est pas à nous : ne jamais l'utiliser
+  tel quel, seulement notre propre version redessinée.
 - **Rythme** : 1 vidéo par jour, au minimum 1 tous les 2 jours.
 
 ## Phase actuelle

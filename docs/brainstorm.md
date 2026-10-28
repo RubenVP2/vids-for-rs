@@ -104,102 +104,97 @@ Règles de rythme :
 
 ---
 
-## 6. La mascotte : le chat
+## 6. La mascotte : Matou ✅ (direction validée, dessin à faire)
 
-### Mon avis sur l'idée ⭐
+![Référence](../brand/references/matou-reference.png)
 
-**Bonne idée, avec deux points de vigilance.**
+*Référence fournie : un chat blanc dessiné à la main, avec de grosses lunettes carrées,
+des dents de lapin et le doigt levé jaune ☝️.*
 
-Pourquoi ça marche :
-- **Le chat est le roi d'internet.** Capital sympathie immédiat, et il colle parfaitement
-  à l'humour « meme » à la Fireship.
-- **Le jeu de mots est en or en français** : *chat* = l'animal **et** la conversation
-  (ChatGPT, chatbot). « Le chat qui t'explique les chatbots. »
-- **Très expressif, donc facile à animer** : oreilles, yeux, queue. Chaque état a
-  une forme évidente :
+### Mon analyse
 
-| État | Comment on le lit |
-| --- | --- |
-| Neutre / parle | Assis, la queue bouge doucement |
-| Surpris | Yeux ronds, oreilles droites, poils hérissés |
-| Sceptique | Paupières mi-closes, une oreille de côté |
-| Réfléchit | Regarde en l'air, la queue en point d'interrogation |
-| Content | Yeux en arcs « ^^ », ronronne |
-| Alerte | Oreilles en arrière, queue gonflée |
+**Verdict : excellente base.** Elle coche presque tout.
 
-Points de vigilance ⚠️ :
-1. **Mistral AI a un assistant qui s'appelle « Le Chat ».** Comme on parlera de
-   Mistral, il faut éviter ce nom et tout ce qui ressemblerait à leur visuel
-   (je vérifierai leur charte avant de dessiner).
-2. **Les comptes de chats sont des millions.** Il faut **un trait distinctif lié à
-   l'IA**, visible même en tout petit. Pistes :
-   - Le bout de la queue est **un curseur clignotant** `▍` (on recycle la piste
-     « Curseur » de départ).
-   - Les pupilles deviennent **une icône de chargement** quand il réfléchit.
-   - Un accessoire fixe : casque audio, lunettes, collier avec un badge.
+✅ **Les lunettes sont le trait distinctif idéal.** On les lit même en tout petit, et
+elles règlent le problème du « chat parmi des millions ». En plus, **les verres
+deviennent des écrans** : on y fait apparaître le logo de l'entreprise dont on parle,
+une icône de chargement quand il réfléchit, un « ? », le verdict du Hype-mètre…
+C'est le lien avec l'IA, sans le forcer.
 
-### La contrainte technique
+✅ **Le doigt levé ☝️ est un code d'internet que tout le monde connaît** : le meme
+« ☝️🤓 en fait… », celui qui corrige tout le monde. Pour une chaîne pédago, c'est
+parfait : **Matou sait qu'il est un peu je-sais-tout et il l'assume.** C'est de
+l'autodérision, exactement l'humour pince-sans-rire de Fireship.
+→ **Le geste devient le rituel de chaque vidéo** : au début de l'explication, Matou
+lève le doigt : *« ☝️ En fait… »*.
 
-Le chat sera **animé par du code dans chaque vidéo**. Il doit donc être dessiné en
-**vectoriel (SVG), en aplats simples** (3–4 couleurs), avec une silhouette
-reconnaissable même en petit dans un coin de l'écran. Si ta photo est celle d'un
-vrai chat, on la **stylise** : on garde ce qui le rend unique (couleur du pelage,
-une tache, la forme des yeux) et on simplifie le reste.
+✅ **Le style « dessiné sous Paint » nous démarque.** Tous les comptes IA sont lisses,
+brillants, néon. Un trait noir épais et tremblé, fait main, ressort dans le fil,
+et c'est le langage natif des memes.
+→ En animation, on garde le **trait qui frémit** (*boiling line* : le contour bouge
+légèrement 8 à 12 fois par seconde, comme un dessin animé fait main). Matou a
+l'air vivant en permanence, pour presque rien côté code.
 
-### Quand tu m'envoies la photo, je regarde
+✅ **Très simple** : une dizaine de formes. Corps blanc, contour noir, 3 rayures
+grises, dents de lapin. Parfait pour le SVG et pour les états animés.
 
-- La **silhouette** : est-elle reconnaissable en ombre chinoise ?
-- Le **signe distinctif** : couleur, tache, motif, regard.
-- La **simplification** : combien de formes pour le rendre reconnaissable ?
-- La **compatibilité couleur** avec une palette de marque.
+✅ **La palette est déjà là** : noir, blanc, et **le jaune du doigt comme couleur
+signature**. Le jaune ressort très bien dans le fil et évite le cliché violet des
+comptes IA.
 
-❓ **Qui parle ?** Deux modèles possibles :
-- ⭐ **Le chat parle** : la voix *est* le chat. En V2, ta voix devient la sienne et
-  il devient ton avatar. C'est le plus cohérent puisque tu n'apparais jamais.
-- **Un narrateur parle** et le chat réagit (comme un acolyte). Plus souple, mais
-  l'identité est moins forte.
+⚠️ **Droits : on ne peut pas utiliser ce dessin tel quel.** Cette image de chat
+circule comme meme (variante du « nerd emoji ☝️🤓 », voir aussi le
+[Nerd Dog](https://knowyourmeme.com/memes/nerd-dog)) et son auteur est inconnu. Le
+concept n'appartient à personne, mais le dessin si. **On dessine notre propre Matou**
+à partir de cette idée (proportions, rayures, lunettes à nous). Même chose pour la
+main jaune : elle ressemble à l'emoji d'Apple, on la redessine dans notre style.
+*(Si c'est toi qui l'as dessiné, dis-le-moi : ça change tout.)*
+
+⚠️ **Un chat blanc disparaît sur fond blanc.** Il faut un fond coloré ou sombre (le
+contour noir aide aussi). À trancher avec la palette.
+
+⚠️ **Le meme vieillira.** Le ☝️ est un point d'entrée, pas toute la personnalité :
+Matou doit aussi exister par ses autres expressions et son lore.
+
+❓ **La petite croix grise sur le ventre** : intentionnelle ? On peut la garder comme
+signe distinctif (sa « cicatrice de bug » 🐛, idéal pour le lore) ou l'enlever.
+
+### Les états de Matou
+
+| État | Corps | Lunettes / yeux |
+| --- | --- | --- |
+| Neutre / parle | Assis, la bouche bouge | Yeux normaux |
+| **« En fait… »** ☝️ | Doigt levé | Reflet qui brille sur les verres |
+| Surpris | Poils hérissés, oreilles droites | Yeux énormes, lunettes qui sautent |
+| Sceptique | Une oreille de côté | Paupières mi-closes, il baisse ses lunettes |
+| Réfléchit | La patte sous le menton | Icône de chargement dans les verres |
+| Content | Se dandine | Yeux en « ^^ » |
+| Verdict | Face caméra | 🫧 / 🌱 / 🚀 affiché dans les verres |
+
+### Qui parle ?
+
+⭐ **Matou parle.** La voix *est* Matou. En V2, ta voix devient la sienne : il devient
+ton avatar. C'est le plus cohérent puisque tu n'apparais jamais.
+
+### Phrases signatures (pistes)
+
+- Ouverture de l'explication : *« ☝️ En fait… »*
+- Fin : ⭐ *« C'était Matou, et c'est tout. »*, ou une variante qui rime avec Matou.
 
 ---
 
-## 7. Nom de la chaîne
+## 7. Nom de la chaîne ✅
 
-### Critères
+**Matou**, pseudo **`@matou.ai`** sur TikTok, Instagram et YouTube.
 
-- **Court** (≤ 10 caractères), prononçable, mémorisable à l'oral.
-- **Pseudo disponible** sur TikTok, Instagram **et** YouTube (le même partout).
-- **Pas de conflit** avec une marque existante, surtout dans l'IA.
-- Fonctionne avec la formule *« [Sujet] en 30 secondes »*.
-
-### Stratégie ⭐ : la mascotte est la marque
-
-Sur TikTok, les gens s'abonnent à un **personnage** plus qu'à un média. Donc :
-**nom de la chaîne = nom du chat**, et la promesse va dans la bio.
-Exemple : `@ronron.ia` · bio : *« L'actu IA en 30 secondes. Un chat t'explique. »*
-
-### Pistes
-
-**Autour du chat**
-- **Ronron** ⭐ : le chat qui ronronne et « le ronron de l'actu ». Doux, très
-  français, 6 lettres. → *Ronron, l'IA en 30 secondes.*
-- **Moustache** : les moustaches du chat, un prénom de chat très français, sympathique.
-- **Matou** : le chat malin des rues, court, familier.
-- **Miaou.ia** : immédiatement compris, mais moins « nom propre ».
-- **Neko** (« chat » en japonais) : court et international, mais connoté manga.
-
-**Jeu de mots chat / chatbot**
-- **Le Chatbot** : drôle (un chat robot), mais trop générique, introuvable en recherche.
-- ⚠️ **ChatOn / Chaton** : une app d'IA porte déjà ce nom. À éviter.
-- ⚠️ **Le Chat** : le nom de l'assistant de Mistral. À éviter.
-
-**Autour du format**
-- **IA Express**, **30 sec d'IA** : clair, mais pas de personnalité, et pas de mascotte
-  dans le nom.
-
-**À éviter absolument** ⚠️
-- **Byte** : en français, ça se prononce comme… tu as compris. 😅
-- **Pixel** : conflit avec les téléphones Google, et ultra générique.
-
-❓ Lesquels te parlent ? Le nom dépendra aussi de la personnalité du chat sur ta photo.
+- Le chat et la chaîne portent le même nom : on s'abonne à un personnage.
+- `.ai` fait penser à un nom de domaine en `.ai` : ça sonne tech, tout en restant
+  un nom de chat très français. À l'oral, on dit simplement « Matou ».
+- Bio proposée : *« L'actu IA en 30 secondes. Un chat t'explique. ☝️🤓 »*
+- Aucun produit IA nommé « Matou » trouvé lors d'une première recherche.
+- À faire de ton côté : **réserver `@matou.ai` sur les trois plateformes** dès
+  maintenant, avant que quelqu'un d'autre le prenne. Le nom de domaine `matou.ai`
+  peut aussi valoir le coup d'être vérifié.
 
 ---
 
@@ -207,12 +202,14 @@ Exemple : `@ronron.ia` · bio : *« L'actu IA en 30 secondes. Un chat t'explique
 
 - **Format** : vertical 1080×1920, avec des **zones de sécurité** (l'interface de
   TikTok, Reels et Shorts masque le bas et la droite de l'écran).
-- **Couleurs** : une base + **une couleur signature** (probablement inspirée du
-  pelage du chat) + des couleurs de verdict pour le Hype-mètre.
-  ⚠️ Éviter le cliché « dégradé violet néon » de tous les comptes IA.
+- **Couleurs** : noir, blanc, **jaune signature** (le ☝️ de Matou) + des couleurs de
+  verdict pour le Hype-mètre. Fond coloré ou sombre (Matou est blanc).
+- **Style graphique** : tout l'univers en **trait fait main** cohérent avec Matou
+  (cadres, flèches, soulignements tremblés), avec une typo propre pour la lisibilité.
 - **Typographie** : une police d'affichage très grasse pour les hooks, une police
   lisible pour les sous-titres. Polices libres (Google Fonts, licence OFL).
-- **Logos des entreprises** : usage informatif uniquement, avec parcimonie.
+- **Logos des entreprises** : usage informatif uniquement, idéalement dans les
+  lunettes de Matou.
 - **Son** : 2–3 musiques de fond libres de droits fixes + la signature sonore.
 
 ---
@@ -224,7 +221,7 @@ Article (texte ou URL)
   → Analyse + vérification des faits
   → Script (~80 mots) + découpage en scènes
   → Fichier de scènes (JSON validé)
-  → Voix : audio + horodatage de chaque mot (pour les sous-titres)
+  → Voix : audio (OpenRouter) + horodatage de chaque mot (alignement local)
   → Rendu vidéo (MP4 1080×1920)
   → Livrables : vidéo + miniature + description + hashtags par plateforme
 ```
@@ -233,29 +230,35 @@ Article (texte ou URL)
 (React), le rendu MP4 se fait sans interface. Licence gratuite pour les particuliers
 et petites structures (à vérifier pour ton cas). Alternatives : Motion Canvas, FFmpeg.
 
-### La voix : une brique interchangeable ⭐
+### La voix : une brique interchangeable
 
 Pour passer de la V1 (TTS) à la V2 (ta voix) sans tout refaire, la voix est une
 **brique isolée** : elle reçoit le script et rend **un fichier audio + l'horodatage
 de chaque mot**. Tout le reste du pipeline ne sait pas d'où vient la voix.
 
-**V1 : quel service TTS ?**
+### V1 : OpenRouter ✅
 
-| Service | Qualité en français | Horodatage des mots | Remarques |
-| --- | --- | --- | --- |
-| **ElevenLabs** ⭐ | Excellente, très naturelle | Oui, fourni | Payant (vérifier la grille). Permet plus tard de **cloner ta voix**. |
-| OpenAI TTS | Bonne | Non : à recalculer après coup | Simple à utiliser |
-| Google Cloud / Azure | Correcte | Oui | Moins expressif |
-| Open source local (Piper…) | Moyenne | À recalculer | Gratuit, plus lourd à faire tourner |
+OpenRouter propose un [point d'accès de synthèse vocale](https://openrouter.ai/docs/guides/overview/multimodal/tts.md)
+(`/api/v1/audio/speech`, compatible avec l'API OpenAI) et plusieurs modèles :
+GPT-4o mini TTS (OpenAI), Voxtral TTS (Mistral), Gemini TTS (Google), MiniMax,
+Fish Audio… ([collection TTS](https://openrouter.ai/collections/text-to-speech-models)).
+Facturation au caractère : un script de 30 s fait environ 500 caractères.
 
-**V2 : ta voix, deux façons de faire**
-- **Tu enregistres** chaque script (Claude te le donne, tu l'enregistres, Claude
-  calcule l'horodatage et fait le montage). Plus authentique, mais une étape manuelle.
-- **Un clone de ta voix** (ElevenLabs) : ta voix, et le pipeline reste 100 %
-  automatique. Ça plaide pour ElevenLabs dès la V1.
+Ce que ça implique :
 
-⚠️ La clé d'API du service TTS devra être configurée dans l'environnement des
-sessions Claude, et le réseau doit autoriser ce service.
+1. **Il faut comparer les voix en français.** On génère le même script de test avec
+   4 ou 5 modèles et voix, et tu choisis à l'oreille. Certains modèles acceptent des
+   `instructions` de diction (*« rapide, assuré, pince-sans-rire »*) : un vrai plus
+   pour le ton Fireship.
+2. **OpenRouter ne renvoie que l'audio, sans l'horodatage des mots.** Comme on connaît
+   le texte exact, on ajoute une étape d'**alignement forcé** en local (Whisper ou
+   équivalent) : elle retrouve le moment précis de chaque mot. C'est fiable et gratuit.
+3. **La V2 est déjà couverte** : plusieurs modèles sur OpenRouter (Voxtral, Fish
+   Audio…) **clonent une voix à partir d'un court extrait**. Ta voix pourra donc
+   remplacer la synthèse sans que tu enregistres chaque vidéo, si tu le souhaites.
+
+⚠️ À configurer pour les sessions Claude : la clé `OPENROUTER_API_KEY` dans les
+secrets de l'environnement, et l'accès réseau à `openrouter.ai`.
 
 ---
 
@@ -273,10 +276,10 @@ sessions Claude, et le réseau doit autoriser ce service.
 
 ## 11. Questions ouvertes
 
-1. **La photo du chat** : envoie-la ici ou dépose-la dans `brand/references/`.
-   C'est ton chat ? (« le chat du créateur » ferait une belle histoire d'origine.)
-2. **Le nom** : quelles pistes du §7 te plaisent ? D'accord pour « nom de la chaîne
-   = nom du chat » ?
-3. **Qui parle** : le chat lui-même (⭐) ou un narrateur (§6) ?
-4. **Le TTS** : d'accord pour ElevenLabs (payant) ? Une voix plutôt masculine ou féminine ?
-5. **Durée** : tout à 30 s, ou Décrypté peut aller jusqu'à 45 s ?
+1. **Le dessin de référence** : c'est toi qui l'as dessiné, ou il vient d'internet ?
+2. **La croix grise sur le ventre** : on la garde (la « cicatrice de bug ») ou on l'enlève ?
+3. **Qui parle** : Matou lui-même (⭐) ou un narrateur ?
+4. **La voix de Matou** : plutôt masculine, féminine, ou à choisir à l'oreille parmi
+   les essais ?
+5. **La phrase de fin** : *« C'était Matou, et c'est tout. »* te plaît ?
+6. **Le fond** : plutôt sombre (Matou ressort en blanc) ou coloré, en jaune par exemple ?
