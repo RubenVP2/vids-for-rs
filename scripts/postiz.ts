@@ -1,4 +1,5 @@
-// Étape « programmation » : un épisode prêt → brouillons Postiz (TikTok, Instagram, YouTube).
+// Étape « programmation » : un épisode prêt → brouillons Postiz sur chaque réseau connecté
+// (TikTok, Instagram, YouTube, Facebook, Threads, LinkedIn, X, Bluesky).
 // Rien n'est publié sans le feu vert de l'utilisateur : les posts sont créés en BROUILLON,
 // et --programmer ne fait que les passer dans la file de publication de Postiz.
 // Usage : npm run postiz -- <épisode>                aperçu : écrit postiz.json, n'envoie rien
@@ -10,19 +11,29 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {dossierEpisode, nomEpisode, RACINE} from './lib/episode';
 
-type Reseau = 'tiktok' | 'instagram' | 'youtube';
+type Reseau = 'tiktok' | 'instagram' | 'youtube' | 'facebook' | 'threads' | 'linkedin' | 'x' | 'bluesky';
+type Texte = 'tiktok' | 'instagram' | 'youtube' | 'court'; // sections de publication.md
 type Reglages = {fuseau: string; heure: string; comptes: Partial<Record<Reseau, string>>} & Record<Reseau, Record<string, unknown>>;
 type Canal = {id: string; name: string; identifier: string; disabled: boolean};
 type Media = {id: string; path: string};
-type Publication = Record<Reseau, string> & {titre: string; commentaire?: string};
+type Publication = Record<Texte, string> & {titre: string; commentaire?: string};
 type Journal = {envoye: string; date: string; statut: 'brouillon' | 'programmé'; video: string; miniature?: string; postes: {reseau: string; postId: string; integration: string}[]};
 
 const API = (process.env.POSTIZ_API_URL ?? 'https://api.postiz.com').replace(/\/$/, '');
 const reglages = JSON.parse(fs.readFileSync(path.join(RACINE, 'brand', 'postiz.json'), 'utf8')) as Reglages;
-const RESEAUX: Reseau[] = ['tiktok', 'instagram', 'youtube'];
-const IDENTIFIANTS: Record<Reseau, string[]> = {tiktok: ['tiktok'], instagram: ['instagram', 'instagram-standalone'], youtube: ['youtube']};
-const NOMS: Record<Reseau, string> = {tiktok: 'TikTok', instagram: 'Instagram', youtube: 'YouTube'};
-const LIMITES: Record<Reseau, number> = {tiktok: 2200, instagram: 2200, youtube: 5000}; // caractères de description
+// Par réseau : identifiants Postiz, section de publication.md reprise, limite de caractères du texte.
+const INFOS: Record<Reseau, {nom: string; identifiants: string[]; texte: Texte; limite: number}> = {
+  tiktok: {nom: 'TikTok', identifiants: ['tiktok'], texte: 'tiktok', limite: 2200},
+  instagram: {nom: 'Instagram', identifiants: ['instagram', 'instagram-standalone'], texte: 'instagram', limite: 2200},
+  youtube: {nom: 'YouTube', identifiants: ['youtube'], texte: 'youtube', limite: 5000},
+  facebook: {nom: 'Facebook', identifiants: ['facebook'], texte: 'instagram', limite: 63206},
+  threads: {nom: 'Threads', identifiants: ['threads'], texte: 'court', limite: 500},
+  linkedin: {nom: 'LinkedIn', identifiants: ['linkedin', 'linkedin-page'], texte: 'instagram', limite: 3000},
+  x: {nom: 'X', identifiants: ['x'], texte: 'court', limite: 280},
+  bluesky: {nom: 'Bluesky', identifiants: ['bluesky'], texte: 'court', limite: 300},
+};
+const RESEAUX = Object.keys(INFOS) as Reseau[];
+const NOMS = Object.fromEntries(RESEAUX.map((r) => [r, INFOS[r].nom])) as Record<Reseau, string>;
 const LIMITE_TITRE_YOUTUBE = 100;
 
 const appeler = async <T>(chemin: string, init: RequestInit = {}): Promise<T> => {
@@ -56,6 +67,7 @@ const lirePublication = (dossier: string): Publication => {
     tiktok: section('TikTok'),
     instagram: section('Instagram'),
     youtube: youtube.replace(/^\*\*Titre\*\*.*\n+/m, '').trim(),
+    court: section('Court'),
     titre,
     commentaire: /^Commentaire à épingler[^:]*:\s*(.+)$/m.exec(texte)?.[1].trim(),
   };
@@ -87,7 +99,7 @@ const choisirCanaux = (canaux: Canal[]) => {
   const choisis: Partial<Record<Reseau, Canal>> = {};
   for (const r of RESEAUX) {
     const impose = reglages.comptes[r];
-    const candidats = canaux.filter((c) => !c.disabled && (impose ? c.id === impose : IDENTIFIANTS[r].includes(c.identifier)));
+    const candidats = canaux.filter((c) => !c.disabled && (impose ? c.id === impose : INFOS[r].identifiants.includes(c.identifier)));
     if (candidats.length > 1) {
       const liste = candidats.map((c) => `${c.id} = ${c.name}`).join(', ');
       throw new Error(`Plusieurs comptes ${NOMS[r]} dans Postiz (${liste}) : mettre le bon id dans brand/postiz.json → comptes.${r}.`);
@@ -104,14 +116,16 @@ const construire = (pub: Publication, canaux: Partial<Record<Reseau, Pick<Canal,
   tags: [],
   posts: RESEAUX.filter((r) => canaux[r]).map((r) => {
     const canal = canaux[r]!;
-    const valeur: {content: string; image: Media[]}[] = [{content: pub[r], image: [video]}];
-    // TikTok ne permet pas aux applications de commenter : commentaire à la main là-bas.
+    const valeur: {content: string; image: Media[]}[] = [{content: pub[INFOS[r].texte], image: [video]}];
+    // Commentaire = 1re réponse du fil sur Threads, X et Bluesky. TikTok ne permet pas aux
+    // applications de commenter : commentaire à la main là-bas.
     if (commentaire && pub.commentaire && r !== 'tiktok') valeur.push({content: pub.commentaire, image: []});
     const settings: Record<string, unknown> = {__type: canal.identifier, ...reglages[r]};
     if (r === 'youtube') {
       settings.title = pub.titre;
       if (miniature) settings.thumbnail = miniature;
     }
+    if (r === 'facebook') settings.title = pub.titre;
     return {integration: {id: canal.id}, value: valeur, settings};
   }),
 });
@@ -166,7 +180,11 @@ const commentaire = args.includes('--commentaire');
 const alertes: string[] = [];
 if (!fs.existsSync(mp4)) alertes.push(`Vidéo absente : ${path.relative(RACINE, mp4)} (npm run render)`);
 for (const r of RESEAUX) {
-  if (pub[r].length > LIMITES[r]) alertes.push(`${NOMS[r]} : description de ${pub[r].length} caractères (max ${LIMITES[r]})`);
+  const n = pub[INFOS[r].texte].length;
+  if (n > INFOS[r].limite) alertes.push(`${NOMS[r]} : texte de ${n} caractères (max ${INFOS[r].limite})`);
+  if (commentaire && r !== 'tiktok' && (pub.commentaire?.length ?? 0) > INFOS[r].limite) {
+    alertes.push(`${NOMS[r]} : commentaire de sources de ${pub.commentaire!.length} caractères (max ${INFOS[r].limite})`);
+  }
 }
 if (pub.titre.length > LIMITE_TITRE_YOUTUBE) alertes.push(`YouTube : titre de ${pub.titre.length} caractères (max ${LIMITE_TITRE_YOUTUBE})`);
 if (new Date(date).getTime() < Date.now()) alertes.push(`Date passée : ${lisible(date)}`);
@@ -175,9 +193,12 @@ if (!args.includes('--envoyer')) {
   const fictifs = Object.fromEntries(RESEAUX.map((r) => [r, {id: `<compte ${NOMS[r]}>`, identifier: r}]));
   const corps = construire(pub, fictifs, {id: 'video', path: `<téléversement de ${path.basename(mp4)}>`}, {id: 'miniature', path: `<téléversement de ${path.basename(png)}>`}, date, commentaire);
   fs.writeFileSync(path.join(dossier, 'postiz.json'), JSON.stringify(corps, null, 2) + '\n');
-  for (const r of RESEAUX) console.log(`${NOMS[r].padEnd(10)} ${pub[r].length} caractères${r === 'youtube' ? ` · titre « ${pub.titre} »` : ''}`);
+  for (const r of RESEAUX) {
+    const {texte, limite} = INFOS[r];
+    console.log(`${NOMS[r].padEnd(10)} ${pub[texte].length}/${limite} caractères (section ${texte})${r === 'youtube' ? ` · titre « ${pub.titre} »` : ''}`);
+  }
   console.log(`Date      ${lisible(date)} (brouillon)`);
-  console.log(`Commentaire de sources : ${commentaire ? '1er commentaire sur Instagram et YouTube, à la main sur TikTok' : pub.commentaire ? 'à poster à la main (--commentaire : Instagram et YouTube)' : 'absent de publication.md'}`);
+  console.log(`Commentaire de sources : ${commentaire ? '1er commentaire partout, à la main sur TikTok' : pub.commentaire ? 'à poster à la main (--commentaire : partout sauf TikTok)' : 'absent de publication.md'}`);
   alertes.forEach((a) => console.log(`ATTENTION ${a}`));
   console.log('\nAperçu écrit dans postiz.json. Rien n’a été envoyé : relancer avec --envoyer.');
   process.exit(alertes.length ? 1 : 0);
@@ -190,8 +211,8 @@ if (fs.existsSync(journal) && !args.includes('--force')) {
 
 const canaux = choisirCanaux(await appeler<Canal[]>('/integrations'));
 const absents = RESEAUX.filter((r) => !canaux[r]);
-if (absents.length === RESEAUX.length) throw new Error('Aucun compte TikTok, Instagram ou YouTube connecté dans Postiz.');
-absents.forEach((r) => console.log(`ATTENTION ${NOMS[r]} : aucun compte connecté dans Postiz, réseau ignoré.`));
+if (absents.length === RESEAUX.length) throw new Error(`Aucun compte connecté dans Postiz (${RESEAUX.map((r) => NOMS[r]).join(', ')}).`);
+if (absents.length) console.log(`Non connectés dans Postiz, ignorés : ${absents.map((r) => NOMS[r]).join(', ')}.`);
 
 const video = await televerser(mp4);
 const miniature = canaux.youtube && fs.existsSync(png) ? await televerser(png) : undefined;

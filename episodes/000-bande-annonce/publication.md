@@ -31,3 +31,7 @@ Moi c'est Matou. Chaque jour, j'explique une annonce de l'IA en 30 secondes : un
 Source : https://www.tiktok.com/@matou.ai
 
 #IA #intelligenceartificielle #shorts #matou
+
+## Court (Threads, X, Bluesky)
+
+L'actu de l'IA va trop vite ? Moi c'est Matou ☝️🤓 Chaque jour, une annonce de l'IA expliquée en 30 secondes : une seule idée, zéro jargon, toujours la source. #IA

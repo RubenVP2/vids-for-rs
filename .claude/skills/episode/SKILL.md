@@ -72,7 +72,7 @@ BLOQUANT dans `scenes.json` (texte trop long, mot coupé…), puis refaire rendu
 ## 6. Publication
 
 Suivre le skill **`publication`** pour écrire `publication.md` (TikTok, Instagram,
-YouTube). Puis `npm run check -- NNN`.
+YouTube, et le texte court de Threads, X et Bluesky). Puis `npm run check -- NNN`.
 
 **Fait quand** `npm run check` affiche « Prêt pour la relecture humaine. »
 

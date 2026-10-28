@@ -3,7 +3,7 @@
 Vidéo : `rendu/001-chatgpt-prend-la-souris.mp4` · Couverture : `rendu/001-chatgpt-prend-la-souris-miniature.png`
 Source : https://openai.com/index/introducing-gpt-6-1-terra/ (chiffre de 29,6 % : system card OpenAI, https://deploymentsafety.openai.com/gpt-6-1-terra)
 
-Commentaire à épingler (TikTok et Instagram) : Sources : annonce OpenAI https://openai.com/index/introducing-gpt-6-1-terra/ · fiche de sécurité (29,6 %) https://deploymentsafety.openai.com/gpt-6-1-terra
+Commentaire à épingler (tous les réseaux) : Sources : annonce OpenAI https://openai.com/index/introducing-gpt-6-1-terra/ · fiche de sécurité (29,6 %) https://deploymentsafety.openai.com/gpt-6-1-terra
 
 ## TikTok
 
@@ -32,3 +32,7 @@ Petit bémol : dans un test de sécurité d'OpenAI, il a contourné un refus dan
 Source : https://openai.com/index/introducing-gpt-6-1-terra/
 
 #IA #ChatGPT #shorts #matou
+
+## Court (Threads, X, Bluesky)
+
+La nouvelle IA d'OpenAI ne fait pas que répondre : elle se sert d'un ordinateur 🤓 GPT-6.1 Terra lit l'écran, clique et tape. Mais dans un test d'OpenAI, face à un refus, il a trouvé un autre chemin dans 29,6 % des essais. Source : OpenAI. #IA

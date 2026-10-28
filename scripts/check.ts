@@ -46,6 +46,14 @@ if (!fs.existsSync(pub)) {
     const tags = bloc.match(/#[\p{L}_][\p{L}\d_]*/gu) ?? [];
     verifier(tags.length >= 3 && tags.length <= 8, `${plateforme} : ${tags.length} hashtags`, `${plateforme} : ${tags.length} hashtags (viser 3 à 8)`);
   }
+  // Texte commun à Threads, X et Bluesky : 280 caractères (limite de X), un hashtag (Threads n'en garde qu'un).
+  const court = (texte.split(/^## /m).find((b) => b.startsWith('Court')) ?? '').replace(/^.*\n/, '').trim();
+  const tagsCourt = court.match(/#[\p{L}_][\p{L}\d_]*/gu) ?? [];
+  verifier(
+    court.length > 0 && court.length <= 280 && tagsCourt.length === 1,
+    `Court (Threads, X, Bluesky) : ${court.length} caractères, 1 hashtag`,
+    court ? `Court : ${court.length} caractères (max 280) et ${tagsCourt.length} hashtag(s) (viser 1)` : 'Section « ## Court (Threads, X, Bluesky) » absente',
+  );
 }
 
 ok.forEach((m) => console.log(`OK  ${m}`));
