@@ -1,0 +1,90 @@
+{
+  "numero": 2,
+  "slug": "gemini-4-carbon",
+  "serie": "decrypte",
+  "source": {
+    "nom": "Google",
+    "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/",
+    "date": "2026-10-28",
+    "type": "blog"
+  },
+  "statut": "annonce",
+  "verdict": "prometteur",
+  "miniature": "L'IA la plus forte de Google… ==pas pour toi==",
+  "musique": true,
+  "scenes": [
+    {
+      "type": "hook",
+      "texte": "Google sort son IA la plus puissante. Et toi, tu ne peux pas l'utiliser.",
+      "titre": "La plus forte… ==pas pour toi==",
+      "matou": "surpris"
+    },
+    {
+      "type": "source",
+      "texte": "Google annonce {Gemini 4 Carbon|Gémini quatre Carbone}, deux semaines après son grand frère.",
+      "titreArticle": "Voici ==Gemini 4 Carbon==",
+      "matou": "parle"
+    },
+    {
+      "type": "point",
+      "texte": "En fait, c'est un ==chasseur de failles== : il les trouve, teste si un pirate peut s'en servir, puis les répare.",
+      "titre": "Un ==chasseur de failles==",
+      "corps": "Trouver la faille, tester si elle est dangereuse, la corriger.",
+      "icone": "loupe",
+      "matou": "enFait"
+    },
+    {
+      "type": "chiffre",
+      "texte": "Test de chasse aux failles : ==88 %== de réussite. Sans ses garde-fous, précise Google.",
+      "valeur": "88,2 %",
+      "legende": "au test SEC-bench Pro : ==trouver les failles==",
+      "quand": "88"
+    },
+    {
+      "type": "point",
+      "texte": "Selon Google, il peut s'acharner ==plusieurs jours== sur un bug, sans abandonner.",
+      "titre": "Il bosse ==des jours==",
+      "corps": "Sur un gros bug, il continue là où d'autres s'arrêtent.",
+      "icone": "horloge",
+      "matou": "reflechit"
+    },
+    {
+      "type": "liste",
+      "texte": "Qui y a accès ? Cette semaine, des défenseurs en cybersécurité. Puis des partenaires choisis. Toi ? Bientôt, sans date.",
+      "titre": "Qui y a ==accès== ?",
+      "elements": [
+        {
+          "texte": "Cette semaine : des cyber-défenseurs",
+          "icone": "cadenas",
+          "quand": "semaine"
+        },
+        {
+          "texte": "Ensuite : des partenaires choisis",
+          "icone": "coche",
+          "quand": "partenaires"
+        },
+        {
+          "texte": "Grand public : pas de date",
+          "icone": "horloge",
+          "quand": "Toi"
+        }
+      ]
+    },
+    {
+      "type": "pourquoi",
+      "texte": "Et pour toi ? Bien utilisé, il pourrait laisser ==moins de failles== dans tes applis.",
+      "titre": "Et pour toi ?",
+      "corps": "Des applis avec ==moins de failles==, si les défenseurs s'en servent bien.",
+      "icone": "cadenas"
+    },
+    {
+      "type": "verdict",
+      "texte": "Hype-mètre : prometteur. Un super serrurier… enfermé à double tour.",
+      "raison": "Très fort, mais ==pas encore pour toi==."
+    },
+    {
+      "type": "fin",
+      "texte": "Abonne-toi. C'était Matou, et c'est tout."
+    }
+  ]
+}
