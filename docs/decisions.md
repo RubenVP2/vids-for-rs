@@ -42,6 +42,8 @@ Les options explorées sont dans [`brainstorm.md`](brainstorm.md).
 | 2026-10-28 | Plateformes (révision) | Maximiser la diffusion : TikTok, Reels et Shorts restent prioritaires ; relais de la même vidéo sur Facebook, Threads, X et Bluesky. Postiz en abonnement cloud (comptes connectés dans Postiz, une seule clé API pour le script) | Une vidéo coûte la même chose sur 7 réseaux ; un seul texte en plus par épisode (`## Court`) ; pas d'application développeur à créer par réseau |
 | 2026-10-28 | Postiz | Abonnement cloud, formule **Standard (5 canaux)**, branché à Claude par le **MCP Postiz** (pas de clé d'API) | Choix de l'utilisateur : configuration la plus courte. Le MCP ne lit pas les fichiers de la session : l'utilisateur dépose la vidéo dans la médiathèque Postiz |
 | 2026-10-28 | Postiz : accès | Clé d'API dans la variable `POSTIZ_ENV` ; le MCP reste branché | La clé permet au script de téléverser la vidéo lui-même (le MCP ne lit pas les fichiers de la session) |
+| 2026-10-28 | Mention « fait avec l'IA » | Gardée sur TikTok et X (`brand/postiz.json`) | Voix de synthèse : éviter les sanctions et les bannissements |
+| 2026-10-28 | 5e canal Postiz | Facebook (page « Matou ») | Choix délégué à Claude : plus grand public en France, Reels montrés aux non-abonnés, seul canal restant où une vidéo courte peut être rémunérée (programme Meta, éligibilité à vérifier dans Meta Business Suite) ; X ne paie qu'avec un abonnement Premium, Bluesky, Threads et LinkedIn ne paient pas |
 | 2026-10-28 | Industrialisation | Skills `episode`, `ecriture-matou`, `publication`, `veille-ia` + sous-agents `documentaliste`, `verificateur-faits`, `spectateur`, `controleur-visuel` | Une recette unique et des relectures indépendantes à chaque épisode |
 
 ## À trancher
@@ -50,6 +52,5 @@ Les options explorées sont dans [`brainstorm.md`](brainstorm.md).
 | --- | --- | --- |
 | Fond « cahier » sur téléphone | Regarder la bande-annonce #000 sur un vrai téléphone | Pilote #001 |
 | Pseudo `@matou.ai` | Réserver le pseudo sur chaque réseau (Threads reprend celui d'Instagram ; Bluesky : `matou-ai.bsky.social` ou un domaine) | Avant la publication |
-| Mention « fait avec l'IA » sur TikTok et X | Activée par défaut (`brand/postiz.json`, voix de synthèse) ou désactivée | Avant le premier envoi dans Postiz |
 | LinkedIn | Écarté au départ (ligne « Plateformes ») ; le script le gère s'il est connecté dans Postiz (texte d'Instagram) | Au choix de l'abonnement Postiz |
-| Les 5 canaux de la formule Standard | Proposé : TikTok, Instagram, YouTube, Threads, Facebook. X, Bluesky et LinkedIn en réserve (passer en Team pour les ajouter) | En connectant les comptes dans Postiz |
+| Durée et rémunération TikTok | Le programme Creator Rewards ne paie que les vidéos de plus d'une minute (selon des guides non officiels, à vérifier dans l'app) : nos vidéos de 30 s n'y entrent pas. Garder 30 s, ou faire des « décryptés » de plus de 60 s | Quand le compte approche des seuils (10 000 abonnés) |

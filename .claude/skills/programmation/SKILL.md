@@ -49,7 +49,7 @@ signaler.
 
 Choix déjà faits dans `brand/postiz.json` (ne pas changer sans l'utilisateur) :
 TikTok en `DIRECT_POST` (`UPLOAD` ne publie pas) ; mention « fait avec l'IA » sur TikTok
-et X (voix de synthèse, encore à trancher) ; Instagram en Reel (`post_type: post`) ;
+et X (voix de synthèse, pour éviter les sanctions) ; Instagram en Reel (`post_type: post`) ;
 YouTube public, pas « pour enfants » ; Facebook en publication (pas en story) ; X ouvert
 aux réponses de tous.
 
