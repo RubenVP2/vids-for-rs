@@ -10,7 +10,7 @@ appris. Le résultat sert à `veille-ia`, `ecriture-matou` et `publication`.
 
 ## 0. Préparer
 
-Comme l'étape 0 du skill `episode-du-jour` : branche par défaut à jour, `npm ci` si besoin.
+Comme l'étape 0 du skill `episode-du-jour` : `main` à jour, `npm ci` si besoin.
 
 ## 1. Relever les chiffres
 
@@ -49,8 +49,8 @@ que les chiffres ne montrent pas.
 Ne pas modifier les skills ni `CLAUDE.md` : proposer le changement dans le message final,
 l'utilisateur tranche.
 
-Commit, puis `git pull --rebase origin <branche par défaut>` et
-`git push origin HEAD:<branche par défaut>` (autorisé pour cette routine).
+Commit, puis `git pull --rebase origin main` et
+`git push origin HEAD:main` (autorisé pour cette routine).
 
 ## 4. Message final
 

@@ -11,16 +11,16 @@ des brouillons dans Postiz (règle non négociable de `CLAUDE.md`).
 
 ## 0. Préparer
 
-1. Branche par défaut du dépôt : `git ls-remote --symref origin HEAD`. La récupérer
-   (`git fetch origin <branche>` puis `git checkout -B <branche> origin/<branche>`) :
-   c'est là que vivent les épisodes précédents, `docs/apprentissages.md` et `docs/sujets.md`.
+1. Branche de travail : **`main`**. La récupérer (`git fetch origin main` puis
+   `git checkout -B main origin/main`) : c'est là que vivent le code, les épisodes
+   précédents, `docs/apprentissages.md` et `docs/sujets.md`.
 2. `npm ci` si `node_modules` manque. `npm run postiz -- --canaux` doit lister les comptes.
    Sinon (clé absente ou refusée) : s'arrêter et le dire dans le message final.
 3. File d'attente : `npm run bilan -- --attente`. **3 épisodes ou plus en attente de
    relecture** : ne rien produire (l'utilisateur ne suit pas), dire dans le message final
    lesquels attendent sa relecture, et s'arrêter.
 
-**Fait quand** la branche par défaut est à jour, Postiz répond, et moins de 3 épisodes attendent.
+**Fait quand** `main` est à jour, Postiz répond, et moins de 3 épisodes attendent.
 
 ## 1. Choisir le sujet
 
@@ -39,7 +39,7 @@ Skill **`episode`**, étapes 0 à 7. Pendant la routine :
   sujet, supprimer son dossier, reprendre l'étape 1 avec le suivant (une seule fois ; au
   deuxième échec, s'arrêter et l'expliquer).
 - Étape 7 : envoyer la vidéo et la miniature (`SendUserFile`), commit, puis
-  `git pull --rebase origin <branche par défaut>` et `git push origin HEAD:<branche par défaut>`.
+  `git pull --rebase origin main` et `git push origin HEAD:main`.
   L'utilisateur a autorisé cette poussée pour la routine : c'est ce qui permet à l'épisode
   suivant de voir celui-ci (numéro, sujets déjà traités).
 

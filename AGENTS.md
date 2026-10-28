@@ -8,8 +8,8 @@ une fois la validation faite — `AGENTS.md` fait foi).
 
 Matou (`@matou.ai`) : vidéos verticales courtes qui expliquent l'actu de l'IA (annonces
 et articles de blog des grandes entreprises) au grand public, sur **TikTok, Instagram
-Reels, YouTube Shorts et Threads**, les 4 comptes connectés à Postiz (un 5e réseau est à
-choisir par l'utilisateur ; le script gère aussi Facebook, LinkedIn, X et Bluesky).
+Reels, YouTube Shorts, Threads et LinkedIn** (page Matou AI), les 5 comptes connectés à
+Postiz (le script gère aussi Facebook, X et Bluesky).
 
 **Une session = un épisode** : l'utilisateur donne un article (lien ou texte), la
 session livre la vidéo MP4, la miniature, la description et les hashtags. Recette :
@@ -17,7 +17,7 @@ skill **`episode`**. Pas d'article sous la main → skill **`veille-ia`**.
 
 **Routines (tâches planifiées, sans intervention)** : chaque matin **`episode-du-jour`**
 (veille → épisode → brouillons Postiz), chaque lundi **`bilan`** (chiffres Postiz →
-`docs/apprentissages.md` et `docs/sujets.md`). Elles poussent sur la branche par défaut.
+`docs/apprentissages.md` et `docs/sujets.md`). Elles poussent sur **`main`**.
 La seule étape humaine : relire les brouillons, puis les programmer.
 
 ## Cadre validé (détail et raisons : `docs/decisions.md`)
