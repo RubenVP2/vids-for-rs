@@ -1,0 +1,25 @@
+{
+  "$description": "Réglages d'envoi dans Postiz (npm run postiz). Les brouillons arrivent à « heure » (fuseau donné) le lendemain, sauf --date. Réglages par réseau : voir .claude/skills/postiz/PROVIDER_SETTINGS.md et npm run postiz -- --canaux.",
+  "fuseau": "Europe/Paris",
+  "heure": "18:00",
+  "comptes": {},
+  "tiktok": {
+    "content_posting_method": "DIRECT_POST",
+    "privacy_level": "PUBLIC_TO_EVERYONE",
+    "duet": true,
+    "stitch": true,
+    "comment": true,
+    "autoAddMusic": "no",
+    "brand_content_toggle": false,
+    "brand_organic_toggle": false,
+    "video_made_with_ai": true
+  },
+  "instagram": {
+    "post_type": "post",
+    "is_trial_reel": false
+  },
+  "youtube": {
+    "type": "public",
+    "selfDeclaredMadeForKids": "no"
+  }
+}

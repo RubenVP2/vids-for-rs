@@ -84,3 +84,9 @@ YouTube). Puis `npm run check -- NNN`.
 3. `git add` du dossier (les rendus sont ignorés par git), commit, push.
 
 L'utilisateur relit toujours avant de publier : ne présente jamais l'épisode comme publié.
+
+## 8. Programmer dans Postiz (si l'accès est configuré)
+
+Suivre le skill **`programmation`** : brouillons dans Postiz, relecture de l'utilisateur,
+puis programmation sur son feu vert. Sans accès à Postiz (erreur 401), le dire en une
+ligne et s'arrêter à l'étape 7.

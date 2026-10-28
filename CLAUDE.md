@@ -37,7 +37,9 @@ skill **`episode`**. Pas d'article sous la main → skill **`veille-ia`**.
 ## Outils du dépôt
 
 - Skills (`.claude/skills/`) : `episode` (la recette), `ecriture-matou` (voix et
-  scènes), `publication` (descriptions, hashtags), `veille-ia` (choisir un sujet).
+  scènes), `publication` (descriptions, hashtags), `veille-ia` (choisir un sujet),
+  `programmation` (brouillons Postiz, puis programmation sur feu vert) et `postiz`
+  (skill officiel de Postiz, copié tel quel).
 - Sous-agents (`.claude/agents/`) : `documentaliste` (article → `source.md`),
   `verificateur-faits` (script contre source), `spectateur` (test grand public),
   `controleur-visuel` (images rendues).

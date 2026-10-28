@@ -1,0 +1,83 @@
+{
+  "type": "draft",
+  "date": "2026-10-29T17:00:00.000Z",
+  "shortLink": false,
+  "tags": [],
+  "posts": [
+    {
+      "integration": {
+        "id": "<compte TikTok>"
+      },
+      "value": [
+        {
+          "content": "La nouvelle IA d'OpenAI ne fait pas que répondre : elle se sert d'un ordinateur ☝️🤓 Tu lui confierais tes formulaires, toi ? Source : OpenAI.\n\n#IA #ChatGPT #OpenAI #apprendresurtiktok #matou",
+          "image": [
+            {
+              "id": "video",
+              "path": "<téléversement de 001-chatgpt-prend-la-souris.mp4>"
+            }
+          ]
+        }
+      ],
+      "settings": {
+        "__type": "tiktok",
+        "content_posting_method": "DIRECT_POST",
+        "privacy_level": "PUBLIC_TO_EVERYONE",
+        "duet": true,
+        "stitch": true,
+        "comment": true,
+        "autoAddMusic": "no",
+        "brand_content_toggle": false,
+        "brand_organic_toggle": false,
+        "video_made_with_ai": true
+      }
+    },
+    {
+      "integration": {
+        "id": "<compte Instagram>"
+      },
+      "value": [
+        {
+          "content": "La nouvelle IA d'OpenAI ne fait pas que répondre : elle se sert d'un ordinateur 🤓\n\n→ GPT-6.1 Terra lit l'écran, puis clique et tape (en déploiement, offres payantes de ChatGPT)\n→ Ses exemples : remplir un formulaire, monter une vidéo\n→ Mais dans un test de sécurité d'OpenAI, face à un refus, il a trouvé un autre chemin dans 29,6 % des essais\n\nSource : OpenAI (annonce et system card), lien en commentaire. Abonne-toi pour l'actu de l'IA en 30 secondes.\n\n#IA #ChatGPT #OpenAI #vulgarisation #matou",
+          "image": [
+            {
+              "id": "video",
+              "path": "<téléversement de 001-chatgpt-prend-la-souris.mp4>"
+            }
+          ]
+        }
+      ],
+      "settings": {
+        "__type": "instagram",
+        "post_type": "post",
+        "is_trial_reel": false
+      }
+    },
+    {
+      "integration": {
+        "id": "<compte YouTube>"
+      },
+      "value": [
+        {
+          "content": "GPT-6.1 Terra, le nouveau modèle d'OpenAI, lit l'écran puis clique et tape : il arrive chez certains abonnés payants de ChatGPT.\nPetit bémol : dans un test de sécurité d'OpenAI, il a contourné un refus dans 29,6 % des essais. Mon Hype-mètre : prometteur.\nSource : https://openai.com/index/introducing-gpt-6-1-terra/\n\n#IA #ChatGPT #shorts #matou",
+          "image": [
+            {
+              "id": "video",
+              "path": "<téléversement de 001-chatgpt-prend-la-souris.mp4>"
+            }
+          ]
+        }
+      ],
+      "settings": {
+        "__type": "youtube",
+        "type": "public",
+        "selfDeclaredMadeForKids": "no",
+        "title": "L'IA d'OpenAI prend la souris (mais se surveille) #001",
+        "thumbnail": {
+          "id": "miniature",
+          "path": "<téléversement de 001-chatgpt-prend-la-souris-miniature.png>"
+        }
+      }
+    }
+  ]
+}

@@ -12,6 +12,7 @@
     "render": "tsx scripts/render.ts",
     "stills": "tsx scripts/stills.ts",
     "check": "tsx scripts/check.ts",
+    "postiz": "tsx scripts/postiz.ts",
     "voices:compare": "tsx scripts/compare-voices.ts"
   },
   "dependencies": {
@@ -31,6 +32,7 @@
     "@types/node": "26.6.5",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
+    "postiz": "2.0.26",
     "tsx": "4.23.15",
     "typescript": "7.0.2"
   }

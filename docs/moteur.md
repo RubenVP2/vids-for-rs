@@ -16,7 +16,9 @@ document explique **comment le moteur marche**, pour le modifier.
 npm ci
 ```
 
-Variables : `OPENROUTER_API_KEY` (ou `OPENROUTER_KEY`). Navigateur : Remotion utilise
+Variables : `OPENROUTER_API_KEY` (ou `OPENROUTER_KEY`). Postiz : secret réseau sur
+`api.postiz.com` (en-tête `Authorization` sans préfixe) ou `POSTIZ_API_KEY` ; `POSTIZ_API_URL`
+pour une instance auto-hébergée. Navigateur : Remotion utilise
 `$REMOTION_BROWSER`, sinon le Chromium headless de Playwright s'il est installé
 (`/opt/pw-browsers`), sinon il télécharge le sien.
 
@@ -29,6 +31,8 @@ Variables : `OPENROUTER_API_KEY` (ou `OPENROUTER_KEY`). Navigateur : Remotion ut
 | `npm run render -- NNN [--brouillon]` | MP4 1080×1920 normalisé −14 LUFS + miniature PNG |
 | `npm run stills -- NNN` | une image de contrôle par scène, interface des réseaux par-dessus |
 | `npm run check -- NNN` | contrôle final : durée, format, volume, voix, publication |
+| `npm run postiz -- NNN [--envoyer \| --programmer]` | aperçu, puis brouillons Postiz, puis programmation (skill `programmation`) |
+| `npm run postiz -- --canaux` | comptes connectés à Postiz et règles de chaque réseau |
 | `npm run studio` | Remotion Studio, aperçu interactif (props par défaut : #000) |
 | `npm run brand` | réexporte les SVG de Matou et des icônes dans `brand/` |
 | `npm run stills -- planches` | réexporte les planches de `docs/images/` |
@@ -45,6 +49,8 @@ episodes/NNN-slug/
   voix.mp3          la voix de Matou
   timings.json      minutage de chaque mot, des scènes, volume par image
   publication.md    descriptions et hashtags par plateforme
+  postiz.json       ce qui est (ou serait) envoyé à Postiz
+  postiz-envoi.json ids des brouillons Postiz et leur statut
   rendu/            MP4 + miniature (ignoré par git)
   controle/         images de contrôle (ignoré par git)
 ```
