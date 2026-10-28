@@ -2,18 +2,17 @@
 // (TikTok, Instagram, YouTube, Facebook, Threads, LinkedIn, X, Bluesky).
 // Rien n'est publié sans le feu vert de l'utilisateur : les posts sont créés en BROUILLON,
 // et --programmer ne fait que les passer dans la file de publication de Postiz.
-// Usage : npm run postiz -- <épisode>                aperçu : écrit postiz.json et postiz-mcp.json, n'envoie rien
+// Usage : npm run postiz -- <épisode>                aperçu : écrit postiz.json (charge utile -j), n'envoie rien
 //         npm run postiz -- <épisode> --envoyer [--date 2026-10-29T18:00] [--commentaire] [--force]
 //         sans --date : le premier jour libre du calendrier Postiz, aujourd'hui compris s'il reste 3 h
 //         npm run postiz -- <épisode> --programmer   après le feu vert : brouillons → programmés
 //         npm run postiz -- --canaux                 comptes connectés + règles de chaque réseau
-// Accès : secret réseau sur api.postiz.com (en-tête Authorization, sans préfixe) ou variable POSTIZ_API_KEY
-// (ou POSTIZ_ENV, le nom choisi dans l'environnement de l'utilisateur).
-// Sans clé, passer par le MCP Postiz : postiz-mcp.json est l'argument de integrationSchedulePostTool,
-// une fois les <…> remplacés (skill programmation).
+// Accès : CLI officielle `postiz` authentifiée par OAuth2 device flow (postiz auth:login,
+// jeton dans ~/.postiz/credentials.json) — aucune clé API nécessaire.
 import fs from 'node:fs';
 import path from 'node:path';
 import {dossierEpisode, nomEpisode, RACINE} from './lib/episode';
+import {cli, enListe} from './lib/postiz-cli';
 
 type Reseau = 'tiktok' | 'instagram' | 'youtube' | 'facebook' | 'threads' | 'linkedin' | 'x' | 'bluesky';
 type Texte = 'tiktok' | 'instagram' | 'youtube' | 'court'; // sections de publication.md
@@ -23,7 +22,6 @@ type Media = {id: string; path: string};
 type Publication = Record<Texte, string> & {titre: string; commentaire?: string};
 type Journal = {envoye: string; date: string; statut: 'brouillon' | 'programmé'; video: string; miniature?: string; postes: {reseau: string; postId: string; integration: string}[]};
 
-const API = (process.env.POSTIZ_API_URL ?? 'https://api.postiz.com').replace(/\/$/, '');
 const reglages = JSON.parse(fs.readFileSync(path.join(RACINE, 'brand', 'postiz.json'), 'utf8')) as Reglages;
 // Par réseau : identifiants Postiz, section de publication.md reprise, limite de caractères du texte.
 const INFOS: Record<Reseau, {nom: string; identifiants: string[]; texte: Texte; limite: number}> = {
@@ -39,23 +37,6 @@ const INFOS: Record<Reseau, {nom: string; identifiants: string[]; texte: Texte; 
 const RESEAUX = Object.keys(INFOS) as Reseau[];
 const NOMS = Object.fromEntries(RESEAUX.map((r) => [r, INFOS[r].nom])) as Record<Reseau, string>;
 const LIMITE_TITRE_YOUTUBE = 100;
-
-const appeler = async <T>(chemin: string, init: RequestInit = {}): Promise<T> => {
-  const entetes = new Headers(init.headers);
-  // Sans variable, la clé est ajoutée par le proxy de la session (secret réseau).
-  const cle = process.env.POSTIZ_API_KEY ?? process.env.POSTIZ_ENV;
-  if (cle) entetes.set('Authorization', cle);
-  if (typeof init.body === 'string') entetes.set('Content-Type', 'application/json');
-  const rep = await fetch(`${API}/public/v1${chemin}`, {...init, headers: entetes});
-  if (rep.status === 401) {
-    throw new Error(
-      'Postiz refuse l’accès (401). Ajouter la clé API Postiz (Settings › Developers › Public API) à l’environnement : ' +
-        'secret réseau sur api.postiz.com (en-tête Authorization, sans préfixe) ou variable POSTIZ_API_KEY, puis ouvrir une nouvelle session.',
-    );
-  }
-  if (!rep.ok) throw new Error(`Postiz ${init.method ?? 'GET'} ${chemin} : HTTP ${rep.status} ${await rep.text()}`);
-  return (await rep.json()) as T;
-};
 
 const lirePublication = (dossier: string): Publication => {
   const texte = fs.readFileSync(path.join(dossier, 'publication.md'), 'utf8');
@@ -104,10 +85,10 @@ const prochainCreneau = async () => {
   const [debut, fin] = [Date.now() - 86_400_000, Date.now() + 15 * 86_400_000].map((t) => new Date(t).toISOString());
   let pris: Set<string>;
   try {
-    const {posts} = await appeler<{posts: {publishDate: string}[]}>(`/posts?startDate=${debut}&endDate=${fin}`);
+    const posts = enListe<{publishDate: string}>(cli('posts:list', '--startDate', debut, '--endDate', fin));
     pris = new Set(posts.map((p) => jour(new Date(p.publishDate).getTime())));
   } catch {
-    return demain(); // sans clé (voie MCP) : vérifier le jour avec postsListTool
+    return demain(); // accès Postiz indisponible : vérifier `postiz auth:status`, reprendre demain
   }
   for (let i = 0; i < 15; i++) {
     const creneau = `${jour(Date.now() + i * 86_400_000)}T${reglages.heure}`;
@@ -153,29 +134,8 @@ const construire = (pub: Publication, canaux: Partial<Record<Reseau, Pick<Canal,
   }),
 });
 
-// Le MCP veut du HTML (une ligne = un <p>), les réglages en paires clé/valeur, et accepte une
-// couverture par vidéo (thumbnail) : elle sert aussi sur TikTok, Instagram et Facebook.
-const html = (texte: string) =>
-  texte.split('\n').map((l) => `<p>${l.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</p>`).join('');
-const versMcp = (corps: ReturnType<typeof construire>, miniature: string) => ({
-  socialPost: corps.posts.map((p) => ({
-    integrationId: p.integration.id,
-    isPremium: false,
-    date: corps.date,
-    shortLink: false,
-    type: 'draft',
-    postsAndComments: p.value.map((v) => ({content: html(v.content), attachments: v.image.map((m) => ({path: m.path, thumbnail: miniature}))})),
-    settings: Object.entries(p.settings)
-      .filter(([cle]) => cle !== '__type')
-      .map(([key, value]) => ({key, value})),
-  })),
-});
-
 const televerser = async (fichier: string): Promise<Media> => {
-  const form = new FormData();
-  const type = fichier.endsWith('.mp4') ? 'video/mp4' : 'image/png';
-  form.append('file', await fs.openAsBlob(fichier, {type}), path.basename(fichier));
-  const r = await appeler<{id?: string; path: string}>('/upload', {method: 'POST', body: form});
+  const r = cli<{id?: string; path: string}>('upload', fichier);
   console.log(`Téléversé : ${path.basename(fichier)} → ${r.path}`);
   return {id: r.id ?? path.basename(fichier), path: r.path};
 };
@@ -187,10 +147,10 @@ const valeurDe = (option: string) => {
 };
 
 if (args.includes('--canaux')) {
-  const canaux = await appeler<Canal[]>('/integrations');
+  const canaux = enListe<Canal>(cli('integrations:list'), 'integrations');
   for (const c of canaux) console.log(`${c.identifier.padEnd(22)} ${c.id}  ${c.name}${c.disabled ? ' (désactivé)' : ''}`);
   for (const [r, c] of Object.entries(choisirCanaux(canaux)) as [Reseau, Canal][]) {
-    const rep = await appeler<{output?: unknown}>(`/integration-settings/${c.id}`);
+    const rep = cli<{output?: unknown}>('integrations:settings', c.id);
     console.log(`\n=== ${NOMS[r]} (${c.name}) : règles et réglages ===\n${JSON.stringify(rep.output ?? rep, null, 2)}`);
   }
   process.exit(0);
@@ -204,7 +164,7 @@ if (args.includes('--programmer')) {
   if (!fs.existsSync(journal)) throw new Error('Aucun brouillon envoyé pour cet épisode : lancer d’abord --envoyer.');
   const envoi = JSON.parse(fs.readFileSync(journal, 'utf8')) as Journal;
   for (const p of envoi.postes) {
-    await appeler(`/posts/${p.postId}/status`, {method: 'PUT', body: JSON.stringify({status: 'schedule'})});
+    cli('posts:status', p.postId, '--status', 'schedule');
     console.log(`Programmé : ${p.reseau} (${p.postId})`);
   }
   fs.writeFileSync(journal, JSON.stringify({...envoi, statut: 'programmé'}, null, 2) + '\n');
@@ -235,7 +195,6 @@ if (!args.includes('--envoyer')) {
   const [cheminVideo, cheminMiniature] = [`<chemin de ${path.basename(mp4)}>`, `<chemin de ${path.basename(png)}>`];
   const corps = construire(pub, fictifs, {id: '<id de la vidéo>', path: cheminVideo}, {id: '<id de la miniature>', path: cheminMiniature}, date, commentaire);
   fs.writeFileSync(path.join(dossier, 'postiz.json'), JSON.stringify(corps, null, 2) + '\n');
-  fs.writeFileSync(path.join(dossier, 'postiz-mcp.json'), JSON.stringify(versMcp(corps, cheminMiniature), null, 2) + '\n');
   for (const r of RESEAUX) {
     const {texte, limite} = INFOS[r];
     console.log(`${NOMS[r].padEnd(10)} ${pub[texte].length}/${limite} caractères (section ${texte})${r === 'youtube' ? ` · titre « ${pub.titre} »` : ''}`);
@@ -243,7 +202,7 @@ if (!args.includes('--envoyer')) {
   console.log(`Date      ${lisible(date)} (brouillon)`);
   console.log(`Commentaire de sources : ${commentaire ? '1er commentaire partout, à la main sur TikTok' : pub.commentaire ? 'à poster à la main (--commentaire : partout sauf TikTok)' : 'absent de publication.md'}`);
   alertes.forEach((a) => console.log(`ATTENTION ${a}`));
-  console.log('\nAperçu écrit dans postiz.json (API) et postiz-mcp.json (MCP). Rien n’a été envoyé.');
+  console.log('\nAperçu écrit dans postiz.json (charge utile de `postiz posts:create --json`). Rien n’a été envoyé.');
   process.exit(alertes.length ? 1 : 0);
 }
 
@@ -252,7 +211,7 @@ if (fs.existsSync(journal) && !args.includes('--force')) {
   throw new Error(`Déjà envoyé (${path.relative(RACINE, journal)}) : vérifier dans Postiz avant de recommencer (--force crée des doublons).`);
 }
 
-const canaux = choisirCanaux(await appeler<Canal[]>('/integrations'));
+const canaux = choisirCanaux(enListe<Canal>(cli('integrations:list'), 'integrations'));
 const absents = RESEAUX.filter((r) => !canaux[r]);
 if (absents.length === RESEAUX.length) throw new Error(`Aucun compte connecté dans Postiz (${RESEAUX.map((r) => NOMS[r]).join(', ')}).`);
 if (absents.length) console.log(`Non connectés dans Postiz, ignorés : ${absents.map((r) => NOMS[r]).join(', ')}.`);
@@ -261,7 +220,9 @@ const video = await televerser(mp4);
 const miniature = canaux.youtube && fs.existsSync(png) ? await televerser(png) : undefined;
 const corps = construire(pub, canaux, video, miniature, date, commentaire);
 fs.writeFileSync(path.join(dossier, 'postiz.json'), JSON.stringify(corps, null, 2) + '\n');
-const reponse = await appeler<{postId: string; integration: string}[]>('/posts', {method: 'POST', body: JSON.stringify(corps)});
+const reponse = enListe<{postId?: string; id?: string; integration?: string; integrationId?: string}>(
+  cli('posts:create', '--json', path.join(dossier, 'postiz.json')),
+).map((p) => ({postId: p.postId ?? p.id ?? '', integration: p.integration ?? p.integrationId ?? ''}));
 
 const envoi: Journal = {
   envoye: new Date().toISOString(),

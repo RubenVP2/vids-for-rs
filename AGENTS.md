@@ -54,9 +54,9 @@ La seule étape humaine : relire les brouillons, puis les programmer.
 - Sous-agents (`.agents/agents/`) : `documentaliste` (article → `source.md`),
   `verificateur-faits` (script contre source), `spectateur` (test grand public),
   `controleur-visuel` (images rendues).
-- MCP : serveur **postiz** (`https://mcp.postiz.com/mcp-oauth-dynamic`, OAuth) pour
-  piloter Postiz en session. Le script `npm run postiz` continue d'utiliser la clé
-  d'API (`POSTIZ_API_KEY` ou `POSTIZ_ENV`) : c'est lui qui téléverse la vidéo.
+- Postiz : CLI officielle `postiz`, authentifiée par **OAuth2 device flow**
+  (`postiz auth:login`, jeton dans `~/.postiz/credentials.json`) — aucune clé API.
+  `scripts/postiz.ts` et `scripts/bilan.ts` passent par cette CLI (`lib/postiz-cli.ts`).
 - Moteur (Remotion + scripts) : `docs/moteur.md`. Commandes : `package.json`.
 
 ## Sessions et routines avec agy

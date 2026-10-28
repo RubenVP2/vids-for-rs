@@ -29,7 +29,8 @@ en répondant « programme » dans la session de la routine). Rien ne part sans 
 
 Diffusion par [Postiz](https://postiz.com) (cloud, formule Standard) : TikTok,
 Instagram, YouTube et Threads connectés ; Facebook, LinkedIn, X et Bluesky sont gérés
-par le script dès qu'ils sont connectés. Clé d'API dans la variable `POSTIZ_ENV`.
+par le script dès qu'ils sont connectés. Accès : CLI `postiz` authentifiée en OAuth2
+(`postiz auth:login`, device flow), sans clé d'API.
 
 ## Produire un épisode à la main
 
