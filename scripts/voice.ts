@@ -47,7 +47,22 @@ if (!fs.existsSync(mp3) || force) {
   let ok = false;
   try {
     console.log(`Voix : ${reglages.modele} / ${reglages.voix} (Google AI Studio)…`);
-    await synthetiser(texte, reglages, mp3);
+    // Par blocs de scènes : les requêtes courtes évitent les répétitions de fin des longues
+    // générations, et 3 requêtes/épisode tiennent dans le quota gratuit (10/jour, 3/min).
+    const scenes = episode.scenes.map((s) => texteParle(s.texte).trim()).filter(Boolean);
+    const morceaux: string[] = [];
+    for (let i = 0; i < scenes.length; i += 3) morceaux.push(scenes.slice(i, i + 3).join(' '));
+    const tmps: string[] = [];
+    for (const [i, m] of morceaux.entries()) {
+      const f = mp3.replace(/\.mp3$/, `.part${i}.mp3`);
+      await synthetiser(m, reglages, f);
+      tmps.push(f);
+    }
+    const liste = mp3.replace(/\.mp3$/, '.parts.txt');
+    fs.writeFileSync(liste, tmps.map((f) => `file '${path.basename(f)}'`).join('\n') + '\n');
+    execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'concat', '-safe', '0', '-i', liste, '-c', 'copy', mp3]);
+    tmps.forEach((f) => fs.rmSync(f));
+    fs.rmSync(liste);
     ok = true;
   } catch (e) {
     console.warn(`  échec : ${(e as Error).message.slice(0, 200)}`);

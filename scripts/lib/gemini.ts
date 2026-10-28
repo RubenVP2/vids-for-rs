@@ -23,6 +23,7 @@ export const cleGemini = () => {
 };
 
 const api = async (chemin: string, corps: unknown): Promise<Record<string, unknown>> => {
+  await espacer();
   const rep = await fetch(`${BASE}/${chemin}`, {
     method: 'POST',
     headers: {'x-goog-api-key': cleGemini(), 'Content-Type': 'application/json'},
@@ -30,6 +31,16 @@ const api = async (chemin: string, corps: unknown): Promise<Record<string, unkno
   });
   if (!rep.ok) throw new Error(`Gemini ${chemin} : HTTP ${rep.status} ${await rep.text()}`);
   return (await rep.json()) as Record<string, unknown>;
+};
+
+// Quota gratuit Google AI Studio : 3 requêtes/minute ET 10 requêtes/jour sur gemini-3.8-flash-tts.
+// Espacement automatique : au plus une requête toutes les 21 s (le plafond journalier, lui,
+// impose de rester à 3-4 requêtes TTS par épisode).
+let derniereRequete = 0;
+const espacer = async () => {
+  const attente = derniereRequete + 21_000 - Date.now();
+  if (attente > 0) await new Promise((r) => setTimeout(r, attente));
+  derniereRequete = Date.now();
 };
 
 const texteReponse = (rep: Record<string, unknown>) =>
