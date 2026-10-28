@@ -11,38 +11,37 @@
 - Voix via OpenRouter, moteur vidéo Remotion.
 - Décisions consignées dans [`decisions.md`](decisions.md).
 
-## Phase 2 — Identité de marque 🟡 *prochaine étape*
+## Phase 2 — Identité de marque ✅
 
-- Réserver `@matou.ai` sur TikTok, Instagram et YouTube.
-- Matou : vectoriser fidèlement ton dessin en SVG (trait fait main) → jeu d'états
-  (neutre, « En fait… » ☝️, surpris, sceptique, réfléchit, content, verdict).
-- Maquette d'un écran type sur fond « cahier » pour valider le fond sur téléphone.
-- Design system : couleurs, typographies, grille et zones de sécurité, composants
-  (hook, carte « point clé », sous-titres, Hype-mètre, écran de fin), signature sonore.
-- **Sortie** : dossier `brand/` + `docs/design-system.md` + une page de visualisation.
+- Matou vectorisé à partir du dessin original : 8 expressions, verres-écrans, trait qui bouillonne.
+- Design system « le cahier de Matou » : tokens, polices, couleurs, zones de sécurité,
+  composants, icônes, bruitages, signature sonore, musique de fond.
+- **Sortie** : [`design-system.md`](design-system.md), `brand/`, planches dans `docs/images/`.
+- Reste à faire par l'utilisateur : réserver `@matou.ai` sur TikTok, Instagram et YouTube.
 
-## Phase 3 — Moteur vidéo
+## Phase 3 — Moteur vidéo ✅
 
-- Installer le moteur de rendu (Remotion).
-- Coder les composants du design system en version animée.
-- Brancher la voix : comparer les voix françaises d'OpenRouter, ajouter l'alignement local des mots.
-- Définir le format du fichier de scènes (`scenes.json`) et son schéma.
-- **Sortie** : un rendu MP4 de test à partir d'un fichier de scènes écrit à la main.
+- Remotion : 9 types de scènes, sous-titres mot à mot, Hype-mètre, miniature.
+- Voix : 11 voix masculines comparées, Gemini « Puck » choisie ; minutage des mots par
+  transcription horodatée + alignement sur le script.
+- Schéma `scenes.json` validé, scripts `validate`, `voice`, `render`, `stills`, `check`.
+- **Sortie** : épisode `#000` (bande-annonce de la chaîne) rendu de bout en bout.
+  Détail : [`moteur.md`](moteur.md).
 
-## Phase 4 — Épisode pilote `#000`
+## Phase 5 — Industrialisation « 1 session = 1 vidéo » ✅ (avancée avant le pilote)
 
-- Un vrai article → une vraie vidéo, de bout en bout.
-- Itérer sur le rythme, le ton, les sous-titres, la mascotte.
+- Skills : `episode`, `ecriture-matou`, `publication`, `veille-ia`.
+- Sous-agents : `documentaliste`, `verificateur-faits`, `spectateur`, `controleur-visuel`.
+- Contrôles automatiques avant et après rendu.
+
+## Phase 4 — Épisode pilote `#001` 🟡 *prochaine étape*
+
+- Un vrai article → une vraie vidéo, de bout en bout, avec la recette `episode`.
+- Itérer sur le rythme, le ton, les sous-titres, la mascotte, la voix.
 - **Sortie** : une vidéo publiable + la liste des ajustements.
-
-## Phase 5 — Industrialisation « 1 session = 1 vidéo »
-
-- Écrire la recette complète dans `CLAUDE.md` (étapes, vérifications, livrables).
-- Modèles de description et de hashtags par plateforme.
-- Checklist qualité avant publication (faits, source, sous-titres, zones de sécurité).
-- **Sortie** : tu donnes un article, la session livre vidéo + description + hashtags.
 
 ## Phase 6 — Lancement & amélioration continue
 
-- Publication régulière.
+- Publication régulière (la bande-annonce `#000` peut ouvrir la chaîne).
 - Suivi de la rétention et de l'engagement par vidéo → ajustement des formats.
+- V2 : la voix de l'utilisateur (clonage via OpenRouter, `brand/voix.json`).

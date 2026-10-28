@@ -147,5 +147,11 @@ export const episodePropsSchema = z.object({
 });
 export type EpisodeProps = z.infer<typeof episodePropsSchema>;
 
-/** Retire les marqueurs ==…== pour obtenir le texte lu par la voix. */
-export const texteParle = (t: string) => t.replace(/==/g, '');
+// {affiché|prononcé} : « {GPT-5|G P T 5} » s'affiche GPT-5 dans les sous-titres mais se dit « G P T 5 ».
+const PRONONCIATION = /\{([^|}]+)\|([^}]+)\}/g;
+
+/** Texte lu par la voix : sans les marqueurs ==…==, avec les prononciations. */
+export const texteParle = (t: string) => t.replace(/==/g, '').replace(PRONONCIATION, '$2');
+
+/** Texte des sous-titres : avec les marqueurs ==…==, la forme affichée des prononciations. */
+export const texteAffiche = (t: string) => t.replace(PRONONCIATION, '$1');

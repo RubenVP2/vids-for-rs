@@ -1,44 +1,29 @@
 # CLAUDE.md — Vids for RS
 
-Ce fichier est la mémoire du projet pour Claude. Le lire en début de session.
+Mémoire du projet. Langue de travail : **français**.
 
 ## Le projet
 
-Vidéos courtes verticales d'information sur l'IA (news + articles de blog des grandes
-entreprises) pour les réseaux sociaux. Langue de travail : **français**.
+Matou (`@matou.ai`) : vidéos verticales courtes qui expliquent l'actu de l'IA (annonces
+et articles de blog des grandes entreprises) au grand public, sur TikTok, Instagram
+Reels et YouTube Shorts.
 
-Cible finale : **une session Claude = une vidéo**. L'utilisateur fournit un article
-(texte ou URL) ; Claude produit la vidéo finale, la description et les hashtags,
-en respectant le design system du projet.
+**Une session = un épisode** : l'utilisateur donne un article (lien ou texte), la
+session livre la vidéo MP4, la miniature, la description et les hashtags. Recette :
+skill **`episode`**. Pas d'article sous la main → skill **`veille-ia`**.
 
-## Cadre validé (voir `docs/decisions.md`)
+## Cadre validé (détail et raisons : `docs/decisions.md`)
 
 - **Audience** : grand public + pros hors tech. Aucun jargon non expliqué.
-- **Plateformes** : TikTok, Instagram Reels, YouTube Shorts (vertical 1080×1920).
-- **Format** : ~30 secondes (Décrypté : jusqu'à 45 s), une seule idée, ~75–85 mots.
-- **Ton** : pédagogie grand public avant tout, avec une touche de fun. Inspiration :
-  Fireship (densité, rythme, humour pince-sans-rire), adapté au format court.
-- **Voix** : V1 en synthèse vocale via OpenRouter ; V2 avec la voix de l'utilisateur.
-  La voix doit rester une brique interchangeable (script → audio + horodatage des
-  mots). OpenRouter ne fournit pas l'horodatage : il vient d'un alignement local.
-- **À l'écran** : jamais l'utilisateur. Seulement la voix et la mascotte.
-- **Marque** : la chaîne s'appelle **Matou** (`@matou.ai`). Matou est un chat blanc
-  dessiné à la main par l'utilisateur (`brand/references/`) : grosses lunettes,
-  dents de lapin, doigt levé jaune ☝️, croix grise sur le ventre. C'est **lui qui
-  parle**, avec une voix masculine. Ses phrases : « ☝️ En fait… » pour lancer
-  l'explication, « C'était Matou, et c'est tout. » pour finir.
-- **Univers visuel** : « le cahier de Matou ». Fond papier crème quadrillé, trait de
-  feutre noir fait main, jaune = surligneur des mots clés.
+- **Format** : 1080×1920. Série `flash` ~30 s (une annonce), `decrypte` ≤ 45 s (un
+  article de blog). Une seule idée par vidéo.
+- **Ton** : pédagogie d'abord, humour pince-sans-rire (inspiration Fireship).
+- **Matou** : chat blanc à lunettes dessiné par l'utilisateur, c'est **lui qui parle**
+  (voix masculine). Rituels : « En fait… » pour expliquer, Hype-mètre à la fin
+  (pur buzz / prometteur / game changer), « C'était Matou, et c'est tout. » pour finir.
+- **À l'écran** : jamais l'utilisateur. Univers « cahier de Matou » : `docs/design-system.md`.
+- **Voix** : V1 synthèse via OpenRouter (`brand/voix.json`) ; V2 la voix de l'utilisateur.
 - **Rythme** : 1 vidéo par jour, au minimum 1 tous les 2 jours.
-
-## Phase actuelle
-
-**Phase 2 — Identité de marque** (à démarrer). La phase 1 est terminée : le cadre
-est fixé. Les pistes sont dans `docs/brainstorm.md`, les choix dans
-`docs/decisions.md`, l'enchaînement des phases dans `docs/roadmap.md`.
-
-Quand une décision est prise avec l'utilisateur : l'ajouter à `docs/decisions.md`
-(date, choix, raison) et mettre à jour ce fichier si elle change les règles ci-dessous.
 
 ## Règles éditoriales (non négociables)
 
@@ -46,13 +31,23 @@ Quand une décision est prise avec l'utilisateur : l'ajouter à `docs/decisions.
 - Ne jamais inventer un fait, un chiffre ou une citation absente de la source.
 - Distinguer clairement : annoncé / disponible / rumeur.
 - Résumer et commenter, ne pas recopier l'article mot à mot.
-- Pas de titre racoleur qui trahit le contenu : le hook doit être tenu par la vidéo.
+- Pas de titre racoleur : le hook doit être tenu par la vidéo.
 - L'utilisateur relit toujours avant publication.
 
-## Conventions du dépôt
+## Outils du dépôt
 
-- Documentation en français, en Markdown, dans `docs/`.
-- Structure cible (à créer au fil des phases, pas avant) :
-  - `brand/` : design system (tokens, typos, mascotte SVG, sons)
-  - `templates/` : composants vidéo réutilisables
-  - `episodes/<numéro>-<slug>/` : un dossier par vidéo (source, script, scènes, rendu)
+- Skills (`.claude/skills/`) : `episode` (la recette), `ecriture-matou` (voix et
+  scènes), `publication` (descriptions, hashtags), `veille-ia` (choisir un sujet).
+- Sous-agents (`.claude/agents/`) : `documentaliste` (article → `source.md`),
+  `verificateur-faits` (script contre source), `spectateur` (test grand public),
+  `controleur-visuel` (images rendues).
+- Moteur (Remotion + scripts) : `docs/moteur.md`. Commandes : `package.json`.
+
+## Conventions
+
+- Docs en français, Markdown, dans `docs/`. Code et noms en français aussi.
+- `brand/` : tokens, Matou en SVG, icônes, voix. `public/brand/` : polices et sons
+  (servis au rendu). `src/` : composants vidéo. `episodes/NNN-slug/` : un dossier par vidéo.
+- Une décision prise avec l'utilisateur → une ligne dans `docs/decisions.md` (date,
+  choix, raison), et ce fichier mis à jour si elle change les règles ci-dessus.
+- Les vidéos rendues ne sont pas versionnées (`rendu/`) : on les envoie à l'utilisateur.

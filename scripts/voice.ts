@@ -7,7 +7,7 @@
 import {execFileSync} from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-import {texteParle, type Timings} from '../src/schema';
+import {texteAffiche, texteParle, type Timings} from '../src/schema';
 import {aligner, normaliser} from './lib/alignement';
 import {dossierEpisode, lireEpisode, RACINE} from './lib/episode';
 import {dureeAudio, synthetiser, transcrire, type ReglagesVoix} from './lib/openrouter';
@@ -26,7 +26,7 @@ const reglages = JSON.parse(fs.readFileSync(path.join(RACINE, 'brand', 'voix.jso
 type MotScript = {texte: string; scene: number; surligne: boolean};
 const motsScript: MotScript[] = [];
 episode.scenes.forEach((s, iScene) => {
-  const morceaux = s.texte.trim().split(/==(.+?)==/g);
+  const morceaux = texteAffiche(s.texte).trim().split(/==(.+?)==/g);
   morceaux.forEach((m, k) => {
     for (const w of m.split(/\s+/).filter(Boolean)) {
       // la ponctuation isolée (« : », « ? ») se colle au mot précédent

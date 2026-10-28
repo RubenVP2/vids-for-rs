@@ -29,10 +29,20 @@ Les options explorées sont dans [`brainstorm.md`](brainstorm.md).
 | 2026-10-28 | Fond | Papier crème quadrillé façon cahier d'écolier, jaune utilisé comme surligneur (choix de Claude, à valider sur maquette) | Raconte la pédagogie, cohérent avec le trait fait main, se démarque des comptes IA sombres |
 | 2026-10-28 | Séries de lancement | Flash (~30 s) + Décrypté (≤ 45 s). Récap et Mot de l'IA plus tard | Roder le pipeline sur un seul squelette |
 | 2026-10-28 | Moteur vidéo | Remotion (licence gratuite pour un particulier ou une structure ≤ 3 personnes). Plan B : HyperFrames | Mature, outils intégrés pour les sous-titres mot par mot et l'alignement local (whisper.cpp), scènes typées et validées |
+| 2026-10-28 | Voix de Matou (V1) | Gemini 3.8 Flash TTS, voix « Puck », avec une consigne de jeu (complice, pince-sans-rire). Secours : MAI « Marc », ElevenLabs « Brian » | Meilleure note d'un casting de 11 voix masculines (accent natif, naturel, ton du personnage). Choix de Claude, à confirmer à l'oreille : extraits dans `brand/voix/essais/` |
+| 2026-10-28 | Minutage des mots | Transcription horodatée (Whisper large v3 via OpenRouter) + alignement sur le script, au lieu de whisper.cpp en local | Même résultat sans compiler d'outil à chaque session ; le script garde son orthographe |
+| 2026-10-28 | Typographies | Permanent Marker (titres) + Shantell Sans (texte, sous-titres) | Esprit feutre et écriture à la main, très lisibles, accents français complets, licences libres |
+| 2026-10-28 | Zones de sécurité | 220 px en haut, 420 px en bas, 150 px à droite, 72 px à gauche | Commun à TikTok, Reels et Shorts |
+| 2026-10-28 | Icônes | Icônes dessinées maison au feutre, pas d'emoji à l'écran | Style homogène, aucun droit tiers |
+| 2026-10-28 | Son | Bruitages synthétisés maison, signature « Ma-tou ! » en 3 notes de marimba, musique de fond générée (Lyria) à 7 % | Identité sonore propre et sans droits tiers |
+| 2026-10-28 | Épisode #000 | Bande-annonce de la chaîne (Matou se présente) ; le pilote sur un vrai article devient #001 | Sert de test du moteur et peut ouvrir la chaîne |
+| 2026-10-28 | Durée réelle | ~3,4 mots/s : flash = 80–105 mots, décrypté = 110–145 mots | Mesuré sur la voix choisie (le budget de 75–85 mots donnait ~25 s) |
+| 2026-10-28 | Industrialisation | Skills `episode`, `ecriture-matou`, `publication`, `veille-ia` + sous-agents `documentaliste`, `verificateur-faits`, `spectateur`, `controleur-visuel` | Une recette unique et des relectures indépendantes à chaque épisode |
 
 ## À trancher
 
 | Sujet | Options | Quand |
 | --- | --- | --- |
-| Voix exacte de Matou | Essais de voix masculines françaises sur OpenRouter, choix à l'oreille | Phase 3 |
-| Teinte du fond | Validation du fond « cahier » sur une maquette téléphone | Phase 2 |
+| Voix de Matou à l'oreille | Écouter `brand/voix/essais/` et confirmer « Puck » ou en choisir une autre | Pilote #001 |
+| Fond « cahier » sur téléphone | Regarder la bande-annonce #000 sur un vrai téléphone | Pilote #001 |
+| Pseudo `@matou.ai` | Réserver le pseudo sur TikTok, Instagram et YouTube | Avant la publication |
