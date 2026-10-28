@@ -12,6 +12,8 @@ d'Instagram : pas de section à écrire pour eux.
 
 ## Règles communes
 
+Lire d'abord la section « Publier » de `docs/apprentissages.md`.
+
 - Première ligne = la promesse du hook, reformulée, sans racolage : la vidéo la tient.
 - La source est citée : nom de l'entreprise ou du média, et l'**URL complète** au moins
   dans la section YouTube (TikTok et Instagram : nom de la source, URL en commentaire épinglé).

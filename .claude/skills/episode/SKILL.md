@@ -11,7 +11,8 @@ suivante qu'une fois le critère atteint. Les commandes sont dans `package.json`
 ## 0. Préparer
 
 - `node_modules` absent → `npm ci`.
-- Numéro : le plus grand `episodes/NNN-*` + 1. Slug : 2 à 5 mots, minuscules, tirets.
+- Numéro : le plus grand `episodes/NNN-*` + 1, sur la branche par défaut à jour (les
+  routines y poussent chaque épisode). Slug : 2 à 5 mots, minuscules, tirets.
 - Créer `episodes/NNN-slug/`.
 
 **Fait quand** le dossier existe et que le numéro ne collisionne avec aucun autre.
@@ -23,7 +24,8 @@ Il écrit `source.md` : texte de l'article, date, auteur, et la **fiche** (faits
 citations, statut annoncé / disponible / rumeur).
 
 Lire la fiche. Si la source n'est pas d'une entreprise ou d'un média identifiable, ou
-si l'info n'a qu'une source secondaire non recoupée : le dire à l'utilisateur avant d'écrire.
+si l'info n'a qu'une source secondaire non recoupée : le dire à l'utilisateur avant d'écrire
+(en tâche planifiée : changer de sujet, voir le skill `episode-du-jour`).
 
 **Fait quand** `source.md` contient l'URL, la date de publication, la fiche, et que
 tu sais en une phrase quelle est **l'idée unique** de l'épisode.
@@ -85,9 +87,9 @@ YouTube, et le texte court de Threads, X et Bluesky). Puis `npm run check -- NNN
 
 L'utilisateur relit toujours avant de publier : ne présente jamais l'épisode comme publié.
 
-## 8. Programmer dans Postiz (si l'accès est configuré)
+## 8. Programmer dans Postiz
 
-Suivre le skill **`programmation`** : brouillons dans Postiz (par le MCP Postiz),
-relecture de l'utilisateur, puis programmation sur son feu vert. Sans accès à Postiz
-(outils `mcp__Postiz__*` absents, aucun compte connecté), le dire en une ligne et
-s'arrêter à l'étape 7.
+Suivre le skill **`programmation`** : brouillons dans Postiz (clé d'API `POSTIZ_ENV`,
+sinon MCP Postiz), relecture de l'utilisateur, puis programmation sur son feu vert.
+Sans accès à Postiz (`npm run postiz -- --canaux` refusé et outils `mcp__Postiz__*`
+absents), le dire en une ligne et s'arrêter à l'étape 7.

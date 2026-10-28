@@ -33,6 +33,8 @@ pour une instance auto-hébergée. Navigateur : Remotion utilise
 | `npm run check -- NNN` | contrôle final : durée, format, volume, voix, publication |
 | `npm run postiz -- NNN [--envoyer \| --programmer]` | aperçu (`postiz.json`, `postiz-mcp.json` pour le MCP Postiz), puis, avec une clé d'API, brouillons et programmation (skill `programmation`) |
 | `npm run postiz -- --canaux` | comptes connectés à Postiz et règles de chaque réseau |
+| `npm run bilan [-- --jours 30]` | chiffres Postiz de chaque épisode envoyé (écrit `stats.json`) et des comptes |
+| `npm run bilan -- --attente` | épisodes dont les brouillons attendent la relecture |
 | `npm run studio` | Remotion Studio, aperçu interactif (props par défaut : #000) |
 | `npm run brand` | réexporte les SVG de Matou et des icônes dans `brand/` |
 | `npm run stills -- planches` | réexporte les planches de `docs/images/` et `brand/avatar.png` |
@@ -52,6 +54,7 @@ episodes/NNN-slug/
   postiz.json       ce qui est (ou serait) envoyé à Postiz
   postiz-mcp.json   le même envoi au format du MCP Postiz (integrationSchedulePostTool)
   postiz-envoi.json ids des brouillons Postiz et leur statut
+  stats.json        chiffres par réseau (npm run bilan)
   rendu/            MP4 + miniature (ignoré par git)
   controle/         images de contrôle (ignoré par git)
 ```

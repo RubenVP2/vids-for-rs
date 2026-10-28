@@ -46,6 +46,8 @@ Hook : 16 mots max, il doit tenir en 3 secondes. Une scène : 40 mots max.
 ## Squelette
 
 1. `hook` (0–3 s) : la promesse. Une question ou un fait étonnant **vrai**. Matou `surpris`.
+   Avant de l'écrire, lire la section « Écrire » de `docs/apprentissages.md` (ce qui a
+   retenu le public de Matou jusqu'ici).
 2. `source` : qui, quoi, quand. Le tampon de statut s'affiche tout seul.
 3. 2 à 4 scènes d'explication : `point`, `chiffre`, `liste`, `comparaison`.
 4. `pourquoi` : « Et pour toi ? » — l'impact concret sur la vie du spectateur.

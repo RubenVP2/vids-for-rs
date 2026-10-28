@@ -34,14 +34,17 @@
 - Sous-agents : `documentaliste`, `verificateur-faits`, `spectateur`, `controleur-visuel`.
 - Contrôles automatiques avant et après rendu.
 
-## Phase 4 — Épisode pilote `#001` 🟡 *prochaine étape*
+## Phase 4 — Épisode pilote `#001` ✅
 
-- Un vrai article → une vraie vidéo, de bout en bout, avec la recette `episode`.
-- Itérer sur le rythme, le ton, les sous-titres, la mascotte, la voix.
-- **Sortie** : une vidéo publiable + la liste des ajustements.
+- `#001` « L'IA d'OpenAI prend la souris » : produit de bout en bout avec la recette
+  `episode`, envoyé en brouillons dans Postiz (TikTok, Instagram, YouTube, Threads).
+- Ajustements tirés du pilote : budget de mots recalé, fin sans promesse, texte court
+  pour Threads.
 
-## Phase 6 — Lancement & amélioration continue
+## Phase 6 — Lancement & amélioration continue 🟡 *en cours*
 
-- Publication régulière (la bande-annonce `#000` peut ouvrir la chaîne).
-- Suivi de la rétention et de l'engagement par vidéo → ajustement des formats.
+- Postiz (cloud, formule Standard) : 4 comptes connectés, le 5e à choisir.
+- Routines : épisode du jour chaque matin, rappel de relecture, bilan du lundi
+  (`docs/bilans/`, `docs/apprentissages.md`, `docs/sujets.md`).
+- À faire : premières publications, puis ajuster les formats selon les bilans.
 - V2 : la voix de l'utilisateur (clonage via OpenRouter, `brand/voix.json`).

@@ -4,6 +4,7 @@
 // et --programmer ne fait que les passer dans la file de publication de Postiz.
 // Usage : npm run postiz -- <épisode>                aperçu : écrit postiz.json et postiz-mcp.json, n'envoie rien
 //         npm run postiz -- <épisode> --envoyer [--date 2026-10-29T18:00] [--commentaire] [--force]
+//         sans --date : le premier jour libre du calendrier Postiz, aujourd'hui compris s'il reste 3 h
 //         npm run postiz -- <épisode> --programmer   après le feu vert : brouillons → programmés
 //         npm run postiz -- --canaux                 comptes connectés + règles de chaque réseau
 // Accès : secret réseau sur api.postiz.com (en-tête Authorization, sans préfixe) ou variable POSTIZ_API_KEY
@@ -95,7 +96,25 @@ const versUtc = (date: string) => {
   return new Date(naif - decalage(naif - decalage(naif))).toISOString();
 };
 
-const demain = () => `${new Intl.DateTimeFormat('en-CA', {timeZone: reglages.fuseau}).format(Date.now() + 86_400_000)}T${reglages.heure}`;
+const jour = (t: number) => new Intl.DateTimeFormat('en-CA', {timeZone: reglages.fuseau}).format(t);
+const demain = () => `${jour(Date.now() + 86_400_000)}T${reglages.heure}`;
+
+/** Premier jour sans post dans le calendrier Postiz, à l'heure de brand/postiz.json, au moins 3 h après maintenant. */
+const prochainCreneau = async () => {
+  const [debut, fin] = [Date.now() - 86_400_000, Date.now() + 15 * 86_400_000].map((t) => new Date(t).toISOString());
+  let pris: Set<string>;
+  try {
+    const {posts} = await appeler<{posts: {publishDate: string}[]}>(`/posts?startDate=${debut}&endDate=${fin}`);
+    pris = new Set(posts.map((p) => jour(new Date(p.publishDate).getTime())));
+  } catch {
+    return demain(); // sans clé (voie MCP) : vérifier le jour avec postsListTool
+  }
+  for (let i = 0; i < 15; i++) {
+    const creneau = `${jour(Date.now() + i * 86_400_000)}T${reglages.heure}`;
+    if (new Date(versUtc(creneau)).getTime() - Date.now() >= 3 * 3_600_000 && !pris.has(creneau.slice(0, 10))) return creneau;
+  }
+  throw new Error('Aucun jour libre dans les 15 prochains jours du calendrier Postiz : préciser --date.');
+};
 const lisible = (iso: string) =>
   new Intl.DateTimeFormat('fr-FR', {timeZone: reglages.fuseau, dateStyle: 'full', timeStyle: 'short'}).format(new Date(iso));
 
@@ -196,7 +215,7 @@ if (args.includes('--programmer')) {
 const pub = lirePublication(dossier);
 const mp4 = path.join(dossier, 'rendu', `${nom}.mp4`);
 const png = path.join(dossier, 'rendu', `${nom}-miniature.png`);
-const date = versUtc(valeurDe('--date') ?? demain());
+const date = versUtc(valeurDe('--date') ?? (await prochainCreneau()));
 const commentaire = args.includes('--commentaire');
 
 const alertes: string[] = [];

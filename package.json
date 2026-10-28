@@ -13,6 +13,7 @@
     "stills": "tsx scripts/stills.ts",
     "check": "tsx scripts/check.ts",
     "postiz": "tsx scripts/postiz.ts",
+    "bilan": "tsx scripts/bilan.ts",
     "voices:compare": "tsx scripts/compare-voices.ts"
   },
   "dependencies": {

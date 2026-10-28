@@ -18,20 +18,39 @@ description: Trouve et classe les annonces IA du moment pour choisir le sujet du
 Une rumeur ne vient que d'un média reconnu qui cite ses sources ; elle sera traitée
 avec le statut `rumeur` et Matou `sceptique`.
 
+## Avant de chercher
+
+Lire `docs/apprentissages.md` (ce qui a fait des vues chez Matou) et `docs/sujets.md`
+(la réserve). Lister les sujets déjà traités : `episodes/*/scenes.json` (source et hook).
+
 ## Classer
 
 Pour chaque candidat des 48 dernières heures, noter de 1 à 3 :
 
 1. **Impact grand public** : est-ce que ça change quelque chose pour quelqu'un qui
    n'est pas dans la tech (travail, école, téléphone, prix, vie privée) ?
-2. **Concret** : disponible ou datée > vague promesse.
-3. **Explicable en 30 s** : une seule idée tient la vidéo.
-4. **Pas déjà traité** : vérifier les `episodes/*/scenes.json` existants.
+2. **Potentiel de trafic** : un nom que tout le monde connaît (ChatGPT, Google, Apple,
+   Meta, WhatsApp…), un effet « quoi ?! » (chiffre, risque, première fois), une actu
+   reprise par plusieurs médias grand public, ou ce que `docs/apprentissages.md` a
+   confirmé. Une annonce de moins de 24 h prend +1 (plafonné à 3).
+3. **Concret** : disponible ou datée > vague promesse.
+4. **Explicable en 30 s** : une seule idée tient la vidéo.
+
+Écarter ce qui est déjà traité (même annonce, ou même idée il y a moins de 7 jours) et
+ce qui n'a pas de source de premier rang ni de média reconnu. Total sur 12 ; **seuil :
+8**. En dessous, ce n'est pas l'actu du jour : prendre la réserve (`docs/sujets.md`).
+
+Le sens avant le buzz : un sujet qui fait du clic mais qu'on ne peut pas expliquer
+honnêtement en 30 s (rumeur fragile, polémique sans fait vérifiable) est écarté.
 
 **Fait quand** tu proposes à l'utilisateur 3 sujets classés, chacun avec : titre de
-hook possible, source (URL), statut, série (`flash` / `decrypte`), et la raison du
-classement. L'utilisateur choisit ; ensuite, skill `episode`.
+hook possible, source (URL), statut, série (`flash` / `decrypte`), la note et la raison
+du classement. L'utilisateur choisit ; ensuite, skill `episode`.
 
-Si l'utilisateur t'a déjà laissé le choix (« fais la plus populaire », « choisis »,
-« fais-moi une vidéo sur l'actu ») : montre le classement en quelques lignes, prends le
-premier et enchaîne directement avec le skill `episode`, sans attendre de réponse.
+## Mode autonome
+
+Tâche planifiée (`episode-du-jour`), ou l'utilisateur t'a laissé le choix (« fais la
+plus populaire », « choisis », « fais-moi une vidéo sur l'actu ») : montre le classement
+en quelques lignes, prends le premier au-dessus du seuil (sinon le premier de la
+réserve, retiré de `docs/sujets.md`) et enchaîne directement avec le skill `episode`,
+sans attendre de réponse.

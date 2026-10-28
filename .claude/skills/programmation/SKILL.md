@@ -5,7 +5,8 @@ description: Envoie un épisode de Matou prêt dans Postiz en brouillons (TikTok
 
 # Programmation : épisode prêt → Postiz
 
-Postiz en abonnement cloud (formule Standard : 5 canaux). L'utilisateur connecte lui-même
+Postiz en abonnement cloud (formule Standard : 5 canaux). Comptes connectés : TikTok,
+Instagram, YouTube, Threads ; le 5e est à choisir par l'utilisateur. Il connecte lui-même
 ses comptes dans Postiz (« Add channel »). Deux accès :
 
 - **Clé d'API** (variable `POSTIZ_ENV` de l'environnement) : la voie normale. Si
@@ -18,7 +19,8 @@ ses comptes dans Postiz (« Add channel »). Deux accès :
 Pour le reste (statistiques…), le skill officiel **`postiz`** s'applique.
 
 **Règle d'or** : rien n'est publié sans un « oui » explicite de l'utilisateur, dans cette
-session, pour cet épisode. Les posts sont créés en **brouillon** (`type: "draft"`) ; ils ne
+session, pour cet épisode (une tâche planifiée n'est pas un « oui » : la routine
+`episode-du-jour` s'arrête aux brouillons). Les posts sont créés en **brouillon** (`type: "draft"`) ; ils ne
 passent en programmé qu'après ce « oui ».
 
 ## 0. Prérequis
@@ -57,10 +59,10 @@ aux réponses de tous.
 
 `npm run postiz -- NNN --commentaire [--date AAAA-MM-JJTHH:MM]`
 
-- Date : par défaut demain à l'heure de `brand/postiz.json` (heure de Paris), convertie
-  en UTC. Rythme visé : 1 vidéo par jour. Si l'utilisateur a donné un jour, le prendre ;
-  sinon vérifier avec `mcp__Postiz__postsListTool` qu'aucun épisode n'est déjà prévu ce
-  jour-là.
+- Date : avec la clé, le premier jour sans post dans le calendrier Postiz, à l'heure de
+  `brand/postiz.json` (18 h, heure de Paris), aujourd'hui compris s'il reste 3 h. Sans
+  clé : demain, à vérifier avec `mcp__Postiz__postsListTool`. Rythme visé : 1 vidéo par
+  jour. Si l'utilisateur a donné un jour, le prendre (`--date`).
 - `--commentaire` ajoute la ligne « Commentaire à épingler » de `publication.md` en
   premier commentaire partout sauf sur TikTok (qui ne le permet pas) ; sur Threads, X et
   Bluesky, c'est la première réponse du fil. Il reste à l'épingler à la main là où c'est
