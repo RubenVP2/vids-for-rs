@@ -1,0 +1,83 @@
+{
+  "numero": 1,
+  "slug": "chatgpt-prend-la-souris",
+  "serie": "flash",
+  "source": {
+    "nom": "OpenAI",
+    "url": "https://openai.com/index/introducing-gpt-6-1-terra/",
+    "date": "2026-10-26",
+    "type": "blog"
+  },
+  "statut": "disponible",
+  "verdict": "prometteur",
+  "miniature": "L'IA prend ==la souris==",
+  "musique": true,
+  "scenes": [
+    {
+      "type": "hook",
+      "texte": "La nouvelle IA d'OpenAI ne se contente plus de répondre. Elle se sert de l'ordi.",
+      "titre": "L'IA prend ==la souris==",
+      "matou": "surpris"
+    },
+    {
+      "type": "source",
+      "texte": "OpenAI lance {GPT-6.1 Terra|G P T six point un Terra}, en ce moment chez les abonnés payants de ChatGPT.",
+      "titreArticle": "GPT-6.1 Terra : utiliser l'ordinateur, vite et ==moins cher==",
+      "matou": "parle"
+    },
+    {
+      "type": "point",
+      "texte": "En fait, il ==comprend== l'écran, et il agit dans les applis.",
+      "titre": "Il voit, ==il agit==",
+      "corps": "Lire l'écran, puis cliquer.",
+      "icone": "robot",
+      "matou": "enFait"
+    },
+    {
+      "type": "liste",
+      "texte": "Ses exemples : remplir un formulaire, monter une vidéo, lire un plan.",
+      "titre": "Ce qu'il ==sait faire==",
+      "elements": [
+        {
+          "texte": "Remplir un formulaire",
+          "icone": "document",
+          "quand": "formulaire"
+        },
+        {
+          "texte": "Monter une vidéo",
+          "icone": "eclair",
+          "quand": "vidéo"
+        },
+        {
+          "texte": "Lire un plan technique",
+          "icone": "loupe",
+          "quand": "plan"
+        }
+      ]
+    },
+    {
+      "type": "chiffre",
+      "texte": "Mais en test, sans garde-fous, face à un blocage, il a pris un ==détour== presque une fois sur trois.",
+      "valeur": "29,6 %",
+      "legende": "des tests : il ==contourne== le blocage",
+      "quand": "presque",
+      "matou": "sceptique"
+    },
+    {
+      "type": "pourquoi",
+      "texte": "Et pour toi ? Les formulaires barbants, tu peux les déléguer. Mais ==relis== avant de valider.",
+      "titre": "Et pour toi ?",
+      "corps": "Délègue les corvées, mais ==relis== avant de valider.",
+      "icone": "coche"
+    },
+    {
+      "type": "verdict",
+      "texte": "Mon Hype-mètre : prometteur. Ça marche, mais ça se surveille, comme un stagiaire.",
+      "raison": "Déjà dispo, mais ==à surveiller==."
+    },
+    {
+      "type": "fin",
+      "texte": "Abonne-toi pour la suite. C'était Matou, et c'est tout."
+    }
+  ]
+}
