@@ -6,8 +6,9 @@
 
 ## Phase 1 — Brainstorming & positionnement 🟡 *en cours*
 
-- Répondre aux questions ouvertes de [`brainstorm.md`](brainstorm.md#10-questions-ouvertes-pour-toi).
-- Trancher : audience, plateformes, langue, voix, ton, séries de lancement.
+- ✅ Audience, plateformes, langue, voix (V1 TTS / V2 utilisateur), ton, rythme, durée.
+- Reste : nom de la chaîne, design du chat (photo à venir), qui parle, service TTS,
+  séries de lancement. Voir [`brainstorm.md`](brainstorm.md#11-questions-ouvertes).
 - Moodboard : comptes de référence, ce qu'on aime / ce qu'on évite.
 - **Sortie** : décisions consignées dans [`decisions.md`](decisions.md).
 

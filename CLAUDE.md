@@ -11,6 +11,18 @@ Cible finale : **une session Claude = une vidéo**. L'utilisateur fournit un art
 (texte ou URL) ; Claude produit la vidéo finale, la description et les hashtags,
 en respectant le design system du projet.
 
+## Cadre validé (voir `docs/decisions.md`)
+
+- **Audience** : grand public + pros hors tech. Aucun jargon non expliqué.
+- **Plateformes** : TikTok, Instagram Reels, YouTube Shorts (vertical 1080×1920).
+- **Format** : ~30 secondes, une seule idée par vidéo, ~75–85 mots de script.
+- **Ton** : pédagogie grand public avant tout, avec une touche de fun. Inspiration :
+  Fireship (densité, rythme, humour pince-sans-rire), adapté au format court.
+- **Voix** : V1 en synthèse vocale (TTS) ; V2 avec la voix de l'utilisateur. La voix
+  doit rester une brique interchangeable (script → audio + horodatage des mots).
+- **À l'écran** : jamais l'utilisateur. Seulement la voix et la mascotte (un chat).
+- **Rythme** : 1 vidéo par jour, au minimum 1 tous les 2 jours.
+
 ## Phase actuelle
 
 **Phase 1 — Brainstorming & positionnement.** On ne produit pas encore de vidéo ni de
