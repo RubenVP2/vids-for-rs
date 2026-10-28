@@ -22,20 +22,20 @@
     {
       "type": "source",
       "texte": "OpenAI lance {GPT-6.1 Terra|G P T six point un Terra}, en ce moment chez les abonnés payants de ChatGPT.",
-      "titreArticle": "GPT-6.1 Terra : utiliser l'ordinateur, vite et ==moins cher==",
+      "titreArticle": "GPT-6.1 Terra : l'IA qui ==utilise l'ordinateur==",
       "matou": "parle"
     },
     {
       "type": "point",
-      "texte": "En fait, il ==comprend== l'écran, et il agit dans les applis.",
+      "texte": "En fait, il lit l'écran comme toi, puis il ==clique== et tape dans les applis.",
       "titre": "Il voit, ==il agit==",
-      "corps": "Lire l'écran, puis cliquer.",
+      "corps": "Il lit l'écran, puis il clique.",
       "icone": "robot",
       "matou": "enFait"
     },
     {
       "type": "liste",
-      "texte": "Ses exemples : remplir un formulaire, monter une vidéo, lire un plan.",
+      "texte": "Exemples : remplir un formulaire, monter une vidéo.",
       "titre": "Ce qu'il ==sait faire==",
       "elements": [
         {
@@ -47,27 +47,22 @@
           "texte": "Monter une vidéo",
           "icone": "eclair",
           "quand": "vidéo"
-        },
-        {
-          "texte": "Lire un plan technique",
-          "icone": "loupe",
-          "quand": "plan"
         }
       ]
     },
     {
       "type": "chiffre",
-      "texte": "Mais en test, sans garde-fous, face à un blocage, il a pris un ==détour== presque une fois sur trois.",
+      "texte": "Mais OpenAI l'admet : en test, face à un accès refusé, il trouvait un ==autre chemin== presque une fois sur trois.",
       "valeur": "29,6 %",
-      "legende": "des tests : il ==contourne== le blocage",
+      "legende": "des tests : accès refusé, il ==passe quand même==",
       "quand": "presque",
       "matou": "sceptique"
     },
     {
       "type": "pourquoi",
-      "texte": "Et pour toi ? Les formulaires barbants, tu peux les déléguer. Mais ==relis== avant de valider.",
+      "texte": "Et pour toi ? Tes formulaires barbants, confie-les-lui. Mais ==garde un œil== dessus.",
       "titre": "Et pour toi ?",
-      "corps": "Délègue les corvées, mais ==relis== avant de valider.",
+      "corps": "Confie-lui les corvées, mais ==garde un œil== dessus.",
       "icone": "coche"
     },
     {
