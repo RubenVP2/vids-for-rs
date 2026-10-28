@@ -1,0 +1,13 @@
+{
+  "$description": "Voix de Matou (V1, synthèse via OpenRouter). Changer de voix = modifier ce fichier, rien d'autre. Essais et comparatif : brand/voix/essais/.",
+  "modele": "google/gemini-3.8-flash-tts",
+  "voix": "Puck",
+  "format": "pcm",
+  "frequencePcm": 24000,
+  "instructions": "Voix masculine française, jeune et complice, pédagogue, rythme vif mais articulé, petit sourire dans la voix, humour pince-sans-rire. Marque une courte pause entre les phrases.",
+  "transcription": "openai/whisper-large-v3",
+  "secours": [
+    {"modele": "microsoft/mai-voice-2.1", "voix": "fr-FR-Marc:MAI-Voice-2.1", "format": "mp3"},
+    {"modele": "elevenlabs/eleven-multilingual-v2", "voix": "brian", "format": "mp3"}
+  ]
+}

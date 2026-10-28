@@ -1,0 +1,37 @@
+{
+  "name": "vids-for-rs",
+  "private": true,
+  "type": "module",
+  "description": "Matou (@matou.ai) : vidéos courtes d'actu IA, du script au MP4",
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "brand": "tsx scripts/export-brand.tsx",
+    "validate": "tsx scripts/validate.ts",
+    "voice": "tsx scripts/voice.ts",
+    "render": "tsx scripts/render.ts",
+    "stills": "tsx scripts/stills.ts",
+    "check": "tsx scripts/check.ts",
+    "voices:compare": "tsx scripts/compare-voices.ts"
+  },
+  "dependencies": {
+    "@remotion/bundler": "4.0.539",
+    "@remotion/cli": "4.0.539",
+    "@remotion/media-utils": "4.0.539",
+    "@remotion/renderer": "4.0.539",
+    "@remotion/zod-types": "4.0.539",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "remotion": "4.0.539",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@fontsource-variable/shantell-sans": "5.3.0",
+    "@fontsource/permanent-marker": "5.3.0",
+    "@types/node": "26.6.5",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "tsx": "4.23.15",
+    "typescript": "7.0.2"
+  }
+}

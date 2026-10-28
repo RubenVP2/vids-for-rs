@@ -1,0 +1,8 @@
+node_modules/
+out/
+.remotion/
+public/episodes/
+episodes/*/rendu/
+episodes/*/controle/
+*.log
+.env

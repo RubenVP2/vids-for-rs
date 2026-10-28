@@ -1,0 +1,70 @@
+{
+  "numero": 0,
+  "slug": "bande-annonce",
+  "serie": "flash",
+  "source": {
+    "nom": "Matou",
+    "url": "https://www.tiktok.com/@matou.ai",
+    "date": "2026-10-28",
+    "type": "post"
+  },
+  "statut": "annonce",
+  "verdict": "prometteur",
+  "miniature": "L'IA expliquée ==par un chat==",
+  "musique": true,
+  "scenes": [
+    {
+      "type": "hook",
+      "texte": "L'actu de l'IA va trop vite pour toi ? J'ai une solution.",
+      "titre": "L'IA expliquée ==par un chat==",
+      "matou": "surpris"
+    },
+    {
+      "type": "source",
+      "texte": "Moi, c'est Matou. Chaque jour, je lis les annonces des grandes boîtes de l'IA.",
+      "titreArticle": "Matou : l'actu de l'IA en ==30 secondes==, sans jargon",
+      "matou": "content"
+    },
+    {
+      "type": "liste",
+      "texte": "Et je te les résume : une seule idée par vidéo, toujours la source, et ==zéro jargon==.",
+      "titre": "Le ==programme==",
+      "elements": [
+        {"texte": "Une seule idée par vidéo", "icone": "ampoule", "quand": "idée"},
+        {"texte": "Toujours la source", "icone": "document", "quand": "source"},
+        {"texte": "Zéro jargon", "icone": "coche", "quand": "zéro"}
+      ]
+    },
+    {
+      "type": "point",
+      "texte": "En fait, je fais surtout le tri : ce qui est ==annoncé==, ce qui est ==disponible==, et ce qui n'est qu'une ==rumeur==.",
+      "titre": "Annoncé, disponible ou ==rumeur== ?",
+      "corps": "Chaque info a son tampon.",
+      "icone": "loupe",
+      "matou": "enFait"
+    },
+    {
+      "type": "chiffre",
+      "texte": "Le tout en trente secondes. Pas une de plus.",
+      "valeur": "30 s",
+      "legende": "pour comprendre ==l'essentiel==",
+      "quand": "trente"
+    },
+    {
+      "type": "pourquoi",
+      "texte": "Et pour toi ? Tu restes à jour sur l'IA, sans y passer tes soirées.",
+      "titre": "Et pour toi ?",
+      "corps": "Tu restes à jour sur l'IA, ==sans y passer tes soirées==.",
+      "icone": "horloge"
+    },
+    {
+      "type": "verdict",
+      "texte": "Et à la fin, mon Hype-mètre : pur buzz, prometteur, ou game changer ? Pour cette chaîne, je dirais… prometteur.",
+      "raison": "On en reparle dans ==cent épisodes==."
+    },
+    {
+      "type": "fin",
+      "texte": "Abonne-toi. C'était Matou, et c'est tout."
+    }
+  ]
+}
