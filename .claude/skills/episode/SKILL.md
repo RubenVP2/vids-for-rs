@@ -11,7 +11,7 @@ suivante qu'une fois le critère atteint. Les commandes sont dans `package.json`
 ## 0. Préparer
 
 - `node_modules` absent → `npm ci`.
-- Numéro : le plus grand `episodes/NNN-*` + 1, sur la branche par défaut à jour (les
+- Numéro : le plus grand `episodes/NNN-*` + 1, sur `main` à jour (les
   routines y poussent chaque épisode). Slug : 2 à 5 mots, minuscules, tirets.
 - Créer `episodes/NNN-slug/`.
 

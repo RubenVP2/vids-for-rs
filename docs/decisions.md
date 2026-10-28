@@ -49,6 +49,7 @@ Les options explorées sont dans [`brainstorm.md`](brainstorm.md).
 | 2026-10-28 | Garde-fou | Plus de 2 épisodes en attente de relecture : la routine ne produit pas | Ne pas empiler des vidéos que personne ne relit |
 | 2026-10-28 | Lancement | La bande-annonce #000 ouvre la chaîne le 28/10 à 18 h, #001 suit le 29/10 à 8 h (programmés sur les 4 réseaux) | Choix de l'utilisateur : Matou se présente avant le premier épisode |
 | 2026-10-28 | 5e canal | **Page LinkedIn « Matou AI »** connectée à Postiz (texte d'Instagram). #000 et #002, déjà partis ailleurs, rattrapés le soir même (`--reseaux linkedin`) | Choix de l'utilisateur |
+| 2026-10-28 | Branche | Le code et la mémoire des routines vivent sur **`main`** (les routines y poussent) | Choix de l'utilisateur |
 | 2026-10-28 | Industrialisation | Skills `episode`, `ecriture-matou`, `publication`, `veille-ia` + sous-agents `documentaliste`, `verificateur-faits`, `spectateur`, `controleur-visuel` | Une recette unique et des relectures indépendantes à chaque épisode |
 
 ## À trancher

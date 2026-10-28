@@ -15,7 +15,7 @@ skill **`episode`**. Pas d'article sous la main → skill **`veille-ia`**.
 
 **Routines (tâches planifiées, sans intervention)** : chaque matin **`episode-du-jour`**
 (veille → épisode → brouillons Postiz), chaque lundi **`bilan`** (chiffres Postiz →
-`docs/apprentissages.md` et `docs/sujets.md`). Elles poussent sur la branche par défaut.
+`docs/apprentissages.md` et `docs/sujets.md`). Elles poussent sur **`main`**.
 La seule étape humaine : relire les brouillons, puis les programmer.
 
 ## Cadre validé (détail et raisons : `docs/decisions.md`)
