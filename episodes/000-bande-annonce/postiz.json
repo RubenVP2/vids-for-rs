@@ -1,0 +1,102 @@
+{
+  "type": "draft",
+  "date": "2026-10-28T17:00:00.000Z",
+  "shortLink": false,
+  "tags": [],
+  "posts": [
+    {
+      "integration": {
+        "id": "cmvsakeo602wupg1crmgz7g9n"
+      },
+      "value": [
+        {
+          "content": "L'actu de l'IA va trop vite ? Moi c'est Matou ☝️🤓 Chaque jour, une annonce de l'IA expliquée en 30 secondes, sans jargon, avec la source. Abonne-toi pour l'épisode #001 !\n\n#IA #intelligenceartificielle #apprendresurtiktok #actu #tech #matou",
+          "image": [
+            {
+              "id": "bca35dd7-400c-4a30-9fa4-cd7378245098",
+              "path": "https://uploads.postiz.com/pdoRvJboiB.mp4"
+            }
+          ]
+        }
+      ],
+      "settings": {
+        "__type": "tiktok-business",
+        "content_posting_method": "DIRECT_POST",
+        "privacy_level": "PUBLIC_TO_EVERYONE",
+        "duet": true,
+        "stitch": true,
+        "comment": true,
+        "autoAddMusic": "no",
+        "brand_content_toggle": false,
+        "brand_organic_toggle": false,
+        "video_made_with_ai": true
+      }
+    },
+    {
+      "integration": {
+        "id": "cmvsaogt206kfor1cddnosuhf"
+      },
+      "value": [
+        {
+          "content": "L'actu de l'IA va trop vite ? Moi c'est Matou ☝️🤓\n\nChaque jour, une annonce des grandes boîtes de l'IA expliquée en 30 secondes :\n→ une seule idée par vidéo\n→ toujours la source\n→ zéro jargon\n→ et mon Hype-mètre : pur buzz, prometteur ou game changer ?\n\nAbonne-toi pour ne pas rater l'épisode #001.\n\n#IA #intelligenceartificielle #actualite #vulgarisation #technologie #matou",
+          "image": [
+            {
+              "id": "bca35dd7-400c-4a30-9fa4-cd7378245098",
+              "path": "https://uploads.postiz.com/pdoRvJboiB.mp4"
+            }
+          ]
+        }
+      ],
+      "settings": {
+        "__type": "instagram-standalone",
+        "post_type": "post",
+        "is_trial_reel": false
+      }
+    },
+    {
+      "integration": {
+        "id": "cmvsb3xwh07l1or1cvp01pod9"
+      },
+      "value": [
+        {
+          "content": "Moi c'est Matou. Chaque jour, j'explique une annonce de l'IA en 30 secondes : une seule idée, toujours la source, zéro jargon. Et à la fin, le Hype-mètre !\nSource : https://www.tiktok.com/@matou.ai\n\n#IA #intelligenceartificielle #shorts #matou",
+          "image": [
+            {
+              "id": "bca35dd7-400c-4a30-9fa4-cd7378245098",
+              "path": "https://uploads.postiz.com/pdoRvJboiB.mp4"
+            }
+          ]
+        }
+      ],
+      "settings": {
+        "__type": "youtube",
+        "type": "public",
+        "selfDeclaredMadeForKids": "no",
+        "title": "L'IA expliquée par un chat, en 30 secondes 🐱 #000",
+        "thumbnail": {
+          "id": "2b2a944b-e117-43b5-be88-434cb7fbc75a",
+          "path": "https://uploads.postiz.com/JsMcrDPLbF.png"
+        }
+      }
+    },
+    {
+      "integration": {
+        "id": "cmvsb2y1q03efpg1c3j45vgui"
+      },
+      "value": [
+        {
+          "content": "L'actu de l'IA va trop vite ? Moi c'est Matou ☝️🤓 Chaque jour, une annonce de l'IA expliquée en 30 secondes : une seule idée, zéro jargon, toujours la source. #IA",
+          "image": [
+            {
+              "id": "bca35dd7-400c-4a30-9fa4-cd7378245098",
+              "path": "https://uploads.postiz.com/pdoRvJboiB.mp4"
+            }
+          ]
+        }
+      ],
+      "settings": {
+        "__type": "threads"
+      }
+    }
+  ]
+}

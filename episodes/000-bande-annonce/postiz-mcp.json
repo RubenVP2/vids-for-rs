@@ -1,0 +1,245 @@
+{
+  "socialPost": [
+    {
+      "integrationId": "<id TikTok>",
+      "isPremium": false,
+      "date": "2026-10-28T17:00:00.000Z",
+      "shortLink": false,
+      "type": "draft",
+      "postsAndComments": [
+        {
+          "content": "<p>L'actu de l'IA va trop vite ? Moi c'est Matou ☝️🤓 Chaque jour, une annonce de l'IA expliquée en 30 secondes, sans jargon, avec la source. Abonne-toi pour l'épisode #001 !</p><p></p><p>#IA #intelligenceartificielle #apprendresurtiktok #actu #tech #matou</p>",
+          "attachments": [
+            {
+              "path": "<chemin de 000-bande-annonce.mp4>",
+              "thumbnail": "<chemin de 000-bande-annonce-miniature.png>"
+            }
+          ]
+        }
+      ],
+      "settings": [
+        {
+          "key": "content_posting_method",
+          "value": "DIRECT_POST"
+        },
+        {
+          "key": "privacy_level",
+          "value": "PUBLIC_TO_EVERYONE"
+        },
+        {
+          "key": "duet",
+          "value": true
+        },
+        {
+          "key": "stitch",
+          "value": true
+        },
+        {
+          "key": "comment",
+          "value": true
+        },
+        {
+          "key": "autoAddMusic",
+          "value": "no"
+        },
+        {
+          "key": "brand_content_toggle",
+          "value": false
+        },
+        {
+          "key": "brand_organic_toggle",
+          "value": false
+        },
+        {
+          "key": "video_made_with_ai",
+          "value": true
+        }
+      ]
+    },
+    {
+      "integrationId": "<id Instagram>",
+      "isPremium": false,
+      "date": "2026-10-28T17:00:00.000Z",
+      "shortLink": false,
+      "type": "draft",
+      "postsAndComments": [
+        {
+          "content": "<p>L'actu de l'IA va trop vite ? Moi c'est Matou ☝️🤓</p><p></p><p>Chaque jour, une annonce des grandes boîtes de l'IA expliquée en 30 secondes :</p><p>→ une seule idée par vidéo</p><p>→ toujours la source</p><p>→ zéro jargon</p><p>→ et mon Hype-mètre : pur buzz, prometteur ou game changer ?</p><p></p><p>Abonne-toi pour ne pas rater l'épisode #001.</p><p></p><p>#IA #intelligenceartificielle #actualite #vulgarisation #technologie #matou</p>",
+          "attachments": [
+            {
+              "path": "<chemin de 000-bande-annonce.mp4>",
+              "thumbnail": "<chemin de 000-bande-annonce-miniature.png>"
+            }
+          ]
+        }
+      ],
+      "settings": [
+        {
+          "key": "post_type",
+          "value": "post"
+        },
+        {
+          "key": "is_trial_reel",
+          "value": false
+        }
+      ]
+    },
+    {
+      "integrationId": "<id YouTube>",
+      "isPremium": false,
+      "date": "2026-10-28T17:00:00.000Z",
+      "shortLink": false,
+      "type": "draft",
+      "postsAndComments": [
+        {
+          "content": "<p>Moi c'est Matou. Chaque jour, j'explique une annonce de l'IA en 30 secondes : une seule idée, toujours la source, zéro jargon. Et à la fin, le Hype-mètre !</p><p>Source : https://www.tiktok.com/@matou.ai</p><p></p><p>#IA #intelligenceartificielle #shorts #matou</p>",
+          "attachments": [
+            {
+              "path": "<chemin de 000-bande-annonce.mp4>",
+              "thumbnail": "<chemin de 000-bande-annonce-miniature.png>"
+            }
+          ]
+        }
+      ],
+      "settings": [
+        {
+          "key": "type",
+          "value": "public"
+        },
+        {
+          "key": "selfDeclaredMadeForKids",
+          "value": "no"
+        },
+        {
+          "key": "title",
+          "value": "L'IA expliquée par un chat, en 30 secondes 🐱 #000"
+        },
+        {
+          "key": "thumbnail",
+          "value": {
+            "id": "<id de la miniature>",
+            "path": "<chemin de 000-bande-annonce-miniature.png>"
+          }
+        }
+      ]
+    },
+    {
+      "integrationId": "<id Facebook>",
+      "isPremium": false,
+      "date": "2026-10-28T17:00:00.000Z",
+      "shortLink": false,
+      "type": "draft",
+      "postsAndComments": [
+        {
+          "content": "<p>L'actu de l'IA va trop vite ? Moi c'est Matou ☝️🤓</p><p></p><p>Chaque jour, une annonce des grandes boîtes de l'IA expliquée en 30 secondes :</p><p>→ une seule idée par vidéo</p><p>→ toujours la source</p><p>→ zéro jargon</p><p>→ et mon Hype-mètre : pur buzz, prometteur ou game changer ?</p><p></p><p>Abonne-toi pour ne pas rater l'épisode #001.</p><p></p><p>#IA #intelligenceartificielle #actualite #vulgarisation #technologie #matou</p>",
+          "attachments": [
+            {
+              "path": "<chemin de 000-bande-annonce.mp4>",
+              "thumbnail": "<chemin de 000-bande-annonce-miniature.png>"
+            }
+          ]
+        }
+      ],
+      "settings": [
+        {
+          "key": "post_type",
+          "value": "post"
+        },
+        {
+          "key": "title",
+          "value": "L'IA expliquée par un chat, en 30 secondes 🐱 #000"
+        }
+      ]
+    },
+    {
+      "integrationId": "<id Threads>",
+      "isPremium": false,
+      "date": "2026-10-28T17:00:00.000Z",
+      "shortLink": false,
+      "type": "draft",
+      "postsAndComments": [
+        {
+          "content": "<p>L'actu de l'IA va trop vite ? Moi c'est Matou ☝️🤓 Chaque jour, une annonce de l'IA expliquée en 30 secondes : une seule idée, zéro jargon, toujours la source. #IA</p>",
+          "attachments": [
+            {
+              "path": "<chemin de 000-bande-annonce.mp4>",
+              "thumbnail": "<chemin de 000-bande-annonce-miniature.png>"
+            }
+          ]
+        }
+      ],
+      "settings": []
+    },
+    {
+      "integrationId": "<id LinkedIn>",
+      "isPremium": false,
+      "date": "2026-10-28T17:00:00.000Z",
+      "shortLink": false,
+      "type": "draft",
+      "postsAndComments": [
+        {
+          "content": "<p>L'actu de l'IA va trop vite ? Moi c'est Matou ☝️🤓</p><p></p><p>Chaque jour, une annonce des grandes boîtes de l'IA expliquée en 30 secondes :</p><p>→ une seule idée par vidéo</p><p>→ toujours la source</p><p>→ zéro jargon</p><p>→ et mon Hype-mètre : pur buzz, prometteur ou game changer ?</p><p></p><p>Abonne-toi pour ne pas rater l'épisode #001.</p><p></p><p>#IA #intelligenceartificielle #actualite #vulgarisation #technologie #matou</p>",
+          "attachments": [
+            {
+              "path": "<chemin de 000-bande-annonce.mp4>",
+              "thumbnail": "<chemin de 000-bande-annonce-miniature.png>"
+            }
+          ]
+        }
+      ],
+      "settings": [
+        {
+          "key": "post_as_images_carousel",
+          "value": false
+        }
+      ]
+    },
+    {
+      "integrationId": "<id X>",
+      "isPremium": false,
+      "date": "2026-10-28T17:00:00.000Z",
+      "shortLink": false,
+      "type": "draft",
+      "postsAndComments": [
+        {
+          "content": "<p>L'actu de l'IA va trop vite ? Moi c'est Matou ☝️🤓 Chaque jour, une annonce de l'IA expliquée en 30 secondes : une seule idée, zéro jargon, toujours la source. #IA</p>",
+          "attachments": [
+            {
+              "path": "<chemin de 000-bande-annonce.mp4>",
+              "thumbnail": "<chemin de 000-bande-annonce-miniature.png>"
+            }
+          ]
+        }
+      ],
+      "settings": [
+        {
+          "key": "who_can_reply_post",
+          "value": "everyone"
+        },
+        {
+          "key": "made_with_ai",
+          "value": true
+        }
+      ]
+    },
+    {
+      "integrationId": "<id Bluesky>",
+      "isPremium": false,
+      "date": "2026-10-28T17:00:00.000Z",
+      "shortLink": false,
+      "type": "draft",
+      "postsAndComments": [
+        {
+          "content": "<p>L'actu de l'IA va trop vite ? Moi c'est Matou ☝️🤓 Chaque jour, une annonce de l'IA expliquée en 30 secondes : une seule idée, zéro jargon, toujours la source. #IA</p>",
+          "attachments": [
+            {
+              "path": "<chemin de 000-bande-annonce.mp4>",
+              "thumbnail": "<chemin de 000-bande-annonce-miniature.png>"
+            }
+          ]
+        }
+      ],
+      "settings": []
+    }
+  ]
+}

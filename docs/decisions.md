@@ -47,6 +47,7 @@ Les options explorées sont dans [`brainstorm.md`](brainstorm.md).
 | 2026-10-28 | Routines | Tâches planifiées : `episode-du-jour` chaque matin (veille → épisode → brouillons Postiz), rappel de relecture l'après-midi, `bilan` le lundi. Elles poussent sur la branche par défaut | « Le plus autonome possible » : seule la relecture des brouillons reste humaine (règle éditoriale) ; la branche par défaut porte la mémoire (numéros, sujets traités, apprentissages) |
 | 2026-10-28 | Choix des sujets | Note sur 12 (impact grand public, potentiel de trafic, concret, explicable en 30 s), seuil 8 ; sinon la réserve `docs/sujets.md`. Le bilan du lundi met à jour `docs/apprentissages.md` à partir des chiffres | Des news qui ont du sens et font du trafic, et un choix qui apprend des vues réelles |
 | 2026-10-28 | Garde-fou | Plus de 2 épisodes en attente de relecture : la routine ne produit pas | Ne pas empiler des vidéos que personne ne relit |
+| 2026-10-28 | Lancement | La bande-annonce #000 ouvre la chaîne le 28/10 à 18 h, #001 suit le 29/10 à 8 h (programmés sur les 4 réseaux) | Choix de l'utilisateur : Matou se présente avant le premier épisode |
 | 2026-10-28 | Industrialisation | Skills `episode`, `ecriture-matou`, `publication`, `veille-ia` + sous-agents `documentaliste`, `verificateur-faits`, `spectateur`, `controleur-visuel` | Une recette unique et des relectures indépendantes à chaque épisode |
 
 ## À trancher
