@@ -64,8 +64,8 @@ La seule étape humaine : relire les brouillons, puis les programmer.
 - Session interactive : `agy` à la racine du dépôt — les skills et sous-agents de
   `.agents/` sont découverts automatiquement, `AGENTS.md` sert de contexte.
 - Routines headless (cron) : `agy --print='…' --model <modèle> --effort <niveau>
-  --mode accept-edits` dans le dépôt, en suivant les skills `episode-du-jour` puis
-  `bilan`. Le modèle Gemini est choisi avec l'utilisateur (voir `docs/decisions.md`).
+  `--mode accept-edits` dans le dépôt, en suivant les skills `episode-du-jour` puis
+  `bilan`. Modèle par défaut : **`gemini-3.8-flash-high`** (voir `docs/decisions.md`).
 
 ## Conventions
 
