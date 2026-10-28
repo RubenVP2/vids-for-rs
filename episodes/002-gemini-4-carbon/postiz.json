@@ -1,0 +1,114 @@
+{
+  "type": "draft",
+  "date": "2026-10-28T18:05:00.000Z",
+  "shortLink": false,
+  "tags": [],
+  "posts": [
+    {
+      "integration": {
+        "id": "cmvsakeo602wupg1crmgz7g9n"
+      },
+      "value": [
+        {
+          "content": "Google annonce son IA la plus puissante… et tu ne peux pas encore l'utiliser ☝️🤓 Tu lui confierais la sécurité de tes applis, toi ? Source : Google.\n\n#IA #Gemini #Google #apprendresurtiktok #matou",
+          "image": [
+            {
+              "id": "f9bf3d3c-ed74-4f15-89b6-863f0e9bb544",
+              "path": "https://uploads.postiz.com/ms5acvGFMx.mp4"
+            }
+          ]
+        }
+      ],
+      "settings": {
+        "__type": "tiktok-business",
+        "content_posting_method": "DIRECT_POST",
+        "privacy_level": "PUBLIC_TO_EVERYONE",
+        "duet": true,
+        "stitch": true,
+        "comment": true,
+        "autoAddMusic": "no",
+        "brand_content_toggle": false,
+        "brand_organic_toggle": false,
+        "video_made_with_ai": true
+      }
+    },
+    {
+      "integration": {
+        "id": "cmvsaogt206kfor1cddnosuhf"
+      },
+      "value": [
+        {
+          "content": "Google annonce son IA la plus puissante… et tu ne peux pas encore l'utiliser 🤓\n\n→ Gemini 4 Carbon est taillé pour la cybersécurité : trouver les failles d'un logiciel, tester si elles sont dangereuses, les corriger\n→ 88,2 % de réussite sur un test de chasse aux failles (mesuré sans garde-fous, selon Google)\n→ Accès : cette semaine, des défenseurs en cybersécurité ; puis des partenaires choisis ; le grand public « bientôt », sans date\n\nAnnoncé par Google, lien en commentaire. Abonne-toi pour l'actu de l'IA en 30 secondes.\n\n#IA #Gemini #Google #cybersécurité #vulgarisation #matou",
+          "image": [
+            {
+              "id": "f9bf3d3c-ed74-4f15-89b6-863f0e9bb544",
+              "path": "https://uploads.postiz.com/ms5acvGFMx.mp4"
+            }
+          ]
+        },
+        {
+          "content": "Source : annonce de Google (28/10/2026) https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/",
+          "image": []
+        }
+      ],
+      "settings": {
+        "__type": "instagram-standalone",
+        "post_type": "post",
+        "is_trial_reel": false
+      }
+    },
+    {
+      "integration": {
+        "id": "cmvsb3xwh07l1or1cvp01pod9"
+      },
+      "value": [
+        {
+          "content": "Gemini 4 Carbon, annoncé aujourd'hui par Google, est taillé pour trouver et réparer les failles de sécurité des logiciels.\nPour l'instant, seuls des défenseurs en cybersécurité y ont accès ; le grand public, « bientôt », sans date. Mon Hype-mètre : prometteur.\nSource : https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/\n\n#IA #Gemini #shorts #matou",
+          "image": [
+            {
+              "id": "f9bf3d3c-ed74-4f15-89b6-863f0e9bb544",
+              "path": "https://uploads.postiz.com/ms5acvGFMx.mp4"
+            }
+          ]
+        },
+        {
+          "content": "Source : annonce de Google (28/10/2026) https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/",
+          "image": []
+        }
+      ],
+      "settings": {
+        "__type": "youtube",
+        "type": "public",
+        "selfDeclaredMadeForKids": "no",
+        "title": "L'IA la plus forte de Google… pas pour toi #002",
+        "thumbnail": {
+          "id": "8ef550c1-0689-4199-9583-aa6be7ff147e",
+          "path": "https://uploads.postiz.com/2WG2QclAbW.png"
+        }
+      }
+    },
+    {
+      "integration": {
+        "id": "cmvsb2y1q03efpg1c3j45vgui"
+      },
+      "value": [
+        {
+          "content": "Google annonce son IA la plus puissante… et tu ne peux pas encore l'utiliser 🤓 Gemini 4 Carbon est taillé pour trouver et réparer les failles de sécurité. Accès réservé à des défenseurs en cybersécurité, grand public sans date. Source : Google. #IA",
+          "image": [
+            {
+              "id": "f9bf3d3c-ed74-4f15-89b6-863f0e9bb544",
+              "path": "https://uploads.postiz.com/ms5acvGFMx.mp4"
+            }
+          ]
+        },
+        {
+          "content": "Source : annonce de Google (28/10/2026) https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/",
+          "image": []
+        }
+      ],
+      "settings": {
+        "__type": "threads"
+      }
+    }
+  ]
+}
