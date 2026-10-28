@@ -67,6 +67,7 @@ const cible = verdict ? crans.findIndex(([id]) => id === verdict) : -1;
   }
   .case.choisie {
     --fond: var(--fluo);
+    z-index: 2;
   }
   .case :global(.case-icone) {
     width: clamp(2.2rem, 10vw, 3.4rem);
@@ -78,6 +79,9 @@ const cible = verdict ? crans.findIndex(([id]) => id === verdict) : -1;
     height: calc(100% + 28px);
     overflow: visible;
     pointer-events: none;
+  }
+  .entoure {
+    mix-blend-mode: multiply;
   }
   .entoure ellipse {
     fill: none;

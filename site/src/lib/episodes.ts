@@ -5,6 +5,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import type {ImageMetadata} from 'astro';
 import {getCollection, type CollectionEntry} from 'astro:content';
+import {fr} from './typo.mjs';
 
 const EPISODES = path.resolve(process.cwd(), '../episodes');
 if (!fs.existsSync(EPISODES)) {
@@ -66,12 +67,12 @@ export async function articles(): Promise<Article[]> {
       slug: scenes.slug,
       numero: String(scenes.numero).padStart(3, '0'),
       serie: scenes.serie,
-      titre: entree.data.titre,
-      description: entree.data.description,
+      titre: fr(entree.data.titre),
+      description: fr(entree.data.description),
       source: scenes.source,
       statut: scenes.statut,
       verdict: scenes.verdict,
-      raison: scenes.scenes.find((s) => s.type === 'verdict')?.raison,
+      raison: ((r) => r && fr(r))(scenes.scenes.find((s) => s.type === 'verdict')?.raison),
       date,
       miniature: miniatures[`../../../episodes/${entree.id}/miniature.jpg`],
       entree,

@@ -59,15 +59,15 @@ const jsonLd = [
   <article>
     <header class="tete">
       <div class="titres">
+        <h1>{a.titre}</h1>
+        <p class="chapo">{a.description}</p>
         <p class="meta">
           <span class="num">Matou #{a.numero}</span>
           <span>{SERIES[a.serie]}</span>
           <Tampon statut={a.statut} taille="1.05rem" />
         </p>
-        <h1>{a.titre}</h1>
-        <p class="chapo">{a.description}</p>
         <p class="infos">
-          <time datetime={a.date.toISOString()}>{dateLongue(a.date)}</time> · Source :{' '}
+          <time datetime={a.date.toISOString()}>{dateLongue(a.date)}</time> · Source :{' '}
           <a href={a.source.url} rel="noopener" target="_blank">{a.source.nom}</a>
         </p>
       </div>
@@ -94,7 +94,7 @@ const jsonLd = [
       <h2>Source</h2>
       <p>
         <a href={a.source.url} rel="noopener" target="_blank">{a.source.nom}</a>, publié le {dateLongue(new Date(a.source.date))}.
-        Les chiffres cités ici viennent de cette source ou des documents qu'elle publie ; Matou résume et commente, il ne recopie pas.
+        Les chiffres cités ici viennent de cette source ou des documents qu'elle publie ; Matou résume et commente, il ne recopie pas.
       </p>
     </aside>
   </article>
@@ -152,12 +152,15 @@ const jsonLd = [
   }
   h1 {
     font-size: clamp(2rem, 5vw, 3rem);
-    margin: 1rem 0;
+    margin: 0 0 1rem;
   }
   .chapo {
     font-family: var(--font-main);
     font-size: 1.2rem;
-    margin: 0 0 1rem;
+    margin: 0 0 1.2rem;
+  }
+  .meta {
+    margin-bottom: 0.6rem;
   }
   .infos {
     font-size: 0.95rem;

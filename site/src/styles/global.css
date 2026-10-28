@@ -254,7 +254,6 @@ mark {
   position: relative;
   padding: 2.5rem 1.25rem 2.5rem var(--gouttiere);
   border-top: 3px solid var(--encre);
-  background: var(--blanc);
   font-family: var(--font-main);
 }
 .pied > * {

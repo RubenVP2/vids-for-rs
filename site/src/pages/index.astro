@@ -28,10 +28,6 @@ const site = {
   <!-- Scène 1 : le hook -->
   <section class="hook" aria-labelledby="hook">
     <div class="hook-texte">
-      <p class="en-tete">
-        <span class="numero">Matou{dernier && ` #${dernier.numero}`}</span>
-        {dernier && <span>{SERIES[dernier.serie]} · {dernier.source.nom}</span>}
-      </p>
       <h1 id="hook">L'actu de l'IA en <mark>30 secondes</mark>.</h1>
       <p class="sous-titre">Un chat t'explique, <mark>sources</mark> à l'appui.</p>
       <div class="actions">
@@ -51,7 +47,16 @@ const site = {
         </p>
       </div>
     </div>
-    <Matou expression="surpris" class="hook-matou" />
+    <div class="hook-visuel">
+      <Matou expression="surpris" class="hook-matou" />
+      {
+        dernier && (
+          <a class="etiquette" href="#dernier">
+            <span class="numero">Matou #{dernier.numero}</span> {SERIES[dernier.serie]}
+          </a>
+        )
+      }
+    </div>
   </section>
 
   <!-- Scène 2 : le dernier épisode, comme la scène « source » -->
@@ -66,16 +71,16 @@ const site = {
             </a>
           )}
           <div class="episode-texte">
-            <p class="episode-meta">
-              <span class="numero">#{dernier.numero}</span> {SERIES[dernier.serie]} ·{' '}
-              <time datetime={dernier.date.toISOString()}>{dernier.date.toLocaleDateString('fr-FR', {day: 'numeric', month: 'long', timeZone: 'Europe/Paris'})}</time>
-            </p>
             <h3>
               <a href={`/blog/${dernier.slug}/`}>{dernier.titre}</a>
             </h3>
             <p>{dernier.description}</p>
+            <p class="episode-meta">
+              <span class="numero">#{dernier.numero}</span> {SERIES[dernier.serie]} ·{' '}
+              <time datetime={dernier.date.toISOString()}>{dernier.date.toLocaleDateString('fr-FR', {day: 'numeric', month: 'long', timeZone: 'Europe/Paris'})}</time>
+            </p>
             <p class="episode-source">
-              Source : <a href={dernier.source.url} rel="noopener" target="_blank">{dernier.source.nom}</a>, {dateLongue(new Date(dernier.source.date))}
+              Source : <a href={dernier.source.url} rel="noopener" target="_blank">{dernier.source.nom}</a>, {dateLongue(new Date(dernier.source.date))}
             </p>
             <Tampon statut={dernier.statut} taille="1.15rem" />
           </div>
@@ -101,7 +106,7 @@ const site = {
       <ul class="programme">
         <li data-entre>
           <Icone nom="ampoule" />
-          <p><strong>Une idée par vidéo.</strong> Pas de fourre-tout : tu repars avec l'essentiel.</p>
+          <p><strong>Une idée par vidéo.</strong> Pas de fourre-tout : tu repars avec l'essentiel.</p>
         </li>
         <li data-entre>
           <Icone nom="document" />
@@ -117,7 +122,7 @@ const site = {
 
   <!-- Scène 4 : les tampons -->
   <section data-anime class="scene tampons" aria-labelledby="statuts">
-    <h2 id="statuts">Annoncé, disponible ou <mark>rumeur</mark> ?</h2>
+    <h2 id="statuts">Annoncé, disponible ou <mark>rumeur</mark> ?</h2>
     <p class="chapo">Chaque info reçoit son tampon. Tu sais tout de suite si tu peux l'essayer aujourd'hui.</p>
     <ul class="statuts feuille trait" data-anime>
       <li><Tampon statut="annonce" taille="clamp(1.2rem, 4vw, 1.7rem)" /><span>Présenté, mais pas encore entre tes mains.</span></li>
@@ -131,8 +136,8 @@ const site = {
     <div>
       <h2 id="hype">À la fin, le <mark>Hype-mètre</mark> tranche.</h2>
       <p class="chapo">
-        Pur buzz, prometteur ou game changer ?{' '}
-        {dernier ? <>Pour le #{dernier.numero} :</> : 'Matou donne son avis, et dit pourquoi.'}
+        Pur buzz, prometteur ou game changer ?{' '}
+        {dernier ? <>Pour le #{dernier.numero} :</> : 'Matou donne son avis, et dit pourquoi.'}
       </p>
       <HypeMetre verdict={dernier?.verdict} raison={dernier?.raison} />
     </div>
@@ -155,9 +160,9 @@ const site = {
         )}
         {CONTACT && (
           <div class="contact">
-            <h2>Une marque, un média ?</h2>
+            <h2>Une marque, un média ?</h2>
             <p>
-              Pour travailler avec Matou : <a href={`mailto:${CONTACT}`}>{CONTACT}</a>
+              Pour travailler avec Matou : <a href={`mailto:${CONTACT}`}>{CONTACT}</a>
             </p>
           </div>
         )}
@@ -170,7 +175,7 @@ const site = {
     <Matou expression="content" class="fin-matou" decoratif />
     <div>
       <h2 id="fin">C'était Matou, <mark>et c'est tout</mark>.</h2>
-      <p class="chapo">Une vidéo par jour, là où tu scrolles. Abonne-toi : au dîner, c'est toi qui expliqueras l'IA.</p>
+      <p class="chapo">Une vidéo par jour, là où tu scrolles. Abonne-toi : au dîner, c'est toi qui expliqueras l'IA.</p>
       <Reseaux grand source="accueil" />
       <p class="suite"><a href="/blog/">Ou lire le blog</a></p>
     </div>
@@ -184,16 +189,29 @@ const site = {
     grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
     align-items: end;
     gap: 1rem 2.5rem;
-    padding-block: clamp(1rem, 4vw, 3rem) clamp(3rem, 8vw, 6rem);
+    padding-block: clamp(1rem, 4vw, 3rem) clamp(1rem, 3vw, 2rem);
   }
-  .en-tete {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 0.4rem 0.9rem;
-    margin: 0;
+  .hook-visuel {
+    position: relative;
+    display: grid;
+    justify-items: center;
+  }
+  .etiquette {
+    position: absolute;
+    left: 0;
+    bottom: 12%;
+    z-index: 2;
+    padding: 0.35rem 0.8rem 0.35rem 0.4rem;
+    background: var(--blanc);
+    box-shadow: var(--ombre);
+    color: var(--encre);
     font-family: var(--font-main);
     font-weight: 800;
+    text-decoration: none;
+    transform: rotate(-5deg);
+  }
+  .etiquette:hover {
+    text-decoration: underline;
   }
   .numero {
     display: inline-block;
@@ -214,7 +232,8 @@ const site = {
     margin: 0;
     font-family: var(--font-main);
     font-weight: 800;
-    font-size: clamp(1.25rem, 3.4vw, 1.7rem);
+    font-size: clamp(1rem, 4.2vw, 1.7rem);
+    white-space: nowrap;
     line-height: 1.3;
   }
   .sous-titre mark {
@@ -304,6 +323,7 @@ const site = {
   }
   .episode p {
     margin: 0 0 0.8rem;
+    font-family: var(--font-main);
   }
   .episode-source {
     font-size: 0.95rem;
@@ -370,8 +390,9 @@ const site = {
     align-items: center;
   }
   :global(.verdict-matou) {
-    max-width: 320px;
-    justify-self: center;
+    max-width: 300px;
+    justify-self: start;
+    align-self: end;
   }
 
   /* Valeur (si réglée) */
@@ -384,6 +405,9 @@ const site = {
   .lettre h2,
   .contact h2 {
     font-size: clamp(1.5rem, 4vw, 2rem);
+  }
+  .lettre p {
+    font-family: var(--font-main);
   }
   .lettre label {
     display: block;
@@ -404,6 +428,7 @@ const site = {
     border-radius: 10px;
     background: var(--papier);
     font: inherit;
+    font-family: var(--font-main);
     color: var(--encre);
   }
   .champ input::placeholder {
@@ -436,19 +461,26 @@ const site = {
     .fin {
       grid-template-columns: 1fr;
     }
-    :global(.hook-matou) {
+    .hook-visuel {
       grid-row: 1;
-      width: 52%;
-      max-width: 15rem;
+      width: 58%;
+      max-width: 16rem;
       justify-self: end;
-      margin: -0.5rem 0 -0.75rem;
+      margin: -0.5rem 0 -0.5rem;
+    }
+    .etiquette {
+      left: -55%;
+      bottom: 22%;
     }
     :global(.enfait-matou),
     :global(.fin-matou) {
       max-width: 13rem;
     }
-    :global(.matou.verdict-matou) {
-      display: none;
+    :global(.verdict-matou) {
+      grid-row: 1;
+      max-width: 9rem;
+      justify-self: end;
+      margin-bottom: -2.5rem;
     }
   }
   @media (max-width: 34rem) {

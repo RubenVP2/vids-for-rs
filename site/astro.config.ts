@@ -1,5 +1,6 @@
 import sitemap from '@astrojs/sitemap';
 import {defineConfig} from 'astro/config';
+import {rehypeFr} from './src/lib/typo.mjs';
 
 // L'adresse publique du site sert aux liens canoniques, au plan du site et au flux RSS.
 // En build sur Cloudflare (WORKERS_CI), elle est obligatoire : sans elle, Google
@@ -15,6 +16,7 @@ export default defineConfig({
   build: {format: 'directory', inlineStylesheets: 'always'},
   prefetch: {prefetchAll: false, defaultStrategy: 'hover'},
   integrations: [sitemap({filter: (page) => !page.endsWith('/liens/')})],
+  markdown: {rehypePlugins: [rehypeFr]},
   // le site lit les épisodes et la marque à la racine du dépôt (une seule source)
   vite: {server: {fs: {allow: ['..']}}},
 });
