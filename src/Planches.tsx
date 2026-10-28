@@ -124,3 +124,12 @@ export const PlancheMatou: React.FC = () => (
     </div>
   </AbsoluteFill>
 );
+
+/** Photo de profil des réseaux (1080×1080) : Matou content, centré pour un recadrage rond. */
+export const Avatar: React.FC = () => (
+  <AbsoluteFill style={{background: C.papier, alignItems: 'center', justifyContent: 'center'}}>
+    <DefsBouillonne />
+    <div style={{position: 'absolute', width: 900, height: 900, borderRadius: '50%', background: C.surligneur, opacity: 0.55}} />
+    <Matou etat="content" largeur={860} style={{marginTop: 40}} />
+  </AbsoluteFill>
+);

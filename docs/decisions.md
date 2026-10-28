@@ -37,6 +37,7 @@ Les options explorées sont dans [`brainstorm.md`](brainstorm.md).
 | 2026-10-28 | Son | Bruitages synthétisés maison, signature « Ma-tou ! » en 3 notes de marimba, musique de fond générée (Lyria) à 7 % | Identité sonore propre et sans droits tiers |
 | 2026-10-28 | Épisode #000 | Bande-annonce de la chaîne (Matou se présente) ; le pilote sur un vrai article devient #001 | Sert de test du moteur et peut ouvrir la chaîne |
 | 2026-10-28 | Durée réelle | ~3,4 mots/s : flash = 80–105 mots, décrypté = 110–145 mots | Mesuré sur la voix choisie (le budget de 75–85 mots donnait ~25 s) |
+| 2026-10-28 | Budget recalé | Flash 75–92 mots prononcés, décrypté 100–118 (ATTENTION au-delà) | Sur #001, Puck a lu à 2,8 mots/s (3,5 sur #000) : trois prises pour passer sous 36 s |
 | 2026-10-28 | Diffusion | Postiz : le script crée des **brouillons** sur TikTok, Instagram et YouTube ; ils ne partent qu'après le feu vert de l'utilisateur (`--programmer` ou dans Postiz). Skill officiel `gitroomhq/postiz-agent` copié dans `.claude/skills/postiz/` | Garde la relecture humaine ; les plugins ne se chargent pas en session cloud, les skills versionnés si |
 | 2026-10-28 | Industrialisation | Skills `episode`, `ecriture-matou`, `publication`, `veille-ia` + sous-agents `documentaliste`, `verificateur-faits`, `spectateur`, `controleur-visuel` | Une recette unique et des relectures indépendantes à chaque épisode |
 

@@ -31,4 +31,7 @@ description: Écrit publication.md d'un épisode de Matou — description et has
 En tête du fichier : le chemin de la vidéo, de la miniature, et l'URL de la source.
 Modèle : `episodes/000-bande-annonce/publication.md`.
 
+La bio, le nom affiché et la photo de profil ne changent pas d'un épisode à l'autre :
+`brand/profil.md` (à donner si l'utilisateur les demande).
+
 **Fait quand** `npm run check -- NNN` ne signale rien sur la publication.

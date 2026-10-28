@@ -29,12 +29,17 @@ Tout fait, chiffre ou citation du script doit se retrouver dans la fiche de `sou
 
 ## Budget
 
-La voix lit **~3,4 mots par seconde**.
+La voix lit **entre 2,7 et 3,5 mots par seconde** selon le texte : sigles, chiffres et
+phrases courtes la ralentissent (pauses). Le budget vise le cas lent, pour que la
+première prise tienne dans la limite (36 s en flash, 46 s en décrypté) ; `npm run
+validate` donne la fourchette de durée.
 
-| Série | Usage | Mots (total des `texte`) | Durée |
+| Série | Usage | Mots prononcés (total des `texte`) | Durée |
 | --- | --- | --- | --- |
-| `flash` | une annonce, une news | 80–105 | ~30 s |
-| `decrypte` | un article de blog, un papier | 110–145 | ~40–45 s |
+| `flash` | une annonce, une news | **75–92** (ATTENTION au-delà, ERREUR > 110) | ~25–35 s |
+| `decrypte` | un article de blog, un papier | **100–118** (ATTENTION au-delà, ERREUR > 140) | ~32–45 s |
+
+Les mots comptés sont ceux **prononcés** : `{GPT-6.1|G P T six point un}` compte 6 mots.
 
 Hook : 16 mots max, il doit tenir en 3 secondes. Une scène : 40 mots max.
 

@@ -105,7 +105,8 @@ const construire = (pub: Publication, canaux: Partial<Record<Reseau, Pick<Canal,
   posts: RESEAUX.filter((r) => canaux[r]).map((r) => {
     const canal = canaux[r]!;
     const valeur: {content: string; image: Media[]}[] = [{content: pub[r], image: [video]}];
-    if (commentaire && pub.commentaire) valeur.push({content: pub.commentaire, image: []});
+    // TikTok ne permet pas aux applications de commenter : commentaire à la main là-bas.
+    if (commentaire && pub.commentaire && r !== 'tiktok') valeur.push({content: pub.commentaire, image: []});
     const settings: Record<string, unknown> = {__type: canal.identifier, ...reglages[r]};
     if (r === 'youtube') {
       settings.title = pub.titre;
@@ -176,7 +177,7 @@ if (!args.includes('--envoyer')) {
   fs.writeFileSync(path.join(dossier, 'postiz.json'), JSON.stringify(corps, null, 2) + '\n');
   for (const r of RESEAUX) console.log(`${NOMS[r].padEnd(10)} ${pub[r].length} caractères${r === 'youtube' ? ` · titre « ${pub.titre} »` : ''}`);
   console.log(`Date      ${lisible(date)} (brouillon)`);
-  console.log(`Commentaire de sources : ${commentaire ? 'ajouté en 1er commentaire' : pub.commentaire ? 'à épingler à la main (--commentaire pour l’ajouter)' : 'absent de publication.md'}`);
+  console.log(`Commentaire de sources : ${commentaire ? '1er commentaire sur Instagram et YouTube, à la main sur TikTok' : pub.commentaire ? 'à poster à la main (--commentaire : Instagram et YouTube)' : 'absent de publication.md'}`);
   alertes.forEach((a) => console.log(`ATTENTION ${a}`));
   console.log('\nAperçu écrit dans postiz.json. Rien n’a été envoyé : relancer avec --envoyer.');
   process.exit(alertes.length ? 1 : 0);

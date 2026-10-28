@@ -45,8 +45,8 @@ synthèse) ; Instagram en Reel (`post_type: post`) ; YouTube public, pas « pour
   visé : 1 vidéo par jour. Si l'utilisateur a donné un jour, le prendre ; sinon vérifier
   avec `npx postiz posts:list` qu'aucun autre épisode n'est déjà prévu ce jour-là.
 - `--commentaire` ajoute la ligne « Commentaire à épingler » de `publication.md` en
-  premier commentaire. Il faudra quand même l'épingler à la main. Sans cette option,
-  le commentaire est à poster à la main.
+  premier commentaire sur Instagram et YouTube (TikTok ne le permet pas). Il reste à
+  l'épingler à la main, et à le poster à la main sur TikTok.
 
 **Fait quand** la sortie ne contient aucune ligne ATTENTION.
 

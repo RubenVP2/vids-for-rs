@@ -35,7 +35,7 @@ pour une instance auto-hébergée. Navigateur : Remotion utilise
 | `npm run postiz -- --canaux` | comptes connectés à Postiz et règles de chaque réseau |
 | `npm run studio` | Remotion Studio, aperçu interactif (props par défaut : #000) |
 | `npm run brand` | réexporte les SVG de Matou et des icônes dans `brand/` |
-| `npm run stills -- planches` | réexporte les planches de `docs/images/` |
+| `npm run stills -- planches` | réexporte les planches de `docs/images/` et `brand/avatar.png` |
 | `npm run voices:compare` | regénère le comparatif des voix (`brand/voix/essais/`) |
 
 `NNN` accepte `000`, `0` ou le nom du dossier.

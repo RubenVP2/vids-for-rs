@@ -21,12 +21,15 @@ try {
 
 const compter = (t: string) => texteParle(t).split(/\s+/).filter((w) => normaliser(w)).length;
 const mots = episode.scenes.reduce((n, s) => n + compter(s.texte), 0);
-// La voix de Matou lit ~3,4 mots/s (mesuré sur la bande-annonce #000).
-const DEBIT = 3.4;
-const estimation = mots / DEBIT + 1.4;
-const bornes = episode.serie === 'flash' ? [80, 110] : [110, 150];
-if (mots < bornes[0]) alertes.push(`Script court : ${mots} mots (viser ${bornes[0]}–${bornes[1]} pour la série ${episode.serie}).`);
-if (mots > bornes[1]) erreurs.push(`Script trop long : ${mots} mots (max ${bornes[1]} pour la série ${episode.serie}).`);
+// Le débit de la voix varie selon le texte : 3,5 mots/s sur #000, 2,8 sur #001 (sigles,
+// chiffres, phrases courtes = plus de pauses). Le budget se cale sur le débit lent pour
+// que la première prise tienne dans la limite de durée de la voix (36 s / 46 s).
+const [DEBIT_LENT, DEBIT_RAPIDE] = [2.7, 3.5];
+const [rapide, lente] = [mots / DEBIT_RAPIDE + 1.4, mots / DEBIT_LENT + 1.4];
+const budget = {flash: {viser: [75, 92], max: 110}, decrypte: {viser: [100, 118], max: 140}}[episode.serie];
+if (mots < budget.viser[0]) alertes.push(`Script court : ${mots} mots (viser ${budget.viser[0]}–${budget.viser[1]} pour la série ${episode.serie}).`);
+if (mots > budget.max) erreurs.push(`Script trop long : ${mots} mots (max ${budget.max} pour la série ${episode.serie}, viser ${budget.viser[0]}–${budget.viser[1]}).`);
+else if (mots > budget.viser[1]) alertes.push(`Script long : ${mots} mots, la voix peut dépasser la limite au débit lent (viser ${budget.viser[0]}–${budget.viser[1]} ; garder seulement si le texte est fluide, sans sigles ni chiffres).`);
 
 const hook = episode.scenes[0];
 if (compter(hook.texte) > 16) erreurs.push(`Hook trop long à l'oral : ${compter(hook.texte)} mots (max 16, il doit tenir en ~3 s).`);
@@ -64,7 +67,7 @@ if (!fs.existsSync(fichierSource)) {
     alertes.push(`Chiffres absents de source.md : ${absents.join(', ')}. Vérifier qu’ils viennent bien de la source (sinon les retirer).`);
 }
 
-console.log(`Épisode ${path.basename(dossier)} : ${episode.scenes.length} scènes, ${mots} mots, ~${estimation.toFixed(0)} s estimées.`);
+console.log(`Épisode ${path.basename(dossier)} : ${episode.scenes.length} scènes, ${mots} mots, ~${rapide.toFixed(0)} à ${lente.toFixed(0)} s estimées.`);
 alertes.forEach((a) => console.log(`ATTENTION ${a}`));
 erreurs.forEach((e) => console.log(`ERREUR ${e}`));
 if (erreurs.length) process.exit(1);

@@ -5,7 +5,7 @@ import demoTimings from '../episodes/000-bande-annonce/timings.json';
 import {SurcoucheReseaux} from './components/SurcoucheReseaux';
 import {dureeEnImages, EpisodeVideo} from './Episode';
 import {Miniature} from './Miniature';
-import {PlancheMarque, PlancheMatou} from './Planches';
+import {Avatar, PlancheMarque, PlancheMatou} from './Planches';
 import {episodePropsSchema, type EpisodeProps} from './schema';
 import {FPS, H, W} from './theme';
 
@@ -50,5 +50,6 @@ export const Racine: React.FC = () => (
     <Still id="Miniature" component={Miniature} width={W} height={H} schema={episodePropsSchema} defaultProps={demo} />
     <Still id="PlancheMarque" component={PlancheMarque} width={W} height={H} />
     <Still id="PlancheMatou" component={PlancheMatou} width={W} height={H} />
+    <Still id="Avatar" component={Avatar} width={1080} height={1080} />
   </>
 );

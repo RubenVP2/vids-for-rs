@@ -273,7 +273,7 @@ export const SceneVerdict: React.FC<SceneProps<'verdict'>> = ({scene, episode}) 
   </Zone>
 );
 
-export const SceneFin: React.FC<SceneProps<'fin'>> = ({episode}) => (
+export const SceneFin: React.FC<SceneProps<'fin'>> = () => (
   <Zone>
     <Entree de="zoom">
       <div style={{...titreStyle(96), textAlign: 'center', transform: 'rotate(-2deg)'}}>
@@ -284,7 +284,7 @@ export const SceneFin: React.FC<SceneProps<'fin'>> = ({episode}) => (
     </Entree>
     <Entree debut={14}>
       <div style={{...texteStyle(46), textAlign: 'center', marginTop: 40}}>
-        Abonne-toi : l'épisode #{String(episode.numero + 1).padStart(3, '0')} arrive.
+        Abonne-toi pour la suite.
       </div>
     </Entree>
   </Zone>

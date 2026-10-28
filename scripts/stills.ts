@@ -1,7 +1,7 @@
 // Images de contrôle : une image par scène (au milieu de la scène), avec la surcouche
 // de l'interface des réseaux pour vérifier les zones de sécurité.
 // Usage : npm run stills -- <épisode>        → episodes/<dossier>/controle/*.png
-//         npm run stills -- planches         → docs/images/planche-*.png
+//         npm run stills -- planches         → docs/images/planche-*.png + brand/avatar.png
 import fs from 'node:fs';
 import path from 'node:path';
 import {renderStill, selectComposition} from '@remotion/renderer';
@@ -14,15 +14,16 @@ const serveUrl = await empaqueter();
 const browserExecutable = navigateur();
 
 if (arg === 'planches') {
-  const dest = path.join(RACINE, 'docs', 'images');
-  fs.mkdirSync(dest, {recursive: true});
   for (const [id, fichier] of [
-    ['PlancheMarque', 'planche-marque.png'],
-    ['PlancheMatou', 'planche-matou.png'],
+    ['PlancheMarque', 'docs/images/planche-marque.png'],
+    ['PlancheMatou', 'docs/images/planche-matou.png'],
+    ['Avatar', 'brand/avatar.png'],
   ]) {
     const composition = await selectComposition({serveUrl, id, browserExecutable, logLevel: 'error'});
-    await renderStill({serveUrl, composition, output: path.join(dest, fichier), browserExecutable, logLevel: 'error'});
-    console.log(`docs/images/${fichier}`);
+    const sortie = path.join(RACINE, fichier);
+    fs.mkdirSync(path.dirname(sortie), {recursive: true});
+    await renderStill({serveUrl, composition, output: sortie, browserExecutable, logLevel: 'error'});
+    console.log(fichier);
   }
 } else {
   const dossier = dossierEpisode(arg);

@@ -31,3 +31,7 @@ Pour chaque candidat des 48 dernières heures, noter de 1 à 3 :
 **Fait quand** tu proposes à l'utilisateur 3 sujets classés, chacun avec : titre de
 hook possible, source (URL), statut, série (`flash` / `decrypte`), et la raison du
 classement. L'utilisateur choisit ; ensuite, skill `episode`.
+
+Si l'utilisateur t'a déjà laissé le choix (« fais la plus populaire », « choisis »,
+« fais-moi une vidéo sur l'actu ») : montre le classement en quelques lignes, prends le
+premier et enchaîne directement avec le skill `episode`, sans attendre de réponse.
