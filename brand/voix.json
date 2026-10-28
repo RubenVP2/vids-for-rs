@@ -5,7 +5,8 @@
   "format": "pcm",
   "frequencePcm": 24000,
   "instructions": "Voix masculine française, jeune et complice, pédagogue, rythme vif mais articulé, petit sourire dans la voix, humour pince-sans-rire. Marque une courte pause entre les phrases.",
-  "transcription": "openai/whisper-large-v3",
+  "directive": "Speak in a young, warm French male voice, pedagogical, with a slight smile and dry humor, short pauses between sentences: ",
+  "transcription": "gemini-3-flash-preview",
   "secours": [
     {"modele": "microsoft/mai-voice-2.1", "voix": "fr-FR-Marc:MAI-Voice-2.1", "format": "mp3"},
     {"modele": "elevenlabs/eleven-multilingual-v2", "voix": "brian", "format": "mp3"}

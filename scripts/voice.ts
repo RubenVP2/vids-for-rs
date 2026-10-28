@@ -10,16 +10,17 @@ import path from 'node:path';
 import {texteAffiche, texteParle, type Timings} from '../src/schema';
 import {aligner, normaliser} from './lib/alignement';
 import {dossierEpisode, lireEpisode, RACINE} from './lib/episode';
-import {dureeAudio, synthetiser, transcrire, type ReglagesVoix} from './lib/openrouter';
+import {dureeAudio, synthetiser, transcrire, type ReglagesGemini} from './lib/gemini';
+import {synthetiser as synthetiserSecours} from './lib/openrouter';
 import tokens from '../brand/tokens.json';
 
 const args = process.argv.slice(2);
 const dossier = dossierEpisode(args.find((a) => !a.startsWith('--')));
 const force = args.includes('--force');
 const episode = lireEpisode(dossier);
-const reglages = JSON.parse(fs.readFileSync(path.join(RACINE, 'brand', 'voix.json'), 'utf8')) as ReglagesVoix & {
+const reglages = JSON.parse(fs.readFileSync(path.join(RACINE, 'brand', 'voix.json'), 'utf8')) as ReglagesGemini & {
   transcription: string;
-  secours: ReglagesVoix[];
+  secours: ReglagesGemini[];
 };
 
 // Texte lu : les scènes bout à bout. Chaque mot garde sa scène et son surlignage.
@@ -42,18 +43,29 @@ const texte = episode.scenes.map((s) => texteParle(s.texte).trim()).join(' ');
 
 const mp3 = path.join(dossier, 'voix.mp3');
 if (!fs.existsSync(mp3) || force) {
-  const essais = [reglages, ...reglages.secours];
+  // Primaire : Google AI Studio (clé GEMINI_API_KEY) ; secours : OpenRouter si une clé est là.
   let ok = false;
-  for (const r of essais) {
-    try {
-      console.log(`Voix : ${r.modele} / ${r.voix}…`);
-      await synthetiser(texte, r, mp3);
-      ok = true;
-      reglages.modele = r.modele;
-      reglages.voix = r.voix;
-      break;
-    } catch (e) {
-      console.warn(`  échec : ${(e as Error).message.slice(0, 200)}`);
+  try {
+    console.log(`Voix : ${reglages.modele} / ${reglages.voix} (Google AI Studio)…`);
+    await synthetiser(texte, reglages, mp3);
+    ok = true;
+  } catch (e) {
+    console.warn(`  échec : ${(e as Error).message.slice(0, 200)}`);
+    if (process.env.OPENROUTER_API_KEY ?? process.env.OPENROUTER_KEY) {
+      for (const r of reglages.secours) {
+        try {
+          console.log(`Voix de secours : ${r.modele} / ${r.voix}…`);
+          await synthetiserSecours(texte, r, mp3);
+          reglages.modele = r.modele;
+          reglages.voix = r.voix;
+          ok = true;
+          break;
+        } catch (e2) {
+          console.warn(`  échec : ${(e2 as Error).message.slice(0, 200)}`);
+        }
+      }
+    } else {
+      console.warn('  clé OpenRouter absente : pas de voix de secours.');
     }
   }
   if (!ok) throw new Error('Aucune voix n’a fonctionné.');
