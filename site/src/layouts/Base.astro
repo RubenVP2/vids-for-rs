@@ -3,6 +3,7 @@ import tokens from '../../../brand/tokens.json';
 import Matou from '../components/Matou.astro';
 import {MARQUE, RESEAUX} from '../config';
 import '../styles/global.css';
+import mouvement from '../styles/mouvement.css?raw';
 
 type Props = {
   titre: string;
@@ -51,6 +52,7 @@ const actuel = Astro.url.pathname;
     <link rel="preload" href="/fonts/permanent-marker.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/shantell-sans.woff2" as="font" type="font/woff2" crossorigin />
     <style is:inline set:html={variables} />
+    <style is:inline set:html={mouvement} />
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
