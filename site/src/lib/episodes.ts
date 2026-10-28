@@ -7,6 +7,9 @@ import type {ImageMetadata} from 'astro';
 import {getCollection, type CollectionEntry} from 'astro:content';
 
 const EPISODES = path.resolve(process.cwd(), '../episodes');
+if (!fs.existsSync(EPISODES)) {
+  throw new Error(`Dossier des épisodes introuvable (${EPISODES}) : lancer le build depuis site/.`);
+}
 
 export type Statut = 'annonce' | 'disponible' | 'rumeur';
 export type Verdict = 'buzz' | 'prometteur' | 'gameChanger';

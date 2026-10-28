@@ -73,6 +73,12 @@ const actuel = Astro.url.pathname;
     <script type="application/ld+json" set:html={JSON.stringify([organisation, ...jsonLd])} />
   </head>
   <body>
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <filter id="feutre" x="-4%" y="-8%" width="108%" height="116%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="3" />
+        <feDisplacementMap in="SourceGraphic" scale="3.5" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </svg>
     <a class="evitement" href="#contenu">Aller au contenu</a>
     <header class="entete">
       <a href="/" class="logo" aria-label="Matou, accueil">
@@ -81,7 +87,7 @@ const actuel = Astro.url.pathname;
       </a>
       <nav aria-label="Principale">
         <a href="/blog/" aria-current={actuel.startsWith('/blog') ? 'page' : undefined}>Blog</a>
-        <a href={RESEAUX[0].url} rel="noopener" target="_blank" class="suivre">Suivre</a>
+        <a href={RESEAUX[0].url} rel="noopener" target="_blank" class="bouton trait">S'abonner</a>
       </nav>
     </header>
     <main id="contenu">

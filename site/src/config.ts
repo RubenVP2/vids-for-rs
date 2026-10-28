@@ -20,3 +20,12 @@ export const RESEAUX: Reseau[] = [
   {id: 'threads', nom: 'Threads', url: 'https://www.threads.com/@matou_ai', pseudo: '@matou_ai'},
   // LinkedIn : ajouter ici l'adresse de la page « Matou AI » quand elle est connue.
 ];
+
+// Créer de la valeur : chaque bloc n'apparaît que s'il est réglé (variables de build).
+// LETTRE_ACTION : l'adresse du formulaire d'inscription du service choisi (ex. Buttondown),
+// LETTRE_CHAMP : le nom du champ e-mail attendu (« email » par défaut).
+// CONTACT_EMAIL : l'adresse pour les marques et partenaires.
+export const LETTRE = process.env.LETTRE_ACTION
+  ? {action: process.env.LETTRE_ACTION, champ: process.env.LETTRE_CHAMP || 'email'}
+  : undefined;
+export const CONTACT = process.env.CONTACT_EMAIL || undefined;

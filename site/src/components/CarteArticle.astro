@@ -7,7 +7,7 @@ type Props = {article: Article; titre?: 'h2' | 'h3'};
 const {article: a, titre: Titre = 'h2'} = Astro.props;
 ---
 
-<article class="carte">
+<article class="carte trait">
   {a.miniature && <Image src={a.miniature} alt="" width={180} height={320} class="mini" loading="lazy" />}
   <div class="texte">
     <p class="meta">
@@ -16,7 +16,7 @@ const {article: a, titre: Titre = 'h2'} = Astro.props;
     </p>
     <Titre><a href={`/blog/${a.slug}/`}>{a.titre}</a></Titre>
     <p class="desc">{a.description}</p>
-    <Tampon statut={a.statut} />
+    <Tampon statut={a.statut} taille="0.95rem" />
   </div>
 </article>
 
@@ -28,10 +28,9 @@ const {article: a, titre: Titre = 'h2'} = Astro.props;
     gap: 1rem;
     align-items: start;
     padding: 1rem;
-    background: var(--blanc);
-    border: 3px solid var(--encre);
-    border-radius: 6px 14px 8px 12px;
-    box-shadow: 4px 4px 0 rgb(28 27 26 / 0.15);
+  }
+  .carte::before {
+    box-shadow: var(--ombre);
   }
   .mini {
     width: 90px;
@@ -67,8 +66,10 @@ const {article: a, titre: Titre = 'h2'} = Astro.props;
     position: absolute;
     inset: 0;
   }
-  .carte:hover {
-    border-color: var(--bleu);
+  .carte:hover h2 a,
+  .carte:hover h3 a {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
   }
   .desc {
     margin: 0 0 0.6rem;

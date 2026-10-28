@@ -62,12 +62,12 @@ const jsonLd = [
         <p class="meta">
           <span class="num">Matou #{a.numero}</span>
           <span>{SERIES[a.serie]}</span>
-          <Tampon statut={a.statut} />
+          <Tampon statut={a.statut} taille="1.05rem" />
         </p>
         <h1>{a.titre}</h1>
         <p class="chapo">{a.description}</p>
         <p class="infos">
-          <time datetime={a.date.toISOString()}>{dateLongue(a.date)}</time> · Source :
+          <time datetime={a.date.toISOString()}>{dateLongue(a.date)}</time> · Source :{' '}
           <a href={a.source.url} rel="noopener" target="_blank">{a.source.nom}</a>
         </p>
       </div>
@@ -85,7 +85,8 @@ const jsonLd = [
       <Content />
     </div>
 
-    <aside class="verdict feuille" aria-label="Verdict">
+    <aside class="verdict feuille trait" aria-label="Verdict" data-anime>
+      <h2 class="titre-hype">Le Hype-mètre de Matou</h2>
       <HypeMetre verdict={a.verdict} raison={a.raison} />
     </aside>
 
@@ -98,7 +99,7 @@ const jsonLd = [
     </aside>
   </article>
 
-  <section class="suivre feuille" aria-labelledby="voir">
+  <section class="suivre feuille trait" aria-labelledby="voir">
     <h2 id="voir">Voir la vidéo en 30 secondes</h2>
     <p>Matou explique cette annonce en vidéo. Une par jour, abonne-toi :</p>
     <Reseaux source={`article-${a.numero}`} />
@@ -168,8 +169,8 @@ const jsonLd = [
   }
   .mini :global(img) {
     border: 3px solid var(--encre);
-    border-radius: 6px;
-    box-shadow: 5px 5px 0 rgb(28 27 26 / 0.15);
+    border-radius: 10px;
+    box-shadow: var(--ombre);
   }
   .mini figcaption {
     font-family: var(--font-main);
@@ -184,12 +185,18 @@ const jsonLd = [
     font-size: 1.7rem;
     margin: 2.5rem 0 0.75rem;
   }
+  /* la nuance importante : un post-it jaune collé dans la marge du texte */
   .corps :global(blockquote) {
-    margin: 1.5rem 0;
-    padding: 0.75rem 1.25rem;
-    border-left: 5px solid var(--bleu);
-    background: rgb(255 255 255 / 0.7);
+    position: relative;
+    margin: 2rem 0;
+    padding: 1.1rem 1.4rem;
+    background: #fff4b8;
+    box-shadow: var(--ombre);
+    transform: rotate(-0.8deg);
     font-family: var(--font-main);
+  }
+  .corps :global(blockquote p) {
+    margin: 0;
   }
   .corps :global(li) {
     margin-block: 0.35rem;
@@ -197,6 +204,10 @@ const jsonLd = [
   .verdict {
     max-width: var(--lecture);
     margin-block: 3rem 2rem;
+  }
+  .titre-hype {
+    margin: 0 0 0.5rem;
+    font-size: 1.5rem;
   }
   .source {
     max-width: var(--lecture);

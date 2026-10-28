@@ -10,7 +10,7 @@ grâce aux articles, et plus tard créer de la valeur (newsletter, offres…).
 
 | Adresse | Contenu |
 | --- | --- |
-| `/` | Accueil : la promesse, le programme, les tampons, le Hype-mètre, les 3 derniers articles, les réseaux |
+| `/` | Accueil joué comme un épisode : hook et abonnement, dernier épisode, « En fait… », tampons, Hype-mètre, lettre et contact (si réglés), « C'était Matou, et c'est tout. » |
 | `/blog/` | Tous les articles, du plus récent au plus ancien |
 | `/blog/<slug>/` | Un article = la version texte d'un épisode |
 | `/liens/` | Page « lien en bio » (non indexée) : dernier article, blog, réseaux |
@@ -57,6 +57,8 @@ Cloudflare › **Workers & Pages** › **Create** › **Import a repository** �
 | Commande de build | `npm run build` |
 | Commande de déploiement | `npx wrangler deploy` |
 | Variable de build | `SITE_URL` = l'adresse publique, ex. `https://matou.ai` |
+| Variable de build (option) | `LETTRE_ACTION` = l'adresse du formulaire d'inscription du service de newsletter (et `LETTRE_CHAMP` si le champ ne s'appelle pas `email`) |
+| Variable de build (option) | `CONTACT_EMAIL` = l'adresse pour les marques et partenaires |
 
 `SITE_URL` est obligatoire : sans elle, le build sur Cloudflare s'arrête (les liens
 canoniques, le plan du site et le flux RSS seraient faux). Domaine perso : Worker ›
@@ -68,16 +70,25 @@ Ensuite : déclarer le site dans Google Search Console et y envoyer
 ## Performance et SEO
 
 Mesuré avec Lighthouse le 28/10/2026 (accueil et article) : **100** en performance,
-accessibilité, bonnes pratiques et SEO ; 90 Ko pour l'accueil, 116 Ko pour un article.
+accessibilité, bonnes pratiques et SEO ; 111 Ko pour l'accueil, 118 Ko pour un article (après le passage Impeccable).
 
 - Zéro JavaScript envoyé au navigateur ; CSS inline ; polices préchargées.
 - Images en WebP aux bonnes tailles (Astro), cache d'un an sur `/_astro/` (`public/_headers`).
 - Titre, description, lien canonique, Open Graph (`public/og.png`), données structurées
   (Organization, WebSite, Blog, BlogPosting avec la source en `citation`, fil d'Ariane).
 
+## Design
+
+Direction décidée avec Impeccable (`.impeccable/surfaces/`, `DESIGN.md`) : l'accueil est un épisode
+en scènes, dans l'univers du cahier. Contour au feutre qui frémit (filtre SVG `#feutre` sur le
+bord seulement), surligneur, tampons et flèche du Hype-mètre animés au défilement en CSS
+(sans JavaScript, coupés si le visiteur réduit les animations).
+
+La lettre et le contact n'apparaissent que si leurs variables sont réglées : sans service
+choisi, rien de factice n'est affiché.
+
 ## Plus tard (idées, rien n'est commencé)
 
-- Newsletter : un formulaire et un Worker qui enregistre l'adresse (D1 ou un service).
 - Vidéo dans l'article : il faudra l'héberger (R2, Stream) ou intégrer le Short YouTube.
 - Image de partage propre à chaque article (aujourd'hui : la même pour tout le site).
 - Mentions légales : à ajouter avec les informations de l'éditeur avant toute monétisation.
