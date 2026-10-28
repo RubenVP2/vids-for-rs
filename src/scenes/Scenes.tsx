@@ -158,8 +158,8 @@ export const ScenePoint: React.FC<SceneProps<'point'>> = ({scene}) => (
   </Zone>
 );
 
-export const SceneChiffre: React.FC<SceneProps<'chiffre'>> = ({scene, mots}) => {
-  const debut = imageDuMot(mots, scene.quand, 0);
+export const SceneChiffre: React.FC<SceneProps<'chiffre'>> = ({scene, mots, duree}) => {
+  const debut = Math.min(imageDuMot(mots, scene.quand, 0), duree - 20);
   const frame = useCurrentFrame();
   const s = useEntree(debut);
   return (
@@ -195,7 +195,8 @@ export const SceneListe: React.FC<SceneProps<'liste'>> = ({scene, mots, duree}) 
       <div style={{display: 'flex', flexDirection: 'column', gap: 26, width: LARGEUR - 40}}>
         {scene.elements.map((el, i) => {
           const repli = Math.round(8 + (i * (duree * 0.75)) / n);
-          const debut = imageDuMot(mots, el.quand, repli);
+          // jamais dans les 20 dernières images : l'élément doit avoir fini d'entrer avant la scène suivante
+          const debut = Math.min(imageDuMot(mots, el.quand, repli), duree - 20);
           return (
             <Entree key={i} debut={debut} de={i % 2 ? 'droite' : 'gauche'}>
               <div style={{display: 'flex', alignItems: 'center', gap: 22, transform: `rotate(${i % 2 ? 0.8 : -0.8}deg)`}}>
@@ -217,7 +218,7 @@ export const SceneListe: React.FC<SceneProps<'liste'>> = ({scene, mots, duree}) 
 };
 
 export const SceneComparaison: React.FC<SceneProps<'comparaison'>> = ({scene, mots, duree}) => {
-  const debutApres = imageDuMot(mots, scene.apres.quand, Math.round(duree * 0.45));
+  const debutApres = Math.min(imageDuMot(mots, scene.apres.quand, Math.round(duree * 0.45)), duree - 20);
   const col = (LARGEUR - 50) / 2;
   const bloc = (titre: string, texte: string, couleur: string, debut: number, de: 'gauche' | 'droite', rot: number) => (
     <Entree debut={debut} de={de}>

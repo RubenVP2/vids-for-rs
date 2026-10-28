@@ -34,8 +34,8 @@ if (arg === 'planches') {
   const debuts = calculerDebuts(props, composition.fps);
   const images = props.episode.scenes.map((s, i) => {
     const fin = i + 1 < debuts.length ? debuts[i + 1] : composition.durationInFrames;
-    // vers la fin de la scène : tout est arrivé à l'écran
-    return {frame: Math.max(debuts[i], Math.round(debuts[i] + (fin - debuts[i]) * 0.8)), nom: `${String(i + 1).padStart(2, '0')}-${s.type}`};
+    // juste avant la scène suivante : tout est arrivé à l'écran
+    return {frame: Math.max(debuts[i], fin - 3), nom: `${String(i + 1).padStart(2, '0')}-${s.type}`};
   });
   images.unshift({frame: 0, nom: '00-premiere-image'});
   for (const im of images) {

@@ -15,7 +15,7 @@
   "scenes": [
     {
       "type": "hook",
-      "texte": "L'actu de l'IA va trop vite pour toi ? J'ai une solution.",
+      "texte": "L'actu de l'IA va trop vite pour toi ? Un chat la lit à ta place.",
       "titre": "L'IA expliquée ==par un chat==",
       "matou": "surpris"
     },
@@ -30,14 +30,26 @@
       "texte": "Et je te les résume : une seule idée par vidéo, toujours la source, et ==zéro jargon==.",
       "titre": "Le ==programme==",
       "elements": [
-        {"texte": "Une seule idée par vidéo", "icone": "ampoule", "quand": "idée"},
-        {"texte": "Toujours la source", "icone": "document", "quand": "source"},
-        {"texte": "Zéro jargon", "icone": "coche", "quand": "zéro"}
+        {
+          "texte": "Une idée par vidéo",
+          "icone": "ampoule",
+          "quand": "idée"
+        },
+        {
+          "texte": "Toujours la source",
+          "icone": "document",
+          "quand": "source"
+        },
+        {
+          "texte": "Zéro jargon",
+          "icone": "coche",
+          "quand": "zéro"
+        }
       ]
     },
     {
       "type": "point",
-      "texte": "En fait, je fais surtout le tri : ce qui est ==annoncé==, ce qui est ==disponible==, et ce qui n'est qu'une ==rumeur==.",
+      "texte": "En fait, je trie : ce qui est ==annoncé==, ce qui est ==disponible==, et ce qui n'est qu'une ==rumeur==.",
       "titre": "Annoncé, disponible ou ==rumeur== ?",
       "corps": "Chaque info a son tampon.",
       "icone": "loupe",
@@ -45,26 +57,26 @@
     },
     {
       "type": "chiffre",
-      "texte": "Le tout en trente secondes. Pas une de plus.",
+      "texte": "Le tout en une trentaine de secondes, pas plus.",
       "valeur": "30 s",
       "legende": "pour comprendre ==l'essentiel==",
-      "quand": "trente"
+      "quand": "trentaine"
     },
     {
       "type": "pourquoi",
-      "texte": "Et pour toi ? Tu restes à jour sur l'IA, sans y passer tes soirées.",
+      "texte": "Et pour toi ? Au dîner, c'est toi qui expliques l'IA aux autres.",
       "titre": "Et pour toi ?",
-      "corps": "Tu restes à jour sur l'IA, ==sans y passer tes soirées==.",
-      "icone": "horloge"
+      "corps": "C'est toi qui expliques l'IA ==au dîner==.",
+      "icone": "ampoule"
     },
     {
       "type": "verdict",
-      "texte": "Et à la fin, mon Hype-mètre : pur buzz, prometteur, ou game changer ? Pour cette chaîne, je dirais… prometteur.",
+      "texte": "À la fin, mon Hype-mètre tranche : pur buzz, prometteur, ou game changer ? Pour cette chaîne… prometteur.",
       "raison": "On en reparle dans ==cent épisodes==."
     },
     {
       "type": "fin",
-      "texte": "Abonne-toi. C'était Matou, et c'est tout."
+      "texte": "Abonne-toi pour la suite. C'était Matou, et c'est tout."
     }
   ]
 }

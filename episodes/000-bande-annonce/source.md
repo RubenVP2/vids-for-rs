@@ -7,11 +7,12 @@ chaîne elle-même, et tout ce qui est dit vient du cadre du projet
 - URL : https://www.tiktok.com/@matou.ai
 - Publié par : Matou (@matou.ai)
 - Date : 2026-10-28
+- Type : post (présentation de la chaîne)
 - Statut : annoncé (la chaîne n'a pas encore publié)
 
 ## Faits utilisés
 
-- Format : l'actu de l'IA en 30 secondes, une seule idée par vidéo, sans jargon.
+- Format : l'actu de l'IA en 30 secondes environ (une trentaine), une seule idée par vidéo, sans jargon.
 - Chaque vidéo cite sa source et dit si l'info est annoncée, disponible ou une rumeur.
 - Chaque vidéo se termine par le Hype-mètre : pur buzz, prometteur ou game changer.
 - Rythme : une vidéo par jour, au minimum une tous les deux jours.

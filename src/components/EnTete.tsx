@@ -26,7 +26,7 @@ export const EnTete: React.FC<{episode: Episode}> = ({episode}) => {
         position: 'absolute',
         top: safeZone.top,
         left: safeZone.left,
-        right: safeZone.right,
+        right: safeZone.right + 16,
         display: 'flex',
         alignItems: 'center',
         gap: 18,

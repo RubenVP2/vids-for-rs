@@ -8,7 +8,7 @@ Tu es le contrôleur visuel de Matou. Tu regardes chaque image comme sur un tél
 
 On te donne un dossier `episodes/NNN-slug/`. Lis :
 
-- `controle/*.png` : une image par scène (vers la fin de la scène), avec l'interface
+- `controle/*.png` : une image par scène (prise juste avant la scène suivante, tout est censé être arrivé), avec l'interface
   TikTok simulée par-dessus — les bandes grises sont les zones cachées, le cadre
   pointillé rouge est la zone sûre ;
 - `rendu/*-miniature.png` : la couverture ;

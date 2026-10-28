@@ -22,7 +22,7 @@ export const Miniature: React.FC<EpisodeProps> = ({episode}) => {
       <div
         style={{
           position: 'absolute',
-          top: tokens.safeZone.top + 20,
+          top: tokens.safeZone.top + 110,
           left: tokens.safeZone.left,
           fontFamily: POLICE_TITRE,
           fontSize: 64,
@@ -36,7 +36,7 @@ export const Miniature: React.FC<EpisodeProps> = ({episode}) => {
       <div
         style={{
           position: 'absolute',
-          top: 470,
+          top: 540,
           left: tokens.safeZone.left,
           right: tokens.safeZone.right - 40,
           fontFamily: POLICE_TITRE,

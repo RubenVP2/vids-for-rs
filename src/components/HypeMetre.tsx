@@ -70,8 +70,8 @@ export const HypeMetre: React.FC<{verdict: Episode['verdict']; largeur?: number;
         <ellipse
           cx={cible * case_ + case_ / 2}
           cy={70 + (hauteur - 80) / 2}
-          rx={case_ / 2 + 14}
-          ry={(hauteur - 80) / 2 + 24}
+          rx={case_ / 2 + 34}
+          ry={(hauteur - 80) / 2 + 44}
           fill="none"
           stroke={C.stylo.rouge}
           strokeWidth={9}
@@ -96,7 +96,7 @@ export const HypeMetre: React.FC<{verdict: Episode['verdict']; largeur?: number;
               fontFamily: POLICE_TEXTE,
               fontVariationSettings: AXES_TEXTE,
               fontWeight: 800,
-              fontSize: 40,
+              fontSize: 36,
               color: C.encre,
               textAlign: 'center',
               lineHeight: 1.05,
