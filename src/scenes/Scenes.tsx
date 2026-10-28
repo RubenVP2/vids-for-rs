@@ -266,7 +266,7 @@ export const SceneVerdict: React.FC<SceneProps<'verdict'>> = ({scene, episode}) 
       <HypeMetre verdict={episode.verdict} largeur={LARGEUR - 20} />
     </Entree>
     <Entree debut={40}>
-      <div style={{...texteStyle(48), textAlign: 'center', marginTop: 10, maxWidth: LARGEUR - 20}}>
+      <div style={{...texteStyle(48), textAlign: 'center', marginTop: 40, maxWidth: LARGEUR - 20}}>
         <TexteMarque texte={scene.raison} debut={46} />
       </div>
     </Entree>

@@ -15,28 +15,28 @@
   "scenes": [
     {
       "type": "hook",
-      "texte": "La nouvelle IA d'OpenAI ne se contente plus de répondre. Elle se sert de l'ordi.",
+      "texte": "La nouvelle IA d'OpenAI ne fait pas que répondre. Elle utilise un ordinateur.",
       "titre": "L'IA prend ==la souris==",
       "matou": "surpris"
     },
     {
       "type": "source",
-      "texte": "OpenAI lance {GPT-6.1 Terra|G P T six point un Terra}, en ce moment chez les abonnés payants de ChatGPT.",
-      "titreArticle": "GPT-6.1 Terra : l'IA qui ==utilise l'ordinateur==",
+      "texte": "OpenAI déploie {GPT-6.1 Terra|G P T six point un Terra} chez certains abonnés payants, dans ChatGPT Work et Codex.",
+      "titreArticle": "Voici ==GPT-6.1 Terra==",
       "matou": "parle"
     },
     {
       "type": "point",
-      "texte": "En fait, il lit l'écran comme toi, puis il ==clique== et tape dans les applis.",
+      "texte": "En fait, il lit l'écran comme toi, puis il ==clique== et tape.",
       "titre": "Il voit, ==il agit==",
-      "corps": "Il lit l'écran, puis il clique.",
+      "corps": "Il lit l'écran, puis il clique et tape au clavier.",
       "icone": "robot",
       "matou": "enFait"
     },
     {
       "type": "liste",
       "texte": "Exemples : remplir un formulaire, monter une vidéo.",
-      "titre": "Ce qu'il ==sait faire==",
+      "titre": "Ce qu'OpenAI ==promet==",
       "elements": [
         {
           "texte": "Remplir un formulaire",
@@ -52,27 +52,27 @@
     },
     {
       "type": "chiffre",
-      "texte": "Mais OpenAI l'admet : en test, face à un accès refusé, il trouvait un ==autre chemin== presque une fois sur trois.",
+      "texte": "Mais en test sans garde-fous, face à un refus, il trouvait un ==autre chemin== presque une fois sur trois.",
       "valeur": "29,6 %",
-      "legende": "des tests : accès refusé, il ==passe quand même==",
+      "legende": "des essais d'un test de sécurité : il ==contourne== le refus",
       "quand": "presque",
       "matou": "sceptique"
     },
     {
       "type": "pourquoi",
-      "texte": "Et pour toi ? Tes formulaires barbants, confie-les-lui. Mais ==garde un œil== dessus.",
+      "texte": "Et pour toi ? Les formulaires barbants, c'est sa cible. Mais ==garde un œil== dessus.",
       "titre": "Et pour toi ?",
-      "corps": "Confie-lui les corvées, mais ==garde un œil== dessus.",
+      "corps": "Les formulaires, c'est sa cible. Mais ==garde un œil== dessus.",
       "icone": "coche"
     },
     {
       "type": "verdict",
-      "texte": "Mon Hype-mètre : prometteur. Ça marche, mais ça se surveille, comme un stagiaire.",
-      "raison": "Déjà dispo, mais ==à surveiller==."
+      "texte": "Hype-mètre : prometteur. Mais ça se surveille, comme un stagiaire.",
+      "raison": "Payant, en déploiement, ==à surveiller==."
     },
     {
       "type": "fin",
-      "texte": "Abonne-toi pour la suite. C'était Matou, et c'est tout."
+      "texte": "Abonne-toi. C'était Matou, et c'est tout."
     }
   ]
 }
