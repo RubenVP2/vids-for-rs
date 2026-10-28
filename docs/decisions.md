@@ -29,7 +29,7 @@ Les options explorées sont dans [`brainstorm.md`](brainstorm.md).
 | 2026-10-28 | Fond | Papier crème quadrillé façon cahier d'écolier, jaune utilisé comme surligneur (choix de Claude, à valider sur maquette) | Raconte la pédagogie, cohérent avec le trait fait main, se démarque des comptes IA sombres |
 | 2026-10-28 | Séries de lancement | Flash (~30 s) + Décrypté (≤ 45 s). Récap et Mot de l'IA plus tard | Roder le pipeline sur un seul squelette |
 | 2026-10-28 | Moteur vidéo | Remotion (licence gratuite pour un particulier ou une structure ≤ 3 personnes). Plan B : HyperFrames | Mature, outils intégrés pour les sous-titres mot par mot et l'alignement local (whisper.cpp), scènes typées et validées |
-| 2026-10-28 | Voix de Matou (V1) | Gemini 3.8 Flash TTS, voix « Puck », avec une consigne de jeu (complice, pince-sans-rire). Secours : MAI « Marc », ElevenLabs « Brian » | Meilleure note d'un casting de 11 voix masculines (accent natif, naturel, ton du personnage). Choix de Claude, à confirmer à l'oreille : extraits dans `brand/voix/essais/` |
+| 2026-10-28 | Voix de Matou (V1) | Gemini 3.8 Flash TTS, voix « Puck », avec une consigne de jeu (complice, pince-sans-rire). Secours : MAI « Marc », ElevenLabs « Brian » | Meilleure note d'un casting de 11 voix masculines (accent natif, naturel, ton du personnage). Validée à l'oreille par l'utilisateur sur la bande-annonce #000 (« j'aime trop »). Extraits : `brand/voix/essais/` |
 | 2026-10-28 | Minutage des mots | Transcription horodatée (Whisper large v3 via OpenRouter) + alignement sur le script, au lieu de whisper.cpp en local | Même résultat sans compiler d'outil à chaque session ; le script garde son orthographe |
 | 2026-10-28 | Typographies | Permanent Marker (titres) + Shantell Sans (texte, sous-titres) | Esprit feutre et écriture à la main, très lisibles, accents français complets, licences libres |
 | 2026-10-28 | Zones de sécurité | 220 px en haut, 420 px en bas, 150 px à droite, 72 px à gauche | Commun à TikTok, Reels et Shorts |
@@ -43,6 +43,5 @@ Les options explorées sont dans [`brainstorm.md`](brainstorm.md).
 
 | Sujet | Options | Quand |
 | --- | --- | --- |
-| Voix de Matou à l'oreille | Écouter `brand/voix/essais/` et confirmer « Puck » ou en choisir une autre | Pilote #001 |
 | Fond « cahier » sur téléphone | Regarder la bande-annonce #000 sur un vrai téléphone | Pilote #001 |
 | Pseudo `@matou.ai` | Réserver le pseudo sur TikTok, Instagram et YouTube | Avant la publication |
