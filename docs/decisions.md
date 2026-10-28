@@ -51,6 +51,7 @@ Les options explorées sont dans [`brainstorm.md`](brainstorm.md).
 | 2026-10-28 | Industrialisation | Skills `episode`, `ecriture-matou`, `publication`, `veille-ia` + sous-agents `documentaliste`, `verificateur-faits`, `spectateur`, `controleur-visuel` | Une recette unique et des relectures indépendantes à chaque épisode |
 | 2026-10-28 | Harness (migration) | Passer de Claude Code à **Antigravity CLI (`agy`)** avec un modèle Gemini : skills et sous-agents copiés vers `.agents/`, contexte `AGENTS.md`, MCP Postiz installé chez agy. Modèle : **`gemini-3.8-flash-high`** (choix de l'utilisateur) | Utiliser l'abonnement Google AI Pro plutôt que l'abonnement Anthropic ; format de skills standard partagé, migration mécanique |
 | 2026-10-28 | Accès Postiz (révision) | La **CLI `postiz`** (OAuth2 device flow, jeton dans `~/.postiz/credentials.json`) remplace la clé d'API et le MCP : `scripts/postiz.ts` et `scripts/bilan.ts` passent par la CLI (`lib/postiz-cli.ts`), `postiz upload` téléverse la vidéo | Option B de l'utilisateur : **zéro secret stocké** par nos soins. L'OAuth dynamique MCP est rejeté par Postiz (redirect_uri d'agy non vérifié) ; le device flow n'a pas de redirect_uri |
+| 2026-10-28 | 5e canal Postiz | **LinkedIn (page « Matou AI »)** connecté dans Postiz | Choix de l'utilisateur (la recommandation Facebook est écartée) ; le script le gère automatiquement (section Instagram, max 3 000 car.) |
 
 ## À trancher
 
@@ -58,6 +59,4 @@ Les options explorées sont dans [`brainstorm.md`](brainstorm.md).
 | --- | --- | --- |
 | Fond « cahier » sur téléphone | Regarder la bande-annonce #000 sur un vrai téléphone | Pilote #001 |
 | Pseudo `@matou.ai` | Réserver le pseudo sur chaque réseau (Threads reprend celui d'Instagram ; Bluesky : `matou-ai.bsky.social` ou un domaine) | Avant la publication |
-| LinkedIn | Écarté au départ (ligne « Plateformes ») ; le script le gère s'il est connecté dans Postiz (texte d'Instagram) | Au choix de l'abonnement Postiz |
-| 5e canal Postiz | Recommandation de Claude : Facebook (page « Matou ») : plus grand public en France, Reels montrés aux non-abonnés, seul canal restant où une vidéo courte peut être rémunérée (programme Meta, éligibilité à vérifier dans Meta Business Suite). X ne paie qu'avec Premium ; Bluesky, Threads et LinkedIn ne paient pas. Pris en compte automatiquement dès qu'il est connecté dans Postiz | L'utilisateur y réfléchit |
 | Durée et rémunération TikTok | Le programme Creator Rewards ne paie que les vidéos de plus d'une minute (selon des guides non officiels, à vérifier dans l'app) : nos vidéos de 30 s n'y entrent pas. Garder 30 s, ou faire des « décryptés » de plus de 60 s | Quand le compte approche des seuils (10 000 abonnés) |
