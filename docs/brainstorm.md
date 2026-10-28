@@ -104,11 +104,11 @@ Règles de rythme :
 
 ---
 
-## 6. La mascotte : Matou ✅ (direction validée, dessin à faire)
+## 6. La mascotte : Matou ✅
 
 ![Référence](../brand/references/matou-reference.png)
 
-*Référence fournie : un chat blanc dessiné à la main, avec de grosses lunettes carrées,
+*Dessin original de l'auteur de la chaîne : un chat blanc dessiné à la main, avec de grosses lunettes carrées,
 des dents de lapin et le doigt levé jaune ☝️.*
 
 ### Mon analyse
@@ -142,22 +142,19 @@ grises, dents de lapin. Parfait pour le SVG et pour les états animés.
 signature**. Le jaune ressort très bien dans le fil et évite le cliché violet des
 comptes IA.
 
-⚠️ **Droits : on ne peut pas utiliser ce dessin tel quel.** Cette image de chat
-circule comme meme (variante du « nerd emoji ☝️🤓 », voir aussi le
-[Nerd Dog](https://knowyourmeme.com/memes/nerd-dog)) et son auteur est inconnu. Le
-concept n'appartient à personne, mais le dessin si. **On dessine notre propre Matou**
-à partir de cette idée (proportions, rayures, lunettes à nous). Même chose pour la
-main jaune : elle ressemble à l'emoji d'Apple, on la redessine dans notre style.
-*(Si c'est toi qui l'as dessiné, dis-le-moi : ça change tout.)*
+✅ **Droits : le dessin est le tien.** On peut donc partir directement de lui pour
+le Matou officiel (vectorisation fidèle, pas besoin de le réinventer). Seule
+exception : si la main jaune ☝️ est l'emoji d'Apple collé dans le dessin, on la
+redessine dans ton style, car les emojis d'Apple appartiennent à Apple.
 
-⚠️ **Un chat blanc disparaît sur fond blanc.** Il faut un fond coloré ou sombre (le
-contour noir aide aussi). À trancher avec la palette.
+⚠️ **Un chat blanc disparaît sur fond blanc.** Réglé par le fond « cahier » teinté
+et le contour noir (voir §8).
 
 ⚠️ **Le meme vieillira.** Le ☝️ est un point d'entrée, pas toute la personnalité :
 Matou doit aussi exister par ses autres expressions et son lore.
 
-❓ **La petite croix grise sur le ventre** : intentionnelle ? On peut la garder comme
-signe distinctif (sa « cicatrice de bug » 🐛, idéal pour le lore) ou l'enlever.
+✅ **La petite croix grise sur le ventre est gardée** : c'est sa « cicatrice de bug » 🐛,
+un signe distinctif et une porte d'entrée pour le lore.
 
 ### Les états de Matou
 
@@ -171,15 +168,15 @@ signe distinctif (sa « cicatrice de bug » 🐛, idéal pour le lore) ou l'enle
 | Content | Se dandine | Yeux en « ^^ » |
 | Verdict | Face caméra | 🫧 / 🌱 / 🚀 affiché dans les verres |
 
-### Qui parle ?
+### Qui parle ? ✅
 
-⭐ **Matou parle.** La voix *est* Matou. En V2, ta voix devient la sienne : il devient
-ton avatar. C'est le plus cohérent puisque tu n'apparais jamais.
+**Matou parle**, avec une **voix masculine**. La voix *est* Matou. En V2, ta voix
+devient la sienne : il devient ton avatar.
 
-### Phrases signatures (pistes)
+### Phrases signatures ✅
 
 - Ouverture de l'explication : *« ☝️ En fait… »*
-- Fin : ⭐ *« C'était Matou, et c'est tout. »*, ou une variante qui rime avec Matou.
+- Fin : *« C'était Matou, et c'est tout. »*
 
 ---
 
@@ -198,14 +195,48 @@ ton avatar. C'est le plus cohérent puisque tu n'apparais jamais.
 
 ---
 
-## 8. Identité visuelle (pistes, à figer en phase 2)
+## 8. Identité visuelle : « le cahier de Matou » ✅ (à valider sur maquette)
+
+### Le fond : un cahier d'écolier
+
+Tu m'as laissé trancher. **Mon choix : un fond papier clair légèrement teinté
+(crème), avec un quadrillage discret façon cahier d'écolier**, et le jaune utilisé
+comme **surligneur**.
+
+Pourquoi :
+
+1. **Ça raconte la promesse.** Une chaîne pédago, un chat « premier de la classe »
+   à lunettes : le cahier dit « ici on t'explique » avant même le premier mot.
+2. **C'est cohérent avec ton dessin.** Trait de feutre noir sur papier : Matou est
+   chez lui. Les flèches, cadres et soulignements tracés à la main s'y intègrent
+   naturellement.
+3. **Le jaune devient un outil, pas une déco.** On **surligne en jaune** les mots
+   clés, comme dans un cahier. Le jaune signifie toujours « retiens ça », et ça
+   rappelle le doigt ☝️ de Matou.
+4. **On ressort dans le fil.** Les comptes IA sont presque tous sombres et néon.
+   Un fond papier clair se repère immédiatement.
+5. **Matou reste lisible.** Le papier crème (pas blanc pur) et le contour noir
+   épais suffisent à le détacher, comme sur ton dessin d'origine.
+
+Options écartées :
+- **Fond sombre** : le contour noir de Matou disparaît, et on ressemble à tous
+  les comptes IA.
+- **Fond jaune** : le doigt ☝️ jaune disparaît, et le jaune perd son rôle
+  de surligneur.
+- **Tableau noir** : cliché « école », et même problème de contour que le fond sombre.
+
+⚠️ À vérifier sur une vraie maquette en phase 2 : lisibilité sur téléphone, confort
+la nuit (un fond clair éblouit plus), et lisibilité de l'interface TikTok par-dessus.
+Si ça ne passe pas, on ajuste la teinte du papier avant de changer de concept.
+
+### Le reste de l'identité
 
 - **Format** : vertical 1080×1920, avec des **zones de sécurité** (l'interface de
   TikTok, Reels et Shorts masque le bas et la droite de l'écran).
-- **Couleurs** : noir, blanc, **jaune signature** (le ☝️ de Matou) + des couleurs de
-  verdict pour le Hype-mètre. Fond coloré ou sombre (Matou est blanc).
-- **Style graphique** : tout l'univers en **trait fait main** cohérent avec Matou
-  (cadres, flèches, soulignements tremblés), avec une typo propre pour la lisibilité.
+- **Couleurs** : papier crème, encre noire, **jaune surligneur**, gris des rayures
+  de Matou, + 3 couleurs de verdict pour le Hype-mètre.
+- **Style graphique** : tout en **trait de feutre fait main** (cadres, flèches,
+  soulignements tremblés), avec une typo propre pour la lisibilité.
 - **Typographie** : une police d'affichage très grasse pour les hooks, une police
   lisible pour les sous-titres. Polices libres (Google Fonts, licence OFL).
 - **Logos des entreprises** : usage informatif uniquement, idéalement dans les
@@ -236,7 +267,7 @@ Pour passer de la V1 (TTS) à la V2 (ta voix) sans tout refaire, la voix est une
 **brique isolée** : elle reçoit le script et rend **un fichier audio + l'horodatage
 de chaque mot**. Tout le reste du pipeline ne sait pas d'où vient la voix.
 
-### V1 : OpenRouter ✅
+### V1 : OpenRouter ✅ (voix masculine)
 
 OpenRouter propose un [point d'accès de synthèse vocale](https://openrouter.ai/docs/guides/overview/multimodal/tts.md)
 (`/api/v1/audio/speech`, compatible avec l'API OpenAI) et plusieurs modèles :
@@ -276,10 +307,6 @@ secrets de l'environnement, et l'accès réseau à `openrouter.ai`.
 
 ## 11. Questions ouvertes
 
-1. **Le dessin de référence** : c'est toi qui l'as dessiné, ou il vient d'internet ?
-2. **La croix grise sur le ventre** : on la garde (la « cicatrice de bug ») ou on l'enlève ?
-3. **Qui parle** : Matou lui-même (⭐) ou un narrateur ?
-4. **La voix de Matou** : plutôt masculine, féminine, ou à choisir à l'oreille parmi
-   les essais ?
-5. **La phrase de fin** : *« C'était Matou, et c'est tout. »* te plaît ?
-6. **Le fond** : plutôt sombre (Matou ressort en blanc) ou coloré, en jaune par exemple ?
+Plus aucune pour la phase 1 ✅. Les prochains choix se feront sur pièces en phase 2 :
+la voix exacte de Matou (à l'oreille, parmi des essais masculins) et la maquette
+du fond « cahier ».

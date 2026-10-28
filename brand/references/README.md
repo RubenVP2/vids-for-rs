@@ -1,8 +1,5 @@
 # Références visuelles
 
-Images d'inspiration. **Ce ne sont pas des assets de la marque** : rien ici ne doit
-apparaître tel quel dans une vidéo.
-
-| Fichier | Ce qu'on en retient |
+| Fichier | Contenu |
 | --- | --- |
-| `matou-reference.png` | Direction de Matou : chat blanc au trait fait main, grosses lunettes carrées, dents de lapin, rayures grises sur le front, doigt levé jaune ☝️. Image qui circule comme meme, auteur inconnu : on redessine notre propre version. |
+| `matou-reference.png` | Dessin original de Matou, fait par l'auteur de la chaîne : chat blanc au trait fait main, grosses lunettes carrées, dents de lapin, rayures grises sur le front, croix grise sur le ventre, doigt levé jaune ☝️. Base de la vectorisation du Matou officiel (phase 2). |

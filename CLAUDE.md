@@ -23,15 +23,18 @@ en respectant le design system du projet.
   mots). OpenRouter ne fournit pas l'horodatage : il vient d'un alignement local.
 - **À l'écran** : jamais l'utilisateur. Seulement la voix et la mascotte.
 - **Marque** : la chaîne s'appelle **Matou** (`@matou.ai`). Matou est un chat blanc
-  dessiné à la main, avec de grosses lunettes et un doigt levé jaune ☝️. Son
-  dessin de référence (`brand/references/`) n'est pas à nous : ne jamais l'utiliser
-  tel quel, seulement notre propre version redessinée.
+  dessiné à la main par l'utilisateur (`brand/references/`) : grosses lunettes,
+  dents de lapin, doigt levé jaune ☝️, croix grise sur le ventre. C'est **lui qui
+  parle**, avec une voix masculine. Ses phrases : « ☝️ En fait… » pour lancer
+  l'explication, « C'était Matou, et c'est tout. » pour finir.
+- **Univers visuel** : « le cahier de Matou ». Fond papier crème quadrillé, trait de
+  feutre noir fait main, jaune = surligneur des mots clés.
 - **Rythme** : 1 vidéo par jour, au minimum 1 tous les 2 jours.
 
 ## Phase actuelle
 
-**Phase 1 — Brainstorming & positionnement.** On ne produit pas encore de vidéo ni de
-design définitif. Les pistes sont dans `docs/brainstorm.md`, les choix dans
+**Phase 2 — Identité de marque** (à démarrer). La phase 1 est terminée : le cadre
+est fixé. Les pistes sont dans `docs/brainstorm.md`, les choix dans
 `docs/decisions.md`, l'enchaînement des phases dans `docs/roadmap.md`.
 
 Quand une décision est prise avec l'utilisateur : l'ajouter à `docs/decisions.md`

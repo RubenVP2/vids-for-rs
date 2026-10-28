@@ -6,7 +6,7 @@ des grands acteurs du domaine (Anthropic, OpenAI, Google DeepMind, Meta, Mistral
 
 ## Objectifs
 
-1. **Informer** : rendre l'actualité IA claire, sourcée et utile en moins de 90 secondes.
+1. **Informer** : rendre l'actualité IA claire, sourcée et utile en 30 à 45 secondes.
 2. **Fidéliser** : une identité forte (design system, mascotte, rituels) pour que les
    viewers reconnaissent les vidéos au premier coup d'œil, s'abonnent et reviennent.
 3. **Automatiser** : à terme, **une session Claude = une vidéo**. On fournit un article,
@@ -14,7 +14,8 @@ des grands acteurs du domaine (Anthropic, OpenAI, Google DeepMind, Meta, Mistral
 
 ## État du projet
 
-🟡 **Phase 1 — Brainstorming & positionnement** (en cours)
+- ✅ Phase 1 — Brainstorming & positionnement
+- 🟡 **Phase 2 — Identité de marque** (prochaine étape)
 
 | Document | Contenu |
 | --- | --- |
