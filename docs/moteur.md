@@ -31,7 +31,7 @@ pour une instance auto-hébergée. Navigateur : Remotion utilise
 | `npm run render -- NNN [--brouillon]` | MP4 1080×1920 normalisé −14 LUFS + miniature PNG |
 | `npm run stills -- NNN` | une image de contrôle par scène, interface des réseaux par-dessus |
 | `npm run check -- NNN` | contrôle final : durée, format, volume, voix, publication |
-| `npm run postiz -- NNN [--envoyer \| --programmer]` | aperçu, puis brouillons Postiz, puis programmation (skill `programmation`) |
+| `npm run postiz -- NNN [--envoyer \| --programmer]` | aperçu (`postiz.json`, `postiz-mcp.json` pour le MCP Postiz), puis, avec une clé d'API, brouillons et programmation (skill `programmation`) |
 | `npm run postiz -- --canaux` | comptes connectés à Postiz et règles de chaque réseau |
 | `npm run studio` | Remotion Studio, aperçu interactif (props par défaut : #000) |
 | `npm run brand` | réexporte les SVG de Matou et des icônes dans `brand/` |
@@ -50,6 +50,7 @@ episodes/NNN-slug/
   timings.json      minutage de chaque mot, des scènes, volume par image
   publication.md    descriptions et hashtags par plateforme
   postiz.json       ce qui est (ou serait) envoyé à Postiz
+  postiz-mcp.json   le même envoi au format du MCP Postiz (integrationSchedulePostTool)
   postiz-envoi.json ids des brouillons Postiz et leur statut
   rendu/            MP4 + miniature (ignoré par git)
   controle/         images de contrôle (ignoré par git)

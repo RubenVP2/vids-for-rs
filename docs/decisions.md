@@ -40,6 +40,7 @@ Les options explorées sont dans [`brainstorm.md`](brainstorm.md).
 | 2026-10-28 | Budget recalé | Flash 75–92 mots prononcés, décrypté 100–118 (ATTENTION au-delà) | Sur #001, Puck a lu à 2,8 mots/s (3,5 sur #000) : trois prises pour passer sous 36 s |
 | 2026-10-28 | Diffusion | Postiz : le script crée des **brouillons** sur TikTok, Instagram et YouTube ; ils ne partent qu'après le feu vert de l'utilisateur (`--programmer` ou dans Postiz). Skill officiel `gitroomhq/postiz-agent` copié dans `.claude/skills/postiz/` | Garde la relecture humaine ; les plugins ne se chargent pas en session cloud, les skills versionnés si |
 | 2026-10-28 | Plateformes (révision) | Maximiser la diffusion : TikTok, Reels et Shorts restent prioritaires ; relais de la même vidéo sur Facebook, Threads, X et Bluesky. Postiz en abonnement cloud (comptes connectés dans Postiz, une seule clé API pour le script) | Une vidéo coûte la même chose sur 7 réseaux ; un seul texte en plus par épisode (`## Court`) ; pas d'application développeur à créer par réseau |
+| 2026-10-28 | Postiz | Abonnement cloud, formule **Standard (5 canaux)**, branché à Claude par le **MCP Postiz** (pas de clé d'API) | Choix de l'utilisateur : configuration la plus courte. Le MCP ne lit pas les fichiers de la session : l'utilisateur dépose la vidéo dans la médiathèque Postiz |
 | 2026-10-28 | Industrialisation | Skills `episode`, `ecriture-matou`, `publication`, `veille-ia` + sous-agents `documentaliste`, `verificateur-faits`, `spectateur`, `controleur-visuel` | Une recette unique et des relectures indépendantes à chaque épisode |
 
 ## À trancher
@@ -50,4 +51,4 @@ Les options explorées sont dans [`brainstorm.md`](brainstorm.md).
 | Pseudo `@matou.ai` | Réserver le pseudo sur chaque réseau (Threads reprend celui d'Instagram ; Bluesky : `matou-ai.bsky.social` ou un domaine) | Avant la publication |
 | Mention « fait avec l'IA » sur TikTok et X | Activée par défaut (`brand/postiz.json`, voix de synthèse) ou désactivée | Avant le premier envoi dans Postiz |
 | LinkedIn | Écarté au départ (ligne « Plateformes ») ; le script le gère s'il est connecté dans Postiz (texte d'Instagram) | Au choix de l'abonnement Postiz |
-| Abonnement Postiz | Standard (5 canaux) trop juste ; Team (10 canaux) couvre les 7 réseaux, + LinkedIn | Avant de connecter les comptes |
+| Les 5 canaux de la formule Standard | Proposé : TikTok, Instagram, YouTube, Threads, Facebook. X, Bluesky et LinkedIn en réserve (passer en Team pour les ajouter) | En connectant les comptes dans Postiz |

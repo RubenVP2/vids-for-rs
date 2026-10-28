@@ -2,11 +2,13 @@
 // (TikTok, Instagram, YouTube, Facebook, Threads, LinkedIn, X, Bluesky).
 // Rien n'est publié sans le feu vert de l'utilisateur : les posts sont créés en BROUILLON,
 // et --programmer ne fait que les passer dans la file de publication de Postiz.
-// Usage : npm run postiz -- <épisode>                aperçu : écrit postiz.json, n'envoie rien
+// Usage : npm run postiz -- <épisode>                aperçu : écrit postiz.json et postiz-mcp.json, n'envoie rien
 //         npm run postiz -- <épisode> --envoyer [--date 2026-10-29T18:00] [--commentaire] [--force]
 //         npm run postiz -- <épisode> --programmer   après le feu vert : brouillons → programmés
 //         npm run postiz -- --canaux                 comptes connectés + règles de chaque réseau
 // Accès : secret réseau sur api.postiz.com (en-tête Authorization, sans préfixe) ou POSTIZ_API_KEY.
+// Sans clé, passer par le MCP Postiz : postiz-mcp.json est l'argument de integrationSchedulePostTool,
+// une fois les <…> remplacés (skill programmation).
 import fs from 'node:fs';
 import path from 'node:path';
 import {dossierEpisode, nomEpisode, RACINE} from './lib/episode';
@@ -23,7 +25,7 @@ const API = (process.env.POSTIZ_API_URL ?? 'https://api.postiz.com').replace(/\/
 const reglages = JSON.parse(fs.readFileSync(path.join(RACINE, 'brand', 'postiz.json'), 'utf8')) as Reglages;
 // Par réseau : identifiants Postiz, section de publication.md reprise, limite de caractères du texte.
 const INFOS: Record<Reseau, {nom: string; identifiants: string[]; texte: Texte; limite: number}> = {
-  tiktok: {nom: 'TikTok', identifiants: ['tiktok'], texte: 'tiktok', limite: 2200},
+  tiktok: {nom: 'TikTok', identifiants: ['tiktok'], texte: 'tiktok', limite: 2000},
   instagram: {nom: 'Instagram', identifiants: ['instagram', 'instagram-standalone'], texte: 'instagram', limite: 2200},
   youtube: {nom: 'YouTube', identifiants: ['youtube'], texte: 'youtube', limite: 5000},
   facebook: {nom: 'Facebook', identifiants: ['facebook'], texte: 'instagram', limite: 63206},
@@ -130,6 +132,24 @@ const construire = (pub: Publication, canaux: Partial<Record<Reseau, Pick<Canal,
   }),
 });
 
+// Le MCP veut du HTML (une ligne = un <p>), les réglages en paires clé/valeur, et accepte une
+// couverture par vidéo (thumbnail) : elle sert aussi sur TikTok, Instagram et Facebook.
+const html = (texte: string) =>
+  texte.split('\n').map((l) => `<p>${l.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</p>`).join('');
+const versMcp = (corps: ReturnType<typeof construire>, miniature: string) => ({
+  socialPost: corps.posts.map((p) => ({
+    integrationId: p.integration.id,
+    isPremium: false,
+    date: corps.date,
+    shortLink: false,
+    type: 'draft',
+    postsAndComments: p.value.map((v) => ({content: html(v.content), attachments: v.image.map((m) => ({path: m.path, thumbnail: miniature}))})),
+    settings: Object.entries(p.settings)
+      .filter(([cle]) => cle !== '__type')
+      .map(([key, value]) => ({key, value})),
+  })),
+});
+
 const televerser = async (fichier: string): Promise<Media> => {
   const form = new FormData();
   const type = fichier.endsWith('.mp4') ? 'video/mp4' : 'image/png';
@@ -190,9 +210,11 @@ if (pub.titre.length > LIMITE_TITRE_YOUTUBE) alertes.push(`YouTube : titre de ${
 if (new Date(date).getTime() < Date.now()) alertes.push(`Date passée : ${lisible(date)}`);
 
 if (!args.includes('--envoyer')) {
-  const fictifs = Object.fromEntries(RESEAUX.map((r) => [r, {id: `<compte ${NOMS[r]}>`, identifier: r}]));
-  const corps = construire(pub, fictifs, {id: 'video', path: `<téléversement de ${path.basename(mp4)}>`}, {id: 'miniature', path: `<téléversement de ${path.basename(png)}>`}, date, commentaire);
+  const fictifs = Object.fromEntries(RESEAUX.map((r) => [r, {id: `<id ${NOMS[r]}>`, identifier: INFOS[r].identifiants[0]}]));
+  const [cheminVideo, cheminMiniature] = [`<chemin de ${path.basename(mp4)}>`, `<chemin de ${path.basename(png)}>`];
+  const corps = construire(pub, fictifs, {id: '<id de la vidéo>', path: cheminVideo}, {id: '<id de la miniature>', path: cheminMiniature}, date, commentaire);
   fs.writeFileSync(path.join(dossier, 'postiz.json'), JSON.stringify(corps, null, 2) + '\n');
+  fs.writeFileSync(path.join(dossier, 'postiz-mcp.json'), JSON.stringify(versMcp(corps, cheminMiniature), null, 2) + '\n');
   for (const r of RESEAUX) {
     const {texte, limite} = INFOS[r];
     console.log(`${NOMS[r].padEnd(10)} ${pub[texte].length}/${limite} caractères (section ${texte})${r === 'youtube' ? ` · titre « ${pub.titre} »` : ''}`);
@@ -200,7 +222,7 @@ if (!args.includes('--envoyer')) {
   console.log(`Date      ${lisible(date)} (brouillon)`);
   console.log(`Commentaire de sources : ${commentaire ? '1er commentaire partout, à la main sur TikTok' : pub.commentaire ? 'à poster à la main (--commentaire : partout sauf TikTok)' : 'absent de publication.md'}`);
   alertes.forEach((a) => console.log(`ATTENTION ${a}`));
-  console.log('\nAperçu écrit dans postiz.json. Rien n’a été envoyé : relancer avec --envoyer.');
+  console.log('\nAperçu écrit dans postiz.json (API) et postiz-mcp.json (MCP). Rien n’a été envoyé.');
   process.exit(alertes.length ? 1 : 0);
 }
 

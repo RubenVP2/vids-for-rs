@@ -87,6 +87,7 @@ L'utilisateur relit toujours avant de publier : ne présente jamais l'épisode c
 
 ## 8. Programmer dans Postiz (si l'accès est configuré)
 
-Suivre le skill **`programmation`** : brouillons dans Postiz, relecture de l'utilisateur,
-puis programmation sur son feu vert. Sans accès à Postiz (erreur 401), le dire en une
-ligne et s'arrêter à l'étape 7.
+Suivre le skill **`programmation`** : brouillons dans Postiz (par le MCP Postiz),
+relecture de l'utilisateur, puis programmation sur son feu vert. Sans accès à Postiz
+(outils `mcp__Postiz__*` absents, aucun compte connecté), le dire en une ligne et
+s'arrêter à l'étape 7.
