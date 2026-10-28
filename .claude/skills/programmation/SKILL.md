@@ -5,11 +5,17 @@ description: Envoie un épisode de Matou prêt dans Postiz en brouillons (TikTok
 
 # Programmation : épisode prêt → Postiz
 
-Postiz en abonnement cloud (formule Standard : 5 canaux), branché sur la session par le
-**MCP Postiz** (outils `mcp__Postiz__*`). L'utilisateur connecte lui-même ses comptes dans
-Postiz (« Add channel »). `npm run postiz -- NNN` prépare les textes et les réglages ; le
-MCP crée les posts. Pour le reste (lister, supprimer, statistiques), le skill officiel
-**`postiz`** s'applique.
+Postiz en abonnement cloud (formule Standard : 5 canaux). L'utilisateur connecte lui-même
+ses comptes dans Postiz (« Add channel »). Deux accès :
+
+- **Clé d'API** (variable `POSTIZ_ENV` de l'environnement) : la voie normale. Si
+  `npm run postiz -- --canaux` liste les comptes, suivre la section « Avec la clé d'API »
+  en bas : le script téléverse la vidéo lui-même.
+- **MCP Postiz** (outils `mcp__Postiz__*`) : sans clé, étapes 0 à 4 ci-dessous ; la vidéo
+  doit alors être déposée à la main dans Postiz. Le MCP sert aussi, avec la clé, à
+  consulter le calendrier (`postsListTool`) ou supprimer un post.
+
+Pour le reste (statistiques…), le skill officiel **`postiz`** s'applique.
 
 **Règle d'or** : rien n'est publié sans un « oui » explicite de l'utilisateur, dans cette
 session, pour cet épisode. Les posts sont créés en **brouillon** (`type: "draft"`) ; ils ne
@@ -104,9 +110,14 @@ réseau. Avec une clé d'API, `npm run postiz -- NNN --programmer` suffit. Mettr
 
 **Fait quand** l'utilisateur a donné son feu vert et que `postiz-envoi.json` dit « programmé ».
 
-## Variante : clé d'API (sans MCP)
+## Avec la clé d'API
 
-Si une clé Postiz est configurée (secret réseau sur `api.postiz.com`, en-tête
-`Authorization` sans préfixe, ou variable `POSTIZ_API_KEY`), le script fait tout seul :
-`--canaux` (comptes et règles), `--envoyer` (téléverse la vidéo depuis la session, crée
-les brouillons, écrit `postiz-envoi.json`), puis `--programmer` après le feu vert.
+Clé lue dans `POSTIZ_ENV` (ou `POSTIZ_API_KEY`, ou secret réseau sur `api.postiz.com`).
+Mêmes règles que ci-dessus (brouillons, relecture, « oui » explicite), en trois commandes :
+
+1. `npm run postiz -- --canaux` : comptes et règles de chaque réseau (étapes 0 et 1).
+2. `npm run postiz -- NNN --commentaire` (aperçu, étape 2), puis la même commande avec
+   `--envoyer` : téléverse la vidéo et la miniature, crée un brouillon par compte, écrit
+   `postiz-envoi.json`. Committer `postiz.json`, `postiz-mcp.json` et `postiz-envoi.json`.
+3. Après le « oui » : `npm run postiz -- NNN --programmer`, puis committer
+   `postiz-envoi.json`.

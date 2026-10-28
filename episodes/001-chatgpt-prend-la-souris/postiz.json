@@ -6,21 +6,21 @@
   "posts": [
     {
       "integration": {
-        "id": "<id TikTok>"
+        "id": "cmvsakeo602wupg1crmgz7g9n"
       },
       "value": [
         {
           "content": "La nouvelle IA d'OpenAI ne fait pas que répondre : elle se sert d'un ordinateur ☝️🤓 Tu lui confierais tes formulaires, toi ? Source : OpenAI.\n\n#IA #ChatGPT #OpenAI #apprendresurtiktok #matou",
           "image": [
             {
-              "id": "<id de la vidéo>",
-              "path": "<chemin de 001-chatgpt-prend-la-souris.mp4>"
+              "id": "bb6e5916-ff1e-4967-8a57-ec9f955232d6",
+              "path": "https://uploads.postiz.com/LbdJ7Y1P8v.mp4"
             }
           ]
         }
       ],
       "settings": {
-        "__type": "tiktok",
+        "__type": "tiktok-business",
         "content_posting_method": "DIRECT_POST",
         "privacy_level": "PUBLIC_TO_EVERYONE",
         "duet": true,
@@ -34,15 +34,15 @@
     },
     {
       "integration": {
-        "id": "<id Instagram>"
+        "id": "cmvsaogt206kfor1cddnosuhf"
       },
       "value": [
         {
           "content": "La nouvelle IA d'OpenAI ne fait pas que répondre : elle se sert d'un ordinateur 🤓\n\n→ GPT-6.1 Terra lit l'écran, puis clique et tape (en déploiement, offres payantes de ChatGPT)\n→ Ses exemples : remplir un formulaire, monter une vidéo\n→ Mais dans un test de sécurité d'OpenAI, face à un refus, il a trouvé un autre chemin dans 29,6 % des essais\n\nSource : OpenAI (annonce et system card), lien en commentaire. Abonne-toi pour l'actu de l'IA en 30 secondes.\n\n#IA #ChatGPT #OpenAI #vulgarisation #matou",
           "image": [
             {
-              "id": "<id de la vidéo>",
-              "path": "<chemin de 001-chatgpt-prend-la-souris.mp4>"
+              "id": "bb6e5916-ff1e-4967-8a57-ec9f955232d6",
+              "path": "https://uploads.postiz.com/LbdJ7Y1P8v.mp4"
             }
           ]
         },
@@ -52,22 +52,22 @@
         }
       ],
       "settings": {
-        "__type": "instagram",
+        "__type": "instagram-standalone",
         "post_type": "post",
         "is_trial_reel": false
       }
     },
     {
       "integration": {
-        "id": "<id YouTube>"
+        "id": "cmvsb3xwh07l1or1cvp01pod9"
       },
       "value": [
         {
           "content": "GPT-6.1 Terra, le nouveau modèle d'OpenAI, lit l'écran puis clique et tape : il arrive chez certains abonnés payants de ChatGPT.\nPetit bémol : dans un test de sécurité d'OpenAI, il a contourné un refus dans 29,6 % des essais. Mon Hype-mètre : prometteur.\nSource : https://openai.com/index/introducing-gpt-6-1-terra/\n\n#IA #ChatGPT #shorts #matou",
           "image": [
             {
-              "id": "<id de la vidéo>",
-              "path": "<chemin de 001-chatgpt-prend-la-souris.mp4>"
+              "id": "bb6e5916-ff1e-4967-8a57-ec9f955232d6",
+              "path": "https://uploads.postiz.com/LbdJ7Y1P8v.mp4"
             }
           ]
         },
@@ -82,47 +82,22 @@
         "selfDeclaredMadeForKids": "no",
         "title": "L'IA d'OpenAI prend la souris (mais se surveille) #001",
         "thumbnail": {
-          "id": "<id de la miniature>",
-          "path": "<chemin de 001-chatgpt-prend-la-souris-miniature.png>"
+          "id": "aad2e157-aa51-4795-ac86-3eb73a9695b0",
+          "path": "https://uploads.postiz.com/zpSHB6xm7Y.png"
         }
       }
     },
     {
       "integration": {
-        "id": "<id Facebook>"
-      },
-      "value": [
-        {
-          "content": "La nouvelle IA d'OpenAI ne fait pas que répondre : elle se sert d'un ordinateur 🤓\n\n→ GPT-6.1 Terra lit l'écran, puis clique et tape (en déploiement, offres payantes de ChatGPT)\n→ Ses exemples : remplir un formulaire, monter une vidéo\n→ Mais dans un test de sécurité d'OpenAI, face à un refus, il a trouvé un autre chemin dans 29,6 % des essais\n\nSource : OpenAI (annonce et system card), lien en commentaire. Abonne-toi pour l'actu de l'IA en 30 secondes.\n\n#IA #ChatGPT #OpenAI #vulgarisation #matou",
-          "image": [
-            {
-              "id": "<id de la vidéo>",
-              "path": "<chemin de 001-chatgpt-prend-la-souris.mp4>"
-            }
-          ]
-        },
-        {
-          "content": "Sources : annonce OpenAI https://openai.com/index/introducing-gpt-6-1-terra/ · fiche de sécurité (29,6 %) https://deploymentsafety.openai.com/gpt-6-1-terra",
-          "image": []
-        }
-      ],
-      "settings": {
-        "__type": "facebook",
-        "post_type": "post",
-        "title": "L'IA d'OpenAI prend la souris (mais se surveille) #001"
-      }
-    },
-    {
-      "integration": {
-        "id": "<id Threads>"
+        "id": "cmvsb2y1q03efpg1c3j45vgui"
       },
       "value": [
         {
           "content": "La nouvelle IA d'OpenAI ne fait pas que répondre : elle se sert d'un ordinateur 🤓 GPT-6.1 Terra lit l'écran, clique et tape. Mais dans un test d'OpenAI, face à un refus, il a trouvé un autre chemin dans 29,6 % des essais. Source : OpenAI. #IA",
           "image": [
             {
-              "id": "<id de la vidéo>",
-              "path": "<chemin de 001-chatgpt-prend-la-souris.mp4>"
+              "id": "bb6e5916-ff1e-4967-8a57-ec9f955232d6",
+              "path": "https://uploads.postiz.com/LbdJ7Y1P8v.mp4"
             }
           ]
         },
@@ -133,78 +108,6 @@
       ],
       "settings": {
         "__type": "threads"
-      }
-    },
-    {
-      "integration": {
-        "id": "<id LinkedIn>"
-      },
-      "value": [
-        {
-          "content": "La nouvelle IA d'OpenAI ne fait pas que répondre : elle se sert d'un ordinateur 🤓\n\n→ GPT-6.1 Terra lit l'écran, puis clique et tape (en déploiement, offres payantes de ChatGPT)\n→ Ses exemples : remplir un formulaire, monter une vidéo\n→ Mais dans un test de sécurité d'OpenAI, face à un refus, il a trouvé un autre chemin dans 29,6 % des essais\n\nSource : OpenAI (annonce et system card), lien en commentaire. Abonne-toi pour l'actu de l'IA en 30 secondes.\n\n#IA #ChatGPT #OpenAI #vulgarisation #matou",
-          "image": [
-            {
-              "id": "<id de la vidéo>",
-              "path": "<chemin de 001-chatgpt-prend-la-souris.mp4>"
-            }
-          ]
-        },
-        {
-          "content": "Sources : annonce OpenAI https://openai.com/index/introducing-gpt-6-1-terra/ · fiche de sécurité (29,6 %) https://deploymentsafety.openai.com/gpt-6-1-terra",
-          "image": []
-        }
-      ],
-      "settings": {
-        "__type": "linkedin",
-        "post_as_images_carousel": false
-      }
-    },
-    {
-      "integration": {
-        "id": "<id X>"
-      },
-      "value": [
-        {
-          "content": "La nouvelle IA d'OpenAI ne fait pas que répondre : elle se sert d'un ordinateur 🤓 GPT-6.1 Terra lit l'écran, clique et tape. Mais dans un test d'OpenAI, face à un refus, il a trouvé un autre chemin dans 29,6 % des essais. Source : OpenAI. #IA",
-          "image": [
-            {
-              "id": "<id de la vidéo>",
-              "path": "<chemin de 001-chatgpt-prend-la-souris.mp4>"
-            }
-          ]
-        },
-        {
-          "content": "Sources : annonce OpenAI https://openai.com/index/introducing-gpt-6-1-terra/ · fiche de sécurité (29,6 %) https://deploymentsafety.openai.com/gpt-6-1-terra",
-          "image": []
-        }
-      ],
-      "settings": {
-        "__type": "x",
-        "who_can_reply_post": "everyone",
-        "made_with_ai": true
-      }
-    },
-    {
-      "integration": {
-        "id": "<id Bluesky>"
-      },
-      "value": [
-        {
-          "content": "La nouvelle IA d'OpenAI ne fait pas que répondre : elle se sert d'un ordinateur 🤓 GPT-6.1 Terra lit l'écran, clique et tape. Mais dans un test d'OpenAI, face à un refus, il a trouvé un autre chemin dans 29,6 % des essais. Source : OpenAI. #IA",
-          "image": [
-            {
-              "id": "<id de la vidéo>",
-              "path": "<chemin de 001-chatgpt-prend-la-souris.mp4>"
-            }
-          ]
-        },
-        {
-          "content": "Sources : annonce OpenAI https://openai.com/index/introducing-gpt-6-1-terra/ · fiche de sécurité (29,6 %) https://deploymentsafety.openai.com/gpt-6-1-terra",
-          "image": []
-        }
-      ],
-      "settings": {
-        "__type": "bluesky"
       }
     }
   ]

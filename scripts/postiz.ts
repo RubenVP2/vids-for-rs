@@ -6,7 +6,8 @@
 //         npm run postiz -- <épisode> --envoyer [--date 2026-10-29T18:00] [--commentaire] [--force]
 //         npm run postiz -- <épisode> --programmer   après le feu vert : brouillons → programmés
 //         npm run postiz -- --canaux                 comptes connectés + règles de chaque réseau
-// Accès : secret réseau sur api.postiz.com (en-tête Authorization, sans préfixe) ou POSTIZ_API_KEY.
+// Accès : secret réseau sur api.postiz.com (en-tête Authorization, sans préfixe) ou variable POSTIZ_API_KEY
+// (ou POSTIZ_ENV, le nom choisi dans l'environnement de l'utilisateur).
 // Sans clé, passer par le MCP Postiz : postiz-mcp.json est l'argument de integrationSchedulePostTool,
 // une fois les <…> remplacés (skill programmation).
 import fs from 'node:fs';
@@ -25,7 +26,7 @@ const API = (process.env.POSTIZ_API_URL ?? 'https://api.postiz.com').replace(/\/
 const reglages = JSON.parse(fs.readFileSync(path.join(RACINE, 'brand', 'postiz.json'), 'utf8')) as Reglages;
 // Par réseau : identifiants Postiz, section de publication.md reprise, limite de caractères du texte.
 const INFOS: Record<Reseau, {nom: string; identifiants: string[]; texte: Texte; limite: number}> = {
-  tiktok: {nom: 'TikTok', identifiants: ['tiktok'], texte: 'tiktok', limite: 2000},
+  tiktok: {nom: 'TikTok', identifiants: ['tiktok', 'tiktok-business'], texte: 'tiktok', limite: 2000},
   instagram: {nom: 'Instagram', identifiants: ['instagram', 'instagram-standalone'], texte: 'instagram', limite: 2200},
   youtube: {nom: 'YouTube', identifiants: ['youtube'], texte: 'youtube', limite: 5000},
   facebook: {nom: 'Facebook', identifiants: ['facebook'], texte: 'instagram', limite: 63206},
@@ -41,7 +42,8 @@ const LIMITE_TITRE_YOUTUBE = 100;
 const appeler = async <T>(chemin: string, init: RequestInit = {}): Promise<T> => {
   const entetes = new Headers(init.headers);
   // Sans variable, la clé est ajoutée par le proxy de la session (secret réseau).
-  if (process.env.POSTIZ_API_KEY) entetes.set('Authorization', process.env.POSTIZ_API_KEY);
+  const cle = process.env.POSTIZ_API_KEY ?? process.env.POSTIZ_ENV;
+  if (cle) entetes.set('Authorization', cle);
   if (typeof init.body === 'string') entetes.set('Content-Type', 'application/json');
   const rep = await fetch(`${API}/public/v1${chemin}`, {...init, headers: entetes});
   if (rep.status === 401) {

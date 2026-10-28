@@ -17,7 +17,7 @@ npm ci
 ```
 
 Variables : `OPENROUTER_API_KEY` (ou `OPENROUTER_KEY`). Postiz : secret réseau sur
-`api.postiz.com` (en-tête `Authorization` sans préfixe) ou `POSTIZ_API_KEY` ; `POSTIZ_API_URL`
+`api.postiz.com` (en-tête `Authorization` sans préfixe) ou `POSTIZ_API_KEY` (ou `POSTIZ_ENV`) ; `POSTIZ_API_URL`
 pour une instance auto-hébergée. Navigateur : Remotion utilise
 `$REMOTION_BROWSER`, sinon le Chromium headless de Playwright s'il est installé
 (`/opt/pw-browsers`), sinon il télécharge le sien.
