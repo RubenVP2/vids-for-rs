@@ -91,6 +91,11 @@ brouillons si `postiz-envoi.json` existe : vérifier d'abord avec `postsListTool
 **Fait quand** `postiz-envoi.json` existe et que les liens `previewUrl` sont donnés à
 l'utilisateur.
 
+**Réseau connecté après coup** (rattraper un épisode déjà parti ailleurs) : avec la clé,
+`npm run postiz -- NNN --envoyer --reseaux linkedin [--date …] [--commentaire]`, puis
+`--programmer --reseaux linkedin` sur feu vert. Seuls ces réseaux sont envoyés ; leurs
+posts s'ajoutent à `postiz-envoi.json` avec leur propre `date` et `statut`.
+
 ## 4. Faire relire, puis programmer
 
 Dire à l'utilisateur : les brouillons sont dans le calendrier Postiz, à la date prévue

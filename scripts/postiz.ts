@@ -5,6 +5,8 @@
 // Usage : npm run postiz -- <épisode>                aperçu : écrit postiz.json et postiz-mcp.json, n'envoie rien
 //         npm run postiz -- <épisode> --envoyer [--date 2026-10-29T18:00] [--commentaire] [--force]
 //         sans --date : le premier jour libre du calendrier Postiz, aujourd'hui compris s'il reste 3 h
+//         --reseaux linkedin,x : seulement ces réseaux (rattrapage d'un réseau connecté après coup :
+//         les posts s'ajoutent au journal, les autres réseaux ne sont pas renvoyés)
 //         npm run postiz -- <épisode> --programmer   après le feu vert : brouillons → programmés
 //         npm run postiz -- --canaux                 comptes connectés + règles de chaque réseau
 // Accès : secret réseau sur api.postiz.com (en-tête Authorization, sans préfixe) ou variable POSTIZ_API_KEY
@@ -21,7 +23,9 @@ type Reglages = {fuseau: string; heure: string; comptes: Partial<Record<Reseau, 
 type Canal = {id: string; name: string; identifier: string; disabled: boolean};
 type Media = {id: string; path: string};
 type Publication = Record<Texte, string> & {titre: string; commentaire?: string};
-type Journal = {envoye: string; date: string; statut: 'brouillon' | 'programmé'; video: string; miniature?: string; postes: {reseau: string; postId: string; integration: string}[]};
+// date et statut d'un poste : présents quand il a été rattrapé (--reseaux) à part du reste de l'épisode.
+type Poste = {reseau: string; postId: string; integration: string; date?: string; statut?: Journal['statut']};
+type Journal = {envoye: string; date: string; statut: 'brouillon' | 'programmé'; video: string; miniature?: string; postes: Poste[]};
 
 const API = (process.env.POSTIZ_API_URL ?? 'https://api.postiz.com').replace(/\/$/, '');
 const reglages = JSON.parse(fs.readFileSync(path.join(RACINE, 'brand', 'postiz.json'), 'utf8')) as Reglages;
@@ -196,19 +200,26 @@ if (args.includes('--canaux')) {
   process.exit(0);
 }
 
-const dossier = dossierEpisode(args.find((a, i) => !a.startsWith('--') && args[i - 1] !== '--date'));
+const choix = valeurDe('--reseaux')?.split(',') as Reseau[] | undefined;
+const inconnus = choix?.filter((r) => !RESEAUX.includes(r)) ?? [];
+if (inconnus.length) throw new Error(`--reseaux : ${inconnus.join(', ')} inconnu (attendu parmi ${RESEAUX.join(', ')}).`);
+const retenu = (reseau: string) => !choix || choix.includes(reseau as Reseau);
+
+const dossier = dossierEpisode(args.find((a, i) => !a.startsWith('--') && !['--date', '--reseaux'].includes(args[i - 1])));
 const nom = nomEpisode(dossier);
 const journal = path.join(dossier, 'postiz-envoi.json');
 
 if (args.includes('--programmer')) {
   if (!fs.existsSync(journal)) throw new Error('Aucun brouillon envoyé pour cet épisode : lancer d’abord --envoyer.');
   const envoi = JSON.parse(fs.readFileSync(journal, 'utf8')) as Journal;
-  for (const p of envoi.postes) {
+  for (const p of envoi.postes.filter((p) => retenu(p.reseau))) {
     await appeler(`/posts/${p.postId}/status`, {method: 'PUT', body: JSON.stringify({status: 'schedule'})});
-    console.log(`Programmé : ${p.reseau} (${p.postId})`);
+    if (p.statut) p.statut = 'programmé';
+    console.log(`Programmé : ${p.reseau} (${p.postId}), ${lisible(p.date ?? envoi.date)}`);
   }
-  fs.writeFileSync(journal, JSON.stringify({...envoi, statut: 'programmé'}, null, 2) + '\n');
-  console.log(`\nPublication prévue ${lisible(envoi.date)} (date enregistrée dans Postiz).`);
+  const statut = choix && envoi.postes.some((p) => !retenu(p.reseau)) ? envoi.statut : 'programmé';
+  fs.writeFileSync(journal, JSON.stringify({...envoi, statut}, null, 2) + '\n');
+  console.log('\nDates enregistrées dans Postiz.');
   process.exit(0);
 }
 
@@ -248,13 +259,17 @@ if (!args.includes('--envoyer')) {
 }
 
 if (alertes.length) throw new Error(`Envoi annulé :\n${alertes.map((a) => `  - ${a}`).join('\n')}`);
-if (fs.existsSync(journal) && !args.includes('--force')) {
-  throw new Error(`Déjà envoyé (${path.relative(RACINE, journal)}) : vérifier dans Postiz avant de recommencer (--force crée des doublons).`);
+const precedent = fs.existsSync(journal) ? (JSON.parse(fs.readFileSync(journal, 'utf8')) as Journal) : undefined;
+const dejaLa = precedent?.postes.filter((p) => retenu(p.reseau)) ?? [];
+if (precedent && (!choix || dejaLa.length) && !args.includes('--force')) {
+  const quoi = choix ? ` sur ${dejaLa.map((p) => p.reseau).join(', ')}` : '';
+  throw new Error(`Déjà envoyé${quoi} (${path.relative(RACINE, journal)}) : vérifier dans Postiz avant de recommencer (--force crée des doublons).`);
 }
 
-const canaux = choisirCanaux(await appeler<Canal[]>('/integrations'));
-const absents = RESEAUX.filter((r) => !canaux[r]);
-if (absents.length === RESEAUX.length) throw new Error(`Aucun compte connecté dans Postiz (${RESEAUX.map((r) => NOMS[r]).join(', ')}).`);
+const tous = choisirCanaux(await appeler<Canal[]>('/integrations'));
+const canaux = Object.fromEntries(Object.entries(tous).filter(([r]) => retenu(r))) as typeof tous;
+const absents = RESEAUX.filter((r) => retenu(r) && !canaux[r]);
+if (!Object.keys(canaux).length) throw new Error(`Aucun compte connecté dans Postiz (${RESEAUX.filter(retenu).map((r) => NOMS[r]).join(', ')}).`);
 if (absents.length) console.log(`Non connectés dans Postiz, ignorés : ${absents.map((r) => NOMS[r]).join(', ')}.`);
 
 const video = await televerser(mp4);
@@ -263,14 +278,12 @@ const corps = construire(pub, canaux, video, miniature, date, commentaire);
 fs.writeFileSync(path.join(dossier, 'postiz.json'), JSON.stringify(corps, null, 2) + '\n');
 const reponse = await appeler<{postId: string; integration: string}[]>('/posts', {method: 'POST', body: JSON.stringify(corps)});
 
-const envoi: Journal = {
-  envoye: new Date().toISOString(),
-  date,
-  statut: 'brouillon',
-  video: video.path,
-  miniature: miniature?.path,
-  postes: reponse.map((p) => ({reseau: RESEAUX.find((r) => canaux[r]?.id === p.integration) ?? p.integration, postId: p.postId, integration: p.integration})),
-};
+const nouveaux: Poste[] = reponse.map((p) => ({reseau: RESEAUX.find((r) => canaux[r]?.id === p.integration) ?? p.integration, postId: p.postId, integration: p.integration}));
+// Rattrapage : le journal de l'épisode garde ses posts, les nouveaux s'y ajoutent avec leur date.
+const envoi: Journal =
+  choix && precedent
+    ? {...precedent, postes: [...precedent.postes.filter((p) => !retenu(p.reseau)), ...nouveaux.map((p) => ({...p, date, statut: 'brouillon' as const}))]}
+    : {envoye: new Date().toISOString(), date, statut: 'brouillon', video: video.path, miniature: miniature?.path, postes: nouveaux};
 fs.writeFileSync(journal, JSON.stringify(envoi, null, 2) + '\n');
-envoi.postes.forEach((p) => console.log(`Brouillon : ${p.reseau} (${p.postId})`));
+nouveaux.forEach((p) => console.log(`Brouillon : ${p.reseau} (${p.postId})`));
 console.log(`\nDate prévue : ${lisible(date)}. Rien n’est publié : relire dans Postiz, puis --programmer après le feu vert.`);

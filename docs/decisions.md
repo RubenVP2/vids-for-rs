@@ -48,6 +48,7 @@ Les options explorées sont dans [`brainstorm.md`](brainstorm.md).
 | 2026-10-28 | Choix des sujets | Note sur 12 (impact grand public, potentiel de trafic, concret, explicable en 30 s), seuil 8 ; sinon la réserve `docs/sujets.md`. Le bilan du lundi met à jour `docs/apprentissages.md` à partir des chiffres | Des news qui ont du sens et font du trafic, et un choix qui apprend des vues réelles |
 | 2026-10-28 | Garde-fou | Plus de 2 épisodes en attente de relecture : la routine ne produit pas | Ne pas empiler des vidéos que personne ne relit |
 | 2026-10-28 | Lancement | La bande-annonce #000 ouvre la chaîne le 28/10 à 18 h, #001 suit le 29/10 à 8 h (programmés sur les 4 réseaux) | Choix de l'utilisateur : Matou se présente avant le premier épisode |
+| 2026-10-28 | 5e canal | **Page LinkedIn « Matou AI »** connectée à Postiz (texte d'Instagram). #000 et #002, déjà partis ailleurs, rattrapés le soir même (`--reseaux linkedin`) | Choix de l'utilisateur |
 | 2026-10-28 | Industrialisation | Skills `episode`, `ecriture-matou`, `publication`, `veille-ia` + sous-agents `documentaliste`, `verificateur-faits`, `spectateur`, `controleur-visuel` | Une recette unique et des relectures indépendantes à chaque épisode |
 
 ## À trancher
@@ -56,6 +57,4 @@ Les options explorées sont dans [`brainstorm.md`](brainstorm.md).
 | --- | --- | --- |
 | Fond « cahier » sur téléphone | Regarder la bande-annonce #000 sur un vrai téléphone | Pilote #001 |
 | Pseudo `@matou.ai` | Réserver le pseudo sur chaque réseau (Threads reprend celui d'Instagram ; Bluesky : `matou-ai.bsky.social` ou un domaine) | Avant la publication |
-| LinkedIn | Écarté au départ (ligne « Plateformes ») ; le script le gère s'il est connecté dans Postiz (texte d'Instagram) | Au choix de l'abonnement Postiz |
-| 5e canal Postiz | Recommandation de Claude : Facebook (page « Matou ») : plus grand public en France, Reels montrés aux non-abonnés, seul canal restant où une vidéo courte peut être rémunérée (programme Meta, éligibilité à vérifier dans Meta Business Suite). X ne paie qu'avec Premium ; Bluesky, Threads et LinkedIn ne paient pas. Pris en compte automatiquement dès qu'il est connecté dans Postiz | L'utilisateur y réfléchit |
 | Durée et rémunération TikTok | Le programme Creator Rewards ne paie que les vidéos de plus d'une minute (selon des guides non officiels, à vérifier dans l'app) : nos vidéos de 30 s n'y entrent pas. Garder 30 s, ou faire des « décryptés » de plus de 60 s | Quand le compte approche des seuils (10 000 abonnés) |

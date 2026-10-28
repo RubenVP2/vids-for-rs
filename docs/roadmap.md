@@ -43,7 +43,7 @@
 
 ## Phase 6 — Lancement & amélioration continue 🟡 *en cours*
 
-- Postiz (cloud, formule Standard) : 4 comptes connectés, le 5e à choisir.
+- Postiz (cloud, formule Standard) : 5 comptes connectés (le 5e : la page LinkedIn).
 - Routines : épisode du jour chaque matin, rappel de relecture, bilan du lundi
   (`docs/bilans/`, `docs/apprentissages.md`, `docs/sujets.md`).
 - À faire : premières publications, puis ajuster les formats selon les bilans.
