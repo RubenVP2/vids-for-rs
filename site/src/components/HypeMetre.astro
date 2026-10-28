@@ -27,7 +27,7 @@ const cible = verdict ? crans.findIndex(([id]) => id === verdict) : -1;
           <span>{c.label}</span>
           {i === cible && (
             <svg class="entoure" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-              <ellipse cx="50" cy="50" rx="56" ry="58" pathLength="1" transform="rotate(-4 50 50)" />
+              <ellipse cx="50" cy="50" rx="56" ry="58" transform="rotate(-4 50 50)" />
             </svg>
           )}
         </li>
@@ -89,8 +89,6 @@ const cible = verdict ? crans.findIndex(([id]) => id === verdict) : -1;
     stroke-width: 4px;
     stroke-linecap: round;
     vector-effect: non-scaling-stroke;
-    stroke-dasharray: 1;
-    stroke-dashoffset: 0;
   }
   .fleche {
     position: absolute;

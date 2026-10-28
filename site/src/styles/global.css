@@ -300,7 +300,7 @@ mark {
       animation-timeline: view();
       animation-range: entry 20% cover 50%;
     }
-    [data-anime] .entoure ellipse {
+    [data-anime] .entoure {
       animation: entoure linear both;
       animation-timeline: view();
       animation-range: cover 40% cover 55%;
@@ -356,11 +356,12 @@ mark {
   }
 }
 @keyframes entoure {
+  /* le stylo rouge passe de gauche à droite */
   from {
-    stroke-dashoffset: 1;
+    clip-path: inset(-20% 100% -20% -20%);
   }
   to {
-    stroke-dashoffset: 0;
+    clip-path: inset(-20% -20% -20% -20%);
   }
 }
 
