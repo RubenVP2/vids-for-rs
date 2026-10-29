@@ -1,11 +1,11 @@
 ---
 name: article
-description: Écrit article.md d'un épisode de Matou, la version texte publiée sur le blog du site (site/). À utiliser après publication.md (étape 6 du skill episode), ou pour réécrire un article du blog.
+description: Écrit article.md d'un épisode de Matou, la version texte publiée sur le blog du site (dépôt RubenVP2/jev-game). À utiliser après publication.md (étape 6 du skill episode), ou pour réécrire un article du blog.
 ---
 
 # Article : la version texte de l'épisode
 
-Écrire `episodes/NNN-slug/article.md`. Le site (`site/`, voir `docs/site.md`) le publie
+Écrire `episodes/NNN-slug/article.md`. Le site (dépôt à part, voir `docs/site.md`) le publie
 sur `/blog/<slug>/` **seul, au bon moment** : seulement quand `postiz-envoi.json` dit
 `programmé` (le « oui » de l'utilisateur) et que la date de la vidéo est passée. Il ne
 faut donc rien faire d'autre pour le publier, ni le publier plus tôt.
@@ -47,5 +47,5 @@ description: "…"  # 80 à 165 caractères : le texte sous le titre dans Google
 Modèle : `episodes/002-gemini-4-carbon/article.md`.
 
 **Fait quand** le sous-agent `verificateur-faits`, lancé sur `article.md` au lieu de
-`scenes.json`, rend « OK », et que `npm run build` dans `site/` passe (le schéma
-refuse un titre ou une description hors limites).
+`scenes.json`, rend « OK », que le titre fait 65 caractères au plus et la description 80 à
+165 (le build du site refuse un article hors limites, et tout le blog avec).

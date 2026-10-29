@@ -48,5 +48,5 @@
   (`docs/bilans/`, `docs/apprentissages.md`, `docs/sujets.md`).
 - À faire : premières publications, puis ajuster les formats selon les bilans.
 - V2 : la voix de l'utilisateur (clonage via OpenRouter, `brand/voix.json`).
-- Site (`site/`, `docs/site.md`) : accueil + blog, un article par épisode. À faire :
+- Site (dépôt RubenVP2/jev-game, `docs/site.md`) : accueil + blog, un article par épisode. À faire :
   le connecter à Cloudflare, le domaine, Search Console, le lien en bio.

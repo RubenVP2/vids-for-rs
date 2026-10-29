@@ -6,6 +6,3 @@ episodes/*/rendu/
 episodes/*/controle/
 *.log
 .env
-.impeccable/review/
-.impeccable/mocks/
-.impeccable/build/

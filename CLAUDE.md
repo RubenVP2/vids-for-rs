@@ -54,8 +54,9 @@ La seule étape humaine : relire les brouillons, puis les programmer.
   `verificateur-faits` (script contre source), `spectateur` (test grand public),
   `controleur-visuel` (images rendues).
 - Moteur (Remotion + scripts) : `docs/moteur.md`. Commandes : `package.json`.
-- Site (Astro, statique sur Cloudflare Workers) : `site/`, doc `docs/site.md`. Chaque épisode
-  y gagne un article (skill `article`), mis en ligne seul une fois la vidéo programmée.
+- Site (Astro, Cloudflare Workers) : dépôt à part, **RubenVP2/jev-game** (à renommer). Il lit
+  `episodes/` et `brand/` de ce dépôt à chaque build ; ce qu'il attend : `docs/site.md`. Chaque
+  épisode y gagne un article (skill `article`), mis en ligne seul une fois la vidéo programmée.
 
 ## Conventions
 

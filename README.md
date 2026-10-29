@@ -33,7 +33,7 @@ par le script dès qu'ils sont connectés. Clé d'API dans la variable `POSTIZ_E
 
 ## Le site
 
-Page d'accueil + blog dans [`site/`](site/) (Astro, statique sur Cloudflare Workers). Chaque
+Page d'accueil + blog dans un dépôt à part, [RubenVP2/jev-game](https://github.com/RubenVP2/jev-game) (Astro, statique sur Cloudflare Workers), qui lit les épisodes d'ici à chaque build. Chaque
 épisode y devient un article, publié seul une fois la vidéo programmée. Détail et mise en
 ligne : [`docs/site.md`](docs/site.md).
 
@@ -62,7 +62,7 @@ npm run postiz -- 001 --commentaire --envoyer
 | --- | --- |
 | [`docs/design-system.md`](docs/design-system.md) | Le cahier de Matou : couleurs, typos, Matou, composants, son |
 | [`docs/moteur.md`](docs/moteur.md) | Le moteur vidéo : commandes, voix, alignement, rendu |
-| [`docs/site.md`](docs/site.md) | Le site (Astro sur Cloudflare Workers) : pages, blog, mise en ligne |
+| [`docs/site.md`](docs/site.md) | Le site (dépôt à part) : ce qu'il lit ici, quand un article est en ligne |
 | [`docs/decisions.md`](docs/decisions.md) | Journal des décisions (tranchées et ouvertes) |
 | [`docs/apprentissages.md`](docs/apprentissages.md) | Ce qui marche chez Matou, d'après les chiffres |
 | [`docs/sujets.md`](docs/sujets.md) | Réserve de sujets pour les jours sans actu forte |
