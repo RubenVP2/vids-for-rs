@@ -27,5 +27,9 @@ ligne démentie est barrée, avec la date et les épisodes qui la démentent.
 
 | Statut | Constat | Preuve |
 | --- | --- | --- |
-| Hypothèse | 18 h (heure de Paris) en semaine est un bon créneau pour le grand public | — |
+| Hypothèse | Le soir est le bon créneau des vidéos : Instagram 18 h 30, TikTok 19 h, YouTube 20 h (`docs/reseaux.md`) | — |
 | Hypothèse | Une question en fin de description TikTok fait commenter | — |
+| Hypothèse | « Envoie-la à quelqu'un qui… » en fin de légende Instagram fait partager | — |
+| Hypothèse | Sur LinkedIn, le carrousel touche plus de monde que la vidéo (épisodes #000 à #002 en vidéo, référence) | — |
+| Hypothèse | LinkedIn en semaine à 8 h 30, texte sans lien (source en commentaire) | — |
+| Hypothèse | Threads : un texte de prise de position fait plus répondre que la légende reprise de TikTok ; la relance du soir (texte seul) ajoute des réponses | — |

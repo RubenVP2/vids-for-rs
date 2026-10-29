@@ -11,6 +11,7 @@
     "voice": "tsx scripts/voice.ts",
     "render": "tsx scripts/render.ts",
     "stills": "tsx scripts/stills.ts",
+    "carrousel": "tsx scripts/carrousel.ts",
     "check": "tsx scripts/check.ts",
     "postiz": "tsx scripts/postiz.ts",
     "bilan": "tsx scripts/bilan.ts",

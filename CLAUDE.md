@@ -37,6 +37,10 @@ Détail : `docs/routines.md`.
 - **À l'écran** : jamais l'utilisateur. Univers « cahier de Matou » : `docs/design-system.md`.
 - **Voix** : V1 synthèse via OpenRouter (`brand/voix.json`) ; V2 la voix de l'utilisateur.
 - **Rythme** : 1 vidéo par jour, au minimum 1 tous les 2 jours.
+- **Un post par réseau, pas un copier-coller** (`docs/reseaux.md`) : vidéo le soir sur
+  Instagram (18 h 30), TikTok (19 h), YouTube (20 h) ; Threads le matin (vidéo, 9 h) puis
+  une relance texte (19 h 30) ; LinkedIn en carrousel, en semaine à 8 h 30, un par jour
+  ouvré. Créneaux : `brand/postiz.json`.
 
 ## Règles éditoriales (non négociables)
 
@@ -50,7 +54,7 @@ Détail : `docs/routines.md`.
 ## Outils du dépôt
 
 - Skills (`.claude/skills/`) : `episode` (la recette), `ecriture-matou` (voix et
-  scènes), `publication` (descriptions, hashtags), `veille-ia` (choisir un sujet),
+  scènes), `publication` (un texte par réseau, hashtags), `veille-ia` (choisir un sujet),
   `programmation` (brouillons Postiz, puis programmation sur feu vert),
   `episode-du-jour` et `bilan` (les routines) et `postiz` (skill officiel de Postiz,
   copié tel quel).

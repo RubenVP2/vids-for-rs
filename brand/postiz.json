@@ -1,7 +1,16 @@
 {
-  "$description": "Réglages d'envoi dans Postiz (npm run postiz). Les brouillons arrivent à « heure » (fuseau donné) le lendemain, sauf --date. Un brouillon par réseau connecté dans Postiz ; les autres sont ignorés. Réglages par réseau : voir .claude/skills/postiz/PROVIDER_SETTINGS.md et npm run postiz -- --canaux.",
+  "$description": "Réglages d'envoi dans Postiz (npm run postiz). Chaque réseau a son créneau (heure de Paris, jours permis : 1 = lundi … 7 = dimanche) : un brouillon par réseau connecté, au premier jour libre de CE réseau, au moins 3 h après l'envoi. « suivantSeulement » : seul le prochain créneau est tenté ; déjà pris → pas de post sur ce réseau (la file ne s'allonge pas). « relance » : un 2e post, texte seul, le même jour à cette heure. Stratégie et sources : docs/reseaux.md. Réglages par réseau : .claude/skills/postiz/PROVIDER_SETTINGS.md et npm run postiz -- --canaux.",
   "fuseau": "Europe/Paris",
-  "heure": "18:00",
+  "creneaux": {
+    "tiktok": {"heure": "19:00"},
+    "instagram": {"heure": "18:30"},
+    "youtube": {"heure": "20:00"},
+    "facebook": {"heure": "18:30"},
+    "threads": {"heure": "09:00", "relance": "19:30"},
+    "linkedin": {"heure": "08:30", "jours": [1, 2, 3, 4, 5], "suivantSeulement": true},
+    "x": {"heure": "12:30"},
+    "bluesky": {"heure": "12:30"}
+  },
   "comptes": {},
   "tiktok": {
     "content_posting_method": "DIRECT_POST",
@@ -27,7 +36,7 @@
   },
   "threads": {},
   "linkedin": {
-    "post_as_images_carousel": false
+    "post_as_images_carousel": true
   },
   "x": {
     "who_can_reply_post": "everyone",

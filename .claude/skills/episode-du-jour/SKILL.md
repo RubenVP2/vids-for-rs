@@ -53,8 +53,10 @@ Skill **`episode`**, étapes 0 à 7. Pendant la routine :
 ## 3. Brouillons Postiz
 
 Skill **`programmation`**, jusqu'à `--envoyer` compris.
-Sans `--date` : le script prend le premier jour libre du calendrier à 18 h (aujourd'hui
-si la routine tourne le matin). Committer et pousser comme à l'étape 2.
+Sans `--date` : chaque réseau prend son premier créneau libre (`docs/reseaux.md`) ; le
+matin, les vidéos partent le soir même (Instagram 18 h 30, TikTok 19 h, YouTube 20 h),
+Threads et LinkedIn le lendemain matin. Un « Pas de post : LinkedIn… » est normal (un seul
+LinkedIn par jour ouvré). Committer et pousser comme à l'étape 2.
 
 **Ne jamais lancer `--programmer`** dans la routine : il attend le « oui » de l'utilisateur.
 
@@ -62,7 +64,8 @@ si la routine tourne le matin). Committer et pousser comme à l'étape 2.
 
 C'est lui que l'utilisateur reçoit en notification. Court, dans cet ordre :
 
-1. L'épisode : numéro, titre YouTube, idée en une phrase, Hype-mètre, date prévue.
+1. L'épisode : numéro, titre YouTube, idée en une phrase, Hype-mètre, et l'heure du
+   premier post (celui avant lequel relire) ; les réseaux sans post et pourquoi.
 2. Pourquoi ce sujet (une ligne : la raison du classement de la veille).
 3. Ce qu'il doit faire : relire les brouillons dans Postiz, puis soit les programmer
    lui-même dans Postiz, soit répondre « programme » dans cette session (tu lances alors

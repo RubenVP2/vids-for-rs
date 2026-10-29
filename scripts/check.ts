@@ -41,19 +41,46 @@ if (!fs.existsSync(pub)) {
 } else {
   const texte = fs.readFileSync(pub, 'utf8');
   verifier(texte.includes(episode.source.url), 'Source citée dans la description', 'L’URL de la source manque dans publication.md');
-  for (const plateforme of ['TikTok', 'Instagram', 'YouTube']) {
-    const bloc = texte.split(/^## /m).find((b) => b.startsWith(plateforme)) ?? '';
-    const tags = bloc.match(/#[\p{L}_][\p{L}\d_]*/gu) ?? [];
-    verifier(tags.length >= 3 && tags.length <= 8, `${plateforme} : ${tags.length} hashtags`, `${plateforme} : ${tags.length} hashtags (viser 3 à 8)`);
+  // Une section par réseau (skill publication, docs/reseaux.md). « ## Threads » n'attrape pas « ## Threads relance ».
+  const blocs = texte.split(/^## /m).slice(1);
+  const section = (titre: string) => {
+    const bloc = blocs.find((b) => b.slice(0, b.indexOf('\n')).replace(/\s*\(.*\)\s*$/, '').trim() === titre);
+    return bloc === undefined ? undefined : bloc.slice(bloc.indexOf('\n') + 1).trim();
+  };
+  const hashtags = (t: string) => t.match(/#[\p{L}_][\p{L}\d_]*/gu) ?? [];
+  // [section, hashtags min, max, caractères max, URL permise]
+  const regles: [string, number, number, number, boolean][] = [
+    ['TikTok', 3, 5, 2000, false],
+    ['Instagram', 3, 5, 2200, false], // Instagram ne garde que 5 hashtags
+    ['YouTube', 2, 4, 5000, true],
+    ['LinkedIn', 0, 3, 3000, false], // lien en commentaire : LinkedIn freine les posts avec lien
+    ['Threads', 0, 1, 500, false], // un seul sujet (tag) par post sur Threads
+    ['Threads relance', 0, 1, 500, false],
+  ];
+  for (const [titre, min, max, limite, url] of regles) {
+    const bloc = section(titre);
+    if (!bloc) {
+      ko.push(`Section « ## ${titre} » absente de publication.md`);
+      continue;
+    }
+    const n = hashtags(bloc).length;
+    const lien = !url && /https?:\/\//.test(bloc);
+    verifier(
+      n >= min && n <= max && bloc.length <= limite && !lien,
+      `${titre} : ${bloc.length} caractères, ${n} hashtag(s)`,
+      `${titre} : ${bloc.length} caractères (max ${limite}), ${n} hashtag(s) (viser ${min} à ${max})${lien ? ', URL dans le texte (la mettre dans le commentaire)' : ''}`,
+    );
   }
-  // Texte commun à Threads, X et Bluesky : 280 caractères (limite de X), un hashtag (Threads n'en garde qu'un).
-  const court = (texte.split(/^## /m).find((b) => b.startsWith('Court')) ?? '').replace(/^.*\n/, '').trim();
-  const tagsCourt = court.match(/#[\p{L}_][\p{L}\d_]*/gu) ?? [];
-  verifier(
-    court.length > 0 && court.length <= 280 && tagsCourt.length === 1,
-    `Court (Threads, X, Bluesky) : ${court.length} caractères, 1 hashtag`,
-    court ? `Court : ${court.length} caractères (max 280) et ${tagsCourt.length} hashtag(s) (viser 1)` : 'Section « ## Court (Threads, X, Bluesky) » absente',
-  );
+  // LinkedIn coupe après ~210 caractères (« … voir plus ») : l'accroche doit tenir avant.
+  const accroche = (section('LinkedIn') ?? '').split(/\n\s*\n/)[0];
+  verifier(accroche.length <= 210, 'LinkedIn : accroche avant « voir plus »', `LinkedIn : le 1er paragraphe fait ${accroche.length} caractères (max 210, avant « voir plus »)`);
+  verifier((section('Threads relance') ?? '').includes('?'), 'Threads relance : une question', 'Threads relance : doit poser une question (elle sert à faire répondre)');
+  const carrousel = path.join(dossier, 'rendu', 'carrousel');
+  const diapos = fs.existsSync(carrousel) ? fs.readdirSync(carrousel).filter((f) => f.endsWith('.png')).length : 0;
+  verifier(diapos >= 2, `Carrousel LinkedIn : ${diapos} diapos`, 'Carrousel LinkedIn absent : lancer npm run carrousel');
+  // X et Bluesky (pas connectés aujourd'hui) : facultatif, 280 caractères (limite de X).
+  const court = section('Court');
+  if (court !== undefined) verifier(court.length <= 280, `Court (X, Bluesky) : ${court.length} caractères`, `Court (X, Bluesky) : ${court.length} caractères (max 280)`);
 }
 
 ok.forEach((m) => console.log(`OK  ${m}`));

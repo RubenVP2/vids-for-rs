@@ -32,6 +32,11 @@ d'un réseau à l'autre pour les additionner). Pour chaque épisode, regarder ce
 distingue : entreprise citée, type de sujet (produit grand public, sécurité, emploi,
 argent…), série, hook (`scenes.json`, première scène), verdict du Hype-mètre, jour.
 
+Puis la stratégie par réseau (`docs/reseaux.md`) : le créneau de chaque post (colonne
+« Créneau »), le format (LinkedIn : carrousel ou vidéo), le texte propre au réseau
+(`publication.md`), et sur Threads la relance (`threads-relance`) contre le post vidéo.
+Un créneau qui fait moins bien 3 semaines de suite : proposer une autre heure.
+
 Une conclusion ne vaut que si elle repose sur **au moins 3 épisodes** qui vont dans le
 même sens ; sinon c'est une piste, notée comme telle. Ne jamais inventer d'explication
 que les chiffres ne montrent pas.
@@ -48,8 +53,8 @@ que les chiffres ne montrent pas.
    avec le skill `veille-ia` (articles de blog des 30 derniers jours, série `decrypte`,
    pas déjà traités). Retirer ceux qui sont périmés.
 
-Ne pas modifier les skills ni `CLAUDE.md` : proposer le changement dans le message final,
-l'utilisateur tranche.
+Ne pas modifier les skills, `CLAUDE.md` ni les créneaux de `brand/postiz.json` :
+proposer le changement dans le message final, l'utilisateur tranche.
 
 Commit, puis `git pull --rebase origin main` et
 `git push origin HEAD:main` (autorisé pour cette routine).

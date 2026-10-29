@@ -55,6 +55,7 @@ Les options explorées sont dans [`brainstorm.md`](brainstorm.md).
 | 2026-10-29 | Accès Postiz | **CLI `postiz`** (OAuth device flow sur le Pi, ou `POSTIZ_API_KEY`/`POSTIZ_ENV`) pour `npm run postiz` et `npm run bilan` ; le MCP n'est plus utilisé | Aucune clé stockée sur le Pi ; la même CLI marche avec une clé ailleurs |
 | 2026-10-29 | Voix (inchangée) | La voix reste **OpenRouter** (Gemini 3.8 Flash TTS / Puck + Whisper). L'essai d'Hermes en API Gemini directe (quota gratuit 10 req./jour, consigne de style prononcée, minutage deviné par un LLM) est abandonné | La voix validée à l'oreille ne change pas ; Whisper donne un vrai minutage des mots |
 | 2026-10-29 | Effort d'agy | **high**, imposé : `--effort high` et variantes `-high` des modèles dans `lancer.sh`, modèle par défaut `-high` dans les réglages d'agy du Pi | Choix de l'utilisateur : la qualité prime sur le quota |
+| 2026-10-29 | Un post taillé par réseau | Texte propre à chaque réseau ; LinkedIn en **carrousel** (diapos tirées des scènes), sans lien, en semaine 8 h 30, un par jour ouvré ; Threads : vidéo à 9 h + relance texte à 19 h 30 ; vidéos le soir (Instagram 18 h 30, TikTok 19 h, YouTube 20 h) ; toujours 1 épisode par jour | Demande de l'utilisateur (viralité par réseau) ; étude et sources : `docs/reseaux.md` |
 
 ## À trancher
 

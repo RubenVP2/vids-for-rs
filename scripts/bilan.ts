@@ -10,13 +10,15 @@ import {EPISODES} from './lib/episode';
 import {cli, enListe} from './lib/postiz-cli';
 
 type Serie = {label: string; average?: boolean; data: {total: number | string; date: string}[]};
-type Poste = {reseau: string; postId: string; integration: string};
+type Poste = {reseau: string; postId: string; integration: string; date?: string};
 type Post = {id: string; state: string; releaseURL: string | null; publishDate: string};
 type Canal = {id: string; name: string; identifier: string; disabled: boolean};
 
 const args = process.argv.slice(2);
 const jours = Number(args[args.indexOf('--jours') + 1]) || 30;
-
+/** « jeu. 30, 18:30 » : chaque réseau a son créneau (brand/postiz.json), le bilan les compare. */
+const creneau = (iso: string) =>
+  new Date(iso).toLocaleString('fr-FR', {timeZone: 'Europe/Paris', weekday: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'});
 
 /** Une série Postiz → un nombre : la somme des jours, ou leur moyenne pour une durée moyenne. */
 const resumer = (series: Serie[]) =>
@@ -44,13 +46,17 @@ const parId = new Map(posts.map((p) => [p.id, p]));
 
 if (args.includes('--attente')) {
   const enAttente = envois.filter(({envoi}) => (envoi.postes as Poste[]).some((p) => parId.get(p.postId)?.state === 'DRAFT'));
-  enAttente.forEach(({d, envoi}) => console.log(`${d} : brouillons pour le ${new Date(envoi.date).toLocaleString('fr-FR', {timeZone: 'Europe/Paris'})}`));
+  for (const {d, envoi} of enAttente) {
+    // le créneau le plus proche : celui avant lequel il faut relire
+    const dates = (envoi.postes as Poste[]).filter((p) => parId.get(p.postId)?.state === 'DRAFT').map((p) => p.date ?? envoi.date).sort();
+    console.log(`${d} : brouillons à relire avant ${creneau(dates[0])}`);
+  }
   console.log(`${enAttente.length} épisode(s) en attente de relecture.`);
   process.exit(0);
 }
 
 console.log(`## Épisodes (${jours} derniers jours)\n`);
-console.log('| Épisode | Série | Réseau | État | Chiffres |\n| --- | --- | --- | --- | --- |');
+console.log('| Épisode | Série | Réseau | Créneau | État | Chiffres |\n| --- | --- | --- | --- | --- | --- |');
 for (const {d, envoi} of envois) {
   const scenes = JSON.parse(fs.readFileSync(path.join(EPISODES, d, 'scenes.json'), 'utf8'));
   const postes = [];
@@ -62,7 +68,7 @@ for (const {d, envoi} of envois) {
     const stats = Array.isArray(brut) ? resumer(brut) : {};
     postes.push({...p, etat, url: post?.releaseURL ?? null, manquant, stats});
     const note = manquant ? 'publication non reliée : posts:missing puis posts:connect (skill postiz)' : enLigne(stats);
-    console.log(`| ${d} | ${scenes.serie} | ${p.reseau} | ${etat}${post?.releaseURL ? ` ([lien](${post.releaseURL}))` : ''} | ${note} |`);
+    console.log(`| ${d} | ${scenes.serie} | ${p.reseau} | ${creneau(p.date ?? envoi.date)} | ${etat}${post?.releaseURL ? ` ([lien](${post.releaseURL}))` : ''} | ${note} |`);
   }
   const stats = {maj: new Date().toISOString(), jours, date: envoi.date, postes};
   fs.writeFileSync(path.join(EPISODES, d, 'stats.json'), JSON.stringify(stats, null, 2) + '\n');

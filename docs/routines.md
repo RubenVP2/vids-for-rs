@@ -14,6 +14,11 @@ Hermes (cron)  →  ~/.hermes/scripts/matou-<routine>.sh   lance en tâche de fo
                     4. hermes send → Discord #matou : message final, miniature, vidéo
 ```
 
+Les heures suivent les créneaux des réseaux (`docs/reseaux.md`) : l'épisode est prêt
+vers 9 h–10 h, assez tôt pour les vidéos du soir (Instagram 18 h 30, TikTok 19 h,
+YouTube 20 h) ; Threads (9 h) et LinkedIn (8 h 30) partent le lendemain matin. Le rappel
+de 14 h tombe avant le premier créneau du soir.
+
 Hermes ne fait que planifier : un épisode dépasse le délai d'un script de cron (1 h),
 donc le script Hermes rend la main tout de suite et `lancer.sh` livre lui-même.
 

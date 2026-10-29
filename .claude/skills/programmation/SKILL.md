@@ -43,30 +43,37 @@ Choix déjà faits dans `brand/postiz.json` (ne pas changer sans l'utilisateur) 
 TikTok en `DIRECT_POST` (`UPLOAD` ne publie pas) ; mention « fait avec l'IA » sur TikTok
 et X (voix de synthèse, pour éviter les sanctions) ; Instagram en Reel (`post_type: post`) ;
 YouTube public, pas « pour enfants » ; Facebook en publication (pas en story) ; X ouvert
-aux réponses de tous.
+aux réponses de tous ; LinkedIn en carrousel (`post_as_images_carousel`).
 
 ## 2. Aperçu
 
-`npm run postiz -- NNN --commentaire [--date AAAA-MM-JJTHH:MM]`
+`npm run postiz -- NNN --commentaire [--date AAAA-MM-JJ]`
 
-- Date : le premier jour sans post dans le calendrier Postiz, à l'heure de
-  `brand/postiz.json` (18 h, heure de Paris), aujourd'hui compris s'il reste 3 h. Rythme
-  visé : 1 vidéo par jour. Si l'utilisateur a donné un jour, le prendre (`--date`).
+- Chaque réseau a son format, son texte et son **créneau** (`docs/reseaux.md`,
+  `brand/postiz.json` → `creneaux`) : TikTok 19 h, Instagram 18 h 30, YouTube 20 h,
+  Threads 9 h (vidéo) puis 19 h 30 (relance, texte seul), LinkedIn 8 h 30 en semaine
+  (carrousel de `rendu/carrousel/`). Le script prend pour chacun son premier jour libre,
+  au moins 3 h après maintenant. LinkedIn ne tente que le créneau suivant : déjà pris →
+  « Pas de post : LinkedIn… », c'est voulu.
+- Si l'utilisateur a donné un jour : `--date AAAA-MM-JJ` (chaque réseau à son heure ce
+  jour-là). `--date AAAA-MM-JJTHH:MM` met tous les réseaux à cette heure : seulement s'il
+  le demande.
 - `--commentaire` ajoute la ligne « Commentaire à épingler » de `publication.md` en
-  premier commentaire partout sauf sur TikTok (qui ne le permet pas) ; sur Threads, X et
-  Bluesky, c'est la première réponse du fil. Il reste à l'épingler à la main là où c'est
-  possible, et à le poster à la main sur TikTok.
-- Le script écrit `postiz.json` (la charge utile de `postiz posts:create --json`) et
-  n'envoie rien.
+  premier commentaire partout sauf sur TikTok (qui ne le permet pas) et la relance ; sur
+  Threads, X et Bluesky, c'est la première réponse du fil. Il reste à l'épingler à la main
+  là où c'est possible, et à le poster à la main sur TikTok.
+- Le script écrit `postiz.json` (les charges utiles de `postiz posts:create --json`, une
+  par date) et n'envoie rien. Il affiche réseau, date, format et longueur de chaque post.
 
 **Fait quand** la sortie ne contient aucune ligne ATTENTION.
 
 ## 3. Créer les brouillons
 
-La même commande avec `--envoyer` : téléverse la vidéo et la miniature, crée un
-brouillon par compte, écrit `postiz-envoi.json` (`{envoye, date, statut: "brouillon",
-video, miniature, postes: [{reseau, postId, integration}]}`). Committer `postiz.json` et
-`postiz-envoi.json`.
+La même commande avec `--envoyer` : téléverse la vidéo, la miniature et le carrousel,
+crée un brouillon par réseau à son créneau, écrit `postiz-envoi.json` (`{envoye, date
+(la plus proche), statut, video, miniature, carrousel, postes: [{reseau, postId,
+integration, date, statut}]}` ; la relance Threads a pour réseau `threads-relance`).
+Committer `postiz.json` et `postiz-envoi.json`.
 
 Le script refuse de renvoyer un épisode qui a déjà un `postiz-envoi.json` : vérifier
 d'abord dans Postiz (`npx postiz posts:list`) ; `--force` crée des doublons.
@@ -80,11 +87,12 @@ posts s'ajoutent à `postiz-envoi.json` avec leur propre `date` et `statut`.
 
 ## 4. Faire relire, puis programmer
 
-Dire à l'utilisateur : les brouillons sont dans le calendrier Postiz, à la date prévue.
+Dire à l'utilisateur : les brouillons sont dans le calendrier Postiz, chacun à son
+créneau, et le premier à relire (celui qui part le plus tôt).
 Ce qu'il doit regarder :
 
-- la vidéo et le texte de chaque réseau ;
-- la couverture ;
+- la vidéo et le texte de chaque réseau, la relance Threads ;
+- le carrousel LinkedIn et la couverture ;
 - le commentaire de sources à épingler.
 
 Ne jamais présenter l'épisode comme publié.
