@@ -102,7 +102,7 @@ case "$routine" in
     consigne="$commun Épisode $rang du jour. Suis le skill episode-du-jour de bout en bout (veille-ia en mode autonome, puis episode étapes 0 à 7, avec les sous-agents documentaliste, verificateur-faits, spectateur et controleur-visuel). $postiz_consigne Termine par le message final du skill, en français, puis l'avant-dernière ligne exactement « PROGRAMMER: oui » ou « PROGRAMMER: non — <raison> » (étape 4 du skill), et la dernière ligne exactement « EPISODE: NNN » (ou « EPISODE: aucun »)."
     ;;
   bilan)
-    consigne="$commun Suis le skill bilan de bout en bout. Ne modifie ni les skills ni CLAUDE.md (propose-le dans le message final). Ne publie et ne programme rien dans Postiz. Termine par le message final du skill, en français."
+    consigne="$commun Suis le skill bilan de bout en bout. Ne modifie ni les skills ni AGENTS.md (propose-le dans le message final). Ne publie et ne programme rien dans Postiz. Termine par le message final du skill, en français."
     ;;
   *) echouer "routine inconnue « $routine »" ;;
 esac

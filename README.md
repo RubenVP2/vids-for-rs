@@ -62,4 +62,4 @@ npm run postiz -- 001 --commentaire --envoyer
 | [`docs/bilans/`](docs/bilans/) | Bilans hebdomadaires |
 | [`docs/roadmap.md`](docs/roadmap.md) | Les phases du projet |
 | [`docs/brainstorm.md`](docs/brainstorm.md) | Pistes explorées en phase 1 |
-| [`CLAUDE.md`](CLAUDE.md) | Le contexte et les règles que Claude suit à chaque session |
+| [`AGENTS.md`](AGENTS.md) | Le contexte et les règles que suit chaque agent (Claude Code l’importe par `CLAUDE.md`, agy le lit directement) |

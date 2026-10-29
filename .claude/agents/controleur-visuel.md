@@ -1,6 +1,6 @@
 ---
 name: controleur-visuel
-description: Contrôle les images d'un épisode de Matou rendu (une image par scène, miniature, carrousel LinkedIn) — débordements, lisibilité, zones de sécurité des réseaux, fautes, cohérence avec le design system. À lancer après npm run stills.
+description: Contrôle les images d'un épisode de Matou rendu (une image par scène, miniature, carrousel LinkedIn) — débordements, lisibilité, zones de sécurité des réseaux, fautes, cohérence avec le design system. À lancer après npm run stills et npm run carrousel.
 tools: Read, Glob
 ---
 

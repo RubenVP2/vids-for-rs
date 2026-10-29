@@ -23,7 +23,7 @@ jamais moqueur envers le public.
 
 ## Règles éditoriales (non négociables)
 
-Elles viennent de `CLAUDE.md` : citer la source, ne rien inventer, distinguer
+Elles viennent de `AGENTS.md` : citer la source, ne rien inventer, distinguer
 annoncé / disponible / rumeur, reformuler au lieu de recopier, un hook tenu par la vidéo.
 Tout fait, chiffre ou citation du script doit se retrouver dans la fiche de `source.md`.
 

@@ -28,7 +28,7 @@ passer en programmé :
 
 - `npm run check -- NNN` affiche « Prêt pour la relecture humaine. »
 - `npm run postiz -- --canaux` liste au moins un compte, avec les règles de chaque
-  réseau. Refusé : `npx postiz auth:status` dit pourquoi (jeton absent ou expiré : à
+  réseau. Refusé : `node_modules/.bin/postiz auth:status` dit pourquoi (jeton absent ou expiré : à
   l'utilisateur de relancer `postiz auth:login` sur le Pi) ; s'arrêter et le dire.
 
 Réseaux gérés (un brouillon par compte connecté, les autres ignorés) : TikTok, Instagram,
@@ -84,7 +84,7 @@ integration, date, statut}]}` ; la relance Threads a pour réseau `threads-relan
 Committer `postiz.json` et `postiz-envoi.json`.
 
 Le script refuse de renvoyer un épisode qui a déjà un `postiz-envoi.json` : vérifier
-d'abord dans Postiz (`npx postiz posts:list`) ; `--force` crée des doublons.
+d'abord dans Postiz (`node_modules/.bin/postiz posts:list`) ; `--force` crée des doublons.
 
 **Réseau connecté après coup** (rattraper un épisode déjà parti ailleurs) :
 `npm run postiz -- NNN --envoyer --reseaux linkedin [--date …] [--commentaire]`, puis

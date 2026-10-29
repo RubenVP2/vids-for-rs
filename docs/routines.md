@@ -51,7 +51,7 @@ donc le script Hermes rend la main tout de suite et `lancer.sh` livre lui-même.
 
 ## agy
 
-- Contexte : `AGENTS.md` (lien vers `CLAUDE.md`). Skills : `.agents/skills.json` pointe
+- Contexte : `AGENTS.md`, source unique (`CLAUDE.md` l’importe pour Claude Code). Skills : `.agents/skills.json` pointe
   vers `.claude/skills`. Sous-agents : `.agents/agents` est un lien vers `.claude/agents`.
   Une seule copie : modifier les skills dans `.claude/`, les deux harnais les voient.
 - En `--print --mode accept-edits`, agy travaille dans le clone sans qu'il soit dans
@@ -69,7 +69,7 @@ donc le script Hermes rend la main tout de suite et `lancer.sh` livre lui-même.
 
 - Voix : `OPENROUTER_API_KEY`, lue dans `~/.hermes/.env` par le lanceur.
 - Postiz : jeton OAuth de la CLI (`~/.postiz/credentials.json`, `postiz auth:login`).
-  Expiré : `npx postiz auth:status` le dit, relancer `postiz auth:login` sur le Pi.
+  Expiré : `node_modules/.bin/postiz auth:status` le dit, relancer `postiz auth:login` sur le Pi.
 
 ## Dépanner
 
