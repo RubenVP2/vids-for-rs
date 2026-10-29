@@ -33,3 +33,4 @@ ligne démentie est barrée, avec la date et les épisodes qui la démentent.
 | Hypothèse | Sur LinkedIn, le carrousel touche plus de monde que la vidéo (épisodes #000 à #002 en vidéo, référence) | — |
 | Hypothèse | LinkedIn en semaine à 8 h 30, texte sans lien (source en commentaire) | — |
 | Hypothèse | Threads : un texte de prise de position fait plus répondre que la légende reprise de TikTok ; la relance du soir (texte seul) ajoute des réponses | — |
+| Hypothèse | Un 2e épisode le midi (TikTok, YouTube, Threads) ajoute des vues sans faire baisser celles du principal du soir (rythme de production depuis le 30/10) | — |

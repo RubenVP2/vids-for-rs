@@ -56,7 +56,7 @@ if (args.includes('--attente')) {
 }
 
 console.log(`## Épisodes (${jours} derniers jours)\n`);
-console.log('| Épisode | Série | Réseau | Créneau | État | Chiffres |\n| --- | --- | --- | --- | --- | --- |');
+console.log('| Épisode | Série | Rang | Réseau | Créneau | État | Chiffres |\n| --- | --- | --- | --- | --- | --- | --- |');
 for (const {d, envoi} of envois) {
   const scenes = JSON.parse(fs.readFileSync(path.join(EPISODES, d, 'scenes.json'), 'utf8'));
   const postes = [];
@@ -68,9 +68,9 @@ for (const {d, envoi} of envois) {
     const stats = Array.isArray(brut) ? resumer(brut) : {};
     postes.push({...p, etat, url: post?.releaseURL ?? null, manquant, stats});
     const note = manquant ? 'publication non reliée : posts:missing puis posts:connect (skill postiz)' : enLigne(stats);
-    console.log(`| ${d} | ${scenes.serie} | ${p.reseau} | ${creneau(p.date ?? envoi.date)} | ${etat}${post?.releaseURL ? ` ([lien](${post.releaseURL}))` : ''} | ${note} |`);
+    console.log(`| ${d} | ${scenes.serie} | ${envoi.rang ?? 'principal'} | ${p.reseau} | ${creneau(p.date ?? envoi.date)} | ${etat}${post?.releaseURL ? ` ([lien](${post.releaseURL}))` : ''} | ${note} |`);
   }
-  const stats = {maj: new Date().toISOString(), jours, date: envoi.date, postes};
+  const stats = {maj: new Date().toISOString(), jours, date: envoi.date, rang: envoi.rang ?? 'principal', postes};
   fs.writeFileSync(path.join(EPISODES, d, 'stats.json'), JSON.stringify(stats, null, 2) + '\n');
 }
 

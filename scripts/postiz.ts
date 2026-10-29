@@ -2,15 +2,18 @@
 // (TikTok, Instagram, YouTube, Facebook, Threads, LinkedIn, X, Bluesky).
 // Chaque réseau a son texte (section de publication.md), son format (vidéo, ou carrousel
 // sur LinkedIn) et son créneau (brand/postiz.json → creneaux ; stratégie : docs/reseaux.md).
-// Rien n'est publié sans le feu vert de l'utilisateur : les posts sont créés en BROUILLON,
-// et --programmer ne fait que les passer dans la file de publication de Postiz.
+// Deux épisodes par jour : le principal (soir, tous les réseaux) et le second (midi, TikTok,
+// YouTube et Threads). Les posts sont créés en BROUILLON ; --programmer les passe dans la file
+// de Postiz (feu vert de l'utilisateur, ou garde-fous de la routine), --annuler (veto) les y retire.
 // Usage : npm run postiz -- <épisode>                aperçu : écrit postiz.json (charges utiles -j), n'envoie rien
-//         npm run postiz -- <épisode> --envoyer [--date 2026-10-29[T18:00]] [--commentaire] [--force]
-//         sans --date : pour chaque réseau, son premier créneau libre au moins 3 h après maintenant
+//         npm run postiz -- <épisode> --envoyer [--rang second] [--date 2026-10-29[T18:00]] [--commentaire] [--force]
+//         --rang principal (défaut) ou second : la grille de créneaux de l'épisode
+//         sans --date : pour chaque réseau, son premier créneau libre au moins delaiVeto h après maintenant
 //         --date AAAA-MM-JJ : ce jour-là, chaque réseau à son heure ; --date AAAA-MM-JJTHH:MM : tous à cette heure
 //         --reseaux linkedin,x : seulement ces réseaux (rattrapage d'un réseau connecté après coup :
 //         les posts s'ajoutent au journal, les autres réseaux ne sont pas renvoyés)
-//         npm run postiz -- <épisode> --programmer   après le feu vert : brouillons → programmés
+//         npm run postiz -- <épisode> --programmer   brouillons → programmés
+//         npm run postiz -- <épisode> --annuler      veto : les posts programmés pas encore partis → brouillons
 //         npm run postiz -- --canaux                 comptes connectés + règles de chaque réseau
 // Accès : CLI officielle `postiz` authentifiée par OAuth2 device flow (postiz auth:login,
 // jeton dans ~/.postiz/credentials.json) — aucune clé API nécessaire.
@@ -23,14 +26,20 @@ import {cli, enListe} from './lib/postiz-cli';
 type Reseau = 'tiktok' | 'instagram' | 'youtube' | 'facebook' | 'threads' | 'linkedin' | 'x' | 'bluesky';
 type Texte = 'tiktok' | 'instagram' | 'youtube' | 'linkedin' | 'threads' | 'relance' | 'court'; // sections de publication.md
 type Creneau = {heure: string; jours?: number[]; suivantSeulement?: boolean; relance?: string};
-type Reglages = {fuseau: string; creneaux: Record<Reseau, Creneau>; comptes: Partial<Record<Reseau, string>>} & Record<Reseau, Record<string, unknown>>;
+type Rang = 'principal' | 'second';
+type Reglages = {
+  fuseau: string;
+  delaiVeto: number;
+  creneaux: Record<Rang, Partial<Record<Reseau, Creneau>>>;
+  comptes: Partial<Record<Reseau, string>>;
+} & Record<Reseau, Record<string, unknown>>;
 type Canal = {id: string; name: string; identifier: string; disabled: boolean};
 type Media = {id: string; path: string};
 type Publication = Partial<Record<Texte, string>> & {titre: string; commentaire?: string};
 type Statut = 'brouillon' | 'programmé';
 // reseau « threads-relance » : le 2e post Threads (texte seul) du même épisode.
 type Poste = {reseau: string; postId: string; integration: string; date?: string; statut?: Statut};
-type Journal = {envoye: string; date: string; statut: Statut; video: string; miniature?: string; carrousel?: string[]; postes: Poste[]};
+type Journal = {envoye: string; date: string; rang?: Rang; statut: Statut; video: string; miniature?: string; carrousel?: string[]; postes: Poste[]};
 /** Un post à créer : un réseau, son texte, ses médias, sa date. */
 type Envoi = {reseau: Reseau; relance?: boolean; date: string; texte: string; carrousel: boolean};
 
@@ -110,36 +119,37 @@ const jourSemaine = (j: string) => ((new Date(`${j}T12:00:00Z`).getUTCDay() + 6)
 const lisible = (iso: string) =>
   new Intl.DateTimeFormat('fr-FR', {timeZone: reglages.fuseau, dateStyle: 'full', timeStyle: 'short'}).format(new Date(iso));
 
-/** Jours déjà occupés dans Postiz, par réseau (« AAAA-MM-JJ »). Postiz injoignable : aucun. */
-const joursPris = (): Record<Reseau, Set<string>> => {
-  const pris = Object.fromEntries(RESEAUX.map((r) => [r, new Set<string>()])) as Record<Reseau, Set<string>>;
+/** Instants déjà occupés dans Postiz, par réseau (ms). Postiz injoignable : aucun. */
+const postsExistants = (): Record<Reseau, number[]> => {
+  const pris = Object.fromEntries(RESEAUX.map((r) => [r, [] as number[]])) as Record<Reseau, number[]>;
   const [debut, fin] = [Date.now() - JOUR, Date.now() + 15 * JOUR].map((t) => new Date(t).toISOString());
   try {
     const posts = enListe<{publishDate: string; integration?: {providerIdentifier?: string}}>(cli('posts:list', '--startDate', debut, '--endDate', fin));
     for (const p of posts) {
       const r = reseauDe(p.integration?.providerIdentifier ?? '');
-      if (r) pris[r].add(jour(new Date(p.publishDate).getTime()));
+      if (r) pris[r].push(new Date(p.publishDate).getTime());
     }
   } catch {
     console.log('ATTENTION calendrier Postiz illisible (postiz auth:status) : créneaux calculés sans lui.');
   }
   return pris;
 };
+/** Un créneau est pris si le réseau a déjà un post à moins de 90 min (le principal et le second ne se gênent pas). */
+const occupe = (pris: number[], date: string) => pris.some((t) => Math.abs(t - new Date(date).getTime()) < 90 * 60_000);
 
 /**
- * Le créneau d'un réseau : son premier jour permis et libre, à son heure, au moins 3 h après
- * maintenant (ou le jour imposé par --date). undefined : pas de post (créneau suivant déjà pris).
+ * Le créneau d'un réseau pour ce rang : son premier jour permis et libre, à son heure, au moins
+ * delaiVeto h après maintenant (ou le jour imposé par --date). undefined : pas de post.
  */
-const creneauPour = (r: Reseau, pris: Set<string>, impose?: string): string | undefined => {
-  const c = reglages.creneaux[r];
+const creneauPour = (c: Creneau, r: Reseau, pris: number[], impose?: string): string | undefined => {
   if (impose?.includes('T')) return versUtc(impose);
   const depart = impose ? new Date(`${impose}T12:00:00Z`).getTime() : Date.now();
   for (let i = 0; i < 15; i++) {
     const j = jour(depart + i * JOUR);
     if (c.jours && !c.jours.includes(jourSemaine(j))) continue;
     const date = versUtc(`${j}T${c.heure}`);
-    if (!impose && new Date(date).getTime() - Date.now() < 3 * 3_600_000) continue;
-    if (!pris.has(j)) return date;
+    if (!impose && new Date(date).getTime() - Date.now() < reglages.delaiVeto * 3_600_000) continue;
+    if (!occupe(pris, date)) return date;
     if (c.suivantSeulement || impose) return undefined;
   }
   throw new Error(`${NOMS[r]} : aucun jour libre dans les 15 prochains jours du calendrier Postiz : préciser --date.`);
@@ -160,20 +170,25 @@ const choisirCanaux = (canaux: Canal[]) => {
 };
 
 /** Les posts de l'épisode, un par réseau retenu (plus la relance Threads), chacun à son créneau. */
-const planifier = (pub: Publication, reseaux: Reseau[], carrousel: string[], impose?: string) => {
-  const pris = joursPris();
+const planifier = (pub: Publication, reseaux: Reseau[], carrousel: string[], rang: Rang, impose?: string) => {
+  const pris = postsExistants();
   const envois: Envoi[] = [];
   const sautes: string[] = [];
   for (const r of reseaux) {
     const texte = texteDe(pub, r);
+    const c = reglages.creneaux[rang][r];
     if (!texte) continue;
-    const date = creneauPour(r, pris[r], impose);
+    if (!c) {
+      sautes.push(`${NOMS[r]} : réservé à l'épisode principal`);
+      continue;
+    }
+    const date = creneauPour(c, r, pris[r], impose);
     if (!date) {
       sautes.push(`${NOMS[r]} : prochain créneau déjà pris, pas de post pour cet épisode`);
       continue;
     }
     envois.push({reseau: r, date, texte, carrousel: r === 'linkedin' && !!pub.linkedin && carrousel.length >= 2});
-    const relance = reglages.creneaux[r].relance;
+    const relance = c.relance;
     if (relance && r === 'threads' && pub.relance) {
       const dateRelance = versUtc(`${jour(new Date(date).getTime())}T${relance}`);
       if (dateRelance > date) envois.push({reseau: r, relance: true, date: dateRelance, texte: pub.relance, carrousel: false});
@@ -247,21 +262,30 @@ const inconnus = choix?.filter((r) => !RESEAUX.includes(r)) ?? [];
 if (inconnus.length) throw new Error(`--reseaux : ${inconnus.join(', ')} inconnu (attendu parmi ${RESEAUX.join(', ')}).`);
 const retenu = (reseau: string) => !choix || choix.includes(reseau.replace(/-relance$/, '') as Reseau);
 
-const dossier = dossierEpisode(args.find((a, i) => !a.startsWith('--') && !['--date', '--reseaux'].includes(args[i - 1])));
+const rang = (valeurDe('--rang') ?? 'principal') as Rang;
+if (!(rang in reglages.creneaux)) throw new Error(`--rang ${rang} : attendu ${Object.keys(reglages.creneaux).join(' ou ')}.`);
+
+const dossier = dossierEpisode(args.find((a, i) => !a.startsWith('--') && !['--date', '--reseaux', '--rang'].includes(args[i - 1])));
 const nom = nomEpisode(dossier);
 const journal = path.join(dossier, 'postiz-envoi.json');
 
-if (args.includes('--programmer')) {
+if (args.includes('--programmer') || args.includes('--annuler')) {
   if (!fs.existsSync(journal)) throw new Error('Aucun brouillon envoyé pour cet épisode : lancer d’abord --envoyer.');
   const envoi = JSON.parse(fs.readFileSync(journal, 'utf8')) as Journal;
+  const veto = args.includes('--annuler');
   for (const p of envoi.postes.filter((p) => retenu(p.reseau))) {
-    cli('posts:status', p.postId, '--status', 'schedule');
-    p.statut = 'programmé';
-    console.log(`Programmé : ${p.reseau} (${p.postId}), ${lisible(p.date ?? envoi.date)}`);
+    const quand = lisible(p.date ?? envoi.date);
+    if (veto && (p.statut !== 'programmé' || new Date(p.date ?? envoi.date).getTime() <= Date.now())) {
+      console.log(`Inchangé : ${p.reseau}, ${quand} (${p.statut === 'programmé' ? 'déjà parti' : 'déjà en brouillon'})`);
+      continue;
+    }
+    cli('posts:status', p.postId, '--status', veto ? 'draft' : 'schedule');
+    p.statut = veto ? 'brouillon' : 'programmé';
+    console.log(`${veto ? 'Repassé en brouillon' : 'Programmé'} : ${p.reseau} (${p.postId}), ${quand}`);
   }
-  const statut = envoi.postes.every((p) => p.statut === 'programmé') ? 'programmé' : envoi.statut;
+  const statut: Statut = envoi.postes.every((p) => p.statut === 'programmé') ? 'programmé' : 'brouillon';
   fs.writeFileSync(journal, JSON.stringify({...envoi, statut}, null, 2) + '\n');
-  console.log('\nDates enregistrées dans Postiz.');
+  console.log(veto ? '\nVeto appliqué : ces posts attendent en brouillon dans Postiz (--programmer pour les remettre).' : '\nDates enregistrées dans Postiz.');
   process.exit(0);
 }
 
@@ -298,7 +322,8 @@ const resume = (envois: Envoi[], sautes: string[]) => {
 const passees = (envois: Envoi[]) => envois.filter((e) => new Date(e.date).getTime() < Date.now()).map((e) => `Date passée (${NOMS[e.reseau]}) : ${lisible(e.date)}`);
 
 if (!args.includes('--envoyer')) {
-  const {envois, sautes} = planifier(pub, RESEAUX.filter(retenu), carrousel, impose);
+  const {envois, sautes} = planifier(pub, RESEAUX.filter(retenu), carrousel, rang, impose);
+  console.log(`Épisode ${rang}`);
   alertes.push(...passees(envois));
   const fictifs = Object.fromEntries(RESEAUX.map((r) => [r, {id: `<id ${NOMS[r]}>`, identifier: INFOS[r].identifiants[0]}]));
   const medias = {
@@ -329,7 +354,7 @@ const absents = RESEAUX.filter((r) => retenu(r) && !canaux[r]);
 if (!Object.keys(canaux).length) throw new Error(`Aucun compte connecté dans Postiz (${RESEAUX.filter(retenu).map((r) => NOMS[r]).join(', ')}).`);
 if (absents.length) console.log(`Non connectés dans Postiz, ignorés : ${absents.map((r) => NOMS[r]).join(', ')}.`);
 
-const {envois, sautes} = planifier(pub, RESEAUX.filter((r) => canaux[r]), carrousel, impose);
+const {envois, sautes} = planifier(pub, RESEAUX.filter((r) => canaux[r]), carrousel, rang, impose);
 const passe = passees(envois);
 if (passe.length) throw new Error(`Envoi annulé :\n${passe.map((a) => `  - ${a}`).join('\n')}`);
 if (!envois.length) throw new Error(`Aucun post à créer : ${sautes.join(' ; ')}`);
@@ -359,8 +384,8 @@ const premiere = charges[0].date;
 const envoi: Journal =
   choix && precedent
     ? {...precedent, statut: 'brouillon', postes: [...precedent.postes.filter((p) => !retenu(p.reseau)), ...nouveaux]}
-    : {envoye: new Date().toISOString(), date: premiere, statut: 'brouillon', video: video.path, miniature: miniature?.path, carrousel: images.map((m) => m.path), postes: nouveaux};
+    : {envoye: new Date().toISOString(), date: premiere, rang, statut: 'brouillon', video: video.path, miniature: miniature?.path, carrousel: images.map((m) => m.path), postes: nouveaux};
 fs.writeFileSync(journal, JSON.stringify(envoi, null, 2) + '\n');
 nouveaux.forEach((p) => console.log(`Brouillon : ${p.reseau} (${p.postId}), ${lisible(p.date!)}`));
 sautes.forEach((s) => console.log(`Pas de post : ${s}`));
-console.log('\nRien n’est publié : relire dans Postiz, puis --programmer après le feu vert.');
+console.log('\nRien n’est publié : --programmer met ces brouillons dans la file (veto ensuite : --annuler).');

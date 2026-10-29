@@ -53,4 +53,5 @@ Tâche planifiée (`episode-du-jour`), ou l'utilisateur t'a laissé le choix («
 plus populaire », « choisis », « fais-moi une vidéo sur l'actu ») : montre le classement
 en quelques lignes, prends le premier au-dessus du seuil (sinon le premier de la
 réserve, retiré de `docs/sujets.md`) et enchaîne directement avec le skill `episode`,
-sans attendre de réponse.
+sans attendre de réponse. Épisode **second** du jour : le principal est déjà traité,
+écarte aussi tout sujet qui le recoupe (même entreprise ou même annonce).

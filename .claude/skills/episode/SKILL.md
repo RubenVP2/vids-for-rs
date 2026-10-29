@@ -87,10 +87,11 @@ YouTube, LinkedIn, Threads et sa relance : un texte taillé pour chaque réseau)
    en une phrase, le verdict du Hype-mètre et les points que tu n'as pas pu vérifier.
 3. `git add` du dossier (les rendus sont ignorés par git), commit, push.
 
-L'utilisateur relit toujours avant de publier : ne présente jamais l'épisode comme publié.
+Ne présente jamais l'épisode comme publié.
 
 ## 8. Programmer dans Postiz
 
-Suivre le skill **`programmation`** : brouillons dans Postiz (CLI `postiz`), relecture
-de l'utilisateur, puis programmation sur son feu vert. Sans accès à Postiz
+Suivre le skill **`programmation`** : brouillons dans Postiz (CLI `postiz`), puis
+programmation sur le feu vert de l'utilisateur (en routine : par le lanceur, après les
+garde-fous, avec droit de veto). Sans accès à Postiz
 (`npm run postiz -- --canaux` refusé), le dire en une ligne et s'arrêter à l'étape 7.

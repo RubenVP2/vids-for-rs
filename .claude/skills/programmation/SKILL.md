@@ -1,6 +1,6 @@
 ---
 name: programmation
-description: Envoie un épisode de Matou prêt dans Postiz en brouillons (TikTok, Instagram, YouTube, Facebook, Threads, LinkedIn, X, Bluesky : les réseaux connectés), puis le programme sur le feu vert de l'utilisateur. À utiliser après l'étape 7 du skill episode, ou quand l'utilisateur dit « envoie dans Postiz », « programme », « planifie la vidéo ».
+description: Envoie un épisode de Matou prêt dans Postiz en brouillons (TikTok, Instagram, YouTube, Facebook, Threads, LinkedIn, X, Bluesky : les réseaux connectés), puis le programme (feu vert de l'utilisateur, ou garde-fous de la routine) et applique son veto. À utiliser après l'étape 7 du skill episode, ou quand l'utilisateur dit « envoie dans Postiz », « programme », « planifie la vidéo », « veto », « annule le #NNN ».
 ---
 
 # Programmation : épisode prêt → Postiz
@@ -15,10 +15,14 @@ avec une clé (`POSTIZ_API_KEY`, ou `POSTIZ_ENV`). Le script téléverse lui-mê
 et la miniature. Pour le reste (statistiques, calendrier, suppression d'un post), le
 skill officiel **`postiz`** s'applique.
 
-**Règle d'or** : rien n'est publié sans un « oui » explicite de l'utilisateur, dans cette
-session, pour cet épisode (une tâche planifiée n'est pas un « oui » : la routine
-`episode-du-jour` s'arrête aux brouillons). Les posts sont créés en **brouillon** ; ils ne
-passent en programmé qu'après ce « oui ».
+**Règle d'or** : les posts sont créés en **brouillon**. Deux chemins seulement les font
+passer en programmé :
+
+- **En session** : le « oui » explicite de l'utilisateur pour cet épisode.
+- **En routine** : `scripts/routines/lancer.sh`, après ses garde-fous (avis de l'agent,
+  `npm run check`). L'utilisateur garde un **droit de veto** jusqu'à l'heure de chaque
+  post (décision du 2026-10-30). Un agent ne lance jamais `--programmer` de lui-même en
+  routine.
 
 ## 0. Prérequis
 
@@ -47,14 +51,18 @@ aux réponses de tous ; LinkedIn en carrousel (`post_as_images_carousel`).
 
 ## 2. Aperçu
 
-`npm run postiz -- NNN --commentaire [--date AAAA-MM-JJ]`
+`npm run postiz -- NNN --commentaire [--rang second] [--date AAAA-MM-JJ]`
 
 - Chaque réseau a son format, son texte et son **créneau** (`docs/reseaux.md`,
-  `brand/postiz.json` → `creneaux`) : TikTok 19 h, Instagram 18 h 30, YouTube 20 h,
-  Threads 9 h (vidéo) puis 19 h 30 (relance, texte seul), LinkedIn 8 h 30 en semaine
-  (carrousel de `rendu/carrousel/`). Le script prend pour chacun son premier jour libre,
-  au moins 3 h après maintenant. LinkedIn ne tente que le créneau suivant : déjà pris →
-  « Pas de post : LinkedIn… », c'est voulu.
+  `brand/postiz.json` → `creneaux`), selon le **rang** de l'épisode :
+  - principal (défaut) : TikTok 19 h, Instagram 18 h 30, YouTube 20 h, Threads 9 h
+    (vidéo) puis 19 h 30 (relance, texte seul), LinkedIn 8 h 30 en semaine (carrousel
+    de `rendu/carrousel/`) ;
+  - second (`--rang second`) : TikTok 12 h 30, YouTube 13 h, Threads 12 h ; pas
+    d'Instagram ni de LinkedIn (« réservé à l'épisode principal », c'est voulu).
+- Le script prend pour chaque réseau son premier jour où le créneau est libre (aucun
+  post à moins de 90 min sur ce réseau), au moins `delaiVeto` (2 h) après maintenant.
+  LinkedIn ne tente que le créneau suivant : déjà pris → « Pas de post : LinkedIn… ».
 - Si l'utilisateur a donné un jour : `--date AAAA-MM-JJ` (chaque réseau à son heure ce
   jour-là). `--date AAAA-MM-JJTHH:MM` met tous les réseaux à cette heure : seulement s'il
   le demande.
@@ -71,7 +79,7 @@ aux réponses de tous ; LinkedIn en carrousel (`post_as_images_carousel`).
 
 La même commande avec `--envoyer` : téléverse la vidéo, la miniature et le carrousel,
 crée un brouillon par réseau à son créneau, écrit `postiz-envoi.json` (`{envoye, date
-(la plus proche), statut, video, miniature, carrousel, postes: [{reseau, postId,
+(la plus proche), rang, statut, video, miniature, carrousel, postes: [{reseau, postId,
 integration, date, statut}]}` ; la relance Threads a pour réseau `threads-relance`).
 Committer `postiz.json` et `postiz-envoi.json`.
 
@@ -102,3 +110,11 @@ Sur un « oui » explicite (« programme », « vas-y », « publie ») :
 puis committer `postiz-envoi.json`.
 
 **Fait quand** l'utilisateur a donné son feu vert et que `postiz-envoi.json` dit « programmé ».
+
+## 5. Veto
+
+L'utilisateur dit « veto #NNN » (ou « annule », « retiens #NNN », éventuellement pour
+un réseau seulement) : `npm run postiz -- NNN --annuler [--reseaux tiktok]`. Les posts
+programmés qui ne sont pas encore partis repassent en brouillon ; ceux déjà publiés ne
+bougent pas (le dire, et proposer de les supprimer dans Postiz s'il le faut : jamais sans
+son accord). Committer `postiz-envoi.json`. Pour les remettre : `--programmer`.

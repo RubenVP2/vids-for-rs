@@ -1,0 +1,81 @@
+{
+  "maj": "2026-10-29T23:07:12.389Z",
+  "jours": 30,
+  "date": "2026-10-28T17:00:00.000Z",
+  "rang": "principal",
+  "postes": [
+    {
+      "reseau": "tiktok",
+      "postId": "cmvsc1jxo0a02or1czfebaqso",
+      "integration": "cmvsakeo602wupg1crmgz7g9n",
+      "etat": "PUBLISHED",
+      "url": "https://www.tiktok.com/@matou_ai",
+      "manquant": false,
+      "stats": {
+        "Views": 260,
+        "Likes": 1,
+        "Comments": 0,
+        "Shares": 0
+      }
+    },
+    {
+      "reseau": "instagram",
+      "postId": "cmvsc1k2w0a03or1canee9h01",
+      "integration": "cmvsaogt206kfor1cddnosuhf",
+      "etat": "PUBLISHED",
+      "url": "https://www.instagram.com/reel/DfC7NYAlvoh/",
+      "manquant": false,
+      "stats": {
+        "Views": 24,
+        "Reach": 20,
+        "Saves": 0,
+        "Likes": 1,
+        "Comments": 0,
+        "Shares": 0
+      }
+    },
+    {
+      "reseau": "youtube",
+      "postId": "cmvsc1k650a06or1c09u6rd0o",
+      "integration": "cmvsb3xwh07l1or1cvp01pod9",
+      "etat": "ERROR",
+      "url": "https://www.youtube.com/watch?v=24dMx8jZY6Q",
+      "manquant": false,
+      "stats": {
+        "Views": 222,
+        "Likes": 4,
+        "Comments": 0,
+        "Favorites": 0
+      }
+    },
+    {
+      "reseau": "threads",
+      "postId": "cmvsc1k9j0a07or1c3b85mvym",
+      "integration": "cmvsb2y1q03efpg1c3j45vgui",
+      "etat": "PUBLISHED",
+      "url": "https://www.threads.com/@matou_ai/post/DfC62k2E7_o",
+      "manquant": false,
+      "stats": {
+        "Views": 15,
+        "Likes": 0,
+        "Replies": 0,
+        "Reposts": 0,
+        "Quotes": 0
+      }
+    },
+    {
+      "reseau": "linkedin",
+      "postId": "cmvshq4wv0p5ror1cxrvgvew8",
+      "integration": "cmvshkn720a0spg1ci9rzdm7y",
+      "date": "2026-10-28T19:25:00.000Z",
+      "statut": "programmé",
+      "etat": "PUBLISHED",
+      "url": "https://www.linkedin.com/feed/update/urn:li:ugcPost:7521291159562960897",
+      "manquant": false,
+      "stats": {
+        "Likes": 1,
+        "Comments": 0
+      }
+    }
+  ]
+}

@@ -14,9 +14,11 @@ session livre la vidéo MP4, la miniature, la description et les hashtags. Recet
 skill **`episode`**. Pas d'article sous la main → skill **`veille-ia`**.
 
 **Routines (tâches planifiées, sans intervention)** : chaque matin **`episode-du-jour`**
-(veille → épisode → brouillons Postiz), chaque lundi **`bilan`** (chiffres Postiz →
-`docs/apprentissages.md` et `docs/sujets.md`). Elles poussent sur **`main`**.
-La seule étape humaine : relire les brouillons, puis les programmer.
+deux fois (épisode principal, puis second : veille → épisode → Postiz), chaque lundi
+**`bilan`** (chiffres Postiz → `docs/apprentissages.md` et `docs/sujets.md`). Elles
+poussent sur **`main`**. Le lanceur programme les posts si les garde-fous passent ;
+l'étape humaine : le **veto** avant l'heure du post, et relire ce que les garde-fous
+ont retenu en brouillon.
 
 **Harnais** : les routines tournent sur le Raspberry Pi. Hermes (cron) lance
 `scripts/routines/lancer.sh`, qui prépare `main`, confie le travail à **`agy`**
@@ -36,11 +38,14 @@ Détail : `docs/routines.md`.
   (pur buzz / prometteur / game changer), « C'était Matou, et c'est tout. » pour finir.
 - **À l'écran** : jamais l'utilisateur. Univers « cahier de Matou » : `docs/design-system.md`.
 - **Voix** : V1 synthèse via OpenRouter (`brand/voix.json`) ; V2 la voix de l'utilisateur.
-- **Rythme** : 1 vidéo par jour, au minimum 1 tous les 2 jours.
-- **Un post par réseau, pas un copier-coller** (`docs/reseaux.md`) : vidéo le soir sur
-  Instagram (18 h 30), TikTok (19 h), YouTube (20 h) ; Threads le matin (vidéo, 9 h) puis
-  une relance texte (19 h 30) ; LinkedIn en carrousel, en semaine à 8 h 30, un par jour
-  ouvré. Créneaux : `brand/postiz.json`.
+- **Rythme (production)** : **2 épisodes par jour**, au minimum 1. Le **principal** (le
+  meilleur sujet) va partout ; le **second** (le sujet suivant, jamais la même actu) va le
+  midi sur TikTok, YouTube et Threads.
+- **Un post par réseau, pas un copier-coller** (`docs/reseaux.md`). Principal : vidéo le
+  soir sur Instagram (18 h 30), TikTok (19 h), YouTube (20 h) ; Threads le matin (vidéo,
+  9 h) puis une relance texte (19 h 30) ; LinkedIn en carrousel, en semaine à 8 h 30, un
+  par jour ouvré. Second : TikTok 12 h 30, YouTube 13 h, Threads 12 h. Créneaux :
+  `brand/postiz.json`.
 
 ## Règles éditoriales (non négociables)
 
@@ -49,13 +54,16 @@ Détail : `docs/routines.md`.
 - Distinguer clairement : annoncé / disponible / rumeur.
 - Résumer et commenter, ne pas recopier l'article mot à mot.
 - Pas de titre racoleur : le hook doit être tenu par la vidéo.
-- L'utilisateur relit toujours avant publication.
+- Rien ne part sans garde-fou : en session, le « oui » de l'utilisateur ; en routine, la
+  programmation automatique seulement si les faits sont vérifiés sans réserve et que
+  `npm run check` passe, avec un **droit de veto** de l'utilisateur jusqu'à l'heure du
+  post (au moins 2 h). Au moindre doute : brouillon, l'utilisateur relit.
 
 ## Outils du dépôt
 
 - Skills (`.claude/skills/`) : `episode` (la recette), `ecriture-matou` (voix et
   scènes), `publication` (un texte par réseau, hashtags), `veille-ia` (choisir un sujet),
-  `programmation` (brouillons Postiz, puis programmation sur feu vert),
+  `programmation` (brouillons Postiz, programmation, veto),
   `episode-du-jour` et `bilan` (les routines) et `postiz` (skill officiel de Postiz,
   copié tel quel).
 - Ce qui marche chez Matou (chiffres) : `docs/apprentissages.md`. Sujets d'avance :

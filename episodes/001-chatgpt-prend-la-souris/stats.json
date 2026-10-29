@@ -1,0 +1,67 @@
+{
+  "maj": "2026-10-29T23:07:18.961Z",
+  "jours": 30,
+  "date": "2026-10-29T07:00:00.000Z",
+  "rang": "principal",
+  "postes": [
+    {
+      "reseau": "tiktok",
+      "postId": "cmvsc2fss04o8pg1clad32j8x",
+      "integration": "cmvsakeo602wupg1crmgz7g9n",
+      "etat": "PUBLISHED",
+      "url": "https://www.tiktok.com/@matou_ai",
+      "manquant": false,
+      "stats": {
+        "Views": 259,
+        "Likes": 7,
+        "Comments": 0,
+        "Shares": 0
+      }
+    },
+    {
+      "reseau": "instagram",
+      "postId": "cmvsc2gz704o9pg1ctphhxamu",
+      "integration": "cmvsaogt206kfor1cddnosuhf",
+      "etat": "PUBLISHED",
+      "url": "https://www.instagram.com/reel/DfEa8z4k8F_/",
+      "manquant": false,
+      "stats": {
+        "Views": 51,
+        "Reach": 49,
+        "Saves": 0,
+        "Likes": 0,
+        "Comments": 1,
+        "Shares": 0
+      }
+    },
+    {
+      "reseau": "youtube",
+      "postId": "cmvsc2hxj04odpg1c3640jivz",
+      "integration": "cmvsb3xwh07l1or1cvp01pod9",
+      "etat": "PUBLISHED",
+      "url": "https://www.youtube.com/watch?v=t9zefgPepcY",
+      "manquant": false,
+      "stats": {
+        "Views": 233,
+        "Likes": 6,
+        "Comments": 0,
+        "Favorites": 0
+      }
+    },
+    {
+      "reseau": "threads",
+      "postId": "cmvsc2i8s04ogpg1cwkrs96ke",
+      "integration": "cmvsb2y1q03efpg1c3j45vgui",
+      "etat": "PUBLISHED",
+      "url": "https://www.threads.com/@matou_ai/post/DfEa8ncDMjw",
+      "manquant": false,
+      "stats": {
+        "Views": 15,
+        "Likes": 0,
+        "Replies": 1,
+        "Reposts": 0,
+        "Quotes": 0
+      }
+    }
+  ]
+}

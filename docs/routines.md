@@ -7,25 +7,39 @@ routines cloud de Claude. Ce document explique la chaîne, pour la dépanner.
 
 ```
 Hermes (cron)  →  ~/.hermes/scripts/matou-<routine>.sh   lance en tâche de fond (systemd-run)
-               →  scripts/routines/lancer.sh <routine>   dans le clone ~/matou/vids-for-rs
+               →  scripts/routines/lancer.sh <routine> [rang]   dans le clone ~/matou/vids-for-rs
                     1. main à jour, arbre propre, npm ci si le lock a changé
                     2. agy --print … (skill de la routine)  ← modèles Gemini, repli si quota
-                    3. commit + pull --rebase + push sur main
-                    4. hermes send → Discord #matou : message final, miniature, vidéo
+                    3. épisode : garde-fous, puis npm run postiz -- NNN --programmer
+                    4. commit + pull --rebase + push sur main
+                    5. hermes send → Discord #matou : message final, horaires, veto, miniature, vidéo
 ```
 
-Les heures suivent les créneaux des réseaux (`docs/reseaux.md`) : l'épisode est prêt
-vers 9 h–10 h, assez tôt pour les vidéos du soir (Instagram 18 h 30, TikTok 19 h,
-YouTube 20 h) ; Threads (9 h) et LinkedIn (8 h 30) partent le lendemain matin. Le rappel
-de 14 h tombe avant le premier créneau du soir.
+Les heures suivent les créneaux des réseaux (`docs/reseaux.md`). Un épisode prend 45 min
+environ (jusqu'à 1 h 40 avec les replis de modèle) :
+
+- le **principal** part à 5 h 13, il est prêt vers 6 h : LinkedIn (8 h 30) et Threads
+  (9 h) passent le jour même, au moins 2 h plus tard (le délai du veto) ;
+- le **second** part à 7 h 13 (il attend le verrou si le principal déborde), il est prêt
+  vers 8 h, pour les créneaux de midi.
+
+Le rappel de 11 h 07 liste ce que les garde-fous (ou un veto) ont laissé en brouillon,
+avant les créneaux de midi.
+
+**Programmation automatique** (`MATOU_AUTO=1`, défaut) : le lanceur programme seulement
+si l'agent finit par `PROGRAMMER: oui`, que `npm run check -- NNN` passe et que les
+brouillons existent. Sinon le message Discord dit « NON programmé » et pourquoi. Veto :
+dans Postiz (repasser en brouillon), « veto #NNN » à Claude, ou
+`npm run postiz -- NNN --annuler` dans `~/vids-for-rs` (après `git pull`).
 
 Hermes ne fait que planifier : un épisode dépasse le délai d'un script de cron (1 h),
 donc le script Hermes rend la main tout de suite et `lancer.sh` livre lui-même.
 
 | Routine | Hermes | Quand (Paris) | Agent |
 | --- | --- | --- | --- |
-| `episode-du-jour` | Matou — épisode du jour | tous les jours, 7 h 43 | agy, skill `episode-du-jour` |
-| `rappel` | Matou — rappel de relecture | tous les jours, 14 h 07 | aucun (`npm run bilan -- --attente`) |
+| `episode-du-jour principal` | Matou — épisode principal | tous les jours, 5 h 13 | agy, skill `episode-du-jour` |
+| `episode-du-jour second` | Matou — épisode second | tous les jours, 7 h 13 | agy, skill `episode-du-jour` |
+| `rappel` | Matou — rappel de relecture | tous les jours, 11 h 07 | aucun (`npm run bilan -- --attente`) |
 | `bilan` | Matou — bilan du lundi | lundi, 10 h 37 | agy, skill `bilan` |
 
 ## Pourquoi un clone dédié
@@ -63,4 +77,6 @@ donc le script Hermes rend la main tout de suite et `lancer.sh` livre lui-même.
 - Relancer à la main : `hermes cron run <id>` (id : `hermes cron list`), ou directement
   `~/matou/vids-for-rs/scripts/routines/lancer.sh episode-du-jour`.
 - Essai sans effet de bord : `MATOU_BRANCHE=<branche> MATOU_POUSSER=0 MATOU_POSTIZ=0
-  scripts/routines/lancer.sh episode-du-jour` (pas de push, pas de Postiz, pas de Discord).
+  scripts/routines/lancer.sh episode-du-jour second` (pas de push, pas de Postiz, pas de Discord).
+- Revenir aux brouillons seuls (plus de programmation automatique) : `MATOU_AUTO=0` dans
+  les scripts Hermes (`--setenv=MATOU_AUTO=0`).

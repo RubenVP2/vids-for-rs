@@ -8,18 +8,30 @@ chiffres de Matou (`docs/apprentissages.md`).
 
 ## En un coup d'œil
 
-| Réseau | Format | Ce que l'algorithme récompense | Heure (Paris) | Rythme |
-| --- | --- | --- | --- | --- |
-| TikTok | vidéo | taux de vidéo regardée jusqu'au bout, revisionnages, partages, commentaires | 19 h 00 | 1 par jour |
-| Instagram | Reel (vidéo) | temps de visionnage, **envois en message privé**, puis likes et enregistrements | 18 h 30 | 1 par jour |
-| YouTube | Short (vidéo) | satisfaction et durée de session ; les Shorts vivent des semaines par la recherche | 20 h 00 | 1 par jour |
-| LinkedIn (page) | **carrousel** (document à feuilleter) | temps passé sur le post, commentaires ; les liens freinent la portée | 8 h 30, en semaine | 1 par jour ouvré, au plus |
-| Threads | vidéo + texte de conversation, puis une **relance texte** | réponses, vite et en fil | 9 h 00, puis 19 h 30 | 2 par jour |
+| Réseau | Format | Ce que l'algorithme récompense | Principal (Paris) | Second (Paris) | Rythme |
+| --- | --- | --- | --- | --- | --- |
+| TikTok | vidéo | taux de vidéo regardée jusqu'au bout, revisionnages, partages, commentaires | 19 h 00 | 12 h 30 | 2 par jour |
+| Instagram | Reel (vidéo) | temps de visionnage, **envois en message privé**, puis likes et enregistrements | 18 h 30 | — | 1 par jour |
+| YouTube | Short (vidéo) | satisfaction et durée de session ; les Shorts vivent des semaines par la recherche | 20 h 00 | 13 h 00 | 2 par jour |
+| LinkedIn (page) | **carrousel** (document à feuilleter) | temps passé sur le post, commentaires ; les liens freinent la portée | 8 h 30, en semaine | — | 1 par jour ouvré, au plus |
+| Threads | vidéo + texte de conversation, puis une **relance texte** | réponses, vite et en fil | 9 h 00, puis 19 h 30 | 12 h 00 | 3 par jour |
 
-Volume par jour : **1 épisode** (la vidéo du Pi), décliné en 6 posts (TikTok, Instagram,
-YouTube, Threads ×2, LinkedIn les jours ouvrés). Plus de vidéos ne paierait pas : les
-études convergent sur 3 à 7 vidéos par semaine, la qualité avant la quantité, et un
-épisode occupe déjà le Pi 20 à 40 min.
+Volume par jour (production, depuis le 30/10/2026) : **2 épisodes**.
+
+- Le **principal** (le meilleur sujet) est décliné en 6 posts : TikTok, Instagram,
+  YouTube, Threads ×2, LinkedIn les jours ouvrés.
+- Le **second** (le sujet suivant, jamais la même actu) fait 3 posts le midi : TikTok,
+  YouTube, Threads. Le midi est la 2e fenêtre la plus citée pour la vidéo courte.
+
+Pourquoi pas plus partout :
+
+- TikTok, Shorts et Threads jugent chaque post à part, et le volume y fait grandir un
+  compte (la plupart des études citent 1 à 3 vidéos par jour pour croître).
+- Instagram et LinkedIn mettent en concurrence les posts d'un même compte : un 2e post
+  le même jour freine le premier.
+
+C'est un pari à mesurer : le bilan compare le second au principal, et un second qui fait
+baisser les vues du principal (3 semaines de suite) fera revoir ce rythme.
 
 ## Par réseau
 
@@ -28,7 +40,7 @@ YouTube, Threads ×2, LinkedIn les jours ouvrés). Plus de vidéos ne paierait p
 - Légende : la promesse avec les **mots que les gens tapent** (TikTok est un moteur de
   recherche : « ChatGPT », « Google », « IA »), puis une question qui fait commenter.
 - 3 à 5 hashtags. Pas de lien possible ; la source est à l'écran.
-- Le soir (18 h–21 h) est le créneau le plus cité.
+- Le soir (18 h–21 h) est le créneau le plus cité ; la pause de midi vient ensuite.
 
 ### Instagram (Reels)
 - Le signal fort est l'**envoi à quelqu'un** : finir sur « Envoie-la à quelqu'un qui… ».
@@ -61,7 +73,8 @@ YouTube, Threads ×2, LinkedIn les jours ouvrés). Plus de vidéos ne paierait p
 - Post du matin : la vidéo, avec un texte écrit pour Threads (une prise de position,
   une question), pas la légende TikTok. Un seul sujet (hashtag). La source en 1re réponse.
 - Relance du soir : texte seul, une question qui fait débattre, sur le même sujet.
-- 2 à 3 posts par jour sont la norme citée ; au-delà de 5, ça dilue.
+- 2 à 3 posts par jour sont la norme citée ; au-delà de 5, ça dilue. Le second épisode
+  ajoute un post vidéo à midi (3 par jour en tout).
 - Matin en semaine (6 h–11 h), et une 2e fenêtre le soir (19 h–21 h).
 
 ### X, Bluesky, Facebook (pas connectés)
@@ -71,7 +84,7 @@ Facebook le texte d'Instagram. À revoir le jour où ils sont connectés.
 ## Ce qu'on mesure (skill `bilan`)
 
 Chaque ligne d'hypothèse de `docs/apprentissages.md` (Publier) se vérifie réseau par
-réseau : créneau (`npm run bilan` donne le jour et l'heure de chaque post), format
+réseau : rang (principal ou second), créneau (`npm run bilan` donne le jour et l'heure de chaque post), format
 (carrousel contre vidéo sur LinkedIn), relance Threads (réponses obtenues). Un créneau
 change après 3 épisodes qui vont dans le même sens, dans `brand/postiz.json`.
 

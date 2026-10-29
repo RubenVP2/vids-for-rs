@@ -3,30 +3,37 @@
 # Hermes (cron) l'appelle en tâche de fond ; il prépare la branche, confie le travail à agy,
 # puis committe, pousse et livre le message final (et la vidéo) sur Discord.
 #
-# Usage : scripts/routines/lancer.sh episode-du-jour | bilan | rappel
+# Usage : scripts/routines/lancer.sh episode-du-jour [principal|second] | bilan | rappel
+#   principal (défaut) : le meilleur sujet du jour, créneaux du soir sur tous les réseaux ;
+#   second : le sujet suivant, créneaux de midi (TikTok, YouTube, Threads). brand/postiz.json.
 #
 # Variables (toutes facultatives) :
 #   MATOU_DEPOT    clone dédié aux routines                  (défaut ~/matou/vids-for-rs)
 #   MATOU_BRANCHE  branche de travail                        (défaut main)
 #   MATOU_POUSSER  1 : commit + push ; 0 : commit local seul (défaut 1)
 #   MATOU_POSTIZ   1 : brouillons Postiz ; 0 : s'arrêter avant (défaut 1)
+#   MATOU_AUTO     1 : programme les brouillons si les garde-fous passent (veto de
+#                  l'utilisateur ensuite) ; 0 : s'arrêter aux brouillons (défaut 1)
 #   MATOU_LIVRER   cible `hermes send` ; vide : message sur la sortie standard seulement
 #   MATOU_MODELES  modèles agy essayés dans l'ordre (repli si quota ou panne),
 #                  toujours ramenés à leur variante high (effort imposé)
 set -uo pipefail
 
-routine="${1:?Usage : lancer.sh episode-du-jour | bilan | rappel}"
+routine="${1:?Usage : lancer.sh episode-du-jour [principal|second] | bilan | rappel}"
+rang="${2:-principal}"
+case "$rang" in principal | second) ;; *) echo "Rang inconnu « $rang » (principal ou second)" >&2; exit 2 ;; esac
 DEPOT="${MATOU_DEPOT:-$HOME/matou/vids-for-rs}"
 BRANCHE="${MATOU_BRANCHE:-main}"
 POUSSER="${MATOU_POUSSER:-1}"
 POSTIZ="${MATOU_POSTIZ:-1}"
+AUTO="${MATOU_AUTO:-1}"
 LIVRER="${MATOU_LIVRER:-}"
 MODELES="${MATOU_MODELES:-gemini-3.8-flash-high gemini-4-argon-high claude-sonnet-5-5-high}"
 JOURNAUX="$HOME/.local/state/matou"
 
 export PATH="$HOME/.local/bin:$PATH"
 mkdir -p "$JOURNAUX"
-journal="$JOURNAUX/$(date +%F-%H%M)-$routine.log"
+journal="$JOURNAUX/$(date +%F-%H%M)-$routine$([ "$routine" = episode-du-jour ] && echo "-$rang").log"
 
 # La voix passe par OpenRouter : la clé vit dans l'environnement d'Hermes, jamais dans le dépôt.
 if [ -z "${OPENROUTER_API_KEY:-}" ] && [ -f "$HOME/.hermes/.env" ]; then
@@ -47,8 +54,13 @@ livrer() { # livrer <texte> [fichier…] : message final, puis pièces jointes
 echouer() { livrer "Matou — routine $routine arrêtée : $1 (journal : $journal)"; exit 1; }
 
 # Une seule routine à la fois : un épisode occupe le Pi (rendu Remotion) pendant 20 à 40 min.
+# Un épisode attend son tour (le second suit le principal) ; le rappel et le bilan ne l'attendent pas.
 exec 9>"$JOURNAUX/routine.lock"
-flock -n 9 || { echo "Routine $routine ignorée : une autre tourne encore." >>"$journal"; exit 0; }
+if [ "$routine" = episode-du-jour ]; then
+  flock -w 7200 9 || echouer "le Pi est occupé depuis 2 h par une autre routine"
+else
+  flock -n 9 || { echo "Routine $routine ignorée : une autre tourne encore." >>"$journal"; exit 0; }
+fi
 
 # 1. Branche à jour, arbre propre (les rendus, ignorés par git, sont gardés).
 [ -d "$DEPOT/.git" ] || echouer "clone absent ($DEPOT)"
@@ -71,7 +83,7 @@ fi
 if [ "$routine" = rappel ]; then
   attente="$(npm run -s bilan -- --attente 2>>"$journal")" || echouer "npm run bilan -- --attente a échoué"
   if ! grep -q '^0 épisode' <<<"$attente"; then
-    livrer "Matou — brouillons à relire dans Postiz :
+    livrer "Matou — brouillons retenus par les garde-fous (ou par ton veto), à relire dans Postiz :
 $attente
 Un brouillon dont l'heure est passée ne part pas : programme-le dans Postiz, ou lance \`npm run postiz -- NNN --programmer\`."
   fi
@@ -83,11 +95,11 @@ commun="Tu tournes en tâche planifiée sur le Raspberry Pi, lancé par scripts/
 case "$routine" in
   episode-du-jour)
     if [ "$POSTIZ" = 1 ]; then
-      postiz_consigne="Va jusqu'aux brouillons Postiz (npm run postiz -- NNN --commentaire --envoyer). Ne lance jamais --programmer."
+      postiz_consigne="Va jusqu'aux brouillons Postiz (npm run postiz -- NNN --rang $rang --commentaire --envoyer). Ne lance jamais --programmer : le lanceur programme lui-même si les garde-fous passent."
     else
       postiz_consigne="Essai : n'envoie RIEN à Postiz (pas de --envoyer, pas de --programmer) ; arrête-toi après npm run check."
     fi
-    consigne="$commun Suis le skill episode-du-jour de bout en bout (veille-ia en mode autonome, puis episode étapes 0 à 7, avec les sous-agents documentaliste, verificateur-faits, spectateur et controleur-visuel). $postiz_consigne Termine par le message final du skill, en français, puis une dernière ligne exactement « EPISODE: NNN » (ou « EPISODE: aucun »)."
+    consigne="$commun Épisode $rang du jour. Suis le skill episode-du-jour de bout en bout (veille-ia en mode autonome, puis episode étapes 0 à 7, avec les sous-agents documentaliste, verificateur-faits, spectateur et controleur-visuel). $postiz_consigne Termine par le message final du skill, en français, puis l'avant-dernière ligne exactement « PROGRAMMER: oui » ou « PROGRAMMER: non — <raison> » (étape 4 du skill), et la dernière ligne exactement « EPISODE: NNN » (ou « EPISODE: aucun »)."
     ;;
   bilan)
     consigne="$commun Suis le skill bilan de bout en bout. Ne modifie ni les skills ni CLAUDE.md (propose-le dans le message final). Ne publie et ne programme rien dans Postiz. Termine par le message final du skill, en français."
@@ -115,7 +127,32 @@ done
 [ -n "$sortie" ] || echouer "agy a échoué avec tous les modèles ($MODELES)"
 
 numero="$(grep -oE '^EPISODE: *[0-9]{3}' <<<"$sortie" | tail -1 | grep -oE '[0-9]{3}')"
-message="$(grep -vE '^EPISODE: ' <<<"$sortie")"
+avis="$(grep -E '^PROGRAMMER: ' <<<"$sortie" | tail -1 | sed 's/^PROGRAMMER: *//')"
+message="$(grep -vE '^(EPISODE|PROGRAMMER): ' <<<"$sortie")"
+
+# 5 bis. Programmation automatique, avec droit de veto (docs/decisions.md, 2026-10-30).
+# Garde-fous : l'agent dit oui (vérification des faits sans réserve), npm run check passe,
+# les brouillons existent. Sinon les brouillons attendent la relecture de l'utilisateur.
+if [ "$routine" = episode-du-jour ] && [ -n "$numero" ] && [ "$POSTIZ" = 1 ]; then
+  envoi="$(ls episodes/"$numero"-*/postiz-envoi.json 2>/dev/null | head -1)"
+  raison=""
+  if [ "$AUTO" != 1 ]; then raison="programmation automatique coupée (MATOU_AUTO=0)"
+  elif [ -z "$envoi" ]; then raison="aucun brouillon dans Postiz"
+  elif [[ "$avis" != oui* ]]; then raison="l'agent ne le recommande pas : ${avis:-aucun avis rendu}"
+  elif ! npm run -s check -- "$numero" >>"$journal" 2>&1; then raison="npm run check -- $numero échoue"
+  fi
+  if [ -z "$raison" ] && programmes="$(npm run -s postiz -- "$numero" --programmer 2>>"$journal")"; then
+    message="$message
+
+PROGRAMMÉ automatiquement :
+$(grep -E '^Programmé' <<<"$programmes" | sed 's/ ([^)]*)//')
+Veto (avant l'heure du post) : dans Postiz, repasse le post en brouillon ou supprime-le ; ou demande « veto #$numero » à Claude ; ou sur le Pi : cd ~/vids-for-rs && git pull && npm run postiz -- $numero --annuler."
+  else
+    message="$message
+
+NON programmé (${raison:-npm run postiz -- $numero --programmer a échoué}) : les brouillons attendent ta relecture dans Postiz, puis « programme »."
+  fi
+fi
 
 # 6. Mémoire des routines : commit, puis push sur la branche (autorisé par l'utilisateur).
 if [ -n "$(git status --porcelain)" ]; then

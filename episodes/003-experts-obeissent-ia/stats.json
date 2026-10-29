@@ -1,0 +1,74 @@
+{
+  "maj": "2026-10-29T23:07:41.599Z",
+  "jours": 30,
+  "date": "2026-10-30T07:30:00.000Z",
+  "rang": "principal",
+  "postes": [
+    {
+      "reseau": "linkedin",
+      "postId": "cmvu4gpi03vjkor1c7ntq2lsg",
+      "integration": "cmvshkn720a0spg1ci9rzdm7y",
+      "date": "2026-10-30T07:30:00.000Z",
+      "statut": "programmé",
+      "etat": "QUEUE",
+      "url": null,
+      "manquant": false,
+      "stats": {}
+    },
+    {
+      "reseau": "threads",
+      "postId": "cmvu4gqcb3vjmor1cpfvvpoh4",
+      "integration": "cmvsb2y1q03efpg1c3j45vgui",
+      "date": "2026-10-30T08:00:00.000Z",
+      "statut": "programmé",
+      "etat": "QUEUE",
+      "url": null,
+      "manquant": false,
+      "stats": {}
+    },
+    {
+      "reseau": "instagram",
+      "postId": "cmvu4gr8m2uq8pg1c1l8jzkuv",
+      "integration": "cmvsaogt206kfor1cddnosuhf",
+      "date": "2026-10-30T17:30:00.000Z",
+      "statut": "programmé",
+      "etat": "QUEUE",
+      "url": null,
+      "manquant": false,
+      "stats": {}
+    },
+    {
+      "reseau": "tiktok",
+      "postId": "cmvu4gs453vjror1csak4rv1y",
+      "integration": "cmvsakeo602wupg1crmgz7g9n",
+      "date": "2026-10-30T18:00:00.000Z",
+      "statut": "programmé",
+      "etat": "QUEUE",
+      "url": null,
+      "manquant": false,
+      "stats": {}
+    },
+    {
+      "reseau": "threads-relance",
+      "postId": "cmvu4gsw33vjtor1c96d45w37",
+      "integration": "cmvsb2y1q03efpg1c3j45vgui",
+      "date": "2026-10-30T18:30:00.000Z",
+      "statut": "programmé",
+      "etat": "QUEUE",
+      "url": null,
+      "manquant": false,
+      "stats": {}
+    },
+    {
+      "reseau": "youtube",
+      "postId": "cmvu4gtyj2uqbpg1ccv0nlu7s",
+      "integration": "cmvsb3xwh07l1or1cvp01pod9",
+      "date": "2026-10-30T19:00:00.000Z",
+      "statut": "programmé",
+      "etat": "QUEUE",
+      "url": null,
+      "manquant": false,
+      "stats": {}
+    }
+  ]
+}

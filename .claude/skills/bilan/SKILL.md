@@ -32,10 +32,13 @@ d'un réseau à l'autre pour les additionner). Pour chaque épisode, regarder ce
 distingue : entreprise citée, type de sujet (produit grand public, sécurité, emploi,
 argent…), série, hook (`scenes.json`, première scène), verdict du Hype-mètre, jour.
 
-Puis la stratégie par réseau (`docs/reseaux.md`) : le créneau de chaque post (colonne
-« Créneau »), le format (LinkedIn : carrousel ou vidéo), le texte propre au réseau
-(`publication.md`), et sur Threads la relance (`threads-relance`) contre le post vidéo.
-Un créneau qui fait moins bien 3 semaines de suite : proposer une autre heure.
+Puis la stratégie par réseau (`docs/reseaux.md`) : le rang (colonne « Rang » : principal
+du soir contre second du midi), le créneau de chaque post (colonne « Créneau »), le
+format (LinkedIn : carrousel ou vidéo), le texte propre au réseau (`publication.md`), et
+sur Threads la relance (`threads-relance`) contre le post vidéo. Un créneau qui fait
+moins bien 3 semaines de suite : proposer une autre heure. Les vues du principal qui
+baissent depuis l'arrivée du second : le dire (le rythme de 2 par jour est un pari).
+Compter aussi les vetos et les brouillons retenus par les garde-fous de la semaine.
 
 Une conclusion ne vaut que si elle repose sur **au moins 3 épisodes** qui vont dans le
 même sens ; sinon c'est une piste, notée comme telle. Ne jamais inventer d'explication
@@ -45,11 +48,12 @@ que les chiffres ne montrent pas.
 
 1. `docs/bilans/AAAA-MM-JJ.md` : les deux tableaux de `npm run bilan`, le top et le flop
    de la semaine avec leur hook, 3 constats au plus, et le rythme tenu (épisodes publiés
-   sur 7 jours ; objectif 7, minimum 4).
+   sur 7 jours ; objectif 14, minimum 7).
 2. `docs/apprentissages.md` : ajouter ou corriger les lignes que les chiffres confirment
    ou contredisent (avec la date et les épisodes qui le montrent). Une hypothèse démentie
    par 3 épisodes est barrée, pas effacée.
-3. `docs/sujets.md` : la remettre à **5 sujets** d'avance pour les jours sans actu forte,
+3. `docs/sujets.md` : la remettre à **10 sujets** d'avance pour les jours sans actu forte
+   (le second épisode y puise souvent),
    avec le skill `veille-ia` (articles de blog des 30 derniers jours, série `decrypte`,
    pas déjà traités). Retirer ceux qui sont périmés.
 
