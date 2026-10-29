@@ -54,6 +54,7 @@ Les options explorées sont dans [`brainstorm.md`](brainstorm.md).
 | 2026-10-29 | Harnais des routines | Les routines quittent les routines cloud Claude pour le **Raspberry Pi** : Hermes (cron) → `scripts/routines/lancer.sh` → **`agy`** (Gemini). Skills et sous-agents restent dans `.claude/`, lus par agy via `.agents/skills.json` et des liens (pas de copie) | Choix de l'utilisateur. Une seule copie des skills : pas de dérive entre les deux harnais |
 | 2026-10-29 | Accès Postiz | **CLI `postiz`** (OAuth device flow sur le Pi, ou `POSTIZ_API_KEY`/`POSTIZ_ENV`) pour `npm run postiz` et `npm run bilan` ; le MCP n'est plus utilisé | Aucune clé stockée sur le Pi ; la même CLI marche avec une clé ailleurs |
 | 2026-10-29 | Voix (inchangée) | La voix reste **OpenRouter** (Gemini 3.8 Flash TTS / Puck + Whisper). L'essai d'Hermes en API Gemini directe (quota gratuit 10 req./jour, consigne de style prononcée, minutage deviné par un LLM) est abandonné | La voix validée à l'oreille ne change pas ; Whisper donne un vrai minutage des mots |
+| 2026-10-29 | Effort d'agy | **high**, imposé : `--effort high` et variantes `-high` des modèles dans `lancer.sh`, modèle par défaut `-high` dans les réglages d'agy du Pi | Choix de l'utilisateur : la qualité prime sur le quota |
 
 ## À trancher
 

@@ -38,8 +38,12 @@ donc le script Hermes rend la main tout de suite et `lancer.sh` livre lui-même.
   ses `trustedWorkspaces`.
 - Les permissions globales d'agy interdisent `git commit` et `git push` : c'est voulu,
   le lanceur s'en charge.
-- Modèles : `MATOU_MODELES` (défaut `gemini-3.8-flash-high`, puis `gemini-4-argon-medium`,
-  puis `claude-sonnet-5-5-medium`). Liste : `agy models`.
+- Modèles : `MATOU_MODELES` (défaut `gemini-3.8-flash-high`, puis `gemini-4-argon-high`,
+  puis `claude-sonnet-5-5-high`). Liste : `agy models`.
+- Effort : **toujours high**. `lancer.sh` passe `--effort high` et ramène tout modèle
+  de `MATOU_MODELES` à sa variante `-high` (agy refuse un modèle d'un autre effort).
+  En interactif sur le Pi, `~/.gemini/antigravity-cli/settings.json` fixe aussi
+  `"model": "gemini-4-argon-high"`.
 
 ## Secrets
 

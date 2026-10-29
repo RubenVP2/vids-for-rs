@@ -11,7 +11,8 @@
 #   MATOU_POUSSER  1 : commit + push ; 0 : commit local seul (défaut 1)
 #   MATOU_POSTIZ   1 : brouillons Postiz ; 0 : s'arrêter avant (défaut 1)
 #   MATOU_LIVRER   cible `hermes send` ; vide : message sur la sortie standard seulement
-#   MATOU_MODELES  modèles agy essayés dans l'ordre (repli si quota ou panne)
+#   MATOU_MODELES  modèles agy essayés dans l'ordre (repli si quota ou panne),
+#                  toujours ramenés à leur variante high (effort imposé)
 set -uo pipefail
 
 routine="${1:?Usage : lancer.sh episode-du-jour | bilan | rappel}"
@@ -20,7 +21,7 @@ BRANCHE="${MATOU_BRANCHE:-main}"
 POUSSER="${MATOU_POUSSER:-1}"
 POSTIZ="${MATOU_POSTIZ:-1}"
 LIVRER="${MATOU_LIVRER:-}"
-MODELES="${MATOU_MODELES:-gemini-3.8-flash-high gemini-4-argon-medium claude-sonnet-5-5-medium}"
+MODELES="${MATOU_MODELES:-gemini-3.8-flash-high gemini-4-argon-high claude-sonnet-5-5-high}"
 JOURNAUX="$HOME/.local/state/matou"
 
 export PATH="$HOME/.local/bin:$PATH"
@@ -95,11 +96,13 @@ case "$routine" in
 esac
 
 # 5. agy, avec repli sur le modèle suivant si le premier échoue (quota, panne).
+# Effort high obligatoire : un modèle donné en low/medium/xhigh/max passe en high.
 sortie=""
 for modele in $MODELES; do
+  modele="$(sed -E 's/-(low|medium|high|xhigh|max)$//' <<<"$modele")-high"
   echo "== agy --model $modele ($(date +%T))" >>"$journal"
   # Sortie JSON : seule la réponse finale est gardée (pas les lignes de progression).
-  if brut="$(agy --print "$consigne" --model "$modele" --mode accept-edits --print-timeout 100m \
+  if brut="$(agy --print "$consigne" --model "$modele" --effort high --mode accept-edits --print-timeout 100m \
     --output-format json 2>>"$journal")"; then
     printf '%s\n' "$brut" >>"$journal"
     sortie="$(python3 -c 'import json,sys; d=json.load(sys.stdin); print(d.get("response","") if d.get("status")=="SUCCESS" else "")' <<<"$brut" 2>>"$journal")"
