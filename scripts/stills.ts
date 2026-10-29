@@ -31,7 +31,7 @@ if (arg === 'planches') {
   const dest = path.join(dossier, 'controle');
   fs.rmSync(dest, {recursive: true, force: true});
   fs.mkdirSync(dest, {recursive: true});
-  const composition = await selectComposition({serveUrl, id: 'EpisodeAvecInterface', inputProps: props, browserExecutable, logLevel: 'error'});
+  const composition = await selectComposition({serveUrl, id: 'EpisodeAvecInterface', inputProps: props, browserExecutable, logLevel: 'error', timeoutInMilliseconds: 120000});
   const debuts = calculerDebuts(props, composition.fps);
   const images = props.episode.scenes.map((s, i) => {
     const fin = i + 1 < debuts.length ? debuts[i + 1] : composition.durationInFrames;
@@ -41,7 +41,7 @@ if (arg === 'planches') {
   images.unshift({frame: 0, nom: '00-premiere-image'});
   for (const im of images) {
     const output = path.join(dest, `${im.nom}.png`);
-    await renderStill({serveUrl, composition, inputProps: props, frame: im.frame, output, browserExecutable, scale: 0.5, logLevel: 'error'});
+    await renderStill({serveUrl, composition, inputProps: props, frame: im.frame, output, browserExecutable, scale: 0.5, logLevel: 'error', timeoutInMilliseconds: 120000, delayRenderTimeoutInMilliseconds: 120000});
     console.log(path.relative(RACINE, output));
   }
 }

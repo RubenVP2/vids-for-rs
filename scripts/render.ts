@@ -2,6 +2,7 @@
 // Usage : npm run render -- <épisode> [--brouillon]   (brouillon = demi-résolution, plus rapide)
 import {execFileSync} from 'node:child_process';
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import {renderMedia, renderStill, selectComposition} from '@remotion/renderer';
 import {dossierEpisode, nomEpisode, RACINE} from './lib/episode';
@@ -16,7 +17,7 @@ fs.mkdirSync(sortie, {recursive: true});
 
 const serveUrl = await empaqueter();
 const browserExecutable = navigateur();
-const composition = await selectComposition({serveUrl, id: 'Episode', inputProps: props, browserExecutable, logLevel: 'error'});
+const composition = await selectComposition({serveUrl, id: 'Episode', inputProps: props, browserExecutable, logLevel: 'error', timeoutInMilliseconds: 120000});
 const nom = nomEpisode(dossier);
 const mp4 = path.join(sortie, `${nom}${brouillon ? '-brouillon' : ''}.mp4`);
 let dernier = -1;
@@ -32,7 +33,10 @@ await renderMedia({
   outputLocation: mp4,
   browserExecutable,
   logLevel: 'error',
-  concurrency: Math.max(1, Math.min(4, (await import('node:os')).cpus().length)),
+  timeoutInMilliseconds: 120000,
+  delayRenderTimeoutInMilliseconds: 120000,
+  // Peu de mémoire (Raspberry Pi, 4 Go) : une seule page Chromium, sinon les images dépassent le délai.
+  concurrency: os.totalmem() < 6e9 ? 1 : Math.max(1, Math.min(4, os.cpus().length)),
   onProgress: ({progress}) => {
     const p = Math.floor(progress * 10);
     if (p !== dernier) {
@@ -47,7 +51,7 @@ execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-i', mp4, '-c:v', 'copy', '
 fs.renameSync(tmp, mp4);
 console.log(`\nVidéo : ${path.relative(RACINE, mp4)} (${(composition.durationInFrames / composition.fps).toFixed(1)} s)`);
 
-const stillComp = await selectComposition({serveUrl, id: 'Miniature', inputProps: props, browserExecutable, logLevel: 'error'});
+const stillComp = await selectComposition({serveUrl, id: 'Miniature', inputProps: props, browserExecutable, logLevel: 'error', timeoutInMilliseconds: 120000});
 const png = path.join(sortie, `${nom}-miniature.png`);
-await renderStill({serveUrl, composition: stillComp, inputProps: props, output: png, browserExecutable, logLevel: 'error'});
+await renderStill({serveUrl, composition: stillComp, inputProps: props, output: png, browserExecutable, logLevel: 'error', timeoutInMilliseconds: 120000, delayRenderTimeoutInMilliseconds: 120000});
 console.log(`Miniature : ${path.relative(RACINE, png)}`);

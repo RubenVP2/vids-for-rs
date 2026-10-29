@@ -34,8 +34,8 @@ donc le script Hermes rend la main tout de suite et `lancer.sh` livre lui-même.
 - Contexte : `AGENTS.md` (lien vers `CLAUDE.md`). Skills : `.agents/skills.json` pointe
   vers `.claude/skills`. Sous-agents : `.agents/agents` est un lien vers `.claude/agents`.
   Une seule copie : modifier les skills dans `.claude/`, les deux harnais les voient.
-- Le dossier du clone doit être dans `trustedWorkspaces` de la config d'agy
-  (`~/.gemini/antigravity-cli/`), sinon agy refuse d'y travailler sans question.
+- En `--print --mode accept-edits`, agy travaille dans le clone sans qu'il soit dans
+  ses `trustedWorkspaces`.
 - Les permissions globales d'agy interdisent `git commit` et `git push` : c'est voulu,
   le lanceur s'en charge.
 - Modèles : `MATOU_MODELES` (défaut `gemini-3.8-flash-high`, puis `gemini-4-argon-medium`,

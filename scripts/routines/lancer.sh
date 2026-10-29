@@ -78,7 +78,7 @@ Un brouillon dont l'heure est passée ne part pas : programme-le dans Postiz, ou
 fi
 
 # 4. Consigne donnée à agy.
-commun="Tu tournes en tâche planifiée sur le Raspberry Pi, lancé par scripts/routines/lancer.sh : personne ne répondra, ne pose aucune question. La branche $BRANCHE est déjà à jour et npm ci est fait. N'exécute AUCUNE commande git (le lanceur committe et pousse après toi). Lis AGENTS.md. Nous sommes le $(LC_ALL=fr_FR.UTF-8 date '+%A %d %B %Y'), heure de Paris : une « actu » date des 48 dernières heures, vérifie la date de chaque article."
+commun="Tu tournes en tâche planifiée sur le Raspberry Pi, lancé par scripts/routines/lancer.sh : personne ne répondra, ne pose aucune question. La branche $BRANCHE est déjà à jour et npm ci est fait. N'exécute AUCUNE commande git (le lanceur committe et pousse après toi). Si tu dois corriger le moteur (scripts/, src/) pour avancer, dis-le dans le message final. Lis AGENTS.md. Nous sommes le $(LC_ALL=fr_FR.UTF-8 date '+%A %d %B %Y'), heure de Paris : une « actu » date des 48 dernières heures, vérifie la date de chaque article."
 case "$routine" in
   episode-du-jour)
     if [ "$POSTIZ" = 1 ]; then
@@ -98,14 +98,17 @@ esac
 sortie=""
 for modele in $MODELES; do
   echo "== agy --model $modele ($(date +%T))" >>"$journal"
-  if sortie="$(agy --print "$consigne" --model "$modele" --mode accept-edits --print-timeout 100m 2>>"$journal")"; then
+  # Sortie JSON : seule la réponse finale est gardée (pas les lignes de progression).
+  if brut="$(agy --print "$consigne" --model "$modele" --mode accept-edits --print-timeout 100m \
+    --output-format json 2>>"$journal")"; then
+    printf '%s\n' "$brut" >>"$journal"
+    sortie="$(python3 -c 'import json,sys; d=json.load(sys.stdin); print(d.get("response","") if d.get("status")=="SUCCESS" else "")' <<<"$brut" 2>>"$journal")"
     [ -n "$sortie" ] && break
   fi
   echo "agy ($modele) a échoué ou n'a rien rendu : modèle suivant." >>"$journal"
   git reset -q --hard && git clean -fdq
   sortie=""
 done
-printf '%s\n' "$sortie" >>"$journal"
 [ -n "$sortie" ] || echouer "agy a échoué avec tous les modèles ($MODELES)"
 
 numero="$(grep -oE '^EPISODE: *[0-9]{3}' <<<"$sortie" | tail -1 | grep -oE '[0-9]{3}')"
