@@ -1,138 +1,219 @@
-{
-  "type": "draft",
-  "date": "2026-10-30T17:00:00.000Z",
-  "shortLink": false,
-  "tags": [],
-  "posts": [
-    {
-      "integration": {
-        "id": "cmvsakeo602wupg1crmgz7g9n"
-      },
-      "value": [
-        {
-          "content": "Tu crois que les experts contrôlent encore l'IA ? 🤓 Anthropic a piégé 50 spécialistes : l'IA tirait à pile ou face et ils l'ont suivie à 86 % ! Tu en penses quoi, toi ?\n\n#IA #Anthropic #Claude #apprendresurtiktok #matou",
-          "image": [
-            {
-              "id": "127cc0eb-f43e-442e-a344-efb2aa7bc37b",
-              "path": "https://uploads.postiz.com/tPhbnzfOWJ.mp4"
-            }
-          ]
-        }
-      ],
-      "settings": {
-        "__type": "tiktok-business",
-        "content_posting_method": "DIRECT_POST",
-        "privacy_level": "PUBLIC_TO_EVERYONE",
-        "duet": true,
-        "stitch": true,
-        "comment": true,
-        "autoAddMusic": "no",
-        "brand_content_toggle": false,
-        "brand_organic_toggle": false,
-        "video_made_with_ai": true
-      }
-    },
-    {
-      "integration": {
-        "id": "cmvsaogt206kfor1cddnosuhf"
-      },
-      "value": [
-        {
-          "content": "Tu penses que les experts contrôlent encore l'IA ? En réalité, c'est l'inverse 🤓\n\nDans une étude fascinante d'Anthropic, 50 pros de la donnée ont utilisé un assistant d'IA :\n→ Les chercheurs ont tiré à pile ou face les avis défendus par l'IA\n→ Les experts ont suivi l'IA dans 86 % des décisions\n→ 77 % ont répété ses arguments en pensant avoir décidé seuls\n\nSource : Anthropic, lien en commentaire. Abonne-toi pour décrypter l'IA en 30 secondes.\n\n#IA #Anthropic #Claude #vulgarisation #matou",
-          "image": [
-            {
-              "id": "127cc0eb-f43e-442e-a344-efb2aa7bc37b",
-              "path": "https://uploads.postiz.com/tPhbnzfOWJ.mp4"
-            }
-          ]
+[
+  {
+    "type": "draft",
+    "date": "2026-10-30T07:30:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvshkn720a0spg1ci9rzdm7y"
         },
-        {
-          "content": "Sources : étude Anthropic https://www-cdn.anthropic.com/519c17a5d23a794e8b6d50a854048d0b61e0d73a.pdf",
-          "image": []
+        "value": [
+          {
+            "content": "86 % des experts ont suivi l'avis de leur IA. Problème : cet avis était tiré à pile ou face.\n\nC'est le résultat d'une étude d'Anthropic sur 50 professionnels de la donnée, publiée le 28 octobre.\n\n→ L'assistant défendait, avec de vrais arguments, un choix tiré au sort\n→ Les experts l'ont suivi dans 86 % des décisions d'analyse\n→ 77 % ont repris ses arguments mot pour mot… et 15 % seulement ont mentionné l'IA\n\nCe que ça change au travail : quand une IA rédige la note, l'analyse ou la recommandation, l'humain qui « valide » peut simplement signer ce que la machine a choisi. La relecture ne suffit plus, il faut savoir d'où vient chaque argument.\n\nDans ton équipe, qui vérifie vraiment ce que l'IA propose ?\n\nLe détail en images ⤵️\n\n#IA #management #décision",
+            "image": [
+              {
+                "id": "b2962bd3-c222-4126-aee8-7c2d24a3b5c5",
+                "path": "https://uploads.postiz.com/G3E6M42ipD.png"
+              },
+              {
+                "id": "666a385d-daf6-45b9-85e2-790314ad9657",
+                "path": "https://uploads.postiz.com/GXhqC0bcUL.png"
+              },
+              {
+                "id": "d16f32a3-2db4-4779-92ff-3e8dabe0c060",
+                "path": "https://uploads.postiz.com/7I2ZU2mp5E.png"
+              },
+              {
+                "id": "06d6d306-2a06-4216-bbe3-872c4c1cf088",
+                "path": "https://uploads.postiz.com/zMtDndRwnz.png"
+              },
+              {
+                "id": "7668db33-fe4e-4f74-9f1c-b3aedfa86c44",
+                "path": "https://uploads.postiz.com/gcerDjnGRs.png"
+              },
+              {
+                "id": "d3ea495a-607e-4a74-b2cc-60e7fad9b9b7",
+                "path": "https://uploads.postiz.com/IMafmEaTt5.png"
+              },
+              {
+                "id": "0ae0f78e-07d2-4a00-af0a-388527835474",
+                "path": "https://uploads.postiz.com/yo9FEyLpMO.png"
+              }
+            ]
+          },
+          {
+            "content": "Sources : étude Anthropic https://www-cdn.anthropic.com/519c17a5d23a794e8b6d50a854048d0b61e0d73a.pdf",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "linkedin-page",
+          "post_as_images_carousel": true,
+          "carousel_name": "Des experts suivent une IA qui tire à pile ou face"
         }
-      ],
-      "settings": {
-        "__type": "instagram-standalone",
-        "post_type": "post",
-        "is_trial_reel": false
       }
-    },
-    {
-      "integration": {
-        "id": "cmvsb3xwh07l1or1cvp01pod9"
-      },
-      "value": [
-        {
-          "content": "Anthropic a testé 50 experts de la donnée avec un agent d'IA : la machine défendait des choix tirés à pile ou face, et les pros l'ont suivie dans 86 % des cas en croyant décider seuls. Mon Hype-mètre : prometteur (une alerte majeure pour la sécurité).\nSource : https://www-cdn.anthropic.com/519c17a5d23a794e8b6d50a854048d0b61e0d73a.pdf\n\n#IA #Anthropic #shorts #matou",
-          "image": [
-            {
-              "id": "127cc0eb-f43e-442e-a344-efb2aa7bc37b",
-              "path": "https://uploads.postiz.com/tPhbnzfOWJ.mp4"
-            }
-          ]
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-10-30T08:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb2y1q03efpg1c3j45vgui"
         },
-        {
-          "content": "Sources : étude Anthropic https://www-cdn.anthropic.com/519c17a5d23a794e8b6d50a854048d0b61e0d73a.pdf",
-          "image": []
-        }
-      ],
-      "settings": {
-        "__type": "youtube",
-        "type": "public",
-        "selfDeclaredMadeForKids": "no",
-        "title": "Les experts obéissent à l'IA sans le savoir #003",
-        "thumbnail": {
-          "id": "c1c746c7-3a94-4968-845b-b65223eccf9c",
-          "path": "https://uploads.postiz.com/p7Hxyu528A.png"
+        "value": [
+          {
+            "content": "On se dit tous « l'IA m'aide, mais c'est moi qui décide ». Anthropic a testé 50 experts : l'IA tirait ses avis à pile ou face, et ils l'ont suivie dans 86 % des cas. Sans le voir. Source : Anthropic. #IA",
+            "image": [
+              {
+                "id": "e0309b3a-0aa2-4996-b07c-3b18b918c266",
+                "path": "https://uploads.postiz.com/Xc3P0HARf9.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Sources : étude Anthropic https://www-cdn.anthropic.com/519c17a5d23a794e8b6d50a854048d0b61e0d73a.pdf",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "threads"
         }
       }
-    },
-    {
-      "integration": {
-        "id": "cmvsb2y1q03efpg1c3j45vgui"
-      },
-      "value": [
-        {
-          "content": "Tu penses que les experts contrôlent l'IA ? Anthropic a testé 50 spécialistes : l'IA tirait ses avis à pile ou face, et les pros l'ont suivie dans 86 % des cas en croyant décider seuls. Une alerte majeure pour nos futures décisions. Source : Anthropic. #IA",
-          "image": [
-            {
-              "id": "127cc0eb-f43e-442e-a344-efb2aa7bc37b",
-              "path": "https://uploads.postiz.com/tPhbnzfOWJ.mp4"
-            }
-          ]
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-10-30T17:30:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsaogt206kfor1cddnosuhf"
         },
-        {
-          "content": "Sources : étude Anthropic https://www-cdn.anthropic.com/519c17a5d23a794e8b6d50a854048d0b61e0d73a.pdf",
-          "image": []
+        "value": [
+          {
+            "content": "Des experts ont suivi une IA qui décidait à pile ou face. Sans s'en rendre compte 🤓\n\nDans une étude d'Anthropic, 50 pros de la donnée ont travaillé avec un assistant d'IA :\n→ les avis défendus par l'IA étaient tirés au sort\n→ les experts l'ont suivie dans 86 % des décisions\n→ 77 % ont repris ses arguments en croyant décider seuls\n\nSource : Anthropic, lien en commentaire.\nEnvoie-la à quelqu'un qui « garde toujours le contrôle » sur ChatGPT ☝️\n\n#IA #Anthropic #Claude #vulgarisation #matou",
+            "image": [
+              {
+                "id": "e0309b3a-0aa2-4996-b07c-3b18b918c266",
+                "path": "https://uploads.postiz.com/Xc3P0HARf9.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Sources : étude Anthropic https://www-cdn.anthropic.com/519c17a5d23a794e8b6d50a854048d0b61e0d73a.pdf",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "instagram-standalone",
+          "post_type": "post",
+          "is_trial_reel": false
         }
-      ],
-      "settings": {
-        "__type": "threads"
       }
-    },
-    {
-      "integration": {
-        "id": "cmvshkn720a0spg1ci9rzdm7y"
-      },
-      "value": [
-        {
-          "content": "Tu penses que les experts contrôlent encore l'IA ? En réalité, c'est l'inverse 🤓\n\nDans une étude fascinante d'Anthropic, 50 pros de la donnée ont utilisé un assistant d'IA :\n→ Les chercheurs ont tiré à pile ou face les avis défendus par l'IA\n→ Les experts ont suivi l'IA dans 86 % des décisions\n→ 77 % ont répété ses arguments en pensant avoir décidé seuls\n\nSource : Anthropic, lien en commentaire. Abonne-toi pour décrypter l'IA en 30 secondes.\n\n#IA #Anthropic #Claude #vulgarisation #matou",
-          "image": [
-            {
-              "id": "127cc0eb-f43e-442e-a344-efb2aa7bc37b",
-              "path": "https://uploads.postiz.com/tPhbnzfOWJ.mp4"
-            }
-          ]
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-10-30T18:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsakeo602wupg1crmgz7g9n"
         },
-        {
-          "content": "Sources : étude Anthropic https://www-cdn.anthropic.com/519c17a5d23a794e8b6d50a854048d0b61e0d73a.pdf",
-          "image": []
+        "value": [
+          {
+            "content": "Une IA d'Anthropic tirait ses avis à pile ou face… et 50 experts l'ont suivie à 86 % 🤓 Toi, tu aurais vu le piège ?\n\n#IA #Anthropic #Claude #apprendresurtiktok #matou",
+            "image": [
+              {
+                "id": "e0309b3a-0aa2-4996-b07c-3b18b918c266",
+                "path": "https://uploads.postiz.com/Xc3P0HARf9.mp4"
+              }
+            ]
+          }
+        ],
+        "settings": {
+          "__type": "tiktok-business",
+          "content_posting_method": "DIRECT_POST",
+          "privacy_level": "PUBLIC_TO_EVERYONE",
+          "duet": true,
+          "stitch": true,
+          "comment": true,
+          "autoAddMusic": "no",
+          "brand_content_toggle": false,
+          "brand_organic_toggle": false,
+          "video_made_with_ai": true
         }
-      ],
-      "settings": {
-        "__type": "linkedin-page",
-        "post_as_images_carousel": false
       }
-    }
-  ]
-}
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-10-30T18:30:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb2y1q03efpg1c3j45vgui"
+        },
+        "value": [
+          {
+            "content": "Question honnête : la dernière fois que ChatGPT (ou un autre) t'a donné un avis, tu l'as vérifié… ou tu l'as juste trouvé convaincant ? Après l'étude d'Anthropic sur les experts qui suivent une IA tirée au sort, je me pose la question.",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "threads"
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-10-30T19:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb3xwh07l1or1cvp01pod9"
+        },
+        "value": [
+          {
+            "content": "Anthropic a testé 50 experts de la donnée avec un agent d'IA : la machine défendait des choix tirés à pile ou face, et les pros l'ont suivie dans 86 % des cas en croyant décider seuls. Mon Hype-mètre : prometteur (une alerte pour la sécurité).\nSource : https://www-cdn.anthropic.com/519c17a5d23a794e8b6d50a854048d0b61e0d73a.pdf\n\n#IA #Anthropic #shorts #matou",
+            "image": [
+              {
+                "id": "e0309b3a-0aa2-4996-b07c-3b18b918c266",
+                "path": "https://uploads.postiz.com/Xc3P0HARf9.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Sources : étude Anthropic https://www-cdn.anthropic.com/519c17a5d23a794e8b6d50a854048d0b61e0d73a.pdf",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "youtube",
+          "type": "public",
+          "selfDeclaredMadeForKids": "no",
+          "title": "Des experts suivent une IA qui tire à pile ou face #003",
+          "thumbnail": {
+            "id": "d1fb98fb-0680-49a4-9c4f-e675fb90bff0",
+            "path": "https://uploads.postiz.com/JwHxci8asV.png"
+          }
+        }
+      }
+    ]
+  }
+]
