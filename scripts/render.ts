@@ -34,7 +34,6 @@ await renderMedia({
   browserExecutable,
   logLevel: 'error',
   timeoutInMilliseconds: 120000,
-  delayRenderTimeoutInMilliseconds: 120000,
   // Peu de mémoire (Raspberry Pi, 4 Go) : une seule page Chromium, sinon les images dépassent le délai.
   concurrency: os.totalmem() < 6e9 ? 1 : Math.max(1, Math.min(4, os.cpus().length)),
   onProgress: ({progress}) => {
@@ -53,5 +52,5 @@ console.log(`\nVidéo : ${path.relative(RACINE, mp4)} (${(composition.durationIn
 
 const stillComp = await selectComposition({serveUrl, id: 'Miniature', inputProps: props, browserExecutable, logLevel: 'error', timeoutInMilliseconds: 120000});
 const png = path.join(sortie, `${nom}-miniature.png`);
-await renderStill({serveUrl, composition: stillComp, inputProps: props, output: png, browserExecutable, logLevel: 'error', timeoutInMilliseconds: 120000, delayRenderTimeoutInMilliseconds: 120000});
+await renderStill({serveUrl, composition: stillComp, inputProps: props, output: png, browserExecutable, logLevel: 'error', timeoutInMilliseconds: 120000});
 console.log(`Miniature : ${path.relative(RACINE, png)}`);

@@ -41,7 +41,7 @@ if (arg === 'planches') {
   images.unshift({frame: 0, nom: '00-premiere-image'});
   for (const im of images) {
     const output = path.join(dest, `${im.nom}.png`);
-    await renderStill({serveUrl, composition, inputProps: props, frame: im.frame, output, browserExecutable, scale: 0.5, logLevel: 'error', timeoutInMilliseconds: 120000, delayRenderTimeoutInMilliseconds: 120000});
+    await renderStill({serveUrl, composition, inputProps: props, frame: im.frame, output, browserExecutable, scale: 0.5, logLevel: 'error', timeoutInMilliseconds: 120000});
     console.log(path.relative(RACINE, output));
   }
 }
