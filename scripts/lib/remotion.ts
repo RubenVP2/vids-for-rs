@@ -9,12 +9,16 @@ import {lireEpisode, lireTimings, nomEpisode, RACINE} from './episode';
 export const navigateur = (): string | null => {
   if (process.env.REMOTION_BROWSER) return process.env.REMOTION_BROWSER;
   const base = '/opt/pw-browsers';
-  if (!fs.existsSync(base)) return null;
-  for (const d of fs.readdirSync(base).filter((x) => x.startsWith('chromium_headless_shell'))) {
-    for (const sous of fs.readdirSync(path.join(base, d))) {
-      const exe = path.join(base, d, sous, 'chrome-headless-shell');
-      if (fs.existsSync(exe)) return exe;
+  if (fs.existsSync(base)) {
+    for (const d of fs.readdirSync(base).filter((x) => x.startsWith('chromium_headless_shell'))) {
+      for (const sous of fs.readdirSync(path.join(base, d))) {
+        const exe = path.join(base, d, sous, 'chrome-headless-shell');
+        if (fs.existsSync(exe)) return exe;
+      }
     }
+  }
+  for (const p of ['/usr/bin/chromium', '/usr/bin/chromium-browser', '/usr/bin/google-chrome']) {
+    if (fs.existsSync(p)) return p;
   }
   return null;
 };

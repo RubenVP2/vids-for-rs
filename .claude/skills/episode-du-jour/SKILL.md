@@ -15,7 +15,12 @@ des brouillons dans Postiz (règle non négociable de `CLAUDE.md`).
    `git checkout -B main origin/main`) : c'est là que vivent le code, les épisodes
    précédents, `docs/apprentissages.md` et `docs/sujets.md`.
 2. `npm ci` si `node_modules` manque. `npm run postiz -- --canaux` doit lister les comptes.
-   Sinon (clé absente ou refusée) : s'arrêter et le dire dans le message final.
+   Sinon (accès Postiz absent ou refusé) : s'arrêter et le dire dans le message final.
+
+Lancée par `scripts/routines/lancer.sh` (Pi, Hermes + agy), cette étape 0 est déjà
+faite, et le script s'occupe de git (commit, pull, push) et de l'envoi de la vidéo :
+**ne lance aucune commande git**, et termine par le message final (étape 4) puis, sur la
+dernière ligne, `EPISODE: NNN` (ou `EPISODE: aucun` si la routine s'arrête sans épisode).
 3. File d'attente : `npm run bilan -- --attente`. **3 épisodes ou plus en attente de
    relecture** : ne rien produire (l'utilisateur ne suit pas), dire dans le message final
    lesquels attendent sa relecture, et s'arrêter.
@@ -38,14 +43,16 @@ Skill **`episode`**, étapes 0 à 7. Pendant la routine :
 - Une relecture qui reste BLOQUANT après **deux** tours de corrections : abandonner ce
   sujet, supprimer son dossier, reprendre l'étape 1 avec le suivant (une seule fois ; au
   deuxième échec, s'arrêter et l'expliquer).
-- Étape 7 : envoyer la vidéo et la miniature (`SendUserFile`), commit, puis
-  `git pull --rebase origin main` et `git push origin HEAD:main`.
+- Étape 7 : envoyer la vidéo et la miniature (outil d'envoi de fichiers de la session
+  s'il existe ; sinon leurs chemins dans le message final), commit, puis
+  `git pull --rebase origin main` et `git push origin HEAD:main` (sous `lancer.sh` :
+  rien de tout ça, le script le fait).
   L'utilisateur a autorisé cette poussée pour la routine : c'est ce qui permet à l'épisode
   suivant de voir celui-ci (numéro, sujets déjà traités).
 
 ## 3. Brouillons Postiz
 
-Skill **`programmation`**, voie « Avec la clé d'API », jusqu'à `--envoyer` compris.
+Skill **`programmation`**, jusqu'à `--envoyer` compris.
 Sans `--date` : le script prend le premier jour libre du calendrier à 18 h (aujourd'hui
 si la routine tourne le matin). Committer et pousser comme à l'étape 2.
 

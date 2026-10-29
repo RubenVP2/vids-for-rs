@@ -16,11 +16,12 @@ document explique **comment le moteur marche**, pour le modifier.
 npm ci
 ```
 
-Variables : `OPENROUTER_API_KEY` (ou `OPENROUTER_KEY`). Postiz : secret réseau sur
-`api.postiz.com` (en-tête `Authorization` sans préfixe) ou `POSTIZ_API_KEY` (ou `POSTIZ_ENV`) ; `POSTIZ_API_URL`
-pour une instance auto-hébergée. Navigateur : Remotion utilise
-`$REMOTION_BROWSER`, sinon le Chromium headless de Playwright s'il est installé
-(`/opt/pw-browsers`), sinon il télécharge le sien.
+Variables : `OPENROUTER_API_KEY` (ou `OPENROUTER_KEY`). Postiz : la CLI `postiz`
+(`scripts/lib/postiz-cli.ts`) avec son jeton OAuth (`postiz auth:login`) ou
+`POSTIZ_API_KEY` (ou `POSTIZ_ENV`) ; `POSTIZ_API_URL` pour une instance auto-hébergée.
+Navigateur : Remotion utilise `$REMOTION_BROWSER`, sinon le Chromium headless de
+Playwright s'il est installé (`/opt/pw-browsers`), sinon le Chromium du système
+(`/usr/bin/chromium`, sur le Pi), sinon il télécharge le sien.
 
 ## Commandes
 
@@ -31,7 +32,7 @@ pour une instance auto-hébergée. Navigateur : Remotion utilise
 | `npm run render -- NNN [--brouillon]` | MP4 1080×1920 normalisé −14 LUFS + miniature PNG |
 | `npm run stills -- NNN` | une image de contrôle par scène, interface des réseaux par-dessus |
 | `npm run check -- NNN` | contrôle final : durée, format, volume, voix, publication |
-| `npm run postiz -- NNN [--envoyer \| --programmer]` | aperçu (`postiz.json`, `postiz-mcp.json` pour le MCP Postiz), puis, avec une clé d'API, brouillons et programmation (skill `programmation`) |
+| `npm run postiz -- NNN [--envoyer \| --programmer]` | aperçu (`postiz.json`, charge utile de `postiz posts:create --json`), puis brouillons et programmation par la CLI (skill `programmation`) |
 | `npm run postiz -- --canaux` | comptes connectés à Postiz et règles de chaque réseau |
 | `npm run bilan [-- --jours 30]` | chiffres Postiz de chaque épisode envoyé (écrit `stats.json`) et des comptes |
 | `npm run bilan -- --attente` | épisodes dont les brouillons attendent la relecture |
@@ -52,7 +53,6 @@ episodes/NNN-slug/
   timings.json      minutage de chaque mot, des scènes, volume par image
   publication.md    descriptions et hashtags par plateforme
   postiz.json       ce qui est (ou serait) envoyé à Postiz
-  postiz-mcp.json   le même envoi au format du MCP Postiz (integrationSchedulePostTool)
   postiz-envoi.json ids des brouillons Postiz et leur statut
   stats.json        chiffres par réseau (npm run bilan)
   rendu/            MP4 + miniature (ignoré par git)

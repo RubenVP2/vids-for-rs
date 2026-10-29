@@ -3,28 +3,20 @@
 // Usage : npm run bilan [-- --jours 30]
 //         npm run bilan -- --attente   épisodes dont les posts sont encore en brouillon (n'écrit rien)
 // Écrit episodes/NNN-slug/stats.json (chiffres bruts, versionnés) et affiche deux tableaux Markdown.
-// Accès : même clé que npm run postiz (POSTIZ_API_KEY, POSTIZ_ENV ou secret réseau sur api.postiz.com).
+// Accès : CLI officielle `postiz` authentifiée par OAuth2 (postiz auth:login), sans clé API.
 import fs from 'node:fs';
 import path from 'node:path';
 import {EPISODES} from './lib/episode';
+import {cli, enListe} from './lib/postiz-cli';
 
 type Serie = {label: string; average?: boolean; data: {total: number | string; date: string}[]};
 type Poste = {reseau: string; postId: string; integration: string};
 type Post = {id: string; state: string; releaseURL: string | null; publishDate: string};
 type Canal = {id: string; name: string; identifier: string; disabled: boolean};
 
-const API = (process.env.POSTIZ_API_URL ?? 'https://api.postiz.com').replace(/\/$/, '');
 const args = process.argv.slice(2);
 const jours = Number(args[args.indexOf('--jours') + 1]) || 30;
 
-const appeler = async <T>(chemin: string): Promise<T> => {
-  const entetes = new Headers();
-  const cle = process.env.POSTIZ_API_KEY ?? process.env.POSTIZ_ENV;
-  if (cle) entetes.set('Authorization', cle);
-  const rep = await fetch(`${API}/public/v1${chemin}`, {headers: entetes});
-  if (!rep.ok) throw new Error(`Postiz GET ${chemin} : HTTP ${rep.status} ${await rep.text()}`);
-  return (await rep.json()) as T;
-};
 
 /** Une série Postiz → un nombre : la somme des jours, ou leur moyenne pour une durée moyenne. */
 const resumer = (series: Serie[]) =>
@@ -47,7 +39,7 @@ const dossiers = fs
 const envois = dossiers.map((d) => ({d, envoi: JSON.parse(fs.readFileSync(path.join(EPISODES, d, 'postiz-envoi.json'), 'utf8'))}));
 const plusAncien = Math.min(Date.now(), ...envois.map((e) => new Date(e.envoi.date).getTime()));
 const [debut, fin] = [plusAncien - 2 * 86_400_000, Date.now() + 15 * 86_400_000].map((t) => new Date(t).toISOString());
-const {posts} = await appeler<{posts: Post[]}>(`/posts?startDate=${debut}&endDate=${fin}`);
+const posts = enListe<Post>(cli('posts:list', '--startDate', debut, '--endDate', fin));
 const parId = new Map(posts.map((p) => [p.id, p]));
 
 if (args.includes('--attente')) {
@@ -65,7 +57,7 @@ for (const {d, envoi} of envois) {
   for (const p of envoi.postes as Poste[]) {
     const post = parId.get(p.postId);
     const etat = post?.state ?? 'introuvable (supprimé ?)';
-    const brut = post?.releaseURL || etat === 'PUBLISHED' ? await appeler<Serie[] | {missing: true}>(`/analytics/post/${p.postId}?date=${jours}`) : [];
+    const brut = post?.releaseURL || etat === 'PUBLISHED' ? cli<Serie[] | {missing: true}>('analytics:post', p.postId, '-d', String(jours)) : [];
     const manquant = !Array.isArray(brut);
     const stats = Array.isArray(brut) ? resumer(brut) : {};
     postes.push({...p, etat, url: post?.releaseURL ?? null, manquant, stats});
@@ -78,7 +70,7 @@ for (const {d, envoi} of envois) {
 
 console.log('\n## Comptes (7 derniers jours)\n');
 console.log('| Réseau | Compte | Chiffres |\n| --- | --- | --- |');
-for (const c of (await appeler<Canal[]>('/integrations')).filter((c) => !c.disabled)) {
-  const brut = await appeler<Serie[]>(`/analytics/${c.id}?date=7`).catch(() => []);
+for (const c of enListe<Canal>(cli('integrations:list'), 'integrations').filter((c) => !c.disabled)) {
+  const brut = (() => { try { return cli<Serie[]>('analytics:platform', c.id, '-d', '7'); } catch { return []; } })();
   console.log(`| ${c.identifier} | ${c.name} | ${enLigne(resumer(Array.isArray(brut) ? brut : []))} |`);
 }

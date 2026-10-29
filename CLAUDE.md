@@ -18,6 +18,13 @@ skill **`episode`**. Pas d'article sous la main → skill **`veille-ia`**.
 `docs/apprentissages.md` et `docs/sujets.md`). Elles poussent sur **`main`**.
 La seule étape humaine : relire les brouillons, puis les programmer.
 
+**Harnais** : les routines tournent sur le Raspberry Pi. Hermes (cron) lance
+`scripts/routines/lancer.sh`, qui prépare `main`, confie le travail à **`agy`**
+(Antigravity CLI, modèles Gemini), puis committe, pousse et livre sur Discord (#matou).
+`agy` lit ce fichier (lien `AGENTS.md`) et les skills et sous-agents de `.claude/`
+(`.agents/skills.json`, lien `.agents/agents`) : une seule copie, pour les deux harnais.
+Détail : `docs/routines.md`.
+
 ## Cadre validé (détail et raisons : `docs/decisions.md`)
 
 - **Audience** : grand public + pros hors tech. Aucun jargon non expliqué.
@@ -49,6 +56,8 @@ La seule étape humaine : relire les brouillons, puis les programmer.
   copié tel quel).
 - Ce qui marche chez Matou (chiffres) : `docs/apprentissages.md`. Sujets d'avance :
   `docs/sujets.md`. Bilans hebdomadaires : `docs/bilans/`.
+- Postiz : CLI officielle `postiz` (dépendance du projet), authentifiée par OAuth
+  (`postiz auth:login`, sur le Pi) ou par la clé `POSTIZ_API_KEY` / `POSTIZ_ENV`.
 - Sous-agents (`.claude/agents/`) : `documentaliste` (article → `source.md`),
   `verificateur-faits` (script contre source), `spectateur` (test grand public),
   `controleur-visuel` (images rendues).

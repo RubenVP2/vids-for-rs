@@ -89,7 +89,6 @@ L'utilisateur relit toujours avant de publier : ne présente jamais l'épisode c
 
 ## 8. Programmer dans Postiz
 
-Suivre le skill **`programmation`** : brouillons dans Postiz (clé d'API `POSTIZ_ENV`,
-sinon MCP Postiz), relecture de l'utilisateur, puis programmation sur son feu vert.
-Sans accès à Postiz (`npm run postiz -- --canaux` refusé et outils `mcp__Postiz__*`
-absents), le dire en une ligne et s'arrêter à l'étape 7.
+Suivre le skill **`programmation`** : brouillons dans Postiz (CLI `postiz`), relecture
+de l'utilisateur, puis programmation sur son feu vert. Sans accès à Postiz
+(`npm run postiz -- --canaux` refusé), le dire en une ligne et s'arrêter à l'étape 7.

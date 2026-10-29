@@ -17,7 +17,9 @@ Comme l'étape 0 du skill `episode-du-jour` : `main` à jour, `npm ci` si besoin
 `npm run bilan`. Pour chaque ligne « publication non reliée » (TikTok surtout) : skill
 **`postiz`**, `posts:missing <postId>` puis `posts:connect` avec le contenu publié le
 jour de `date` (le plus proche de l'heure prévue) ; puis relancer `npm run bilan`.
-Le CLI `postiz` lit `POSTIZ_API_KEY` : `export POSTIZ_API_KEY="$POSTIZ_ENV"` avant.
+Le CLI `postiz` (`npx postiz`) utilise son jeton OAuth (Pi) ou `POSTIZ_API_KEY` :
+avec une clé dans `POSTIZ_ENV`, `export POSTIZ_API_KEY="$POSTIZ_ENV"` avant.
+Sous `scripts/routines/lancer.sh` : aucune commande git, le script committe et pousse.
 
 Ne compter que les posts PUBLISHED depuis au moins 48 h : avant, les chiffres bougent trop.
 
