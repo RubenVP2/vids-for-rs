@@ -7,6 +7,7 @@ routines cloud de Claude. Ce document explique la chaîne, pour la dépanner.
 
 ```
 Hermes (cron)  →  ~/.hermes/scripts/matou-<routine>.sh   lance en tâche de fond (systemd-run)
+                  (matou-episode-principal.sh, matou-episode-second.sh, matou-rappel.sh, matou-bilan.sh)
                →  scripts/routines/lancer.sh <routine> [rang]   dans le clone ~/matou/vids-for-rs
                     1. main à jour, arbre propre, npm ci si le lock a changé
                     2. agy --print … (skill de la routine)  ← modèles Gemini, repli si quota
