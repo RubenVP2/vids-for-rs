@@ -65,15 +65,22 @@ else
   flock -n 9 || { echo "Routine $routine ignorée : une autre tourne encore." >>"$journal"; exit 0; }
 fi
 
-# 1. Branche à jour, arbre propre (les rendus, ignorés par git, sont gardés).
+# 1. Branche à jour, arbre propre (les rendus, ignorés par git, sont gardés 30 jours).
 [ -d "$DEPOT/.git" ] || echouer "clone absent ($DEPOT)"
 cd "$DEPOT" || echouer "dossier $DEPOT inaccessible"
+git rebase --abort >/dev/null 2>&1 # un push raté la veille peut laisser un rebase en cours
 {
   git fetch -q origin "$BRANCHE" &&
     git checkout -q -B "$BRANCHE" "origin/$BRANCHE" &&
     git reset -q --hard "origin/$BRANCHE" &&
     git clean -fdq
 } >>"$journal" 2>&1 || echouer "impossible de mettre $BRANCHE à jour"
+# Un épisode effacé par un repli ne laisse que ses rendus (ignorés) : sans ce ménage, son
+# dossier fausserait le numéro du suivant (le plus grand episodes/NNN-* + 1).
+for d in episodes/*/; do
+  [ -n "$(git ls-files "$d" | head -1)" ] || rm -rf "$d"
+done
+find episodes/*/rendu episodes/*/controle -maxdepth 0 -mtime +30 -exec rm -rf {} + 2>/dev/null
 
 # 2. Dépendances : npm ci quand package-lock.json change.
 empreinte="$(sha1sum package-lock.json | cut -d' ' -f1)"
@@ -188,15 +195,33 @@ NON programmé (${raison:-npm run postiz -- $numero --programmer a échoué}) : 
 fi
 
 # 6. Mémoire des routines : commit, puis push sur la branche (autorisé par l'utilisateur).
+# Le prochain passage remet le clone à origin/$BRANCHE : un commit non poussé serait perdu.
+# D'où 3 essais (rebase sur ce qui a été poussé entre-temps), puis une branche de secours.
 if [ -n "$(git status --porcelain)" ]; then
   git add -A >>"$journal" 2>&1
-  git -c user.name="Matou (routine)" -c user.email="routines@matou.ai" \
-    commit -q -m "Routine $routine${numero:+ : #$numero} ($agent, Pi)" >>"$journal" 2>&1
-  if [ "$POUSSER" = 1 ]; then
-    { git pull -q --rebase origin "$BRANCHE" && git push -q origin "HEAD:$BRANCHE"; } >>"$journal" 2>&1 ||
+  if ! git -c user.name="Matou (routine)" -c user.email="routines@matou.ai" \
+    commit -q -m "Routine $routine${numero:+ : #$numero} ($agent, Pi)" >>"$journal" 2>&1; then
+    message="$message
+
+ATTENTION : le commit a échoué, rien n'est versionné (journal : $journal)."
+  elif [ "$POUSSER" = 1 ]; then
+    pousse=0
+    for essai in 1 2 3; do
+      if { git pull -q --rebase origin "$BRANCHE" && git push -q origin "HEAD:$BRANCHE"; } >>"$journal" 2>&1; then
+        pousse=1; break
+      fi
+      git rebase --abort >/dev/null 2>&1
+      sleep $((essai * 30))
+    done
+    if [ "$pousse" = 0 ]; then
+      secours="secours/$(date +%F-%H%M)-$routine${numero:+-$numero}"
+      git push -q origin "HEAD:refs/heads/$secours" >>"$journal" 2>&1 &&
+        quoi="le travail est sur la branche $secours, à fusionner dans $BRANCHE" ||
+        quoi="la branche de secours non plus : le travail n'existe que dans $DEPOT, ne relance pas de routine avant de l'avoir récupéré"
       message="$message
 
-ATTENTION : le push sur $BRANCHE a échoué (journal : $journal)."
+ATTENTION : le push sur $BRANCHE a échoué 3 fois ; $quoi (journal : $journal)."
+    fi
   fi
 fi
 

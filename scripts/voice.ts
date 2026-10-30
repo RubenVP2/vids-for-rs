@@ -62,7 +62,7 @@ if (!fs.existsSync(mp3) || force) {
   execFileSync('ffmpeg', [
     '-y', '-loglevel', 'error', '-i', mp3,
     '-af', 'silenceremove=start_periods=1:start_threshold=-45dB,areverse,silenceremove=start_periods=1:start_threshold=-45dB,areverse,loudnorm=I=-16:TP=-1.5:LRA=11',
-    '-ar', '44100', '-b:a', '192k', tmp,
+    '-ar', '44100', '-b:a', '96k', tmp,
   ]);
   fs.renameSync(tmp, mp3);
 } else {

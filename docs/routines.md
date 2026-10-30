@@ -13,7 +13,7 @@ Hermes (cron)  →  ~/.hermes/scripts/matou-<routine>.sh   lance en tâche de fo
                     2. agy --print … (skill de la routine)  ← modèles Gemini, repli si quota,
                        puis Claude Code (claude -p) si agy échoue avec tous ses modèles
                     3. épisode : garde-fous, puis npm run postiz -- NNN --programmer
-                    4. commit + pull --rebase + push sur main
+                    4. commit + pull --rebase + push sur main (3 essais, sinon branche secours/…)
                     5. hermes send → Discord #matou : message final, horaires, veto, miniature, vidéo
 ```
 
@@ -48,7 +48,15 @@ donc le script Hermes rend la main tout de suite et `lancer.sh` livre lui-même.
 
 `~/matou/vids-for-rs` ne sert qu'aux routines : `lancer.sh` le remet à `origin/main`
 à chaque passage (`reset --hard`, `clean`). Ne jamais y travailler à la main ;
-`~/vids-for-rs` reste le clone de travail.
+`~/vids-for-rs` reste le clone de travail. Au passage, il supprime les dossiers d'épisode
+sans aucun fichier versionné (restes d'un repli) et les `rendu/` et `controle/` de plus
+de 30 jours.
+
+Un commit non poussé serait donc perdu au passage suivant. Le lanceur essaie 3 fois
+(rebase sur `main`, puis push) ; s'il échoue encore, il pousse sur `secours/<date>-<routine>-<NNN>`
+et le dit sur Discord. À faire alors : `git fetch && git merge origin/secours/…` dans
+`~/vids-for-rs`, puis pousser. Ce qui est versionné, et pourquoi : `docs/decisions.md`
+(« Versionnement des épisodes »).
 
 ## agy
 
