@@ -12,8 +12,10 @@ Deux épisodes par jour (`docs/reseaux.md`) :
 
 - **principal** (lancé vers 5 h) : le meilleur sujet du jour. Il passe partout :
   LinkedIn 8 h 30, Threads 9 h, Instagram 18 h 30, TikTok 19 h, YouTube 20 h.
-- **second** (lancé ensuite, vers 7 h) : le sujet suivant du classement. Il passe le midi
-  sur TikTok, YouTube et Threads seulement.
+- **second** (lancé ensuite, vers 7 h) : le sujet suivant du classement. Il passe aussi
+  partout sauf LinkedIn : Instagram et Threads 12 h, TikTok 12 h 30, YouTube 13 h,
+  relance Threads 15 h 30. Chaque épisode est un seul sujet, décliné par réseau : écrire
+  toutes les sections de `publication.md` (Instagram et relance comprises).
 
 La consigne du lanceur dit lequel. Sans précision (session à la main) : principal.
 

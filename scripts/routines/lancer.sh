@@ -5,7 +5,7 @@
 #
 # Usage : scripts/routines/lancer.sh episode-du-jour [principal|second] | bilan | rappel
 #   principal (défaut) : le meilleur sujet du jour, créneaux du soir sur tous les réseaux ;
-#   second : le sujet suivant, créneaux de midi (TikTok, YouTube, Threads). brand/postiz.json.
+#   second : le sujet suivant, créneaux de midi (partout sauf LinkedIn). brand/postiz.json.
 #
 # Variables (toutes facultatives) :
 #   MATOU_DEPOT    clone dédié aux routines                  (défaut ~/matou/vids-for-rs)
@@ -17,6 +17,8 @@
 #   MATOU_LIVRER   cible `hermes send` ; vide : message sur la sortie standard seulement
 #   MATOU_MODELES  modèles agy essayés dans l'ordre (repli si quota ou panne),
 #                  toujours ramenés à leur variante high (effort imposé)
+#   MATOU_CLAUDE   modèle Claude Code si agy échoue avec tous ses modèles ; 0 : pas de
+#                  repli                                     (défaut claude-sonnet-5-5)
 set -uo pipefail
 
 routine="${1:?Usage : lancer.sh episode-du-jour [principal|second] | bilan | rappel}"
@@ -29,6 +31,7 @@ POSTIZ="${MATOU_POSTIZ:-1}"
 AUTO="${MATOU_AUTO:-1}"
 LIVRER="${MATOU_LIVRER:-}"
 MODELES="${MATOU_MODELES:-gemini-3.8-flash-high gemini-4-argon-high claude-sonnet-5-5-high}"
+CLAUDE="${MATOU_CLAUDE:-claude-sonnet-5-5}"
 JOURNAUX="$HOME/.local/state/matou"
 
 export PATH="$HOME/.local/bin:$PATH"
@@ -130,7 +133,31 @@ print(r if d.get("status") == "SUCCESS" or fini else "")' <<<"$brut" 2>>"$journa
   git reset -q --hard && git clean -fdq
   sortie=""
 done
-[ -n "$sortie" ] || echouer "agy a échoué avec tous les modèles ($MODELES)"
+agent="agy"
+
+# 5 ter. Dernier repli : Claude Code, s'il est installé (mêmes skills, CLAUDE.md importe
+# AGENTS.md). Personne pour répondre : « dontAsk » refuse tout ce qui n'est pas dans la
+# liste ci-dessous. Ni commit ni push (le lanceur s'en charge).
+outils_claude=(Read Write Edit Glob Grep Skill Task Agent WebFetch WebSearch TodoWrite
+  'Bash(npm run:*)' 'Bash(npm ci:*)' 'Bash(node:*)' 'Bash(npx tsx:*)' 'Bash(python3:*)'
+  'Bash(curl:*)' 'Bash(ffprobe:*)' 'Bash(ffmpeg:*)' 'Bash(ls:*)' 'Bash(cat:*)' 'Bash(head:*)'
+  'Bash(tail:*)' 'Bash(wc:*)' 'Bash(grep:*)' 'Bash(find:*)' 'Bash(mkdir:*)' 'Bash(cp:*)'
+  'Bash(mv:*)' 'Bash(date:*)' 'Bash(git status:*)' 'Bash(git diff:*)' 'Bash(git log:*)'
+  'Bash(git add:*)')
+if [ -z "$sortie" ] && [ "$CLAUDE" != 0 ] && command -v claude >/dev/null; then
+  echo "== claude --model $CLAUDE ($(date +%T))" >>"$journal"
+  if brut="$(timeout 100m claude -p "$consigne" --model "$CLAUDE" --effort high --output-format json \
+    --permission-mode dontAsk --allowedTools "${outils_claude[@]}" </dev/null 2>>"$journal")"; then
+    printf '%s\n' "$brut" >>"$journal"
+    sortie="$(python3 -c '
+import json, re, sys
+d = json.load(sys.stdin); r = d.get("result", "")
+fini = re.search(r"^EPISODE: *[0-9]{3}", r, re.M)
+print(r if not d.get("is_error") or fini else "")' <<<"$brut" 2>>"$journal")"
+  fi
+  [ -n "$sortie" ] && agent="Claude Code" || echo "claude ($CLAUDE) a échoué ou n'a rien rendu." >>"$journal"
+fi
+[ -n "$sortie" ] || echouer "agy a échoué avec tous les modèles ($MODELES)$([ "$CLAUDE" != 0 ] && echo ", puis Claude Code")"
 
 numero="$(grep -oE '^EPISODE: *[0-9]{3}' <<<"$sortie" | tail -1 | grep -oE '[0-9]{3}')"
 avis="$(grep -E '^PROGRAMMER: ' <<<"$sortie" | tail -1 | sed 's/^PROGRAMMER: *//')"
@@ -164,7 +191,7 @@ fi
 if [ -n "$(git status --porcelain)" ]; then
   git add -A >>"$journal" 2>&1
   git -c user.name="Matou (routine)" -c user.email="routines@matou.ai" \
-    commit -q -m "Routine $routine${numero:+ : #$numero} (agy, Pi)" >>"$journal" 2>&1
+    commit -q -m "Routine $routine${numero:+ : #$numero} ($agent, Pi)" >>"$journal" 2>&1
   if [ "$POUSSER" = 1 ]; then
     { git pull -q --rebase origin "$BRANCHE" && git push -q origin "HEAD:$BRANCHE"; } >>"$journal" 2>&1 ||
       message="$message

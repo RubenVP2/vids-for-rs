@@ -28,7 +28,7 @@ passer en programmé :
 
 - `npm run check -- NNN` affiche « Prêt pour la relecture humaine. »
 - `npm run postiz -- --canaux` liste au moins un compte, avec les règles de chaque
-  réseau. Refusé : `node_modules/.bin/postiz auth:status` dit pourquoi (jeton absent ou expiré : à
+  réseau. Refusé : `npx postiz auth:status` dit pourquoi (jeton absent ou expiré : à
   l'utilisateur de relancer `postiz auth:login` sur le Pi) ; s'arrêter et le dire.
 
 Réseaux gérés (un brouillon par compte connecté, les autres ignorés) : TikTok, Instagram,
@@ -58,8 +58,9 @@ aux réponses de tous ; LinkedIn en carrousel (`post_as_images_carousel`).
   - principal (défaut) : TikTok 19 h, Instagram 18 h 30, YouTube 20 h, Threads 9 h
     (vidéo) puis 19 h 30 (relance, texte seul), LinkedIn 8 h 30 en semaine (carrousel
     de `rendu/carrousel/`) ;
-  - second (`--rang second`) : TikTok 12 h 30, YouTube 13 h, Threads 12 h ; pas
-    d'Instagram ni de LinkedIn (« réservé à l'épisode principal », c'est voulu).
+  - second (`--rang second`) : Instagram 12 h, TikTok 12 h 30, YouTube 13 h, Threads
+    12 h puis 15 h 30 (relance) ; pas de LinkedIn (« réservé à l'épisode principal »,
+    c'est voulu : un seul post par jour ouvré).
 - Le script prend pour chaque réseau son premier jour où le créneau est libre (aucun
   post à moins de 90 min sur ce réseau), au moins `delaiVeto` (2 h) après maintenant.
   LinkedIn ne tente que le créneau suivant : déjà pris → « Pas de post : LinkedIn… ».
@@ -84,7 +85,7 @@ integration, date, statut}]}` ; la relance Threads a pour réseau `threads-relan
 Committer `postiz.json` et `postiz-envoi.json`.
 
 Le script refuse de renvoyer un épisode qui a déjà un `postiz-envoi.json` : vérifier
-d'abord dans Postiz (`node_modules/.bin/postiz posts:list`) ; `--force` crée des doublons.
+d'abord dans Postiz (`npx postiz posts:list`) ; `--force` crée des doublons.
 
 **Réseau connecté après coup** (rattraper un épisode déjà parti ailleurs) :
 `npm run postiz -- NNN --envoyer --reseaux linkedin [--date …] [--commentaire]`, puis

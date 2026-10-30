@@ -11,27 +11,30 @@ chiffres de Matou (`docs/apprentissages.md`).
 | Réseau | Format | Ce que l'algorithme récompense | Principal (Paris) | Second (Paris) | Rythme |
 | --- | --- | --- | --- | --- | --- |
 | TikTok | vidéo | taux de vidéo regardée jusqu'au bout, revisionnages, partages, commentaires | 19 h 00 | 12 h 30 | 2 par jour |
-| Instagram | Reel (vidéo) | temps de visionnage, **envois en message privé**, puis likes et enregistrements | 18 h 30 | — | 1 par jour |
+| Instagram | Reel (vidéo) | temps de visionnage, **envois en message privé**, puis likes et enregistrements | 18 h 30 | 12 h 00 | 2 par jour |
 | YouTube | Short (vidéo) | satisfaction et durée de session ; les Shorts vivent des semaines par la recherche | 20 h 00 | 13 h 00 | 2 par jour |
 | LinkedIn (page) | **carrousel** (document à feuilleter) | temps passé sur le post, commentaires ; les liens freinent la portée | 8 h 30, en semaine | — | 1 par jour ouvré, au plus |
-| Threads | vidéo + texte de conversation, puis une **relance texte** | réponses, vite et en fil | 9 h 00, puis 19 h 30 | 12 h 00 | 3 par jour |
+| Threads | vidéo + texte de conversation, puis une **relance texte** | réponses, vite et en fil | 9 h 00, puis 19 h 30 | 12 h 00, puis 15 h 30 | 4 par jour |
 
 Volume par jour (production, depuis le 30/10/2026) : **2 épisodes**.
 
 - Le **principal** (le meilleur sujet) est décliné en 6 posts : TikTok, Instagram,
   YouTube, Threads ×2, LinkedIn les jours ouvrés.
-- Le **second** (le sujet suivant, jamais la même actu) fait 3 posts le midi : TikTok,
-  YouTube, Threads. Le midi est la 2e fenêtre la plus citée pour la vidéo courte.
+- Le **second** (le sujet suivant, jamais la même actu) est décliné de la même façon, le
+  midi : Instagram, TikTok, YouTube, Threads ×2. Le midi est la 2e fenêtre la plus citée
+  pour la vidéo courte.
+- Règle commune : **un épisode = un sujet, le même sur tous ses réseaux**, chaque post au
+  format du réseau. Deux épisodes = deux sujets, chacun présent partout.
 
-Pourquoi pas plus partout :
+Pourquoi LinkedIn reste à 1 :
 
 - TikTok, Shorts et Threads jugent chaque post à part, et le volume y fait grandir un
   compte (la plupart des études citent 1 à 3 vidéos par jour pour croître).
-- Instagram et LinkedIn mettent en concurrence les posts d'un même compte : un 2e post
-  le même jour freine le premier.
+- LinkedIn met en concurrence les posts d'une même page : un 2e post le même jour freine
+  le premier. Instagram aussi, en partie : c'est le pari de l'utilisateur (30/10/2026).
 
 C'est un pari à mesurer : le bilan compare le second au principal, et un second qui fait
-baisser les vues du principal (3 semaines de suite) fera revoir ce rythme.
+baisser les vues du principal (3 semaines de suite, Instagram surtout) fera revoir ce rythme.
 
 ## Par réseau
 
@@ -74,7 +77,7 @@ baisser les vues du principal (3 semaines de suite) fera revoir ce rythme.
   une question), pas la légende TikTok. Un seul sujet (hashtag). La source en 1re réponse.
 - Relance du soir : texte seul, une question qui fait débattre, sur le même sujet.
 - 2 à 3 posts par jour sont la norme citée ; au-delà de 5, ça dilue. Le second épisode
-  ajoute un post vidéo à midi (3 par jour en tout).
+  ajoute sa vidéo à midi et sa relance à 15 h 30 (4 par jour en tout).
 - Matin en semaine (6 h–11 h), et une 2e fenêtre le soir (19 h–21 h).
 
 ### X, Bluesky, Facebook (pas connectés)

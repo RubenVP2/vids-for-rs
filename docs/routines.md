@@ -10,7 +10,8 @@ Hermes (cron)  →  ~/.hermes/scripts/matou-<routine>.sh   lance en tâche de fo
                   (matou-episode-principal.sh, matou-episode-second.sh, matou-rappel.sh, matou-bilan.sh)
                →  scripts/routines/lancer.sh <routine> [rang]   dans le clone ~/matou/vids-for-rs
                     1. main à jour, arbre propre, npm ci si le lock a changé
-                    2. agy --print … (skill de la routine)  ← modèles Gemini, repli si quota
+                    2. agy --print … (skill de la routine)  ← modèles Gemini, repli si quota,
+                       puis Claude Code (claude -p) si agy échoue avec tous ses modèles
                     3. épisode : garde-fous, puis npm run postiz -- NNN --programmer
                     4. commit + pull --rebase + push sur main
                     5. hermes send → Discord #matou : message final, horaires, veto, miniature, vidéo
@@ -63,6 +64,13 @@ donc le script Hermes rend la main tout de suite et `lancer.sh` livre lui-même.
   modèle raté (`reset --hard`, `clean`) ; une réponse en statut ERROR qui finit par
   `EPISODE: NNN` est gardée (épisode fini, seul un dernier appel d'outil a raté).
   Les quotas tombent vite à 2 épisodes par jour : le journal donne « Resets in … ».
+- **Dernier repli : Claude Code.** Si agy échoue avec tous ses modèles, le lanceur relance
+  la même consigne avec `claude -p` (`MATOU_CLAUDE`, défaut `claude-sonnet-5-5`, effort
+  high ; `MATOU_CLAUDE=0` le coupe). Claude Code lit `CLAUDE.md` (qui importe
+  `AGENTS.md`) et les skills et sous-agents de `.claude/`. Permissions : mode `dontAsk`,
+  seuls les outils listés dans `lancer.sh` (`outils_claude`) passent ; ni `git commit`
+  ni `git push`. Un outil manque (refus dans le journal) : l'ajouter à la liste. Le commit dit quel agent a travaillé (« agy » ou
+  « Claude Code »). Compte : celui de `claude` sur le Pi (`claude auth status`).
 - Effort : **toujours high**. `lancer.sh` passe `--effort high` et ramène tout modèle
   de `MATOU_MODELES` à sa variante `-high` (agy refuse un modèle d'un autre effort).
   En interactif sur le Pi, `~/.gemini/antigravity-cli/settings.json` fixe aussi
