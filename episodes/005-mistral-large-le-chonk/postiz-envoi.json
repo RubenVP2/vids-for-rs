@@ -3,7 +3,7 @@
   "date": "2026-10-30T11:00:00.000Z",
   "rang": "second",
   "serie": "flash",
-  "statut": "programmé",
+  "statut": "brouillon",
   "video": "https://uploads.postiz.com/xNxrqAzOcD.mp4",
   "miniature": "https://uploads.postiz.com/B2D4vnxBG7.png",
   "carrousel": [],
@@ -28,6 +28,20 @@
       "integration": "cmvsb3xwh07l1or1cvp01pod9",
       "date": "2026-10-30T12:00:00.000Z",
       "statut": "programmé"
+    },
+    {
+      "reseau": "instagram",
+      "postId": "cmvup8kyp02f4lc1cky3yn46g",
+      "integration": "cmvsaogt206kfor1cddnosuhf",
+      "date": "2026-10-30T11:00:00.000Z",
+      "statut": "brouillon"
+    },
+    {
+      "reseau": "threads-relance",
+      "postId": "cmvup8xa102fmlc1c08rb5q4m",
+      "integration": "cmvsb2y1q03efpg1c3j45vgui",
+      "date": "2026-10-30T14:30:00.000Z",
+      "statut": "brouillon"
     }
   ]
 }
