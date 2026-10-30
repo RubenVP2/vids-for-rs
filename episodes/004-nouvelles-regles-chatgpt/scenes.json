@@ -1,0 +1,83 @@
+{
+  "numero": 4,
+  "slug": "nouvelles-regles-chatgpt",
+  "serie": "flash",
+  "source": {
+    "nom": "OpenAI",
+    "url": "https://openai.com/index/updated-model-spec/",
+    "date": "2026-10-29",
+    "type": "blog"
+  },
+  "statut": "annonce",
+  "verdict": "prometteur",
+  "miniature": "ChatGPT : les ==nouvelles règles==",
+  "musique": true,
+  "scenes": [
+    {
+      "type": "hook",
+      "texte": "Comment ChatGPT doit se comporter ? OpenAI réécrit ses règles.",
+      "titre": "ChatGPT : les ==nouvelles règles==",
+      "icone": "robot",
+      "matou": "surpris"
+    },
+    {
+      "type": "source",
+      "texte": "OpenAI annonce sa nouvelle charte de comportement, la {Model Spec|Modèle Spèque}.",
+      "titreArticle": "An updated ==Model Spec== (OpenAI)",
+      "matou": "parle"
+    },
+    {
+      "type": "point",
+      "texte": "En fait, OpenAI remplace les règles rigides par cinq valeurs fondamentales.",
+      "titre": "Cinq valeurs ==au lieu du style==",
+      "corps": "Le ton s'adapte enfin à toi.",
+      "icone": "ampoule",
+      "matou": "enFait"
+    },
+    {
+      "type": "liste",
+      "texte": "Priorité : respecter ton autonomie, sans jamais décider à ta place.",
+      "titre": "Ce qui change",
+      "elements": [
+        {
+          "texte": "Respecter ton autonomie",
+          "icone": "coche",
+          "quand": "autonomie"
+        },
+        {
+          "texte": "Ne rien décider pour toi",
+          "icone": "cadenas",
+          "quand": "décider"
+        }
+      ],
+      "matou": "reflechit"
+    },
+    {
+      "type": "point",
+      "texte": "Surtout, si un site web cache un piège pour le pirater, ChatGPT l'ignore.",
+      "titre": "Priorité ==à l'humain==",
+      "corps": "Les pièges cachés sur le web sont ignorés.",
+      "icone": "cadenas",
+      "matou": "sceptique"
+    },
+    {
+      "type": "pourquoi",
+      "texte": "Pour toi, c'est un assistant plus souple, mieux protégé des arnaques.",
+      "titre": "Et pour toi ?",
+      "corps": "Un ChatGPT plus sûr qui ne décide pas à ta place.",
+      "icone": "bulle",
+      "matou": "content"
+    },
+    {
+      "type": "verdict",
+      "texte": "Le Hype-mètre dit prometteur : de très bons principes, mais l'entraînement commence à peine.",
+      "raison": "De très bons principes, mais l'entraînement commence à peine.",
+      "matou": "verdict"
+    },
+    {
+      "type": "fin",
+      "texte": "Abonne-toi pour comprendre l'IA. C'était Matou, et c'est tout.",
+      "matou": "neutre"
+    }
+  ]
+}
