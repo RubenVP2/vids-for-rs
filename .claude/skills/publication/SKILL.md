@@ -1,6 +1,6 @@
 ---
 name: publication
-description: Écrit publication.md d'un épisode de Matou — un texte taillé pour chaque réseau (TikTok, Instagram Reels, YouTube Shorts, LinkedIn en carrousel, Threads et sa relance du soir), avec les hashtags. À utiliser après le rendu, ou pour réécrire une description ou des hashtags.
+description: Écrit publication.md d'un épisode de Matou — un texte taillé pour chaque réseau (TikTok, Instagram Reels, YouTube Shorts, LinkedIn en carrousel, Threads et sa relance), avec les hashtags. À utiliser après le rendu, ou pour réécrire une description ou des hashtags.
 ---
 
 # Publication : un texte par réseau
@@ -48,7 +48,7 @@ Lire d'abord `docs/reseaux.md` et la section « Publier » de `docs/apprentissag
 - **Threads** (vidéo, 9 h) : 500 caractères max, une **prise de position** ou une
   question franche qui appelle des réponses, pas la légende TikTok. L'idée en une phrase,
   le statut s'il le faut, `Source : <nom>`. Un seul hashtag (`#IA` ou le sujet), aucune URL.
-- **Threads relance** (texte seul, 19 h 30, le même jour) : 500 caractères max. Une
+- **Threads relance** (texte seul, quelques heures après la vidéo, le même jour) : 500 caractères max. Une
   **question** qui fait débattre sur le même sujet, sous un autre angle que le matin
   (« Tu ferais confiance à… ? », « Qui a déjà… ? »). Elle doit se comprendre sans la
   vidéo. Pas de lien, au plus un hashtag.

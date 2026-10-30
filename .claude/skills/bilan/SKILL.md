@@ -33,11 +33,11 @@ distingue : entreprise citée, type de sujet (produit grand public, sécurité, 
 argent…), série, hook (`scenes.json`, première scène), verdict du Hype-mètre, jour.
 
 Puis la stratégie par réseau (`docs/reseaux.md`) : le rang (colonne « Rang » : principal
-du soir contre second du midi), le créneau de chaque post (colonne « Créneau »), le
+du matin et de midi contre second du soir, depuis le 31/10 ; avant, l'inverse), le créneau de chaque post (colonne « Créneau »), le
 format (LinkedIn : carrousel ou vidéo), le texte propre au réseau (`publication.md`), et
 sur Threads la relance (`threads-relance`) contre le post vidéo. Un créneau qui fait
-moins bien 3 semaines de suite : proposer une autre heure. Les vues du principal qui
-baissent depuis l'arrivée du second : le dire (le rythme de 2 par jour est un pari).
+moins bien 3 semaines de suite : proposer une autre heure. Les vues d'un épisode qui
+baissent depuis l'arrivée de l'autre : le dire (le rythme de 2 par jour est un pari).
 Compter aussi les vetos et les brouillons retenus par les garde-fous de la semaine.
 
 Une conclusion ne vaut que si elle repose sur **au moins 3 épisodes** qui vont dans le

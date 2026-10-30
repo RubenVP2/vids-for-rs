@@ -1,26 +1,26 @@
 {
-  "$description": "Réglages d'envoi dans Postiz (npm run postiz). Deux épisodes par jour : le « principal » (le meilleur sujet, produit en premier) et le « second ». Chaque rang a ses créneaux (heure de Paris, jours permis : 1 = lundi … 7 = dimanche) ; un réseau absent des créneaux d'un rang n'a pas de post pour cet épisode (LinkedIn : le principal seulement ; chaque épisode est un seul sujet, décliné sur les autres réseaux). Chaque post part le jour même : à son heure si le créneau est libre sur CE réseau (aucun post programmé à moins de 90 min) et au moins « delaiVeto » heures après l'envoi (le temps laissé à l'utilisateur pour son veto), sinon 2 h 30 plus tard ; sinon pas de post sur ce réseau. Une actu ne glisse jamais au lendemain. « relance » : un 2e post, texte seul, le même jour à cette heure. Stratégie et sources : docs/reseaux.md. Réglages par réseau : .claude/skills/postiz/PROVIDER_SETTINGS.md et npm run postiz -- --canaux.",
+  "$description": "Réglages d'envoi dans Postiz (npm run postiz). Deux épisodes par jour, chacun publié dans la fenêtre qui suit sa production : le « principal » (produit vers 5 h : LinkedIn et Threads le matin, vidéos à midi) et le « second » (produit vers 14 h, avec l'actu de l'après-midi : vidéos le soir). Chaque rang a ses créneaux (heure de Paris, jours permis : 1 = lundi … 7 = dimanche) ; un réseau absent des créneaux d'un rang n'a pas de post pour cet épisode (LinkedIn : le principal seulement ; chaque épisode est un seul sujet, décliné sur les autres réseaux). Chaque post part le jour même : à son heure si le créneau est libre sur CE réseau (aucun post programmé à moins de 90 min) et au moins « delaiVeto » heures après l'envoi (le temps laissé à l'utilisateur pour son veto), sinon 2 h 30 plus tard ; sinon pas de post sur ce réseau. Une actu ne glisse jamais au lendemain. « relance » : un 2e post, texte seul, le même jour à cette heure. Stratégie et sources : docs/reseaux.md. Réglages par réseau : .claude/skills/postiz/PROVIDER_SETTINGS.md et npm run postiz -- --canaux.",
   "fuseau": "Europe/Paris",
   "delaiVeto": 2,
   "creneaux": {
     "principal": {
-      "tiktok": {"heure": "19:00"},
-      "instagram": {"heure": "18:30"},
-      "youtube": {"heure": "20:00"},
-      "facebook": {"heure": "18:30"},
-      "threads": {"heure": "09:00", "relance": "19:30"},
       "linkedin": {"heure": "08:30", "jours": [1, 2, 3, 4, 5]},
+      "threads": {"heure": "09:00", "relance": "15:30"},
+      "instagram": {"heure": "12:00"},
+      "facebook": {"heure": "12:00"},
+      "tiktok": {"heure": "12:30"},
       "x": {"heure": "12:30"},
-      "bluesky": {"heure": "12:30"}
+      "bluesky": {"heure": "12:30"},
+      "youtube": {"heure": "13:00"}
     },
     "second": {
-      "tiktok": {"heure": "12:30"},
-      "instagram": {"heure": "12:00"},
-      "youtube": {"heure": "13:00"},
-      "facebook": {"heure": "12:00"},
-      "threads": {"heure": "12:00", "relance": "15:30"},
       "x": {"heure": "18:00"},
-      "bluesky": {"heure": "18:00"}
+      "bluesky": {"heure": "18:00"},
+      "instagram": {"heure": "18:30"},
+      "facebook": {"heure": "18:30"},
+      "tiktok": {"heure": "19:00"},
+      "threads": {"heure": "19:30", "relance": "21:30"},
+      "youtube": {"heure": "20:00"}
     }
   },
   "comptes": {},

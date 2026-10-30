@@ -2,8 +2,8 @@
 // (TikTok, Instagram, YouTube, Facebook, Threads, LinkedIn, X, Bluesky).
 // Chaque réseau a son texte (section de publication.md), son format (vidéo, ou carrousel
 // sur LinkedIn) et son créneau (brand/postiz.json → creneaux ; stratégie : docs/reseaux.md).
-// Deux épisodes par jour : le principal (soir, tous les réseaux) et le second (midi, tous sauf
-// LinkedIn). Les posts sont créés en BROUILLON ; --programmer les passe dans la file
+// Deux épisodes par jour : le principal (matin et midi, tous les réseaux) et le second (soir,
+// tous sauf LinkedIn). Les posts sont créés en BROUILLON ; --programmer les passe dans la file
 // de Postiz (feu vert de l'utilisateur, ou garde-fous de la routine), --annuler (veto) les y retire.
 // Usage : npm run postiz -- <épisode>                aperçu : écrit postiz.json (charges utiles -j), n'envoie rien
 //         npm run postiz -- <épisode> --envoyer [--rang second] [--date 2026-10-29[T18:00]] [--commentaire] [--force]

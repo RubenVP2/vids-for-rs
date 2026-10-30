@@ -21,12 +21,15 @@ Les heures suivent les créneaux des réseaux (`docs/reseaux.md`). Un épisode p
 environ (jusqu'à 1 h 40 avec les replis de modèle) :
 
 - le **principal** part à 5 h 13, il est prêt vers 6 h : LinkedIn (8 h 30) et Threads
-  (9 h) passent le jour même, au moins 2 h plus tard (le délai du veto) ;
-- le **second** part à 7 h 13 (il attend le verrou si le principal déborde), il est prêt
-  vers 8 h, pour les créneaux de midi.
+  (9 h), au moins 2 h plus tard (le délai du veto), puis les vidéos à midi ;
+- le **second** part à 14 h 13, avec l'actu de l'après-midi : prêt vers 15 h (16 h 53 au
+  pire), pour les créneaux du soir (18 h 30 et après).
 
-Le rappel de 11 h 07 liste ce que les garde-fous (ou un veto) ont laissé en brouillon,
-avant les créneaux de midi.
+Chaque post part le jour même : un épisode en retard prend le repli (2 h 30 plus tard),
+jamais le lendemain. Un seul épisode par rang et par jour : si celui du rang est déjà
+dans `episodes/` (envoyé aujourd'hui), le lanceur s'arrête sans rien produire
+(`MATOU_FORCER=1` pour passer outre). Le rappel (11 h 07 et 17 h 07) liste ce que les garde-fous (ou un
+veto) ont laissé en brouillon, avant les créneaux de midi et du soir.
 
 **Programmation automatique** (`MATOU_AUTO=1`, défaut) : le lanceur programme seulement
 si l'agent finit par `PROGRAMMER: oui`, que `npm run check -- NNN` passe et que les
@@ -40,8 +43,8 @@ donc le script Hermes rend la main tout de suite et `lancer.sh` livre lui-même.
 | Routine | Hermes | Quand (Paris) | Agent |
 | --- | --- | --- | --- |
 | `episode-du-jour principal` | Matou — épisode principal | tous les jours, 5 h 13 | agy, skill `episode-du-jour` |
-| `episode-du-jour second` | Matou — épisode second | tous les jours, 7 h 13 | agy, skill `episode-du-jour` |
-| `rappel` | Matou — rappel de relecture | tous les jours, 11 h 07 | aucun (`npm run bilan -- --attente`) |
+| `episode-du-jour second` | Matou — épisode second | tous les jours, 14 h 13 | agy, skill `episode-du-jour` |
+| `rappel` | Matou — rappel de relecture | tous les jours, 11 h 07 et 17 h 07 | aucun (`npm run bilan -- --attente`) |
 | `bilan` | Matou — bilan du lundi | lundi, 10 h 37 | agy, skill `bilan` |
 
 ## Pourquoi un clone dédié

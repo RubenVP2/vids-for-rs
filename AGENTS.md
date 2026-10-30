@@ -13,8 +13,8 @@ Postiz (le script gère aussi Facebook, X et Bluesky).
 session livre la vidéo MP4, la miniature, la description et les hashtags. Recette :
 skill **`episode`**. Pas d'article sous la main → skill **`veille-ia`**.
 
-**Routines (tâches planifiées, sans intervention)** : chaque matin **`episode-du-jour`**
-deux fois (épisode principal, puis second : veille → épisode → Postiz), chaque lundi
+**Routines (tâches planifiées, sans intervention)** : chaque jour **`episode-du-jour`**
+deux fois (principal vers 5 h, second vers 14 h : veille → épisode → Postiz), chaque lundi
 **`bilan`** (chiffres Postiz → `docs/apprentissages.md` et `docs/sujets.md`). Elles
 poussent sur **`main`**. Le lanceur programme les posts si les garde-fous passent ;
 l'étape humaine : le **veto** avant l'heure du post, et relire ce que les garde-fous
@@ -38,15 +38,15 @@ Détail : `docs/routines.md`.
 - **À l'écran** : jamais l'utilisateur. Univers « cahier de Matou » : `docs/design-system.md`.
 - **Voix** : V1 synthèse via OpenRouter (`brand/voix.json`) ; V2 la voix de l'utilisateur.
 - **Rythme (production)** : **2 épisodes par jour**, au minimum 1. **Un épisode = un
-  sujet, le même sur tous ses réseaux**, chaque post au format du réseau. Le **principal**
-  (le meilleur sujet) va partout ; le **second** (le sujet suivant, jamais la même actu)
-  va partout sauf LinkedIn, le midi.
-- **Un post par réseau, pas un copier-coller** (`docs/reseaux.md`). Principal : vidéo le
-  soir sur Instagram (18 h 30), TikTok (19 h), YouTube (20 h) ; Threads le matin (vidéo,
-  9 h) puis une relance texte (19 h 30) ; LinkedIn en carrousel, en semaine à 8 h 30, un
-  par jour ouvré. Second : Instagram et Threads 12 h, TikTok 12 h 30, YouTube 13 h, relance
-  Threads 15 h 30. Créneaux :
-  `brand/postiz.json`.
+  sujet, le même sur tous ses réseaux**, chaque post au format du réseau, **le jour même**
+  (jamais reporté au lendemain). Le **principal** (produit vers 5 h) publie le matin et à
+  midi ; le **second** (produit vers 14 h, jamais la même actu) publie le soir, partout
+  sauf LinkedIn.
+- **Un post par réseau, pas un copier-coller** (`docs/reseaux.md`). Principal : LinkedIn
+  en carrousel (en semaine, 8 h 30, un par jour ouvré), Threads (vidéo, 9 h), Instagram
+  (12 h), TikTok (12 h 30), YouTube (13 h), relance texte Threads (15 h 30). Second :
+  Instagram 18 h 30, TikTok 19 h, Threads 19 h 30, YouTube 20 h, relance Threads 21 h 30.
+  Créneaux : `brand/postiz.json`.
 
 ## Règles éditoriales (non négociables)
 

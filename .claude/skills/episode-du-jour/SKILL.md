@@ -1,6 +1,6 @@
 ---
 name: episode-du-jour
-description: Routine quotidienne de Matou, sans intervention — deux fois par matin (épisode principal, puis second), choisit l'actu IA qui a le plus de potentiel, produit l'épisode, le dépose dans Postiz et prévient l'utilisateur ; le lanceur le programme si les garde-fous passent (veto de l'utilisateur ensuite). À utiliser quand une tâche planifiée le demande, ou quand l'utilisateur dit « fais l'épisode du jour tout seul ».
+description: Routine quotidienne de Matou, sans intervention — deux fois par jour (épisode principal vers 5 h, second vers 14 h), choisit l'actu IA qui a le plus de potentiel, produit l'épisode, le dépose dans Postiz et prévient l'utilisateur ; le lanceur le programme si les garde-fous passent (veto de l'utilisateur ensuite). À utiliser quand une tâche planifiée le demande, ou quand l'utilisateur dit « fais l'épisode du jour tout seul ».
 ---
 
 # Épisode du jour (tâche planifiée)
@@ -10,12 +10,15 @@ ci-dessous, jamais en posant une question.
 
 Deux épisodes par jour (`docs/reseaux.md`) :
 
-- **principal** (lancé vers 5 h) : le meilleur sujet du jour. Il passe partout :
-  LinkedIn 8 h 30, Threads 9 h, Instagram 18 h 30, TikTok 19 h, YouTube 20 h.
-- **second** (lancé ensuite, vers 7 h) : le sujet suivant du classement. Il passe aussi
-  partout sauf LinkedIn : Instagram et Threads 12 h, TikTok 12 h 30, YouTube 13 h,
-  relance Threads 15 h 30. Chaque épisode est un seul sujet, décliné par réseau : écrire
-  toutes les sections de `publication.md` (Instagram et relance comprises).
+- **principal** (lancé vers 5 h) : le meilleur sujet de la nuit. Il passe partout, le
+  matin et à midi : LinkedIn 8 h 30, Threads 9 h, Instagram 12 h, TikTok 12 h 30,
+  YouTube 13 h, relance Threads 15 h 30.
+- **second** (lancé vers 14 h) : le meilleur sujet pas encore traité, annonces de la
+  matinée et du début d'après-midi comprises. Il passe partout sauf LinkedIn, le soir :
+  Instagram 18 h 30, TikTok 19 h, Threads 19 h 30, YouTube 20 h, relance Threads 21 h 30.
+
+Chaque épisode est un seul sujet, décliné par réseau : écrire toutes les sections de
+`publication.md` (Instagram et relance comprises).
 
 La consigne du lanceur dit lequel. Sans précision (session à la main) : principal.
 

@@ -32,5 +32,6 @@ ligne démentie est barrée, avec la date et les épisodes qui la démentent.
 | Hypothèse | « Envoie-la à quelqu'un qui… » en fin de légende Instagram fait partager | — |
 | Hypothèse | Sur LinkedIn, le carrousel touche plus de monde que la vidéo (épisodes #000 à #002 en vidéo, référence) | — |
 | Hypothèse | LinkedIn en semaine à 8 h 30, texte sans lien (source en commentaire) | — |
-| Hypothèse | Threads : un texte de prise de position fait plus répondre que la légende reprise de TikTok ; la relance du soir (texte seul) ajoute des réponses | — |
-| Hypothèse | Un 2e épisode le midi (TikTok, YouTube, Threads) ajoute des vues sans faire baisser celles du principal du soir (rythme de production depuis le 30/10) | — |
+| Hypothèse | Threads : un texte de prise de position fait plus répondre que la légende reprise de TikTok ; la relance (texte seul, quelques heures après) ajoute des réponses | — |
+| Hypothèse | Un 2e épisode par jour ajoute des vues sans faire baisser celles de l'autre (rythme de production depuis le 30/10 ; matin + soir depuis le 31/10) | — |
+| Hypothèse | Le second, produit l'après-midi avec l'actu du jour, fait plus de vues le soir qu'un épisode produit le matin (comparer avec #003 et #004, produits avant midi et publiés le soir) | — |

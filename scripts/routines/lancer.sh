@@ -4,8 +4,9 @@
 # puis committe, pousse et livre le message final (et la vidéo) sur Discord.
 #
 # Usage : scripts/routines/lancer.sh episode-du-jour [principal|second] | bilan | rappel
-#   principal (défaut) : le meilleur sujet du jour, créneaux du soir sur tous les réseaux ;
-#   second : le sujet suivant, créneaux de midi (partout sauf LinkedIn). brand/postiz.json.
+#   principal (défaut, vers 5 h) : le meilleur sujet de la nuit, créneaux du matin et de midi ;
+#   second (vers 14 h) : le meilleur sujet pas encore traité, créneaux du soir (partout sauf
+#   LinkedIn). brand/postiz.json.
 #
 # Variables (toutes facultatives) :
 #   MATOU_DEPOT    clone dédié aux routines                  (défaut ~/matou/vids-for-rs)
@@ -19,6 +20,7 @@
 #                  toujours ramenés à leur variante high (effort imposé)
 #   MATOU_CLAUDE   modèle Claude Code si agy échoue avec tous ses modèles ; 0 : pas de
 #                  repli                                     (défaut claude-sonnet-5-5)
+#   MATOU_FORCER   1 : produit même si l'épisode de ce rang est déjà fait aujourd'hui
 set -uo pipefail
 
 routine="${1:?Usage : lancer.sh episode-du-jour [principal|second] | bilan | rappel}"
@@ -87,6 +89,26 @@ empreinte="$(sha1sum package-lock.json | cut -d' ' -f1)"
 if [ "$(cat node_modules/.empreinte 2>/dev/null)" != "$empreinte" ]; then
   npm ci --no-audit --no-fund >>"$journal" 2>&1 || echouer "npm ci a échoué"
   echo "$empreinte" >node_modules/.empreinte
+fi
+
+# Un épisode par rang et par jour : une routine relancée (à la main, ou après un changement
+# d'horaire) ne refait pas un épisode qui n'aurait plus de créneau libre.
+if [ "$routine" = episode-du-jour ] && [ "${MATOU_FORCER:-0}" != 1 ]; then
+  deja="$(RANG="$rang" node -e '
+    const fs = require("fs");
+    const jour = (t) => new Intl.DateTimeFormat("en-CA", {timeZone: "Europe/Paris"}).format(new Date(t));
+    const faits = fs.readdirSync("episodes").filter((d) => {
+      try {
+        const e = JSON.parse(fs.readFileSync(`episodes/${d}/postiz-envoi.json`, "utf8"));
+        return (e.rang ?? "principal") === process.env.RANG && jour(e.envoye) === jour(Date.now());
+      } catch { return false; }
+    });
+    console.log(faits.join(", "));
+  ' 2>>"$journal")"
+  if [ -n "$deja" ]; then
+    echo "Épisode $rang du jour déjà fait ($deja) : rien à produire (MATOU_FORCER=1 pour forcer)." >>"$journal"
+    exit 0
+  fi
 fi
 
 # 3. Rappel de relecture : pas besoin d'agent, le script suffit. Silencieux s'il n'y a rien.

@@ -55,12 +55,12 @@ aux réponses de tous ; LinkedIn en carrousel (`post_as_images_carousel`).
 
 - Chaque réseau a son format, son texte et son **créneau** (`docs/reseaux.md`,
   `brand/postiz.json` → `creneaux`), selon le **rang** de l'épisode :
-  - principal (défaut) : TikTok 19 h, Instagram 18 h 30, YouTube 20 h, Threads 9 h
-    (vidéo) puis 19 h 30 (relance, texte seul), LinkedIn 8 h 30 en semaine (carrousel
-    de `rendu/carrousel/`) ;
-  - second (`--rang second`) : Instagram 12 h, TikTok 12 h 30, YouTube 13 h, Threads
-    12 h puis 15 h 30 (relance) ; pas de LinkedIn (« réservé à l'épisode principal »,
-    c'est voulu : un seul post par jour ouvré).
+  - principal (défaut, épisode du matin) : LinkedIn 8 h 30 en semaine (carrousel de
+    `rendu/carrousel/`), Threads 9 h (vidéo) puis 15 h 30 (relance, texte seul),
+    Instagram 12 h, TikTok 12 h 30, YouTube 13 h ;
+  - second (`--rang second`, épisode du soir) : Instagram 18 h 30, TikTok 19 h, Threads
+    19 h 30 puis 21 h 30 (relance), YouTube 20 h ; pas de LinkedIn (« réservé à
+    l'épisode principal », c'est voulu : un seul post par jour ouvré).
 - Le script place chaque réseau **le jour même** : à son heure si le créneau est libre
   (aucun post programmé à moins de 90 min sur ce réseau ; un brouillon ne compte pas) et
   au moins `delaiVeto` (2 h) après maintenant, sinon 2 h 30 plus tard. Sinon → « Pas de

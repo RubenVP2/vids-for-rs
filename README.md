@@ -20,8 +20,8 @@ présentées par Matou, un chat à lunettes dessiné à la main.
 
 | Quand | Routine (tâche planifiée) | Résultat |
 | --- | --- | --- |
-| Chaque matin | skill `episode-du-jour` | veille → épisode → brouillons Postiz pour 18 h, notification |
-| Chaque après-midi | rappel de relecture | notification si des brouillons du jour attendent |
+| Chaque jour, 5 h 13 et 14 h 13 | skill `episode-du-jour` | veille → épisode → posts Postiz du matin et de midi, puis du soir, notification |
+| Chaque jour, 11 h 07 et 17 h 07 | rappel de relecture | notification si des brouillons du jour attendent |
 | Chaque lundi | skill `bilan` | chiffres par réseau, `docs/apprentissages.md`, `docs/sujets.md` |
 
 **Ton rôle** : relire les brouillons dans Postiz, puis les programmer (dans Postiz, ou
