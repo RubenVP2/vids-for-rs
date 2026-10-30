@@ -29,20 +29,6 @@
       "statut": "programmé"
     },
     {
-      "reseau": "instagram",
-      "postId": "cmvu4gr8m2uq8pg1c1l8jzkuv",
-      "integration": "cmvsaogt206kfor1cddnosuhf",
-      "date": "2026-10-30T17:30:00.000Z",
-      "statut": "programmé"
-    },
-    {
-      "reseau": "tiktok",
-      "postId": "cmvu4gs453vjror1csak4rv1y",
-      "integration": "cmvsakeo602wupg1crmgz7g9n",
-      "date": "2026-10-30T18:00:00.000Z",
-      "statut": "programmé"
-    },
-    {
       "reseau": "threads-relance",
       "postId": "cmvu4gsw33vjtor1c96d45w37",
       "integration": "cmvsb2y1q03efpg1c3j45vgui",
@@ -50,10 +36,24 @@
       "statut": "programmé"
     },
     {
+      "reseau": "instagram",
+      "postId": "cmvupv04f031glc1crshngk1s",
+      "integration": "cmvsaogt206kfor1cddnosuhf",
+      "date": "2026-10-30T20:00:00.000Z",
+      "statut": "programmé"
+    },
+    {
+      "reseau": "tiktok",
+      "postId": "cmvupv620031klc1chtqgxkz6",
+      "integration": "cmvsakeo602wupg1crmgz7g9n",
+      "date": "2026-10-30T20:30:00.000Z",
+      "statut": "programmé"
+    },
+    {
       "reseau": "youtube",
-      "postId": "cmvu4gtyj2uqbpg1ccv0nlu7s",
+      "postId": "cmvupve9o02zqn01c6efqpb98",
       "integration": "cmvsb3xwh07l1or1cvp01pod9",
-      "date": "2026-10-30T19:00:00.000Z",
+      "date": "2026-10-30T21:00:00.000Z",
       "statut": "programmé"
     }
   ]

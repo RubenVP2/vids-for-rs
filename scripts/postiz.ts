@@ -2,13 +2,14 @@
 // (TikTok, Instagram, YouTube, Facebook, Threads, LinkedIn, X, Bluesky).
 // Chaque réseau a son texte (section de publication.md), son format (vidéo, ou carrousel
 // sur LinkedIn) et son créneau (brand/postiz.json → creneaux ; stratégie : docs/reseaux.md).
-// Deux épisodes par jour : le principal (soir, tous les réseaux) et le second (midi, TikTok,
-// YouTube et Threads). Les posts sont créés en BROUILLON ; --programmer les passe dans la file
+// Deux épisodes par jour : le principal (soir, tous les réseaux) et le second (midi, tous sauf
+// LinkedIn). Les posts sont créés en BROUILLON ; --programmer les passe dans la file
 // de Postiz (feu vert de l'utilisateur, ou garde-fous de la routine), --annuler (veto) les y retire.
 // Usage : npm run postiz -- <épisode>                aperçu : écrit postiz.json (charges utiles -j), n'envoie rien
 //         npm run postiz -- <épisode> --envoyer [--rang second] [--date 2026-10-29[T18:00]] [--commentaire] [--force]
 //         --rang principal (défaut) ou second : la grille de créneaux de l'épisode
-//         sans --date : pour chaque réseau, son premier créneau libre au moins delaiVeto h après maintenant
+//         sans --date : aujourd'hui, chaque réseau à son heure, sinon 2 h 30 plus tard (libre, au moins
+//         delaiVeto h après maintenant) ; sinon pas de post : une actu ne passe jamais au lendemain
 //         --date AAAA-MM-JJ : ce jour-là, chaque réseau à son heure ; --date AAAA-MM-JJTHH:MM : tous à cette heure
 //         --reseaux linkedin,x : seulement ces réseaux (rattrapage d'un réseau connecté après coup :
 //         les posts s'ajoutent au journal, les autres réseaux ne sont pas renvoyés)
@@ -25,7 +26,7 @@ import {cli, enListe} from './lib/postiz-cli';
 
 type Reseau = 'tiktok' | 'instagram' | 'youtube' | 'facebook' | 'threads' | 'linkedin' | 'x' | 'bluesky';
 type Texte = 'tiktok' | 'instagram' | 'youtube' | 'linkedin' | 'threads' | 'relance' | 'court'; // sections de publication.md
-type Creneau = {heure: string; jours?: number[]; suivantSeulement?: boolean; relance?: string};
+type Creneau = {heure: string; jours?: number[]; relance?: string};
 type Rang = 'principal' | 'second';
 type Reglages = {
   fuseau: string;
@@ -119,15 +120,15 @@ const jourSemaine = (j: string) => ((new Date(`${j}T12:00:00Z`).getUTCDay() + 6)
 const lisible = (iso: string) =>
   new Intl.DateTimeFormat('fr-FR', {timeZone: reglages.fuseau, dateStyle: 'full', timeStyle: 'short'}).format(new Date(iso));
 
-/** Instants déjà occupés dans Postiz, par réseau (ms). Postiz injoignable : aucun. */
+/** Instants déjà occupés dans Postiz, par réseau (ms). Un brouillon (veto, garde-fou) ne partira pas : il ne compte pas. Postiz injoignable : aucun. */
 const postsExistants = (): Record<Reseau, number[]> => {
   const pris = Object.fromEntries(RESEAUX.map((r) => [r, [] as number[]])) as Record<Reseau, number[]>;
-  const [debut, fin] = [Date.now() - JOUR, Date.now() + 15 * JOUR].map((t) => new Date(t).toISOString());
+  const [debut, fin] = [Date.now() - JOUR, Date.now() + 2 * JOUR].map((t) => new Date(t).toISOString());
   try {
-    const posts = enListe<{publishDate: string; integration?: {providerIdentifier?: string}}>(cli('posts:list', '--startDate', debut, '--endDate', fin));
+    const posts = enListe<{publishDate: string; state?: string; integration?: {providerIdentifier?: string}}>(cli('posts:list', '--startDate', debut, '--endDate', fin));
     for (const p of posts) {
       const r = reseauDe(p.integration?.providerIdentifier ?? '');
-      if (r) pris[r].push(new Date(p.publishDate).getTime());
+      if (r && p.state !== 'DRAFT') pris[r].push(new Date(p.publishDate).getTime());
     }
   } catch {
     console.log('ATTENTION calendrier Postiz illisible (postiz auth:status) : créneaux calculés sans lui.');
@@ -137,22 +138,26 @@ const postsExistants = (): Record<Reseau, number[]> => {
 /** Un créneau est pris si le réseau a déjà un post à moins de 90 min (le principal et le second ne se gênent pas). */
 const occupe = (pris: number[], date: string) => pris.some((t) => Math.abs(t - new Date(date).getTime()) < 90 * 60_000);
 
+/** Créneau pris ou trop proche : on retente une fois, REPLI plus tard le même jour. */
+const REPLI = 150 * 60_000;
+
 /**
- * Le créneau d'un réseau pour ce rang : son premier jour permis et libre, à son heure, au moins
- * delaiVeto h après maintenant (ou le jour imposé par --date). undefined : pas de post.
+ * Le créneau d'un réseau pour ce rang, le jour même (ou le jour imposé par --date) : son heure,
+ * sinon REPLI plus tard, libre et au moins delaiVeto h après maintenant. Une actu ne glisse
+ * jamais au lendemain : undefined, pas de post sur ce réseau.
  */
-const creneauPour = (c: Creneau, r: Reseau, pris: number[], impose?: string): string | undefined => {
+const creneauPour = (c: Creneau, pris: number[], impose?: string): string | undefined => {
   if (impose?.includes('T')) return versUtc(impose);
-  const depart = impose ? new Date(`${impose}T12:00:00Z`).getTime() : Date.now();
-  for (let i = 0; i < 15; i++) {
-    const j = jour(depart + i * JOUR);
-    if (c.jours && !c.jours.includes(jourSemaine(j))) continue;
-    const date = versUtc(`${j}T${c.heure}`);
-    if (!impose && new Date(date).getTime() - Date.now() < reglages.delaiVeto * 3_600_000) continue;
+  const j = impose ?? jour(Date.now());
+  if (c.jours && !c.jours.includes(jourSemaine(j))) return undefined;
+  const heure = new Date(versUtc(`${j}T${c.heure}`)).getTime();
+  for (const t of [heure, heure + REPLI]) {
+    if (jour(t) !== j) continue;
+    if (!impose && t - Date.now() < reglages.delaiVeto * 3_600_000) continue;
+    const date = new Date(t).toISOString();
     if (!occupe(pris, date)) return date;
-    if (c.suivantSeulement || impose) return undefined;
   }
-  throw new Error(`${NOMS[r]} : aucun jour libre dans les 15 prochains jours du calendrier Postiz : préciser --date.`);
+  return undefined;
 };
 
 const choisirCanaux = (canaux: Canal[]) => {
@@ -182,9 +187,9 @@ const planifier = (pub: Publication, reseaux: Reseau[], carrousel: string[], ran
       sautes.push(`${NOMS[r]} : réservé à l'épisode principal`);
       continue;
     }
-    const date = creneauPour(c, r, pris[r], impose);
+    const date = creneauPour(c, pris[r], impose);
     if (!date) {
-      sautes.push(`${NOMS[r]} : prochain créneau déjà pris, pas de post pour cet épisode`);
+      sautes.push(`${NOMS[r]} : aucun créneau libre ce jour-là (heure, repli 2 h 30 plus tard, jours permis), pas de post pour cet épisode`);
       continue;
     }
     envois.push({reseau: r, date, texte, carrousel: r === 'linkedin' && !!pub.linkedin && carrousel.length >= 2});

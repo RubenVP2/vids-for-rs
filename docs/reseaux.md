@@ -67,8 +67,8 @@ baisser les vues du principal (3 semaines de suite, Instagram surtout) fera revo
   flèches, une question à la fin. 3 hashtags au plus.
 - **Pas de lien dans le post** : la source va dans le 1er commentaire (`--commentaire`).
 - Les pages marchent en semaine, le matin (8 h–10 h, mardi–jeudi en tête). Pas le week-end.
-- Rythme : 1 par jour ouvré au plus. `suivantSeulement` : si le prochain créneau est pris,
-  l'épisode ne va pas sur LinkedIn (une actu vieille de 4 jours n'y a pas sa place).
+- Rythme : 1 par jour ouvré au plus. Comme partout, le post part le jour même (à 8 h 30,
+  sinon 11 h) ou pas du tout : une actu de la veille n'y a pas sa place.
 
 ### Threads
 - C'est un réseau de **conversation** : les réponses dans la 1re heure pèsent le plus.

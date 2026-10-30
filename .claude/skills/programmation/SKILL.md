@@ -61,9 +61,11 @@ aux réponses de tous ; LinkedIn en carrousel (`post_as_images_carousel`).
   - second (`--rang second`) : Instagram 12 h, TikTok 12 h 30, YouTube 13 h, Threads
     12 h puis 15 h 30 (relance) ; pas de LinkedIn (« réservé à l'épisode principal »,
     c'est voulu : un seul post par jour ouvré).
-- Le script prend pour chaque réseau son premier jour où le créneau est libre (aucun
-  post à moins de 90 min sur ce réseau), au moins `delaiVeto` (2 h) après maintenant.
-  LinkedIn ne tente que le créneau suivant : déjà pris → « Pas de post : LinkedIn… ».
+- Le script place chaque réseau **le jour même** : à son heure si le créneau est libre
+  (aucun post programmé à moins de 90 min sur ce réseau ; un brouillon ne compte pas) et
+  au moins `delaiVeto` (2 h) après maintenant, sinon 2 h 30 plus tard. Sinon → « Pas de
+  post : … » : une actu ne glisse jamais au lendemain. Un épisode fini trop tard pour
+  le jour même n'a donc aucun post sans `--date` (« Aucun post à créer »).
 - Si l'utilisateur a donné un jour : `--date AAAA-MM-JJ` (chaque réseau à son heure ce
   jour-là). `--date AAAA-MM-JJTHH:MM` met tous les réseaux à cette heure : seulement s'il
   le demande.
