@@ -1,0 +1,31 @@
+[
+  {
+    "type": "draft",
+    "date": "2026-10-30T11:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "<id Instagram>"
+        },
+        "value": [
+          {
+            "content": "L'Europe sort une IA géante que tout le monde peut télécharger 🤓\n\nMistral AI publie les poids de Mistral Large 4, surnommé « Le Chonk » :\n→ 1 000 milliards de paramètres, entraînés en Europe sur 3 800 processeurs\n→ poids ouverts : une entreprise peut l'installer chez elle, sans dépendre des géants américains\n→ le nouveau champion des modèles ouverts pour programmer et sécuriser le code\n\nLe hic : un monstre pareil ne tourne pas sur ton PC portable.\n\nSource : Mistral AI, billet officiel.\nEnvoie-la à quelqu'un qui pense que l'IA, c'est forcément américain ☝️\n\n#IA #Mistral #OpenSource #vulgarisation #matou",
+            "image": [
+              {
+                "id": "<id de la vidéo>",
+                "path": "<chemin de 005-mistral-large-le-chonk.mp4>"
+              }
+            ]
+          }
+        ],
+        "settings": {
+          "__type": "instagram",
+          "post_type": "post",
+          "is_trial_reel": false
+        }
+      }
+    ]
+  }
+]

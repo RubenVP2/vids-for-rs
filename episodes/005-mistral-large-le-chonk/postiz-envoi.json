@@ -1,0 +1,33 @@
+{
+  "envoye": "2026-10-30T06:55:41.000Z",
+  "date": "2026-10-30T11:00:00.000Z",
+  "rang": "second",
+  "serie": "flash",
+  "statut": "programmé",
+  "video": "https://uploads.postiz.com/xNxrqAzOcD.mp4",
+  "miniature": "https://uploads.postiz.com/B2D4vnxBG7.png",
+  "carrousel": [],
+  "postes": [
+    {
+      "reseau": "threads",
+      "postId": "cmvumbmo8005llc1cvqtg0hmy",
+      "integration": "cmvsb2y1q03efpg1c3j45vgui",
+      "date": "2026-10-30T11:00:00.000Z",
+      "statut": "programmé"
+    },
+    {
+      "reseau": "tiktok",
+      "postId": "cmvumbnja006jn01czkqq2iwq",
+      "integration": "cmvsakeo602wupg1crmgz7g9n",
+      "date": "2026-10-30T11:30:00.000Z",
+      "statut": "programmé"
+    },
+    {
+      "reseau": "youtube",
+      "postId": "cmvumboh2005plc1cdqh4rspr",
+      "integration": "cmvsb3xwh07l1or1cvp01pod9",
+      "date": "2026-10-30T12:00:00.000Z",
+      "statut": "programmé"
+    }
+  ]
+}
