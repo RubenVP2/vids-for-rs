@@ -51,7 +51,7 @@ donc le script Hermes rend la main tout de suite et `lancer.sh` livre lui-même.
 
 ## agy
 
-- Contexte : `AGENTS.md`, source unique (`CLAUDE.md` l’importe pour Claude Code). Skills : `.agents/skills.json` pointe
+- Contexte : `AGENTS.md` (lien vers `CLAUDE.md`). Skills : `.agents/skills.json` pointe
   vers `.claude/skills`. Sous-agents : `.agents/agents` est un lien vers `.claude/agents`.
   Une seule copie : modifier les skills dans `.claude/`, les deux harnais les voient.
 - En `--print --mode accept-edits`, agy travaille dans le clone sans qu'il soit dans
@@ -59,7 +59,10 @@ donc le script Hermes rend la main tout de suite et `lancer.sh` livre lui-même.
 - Les permissions globales d'agy interdisent `git commit` et `git push` : c'est voulu,
   le lanceur s'en charge.
 - Modèles : `MATOU_MODELES` (défaut `gemini-3.8-flash-high`, puis `gemini-4-argon-high`,
-  puis `claude-sonnet-5-5-high`). Liste : `agy models`.
+  puis `claude-sonnet-5-5-high`). Liste : `agy models`. Le repli efface le travail du
+  modèle raté (`reset --hard`, `clean`) ; une réponse en statut ERROR qui finit par
+  `EPISODE: NNN` est gardée (épisode fini, seul un dernier appel d'outil a raté).
+  Les quotas tombent vite à 2 épisodes par jour : le journal donne « Resets in … ».
 - Effort : **toujours high**. `lancer.sh` passe `--effort high` et ramène tout modèle
   de `MATOU_MODELES` à sa variante `-high` (agy refuse un modèle d'un autre effort).
   En interactif sur le Pi, `~/.gemini/antigravity-cli/settings.json` fixe aussi
@@ -69,7 +72,7 @@ donc le script Hermes rend la main tout de suite et `lancer.sh` livre lui-même.
 
 - Voix : `OPENROUTER_API_KEY`, lue dans `~/.hermes/.env` par le lanceur.
 - Postiz : jeton OAuth de la CLI (`~/.postiz/credentials.json`, `postiz auth:login`).
-  Expiré : `node_modules/.bin/postiz auth:status` le dit, relancer `postiz auth:login` sur le Pi.
+  Expiré : `npx postiz auth:status` le dit, relancer `postiz auth:login` sur le Pi.
 
 ## Dépanner
 

@@ -102,7 +102,7 @@ case "$routine" in
     consigne="$commun Épisode $rang du jour. Suis le skill episode-du-jour de bout en bout (veille-ia en mode autonome, puis episode étapes 0 à 7, avec les sous-agents documentaliste, verificateur-faits, spectateur et controleur-visuel). $postiz_consigne Termine par le message final du skill, en français, puis l'avant-dernière ligne exactement « PROGRAMMER: oui » ou « PROGRAMMER: non — <raison> » (étape 4 du skill), et la dernière ligne exactement « EPISODE: NNN » (ou « EPISODE: aucun »)."
     ;;
   bilan)
-    consigne="$commun Suis le skill bilan de bout en bout. Ne modifie ni les skills ni AGENTS.md (propose-le dans le message final). Ne publie et ne programme rien dans Postiz. Termine par le message final du skill, en français."
+    consigne="$commun Suis le skill bilan de bout en bout. Ne modifie ni les skills ni CLAUDE.md (propose-le dans le message final). Ne publie et ne programme rien dans Postiz. Termine par le message final du skill, en français."
     ;;
   *) echouer "routine inconnue « $routine »" ;;
 esac
@@ -117,7 +117,13 @@ for modele in $MODELES; do
   if brut="$(agy --print "$consigne" --model "$modele" --effort high --mode accept-edits --print-timeout 100m \
     --output-format json 2>>"$journal")"; then
     printf '%s\n' "$brut" >>"$journal"
-    sortie="$(python3 -c 'import json,sys; d=json.load(sys.stdin); print(d.get("response","") if d.get("status")=="SUCCESS" else "")' <<<"$brut" 2>>"$journal")"
+    # Un statut ERROR avec « EPISODE: NNN » : l'épisode est fini, seul un dernier appel
+    # d'outil a raté (vu le 2026-10-30). On le garde ; les garde-fous décident ensuite.
+    sortie="$(python3 -c '
+import json, re, sys
+d = json.load(sys.stdin); r = d.get("response", "")
+fini = re.search(r"^EPISODE: *[0-9]{3}", r, re.M)
+print(r if d.get("status") == "SUCCESS" or fini else "")' <<<"$brut" 2>>"$journal")"
     [ -n "$sortie" ] && break
   fi
   echo "agy ($modele) a échoué ou n'a rien rendu : modèle suivant." >>"$journal"
