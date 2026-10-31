@@ -1,8 +1,8 @@
 # Réserve de sujets
 
-Sujets d'avance pour les jours sans actu forte : l'épisode du jour prend le premier et
-le retire. Le skill `bilan` remet la liste à 5 chaque lundi (articles de blog des 30
-derniers jours, série `decrypte`, sujets pas encore traités).
+Dernier repli, à la main : l'épisode du jour prend le premier et le retire seulement
+quand la veille n'a plus aucun candidat, réserve automatique comprise
+(`veille/reserve.json`, `docs/veille.md`). Le skill `bilan` y retire les sujets périmés.
 
 | Sujet (idée unique) | Source (URL) | Date | Statut | Pourquoi ça peut marcher |
 | --- | --- | --- | --- | --- |

@@ -10,6 +10,7 @@ Hermes (cron)  →  ~/.hermes/scripts/matou-<routine>.sh   lance en tâche de fo
                   (matou-episode-principal.sh, matou-episode-second.sh, matou-rappel.sh, matou-bilan.sh)
                →  scripts/routines/lancer.sh <routine> [rang]   dans le clone ~/matou/vids-for-rs
                     1. main à jour, arbre propre, npm ci si le lock a changé
+                       puis npm run veille -- --rang <rang> (choix du sujet, docs/veille.md)
                     2. agy --print … (skill de la routine)  ← modèles Gemini, repli si quota,
                        puis Claude Code (claude -p) si agy échoue avec tous ses modèles
                     3. épisode : garde-fous, puis npm run postiz -- NNN --programmer

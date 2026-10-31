@@ -52,10 +52,12 @@ que les chiffres ne montrent pas.
 2. `docs/apprentissages.md` : ajouter ou corriger les lignes que les chiffres confirment
    ou contredisent (avec la date et les épisodes qui le montrent). Une hypothèse démentie
    par 3 épisodes est barrée, pas effacée.
-3. `docs/sujets.md` : la remettre à **10 sujets** d'avance pour les jours sans actu forte
-   (le second épisode y puise souvent),
-   avec le skill `veille-ia` (articles de blog des 30 derniers jours, série `decrypte`,
-   pas déjà traités). Retirer ceux qui sont périmés.
+3. Veille (`docs/veille.md`) : la réserve automatique (`veille/reserve.json`) se remplit
+   et se purge seule. Comparer les scores de la semaine (`veille/*.json`) aux vues des
+   épisodes : si un signal (médias, HN, Reddit, Trends, fraîcheur) ne prédit pas les vues,
+   **proposer** un nouveau poids pour `brand/veille.json` dans le message final, sans le
+   changer (l'utilisateur décide). `docs/sujets.md` (dernier repli, à la main) : retirer
+   les sujets périmés ou déjà traités, sans en ajouter.
 
 Ne pas modifier les skills, `AGENTS.md` ni les créneaux de `brand/postiz.json` :
 proposer le changement dans le message final, l'utilisateur tranche.

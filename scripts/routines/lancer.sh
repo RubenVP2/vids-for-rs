@@ -122,6 +122,22 @@ Un brouillon dont l'heure est passée ne part pas : programme-le dans Postiz, ou
   exit 0
 fi
 
+# 3 bis. Veille déterministe (docs/veille.md) : le classement est fait ici, par script, avant
+# l'agent ; il ne fait que le lire (et peut écarter un sujet, avec une raison). Copie gardée
+# hors du dépôt : un repli de modèle remet l'arbre à zéro, la veille doit lui survivre.
+choix_veille=""
+if [ "$routine" = episode-du-jour ]; then
+  if veille_sortie="$(npm run -s veille -- --rang "$rang" 2>>"$journal")"; then
+    printf '%s\n' "$veille_sortie" >>"$journal"
+    choix_veille="$(tail -1 <<<"$veille_sortie")"
+  else
+    echo "npm run veille a échoué : l'agent prendra la réserve (docs/sujets.md)." >>"$journal"
+    choix_veille="CHOIX: aucun (npm run veille a échoué, voir le journal)"
+  fi
+  rm -rf "$JOURNAUX/veille-courante" && cp -r veille "$JOURNAUX/veille-courante" 2>/dev/null
+fi
+restaurer_veille() { [ -d "$JOURNAUX/veille-courante" ] && rm -rf veille && cp -r "$JOURNAUX/veille-courante" veille; }
+
 # 4. Consigne donnée à agy.
 commun="Tu tournes en tâche planifiée sur le Raspberry Pi, lancé par scripts/routines/lancer.sh : personne ne répondra, ne pose aucune question. La branche $BRANCHE est déjà à jour et npm ci est fait. N'exécute AUCUNE commande git (le lanceur committe et pousse après toi). Si tu dois corriger le moteur (scripts/, src/) pour avancer, dis-le dans le message final. Lis AGENTS.md. Nous sommes le $(LC_ALL=fr_FR.UTF-8 date '+%A %d %B %Y'), heure de Paris : une « actu » date des 48 dernières heures, vérifie la date de chaque article."
 case "$routine" in
@@ -131,7 +147,7 @@ case "$routine" in
     else
       postiz_consigne="Essai : n'envoie RIEN à Postiz (pas de --envoyer, pas de --programmer) ; arrête-toi après npm run check."
     fi
-    consigne="$commun Épisode $rang du jour. Suis le skill episode-du-jour de bout en bout (veille-ia en mode autonome, puis episode étapes 0 à 7, avec les sous-agents documentaliste, verificateur-faits, spectateur et controleur-visuel). $postiz_consigne Termine par le message final du skill, en français, puis l'avant-dernière ligne exactement « PROGRAMMER: oui » ou « PROGRAMMER: non — <raison> » (étape 4 du skill), et la dernière ligne exactement « EPISODE: NNN » (ou « EPISODE: aucun »)."
+    consigne="$commun Épisode $rang du jour. La veille est faite (npm run veille -- --rang $rang) : classement dans veille/$(TZ=Europe/Paris date +%F)-$rang.md, résultat « $choix_veille ». Ne cherche pas d'autre sujet sur le web ; tu peux seulement l'écarter avec --ecarter (skill veille-ia). Suis le skill episode-du-jour de bout en bout (veille-ia, puis episode étapes 0 à 7, avec les sous-agents documentaliste, verificateur-faits, spectateur et controleur-visuel). $postiz_consigne Termine par le message final du skill, en français, puis l'avant-dernière ligne exactement « PROGRAMMER: oui » ou « PROGRAMMER: non — <raison> » (étape 4 du skill), et la dernière ligne exactement « EPISODE: NNN » (ou « EPISODE: aucun »)."
     ;;
   bilan)
     consigne="$commun Suis le skill bilan de bout en bout. Ne modifie ni les skills ni CLAUDE.md (propose-le dans le message final). Ne publie et ne programme rien dans Postiz. Termine par le message final du skill, en français."
@@ -159,7 +175,7 @@ print(r if d.get("status") == "SUCCESS" or fini else "")' <<<"$brut" 2>>"$journa
     [ -n "$sortie" ] && break
   fi
   echo "agy ($modele) a échoué ou n'a rien rendu : modèle suivant." >>"$journal"
-  git reset -q --hard && git clean -fdq
+  git reset -q --hard && git clean -fdq && restaurer_veille
   sortie=""
 done
 agent="agy"
@@ -190,7 +206,8 @@ fi
 
 numero="$(grep -oE '^EPISODE: *[0-9]{3}' <<<"$sortie" | tail -1 | grep -oE '[0-9]{3}')"
 avis="$(grep -E '^PROGRAMMER: ' <<<"$sortie" | tail -1 | sed 's/^PROGRAMMER: *//')"
-message="$(grep -vE '^(EPISODE|PROGRAMMER): ' <<<"$sortie")"
+# Les blocs <communication_style> qu'agy recopie parfois dans sa réponse (vu le 2026-10-31) : retirés.
+message="$(grep -vE '^(EPISODE|PROGRAMMER): ' <<<"$sortie" | sed '/<communication_style>/,/<\/communication_style>/d')"
 
 # 5 bis. Programmation automatique, avec droit de veto (docs/decisions.md, 2026-10-30).
 # Garde-fous : l'agent dit oui (vérification des faits sans réserve), npm run check passe,

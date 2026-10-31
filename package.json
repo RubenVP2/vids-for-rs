@@ -15,6 +15,7 @@
     "check": "tsx scripts/check.ts",
     "postiz": "tsx scripts/postiz.ts",
     "bilan": "tsx scripts/bilan.ts",
+    "veille": "tsx scripts/veille.ts",
     "voices:compare": "tsx scripts/compare-voices.ts"
   },
   "dependencies": {

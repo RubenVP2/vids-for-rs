@@ -48,17 +48,15 @@ le message final (étape 4) puis les deux lignes `PROGRAMMER: …` et `EPISODE: 
 
 ## 1. Choisir le sujet
 
-Skill **`veille-ia`**, en mode autonome : il lit `docs/apprentissages.md` et
-`docs/sujets.md`, classe, et prend le premier. Pas d'actu qui atteint le seuil de la
-veille : prendre le premier sujet de `docs/sujets.md` (et le retirer de la liste).
-
-Épisode **second** : le principal du jour est déjà dans `episodes/` (le plus récent).
-Écarter son sujet et tout ce qui le recoupe (même entreprise, même annonce), puis
-prendre le suivant du classement ; sinon la réserve. Deux vidéos sur la même actu le même
-jour se font concurrence.
+Skill **`veille-ia`** : le classement est fait par `npm run veille -- --rang <rang>`
+(lancé par `lancer.sh` avant toi ; à la main sinon). Prends le CHOIX ; ton seul levier
+est le veto du skill (`--ecarter`, avec une raison), qui donne le suivant. Le script
+écarte déjà les sujets traités, la finance, et pour le second l'entreprise du principal.
+Plus de candidat : premier sujet de `docs/sujets.md` (retiré de la liste), sinon
+`EPISODE: aucun`.
 
 Un sujet que le `documentaliste` juge mal sourcé (source non identifiable, rumeur sans
-média reconnu) : passer au suivant du classement, sans demander.
+média reconnu) : veto, puis le suivant, sans demander.
 
 ## 2. Produire
 
@@ -90,7 +88,9 @@ C'est lui que l'utilisateur reçoit en notification. Court, dans cet ordre :
 
 1. L'épisode : numéro, rang, titre YouTube, idée en une phrase, Hype-mètre, et l'heure du
    premier post (la limite du veto) ; les réseaux sans post et pourquoi.
-2. Pourquoi ce sujet (une ligne : la raison du classement de la veille).
+2. Pourquoi ce sujet : son id, son score et le détail (ex. « C01, 58 : officiel 20,
+   4 médias 32, < 24 h 10… »), puis les deux suivants du classement et, s'il y en a,
+   les veto avec leur raison.
 3. Les points non vérifiés, s'il y en a.
 
 Puis, sur l'avant-dernière ligne, ton avis de garde-fou :

@@ -14,8 +14,9 @@ session livre la vidéo MP4, la miniature, la description et les hashtags. Recet
 skill **`episode`**. Pas d'article sous la main → skill **`veille-ia`**.
 
 **Routines (tâches planifiées, sans intervention)** : chaque jour **`episode-du-jour`**
-deux fois (principal vers 5 h, second vers 14 h : veille → épisode → Postiz), chaque lundi
-**`bilan`** (chiffres Postiz → `docs/apprentissages.md` et `docs/sujets.md`). Elles
+deux fois (principal vers 5 h, second vers 14 h : veille par script → épisode → Postiz),
+chaque lundi **`bilan`** (chiffres Postiz → `docs/apprentissages.md`, poids de la veille
+proposés). Elles
 poussent sur **`main`**. Le lanceur programme les posts si les garde-fous passent ;
 l'étape humaine : le **veto** avant l'heure du post, et relire ce que les garde-fous
 ont retenu en brouillon.
@@ -70,8 +71,9 @@ Détail : `docs/routines.md`.
 - Sous-agents (`.claude/agents/`) : `documentaliste` (article → `source.md`),
   `verificateur-faits` (script contre source), `spectateur` (test grand public),
   `controleur-visuel` (images rendues).
-- Ce qui marche chez Matou (chiffres) : `docs/apprentissages.md`. Sujets d'avance :
-  `docs/sujets.md`. Bilans hebdomadaires : `docs/bilans/`.
+- Ce qui marche chez Matou (chiffres) : `docs/apprentissages.md`. Choix du sujet :
+  `docs/veille.md` (`npm run veille`, classements dans `veille/`) ; dernier repli à la
+  main : `docs/sujets.md`. Bilans hebdomadaires : `docs/bilans/`.
 - Postiz : CLI officielle `postiz` (dépendance du projet), authentifiée par OAuth
   (`postiz auth:login`, sur le Pi) ou par la clé `POSTIZ_API_KEY` / `POSTIZ_ENV`.
 - Moteur (Remotion + scripts) : `docs/moteur.md`. Commandes : `package.json`.
