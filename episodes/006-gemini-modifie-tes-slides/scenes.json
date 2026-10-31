@@ -1,0 +1,70 @@
+{
+  "numero": 6,
+  "slug": "gemini-modifie-tes-slides",
+  "serie": "flash",
+  "source": {
+    "nom": "Google",
+    "url": "https://workspaceupdates.googleblog.com/2026/10/edit-entire-presentations-with-gemini-in-Google-Slides.html",
+    "date": "2026-10-30",
+    "type": "blog"
+  },
+  "statut": "disponible",
+  "verdict": "prometteur",
+  "miniature": "Un ordre pour ==tout ton diaporama==",
+  "musique": true,
+  "scenes": [
+    {
+      "type": "hook",
+      "texte": "Modifier vingt diapos une par une, c'est terminé.",
+      "titre": "Un ordre pour ==tout ton diaporama==",
+      "matou": "surpris"
+    },
+    {
+      "type": "source",
+      "texte": "Google déploie {Gemini|Gémini} dans Google Slides pour modifier une présentation entière d'un coup.",
+      "titreArticle": "Edit entire presentations with ==Gemini in Slides==",
+      "matou": "parle"
+    },
+    {
+      "type": "point",
+      "texte": "En fait, un seul ordre met à jour tes polices, tes couleurs ou ton texte partout.",
+      "titre": "Un ordre, ==toutes les diapos==",
+      "corps": "Mise à jour des couleurs, des polices et du texte en masse.",
+      "icone": "ampoule",
+      "matou": "enFait"
+    },
+    {
+      "type": "liste",
+      "texte": "Il peut copier le style d'un fichier, ou condenser trois diapos en une seule.",
+      "titre": "Ce qu'il fait ==d'un coup==",
+      "elements": [
+        {
+          "texte": "Copier le style d'un fichier",
+          "icone": "eclair",
+          "quand": "style"
+        },
+        {
+          "texte": "Condenser 3 diapos en une",
+          "icone": "document",
+          "quand": "condenser"
+        }
+      ]
+    },
+    {
+      "type": "pourquoi",
+      "texte": "Et pour toi ? Si ça rate, le bouton Annuler remet tout. Mais c'est seulement en anglais.",
+      "titre": "Et pour toi ?",
+      "corps": "Annulation facile avec Ctrl+Z. Mais seulement en anglais.",
+      "icone": "coche"
+    },
+    {
+      "type": "verdict",
+      "texte": "Hype-mètre : prometteur. Adieu la corvée des diapos, même s'il faut lui parler anglais.",
+      "raison": "Disponible, annulation possible, ==en anglais au lancement==."
+    },
+    {
+      "type": "fin",
+      "texte": "Abonne-toi. C'était Matou, et c'est tout."
+    }
+  ]
+}
