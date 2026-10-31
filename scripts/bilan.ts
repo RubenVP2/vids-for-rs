@@ -2,11 +2,13 @@
 // et ceux des comptes. Sert au skill bilan (tâche planifiée du lundi).
 // Usage : npm run bilan [-- --jours 30]
 //         npm run bilan -- --attente   épisodes dont les posts sont encore en brouillon (n'écrit rien)
-// Écrit episodes/NNN-slug/stats.json (chiffres bruts, versionnés) et affiche deux tableaux Markdown.
+// Écrit episodes/NNN-slug/stats.json (chiffres bruts, versionnés) et affiche trois tableaux Markdown
+// (épisodes, gabarits de texte, comptes).
 // Accès : CLI officielle `postiz` authentifiée par OAuth2 (postiz auth:login), sans clé API.
 import fs from 'node:fs';
 import path from 'node:path';
 import {EPISODES} from './lib/episode';
+import {lireDeclares} from './lib/gabarits';
 import {cli, enListe} from './lib/postiz-cli';
 
 type Serie = {label: string; average?: boolean; data: {total: number | string; date: string}[]};
@@ -55,12 +57,15 @@ if (args.includes('--attente')) {
   process.exit(0);
 }
 
+const parGabarit: {reseau: string; gabarit: string; stats: Record<string, number>}[] = [];
 console.log(`## Épisodes (${jours} derniers jours)\n`);
 console.log('| Épisode | Série | Rang | Réseau | Créneau | État | Chiffres |\n| --- | --- | --- | --- | --- | --- | --- |');
 for (const {d, envoi} of envois) {
   // Un épisode reconstitué (archive.md) n'a plus ses scènes : sa série est notée dans postiz-envoi.json.
   const fichierScenes = path.join(EPISODES, d, 'scenes.json');
   const serie = fs.existsSync(fichierScenes) ? JSON.parse(fs.readFileSync(fichierScenes, 'utf8')).serie : (envoi.serie ?? '—');
+  const fichierPub = path.join(EPISODES, d, 'publication.md');
+  const declares = fs.existsSync(fichierPub) ? lireDeclares(fs.readFileSync(fichierPub, 'utf8')) : {};
   const postes = [];
   for (const p of envoi.postes as Poste[]) {
     const post = parId.get(p.postId);
@@ -68,13 +73,29 @@ for (const {d, envoi} of envois) {
     const brut = post?.releaseURL || etat === 'PUBLISHED' ? cli<Serie[] | {missing: true}>('analytics:post', p.postId, '-d', String(jours)) : [];
     const manquant = !Array.isArray(brut);
     const stats = Array.isArray(brut) ? resumer(brut) : {};
-    postes.push({...p, etat, url: post?.releaseURL ?? null, manquant, stats});
+    const reseau = p.reseau === 'threads-relance' ? 'relance' : p.reseau;
+    const gabarit = declares[reseau]?.id ?? null;
+    if (gabarit && Object.keys(stats).length) parGabarit.push({reseau, gabarit, stats});
+    postes.push({...p, etat, url: post?.releaseURL ?? null, manquant, gabarit, stats});
     const note = manquant ? 'publication non reliée : posts:missing puis posts:connect (skill postiz)' : enLigne(stats);
     console.log(`| ${d} | ${serie} | ${envoi.rang ?? 'principal'} | ${p.reseau} | ${creneau(p.date ?? envoi.date)} | ${etat}${post?.releaseURL ? ` ([lien](${post.releaseURL}))` : ''} | ${note} |`);
   }
   const stats = {maj: new Date().toISOString(), jours, date: envoi.date, rang: envoi.rang ?? 'principal', postes};
   fs.writeFileSync(path.join(EPISODES, d, 'stats.json'), JSON.stringify(stats, null, 2) + '\n');
 }
+
+// Gabarits de texte (docs/publication.md) : moyenne de chaque chiffre, réseau par réseau.
+console.log('\n## Gabarits de texte (moyennes par post)\n');
+console.log('| Réseau | Gabarit | Posts | Chiffres |\n| --- | --- | --- | --- |');
+const groupes = new Map<string, typeof parGabarit>();
+for (const x of parGabarit) groupes.set(`${x.reseau} ${x.gabarit}`, [...(groupes.get(`${x.reseau} ${x.gabarit}`) ?? []), x]);
+for (const [cle, lignes] of [...groupes].sort(([a], [b]) => a.localeCompare(b))) {
+  const [reseau, gabarit] = cle.split(' ');
+  const labels = [...new Set(lignes.flatMap((l) => Object.keys(l.stats)))];
+  const moyennes = Object.fromEntries(labels.map((k) => [k, Math.round((lignes.reduce((s, l) => s + (l.stats[k] ?? 0), 0) / lignes.length) * 10) / 10]));
+  console.log(`| ${reseau} | ${gabarit} | ${lignes.length} | ${enLigne(moyennes)} |`);
+}
+if (!groupes.size) console.log('| — | aucun post publié avec un gabarit déclaré | 0 | — |');
 
 console.log('\n## Comptes (7 derniers jours)\n');
 console.log('| Réseau | Compte | Chiffres |\n| --- | --- | --- |');

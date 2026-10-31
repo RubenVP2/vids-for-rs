@@ -73,7 +73,8 @@ Détail : `docs/routines.md`.
   `controleur-visuel` (images rendues).
 - Ce qui marche chez Matou (chiffres) : `docs/apprentissages.md`. Choix du sujet :
   `docs/veille.md` (`npm run veille`, classements dans `veille/`) ; dernier repli à la
-  main : `docs/sujets.md`. Bilans hebdomadaires : `docs/bilans/`.
+  main : `docs/sujets.md`. Textes des posts : `docs/publication.md` (gabarits,
+  `npm run gabarits`). Bilans hebdomadaires : `docs/bilans/`.
 - Postiz : CLI officielle `postiz` (dépendance du projet), authentifiée par OAuth
   (`postiz auth:login`, sur le Pi) ou par la clé `POSTIZ_API_KEY` / `POSTIZ_ENV`.
 - Moteur (Remotion + scripts) : `docs/moteur.md`. Commandes : `package.json`.

@@ -1,0 +1,56 @@
+{
+  "_doc": "Gabarits des textes de publication.md (docs/publication.md). Un gabarit par réseau et par épisode, en rotation sur le numéro : liste[(⌊n/2⌋ + n % 2) % taille]. npm run gabarits -- NNN les donne, npm run check -- NNN vérifie le motif, npm run bilan compare leurs chiffres. Partie vérifiée : ligne1 (1re ligne), question (dernière phrase qui finit par « ? »), titre (YouTube), texte (toute la section, hashtags compris).",
+  "depuis": 8,
+  "ouiNon": "(^|,\\s*)(est-ce qu|tu penses qu|tu trouves qu|tu crois qu|penses-tu|trouves-tu|crois-tu|tu es d'accord|t'es d'accord)",
+  "reseaux": {
+    "tiktok": {
+      "section": "TikTok",
+      "formules": [
+        {"id": "camp", "partie": "question", "motif": "\\bou\\b", "consigne": "Deux camps nommés à choisir", "exemple": "Team « je lui confie mes diapos » ou team « jamais de la vie » ?"},
+        {"id": "note", "partie": "question", "motif": "combien|sur 10|quel âge|en quelle année|quel pourcentage", "consigne": "Un chiffre à donner", "exemple": "Tu lui mets combien sur 10, à cette idée ?"},
+        {"id": "vecu", "partie": "question", "motif": "déjà", "consigne": "Une expérience à raconter", "exemple": "Qui s'est déjà fait couper la parole par ChatGPT ?"},
+        {"id": "un-mot", "partie": "texte", "motif": "en un mot|en un emoji", "consigne": "Un mot ou un emoji à répondre", "exemple": "Résume ta réaction en un emoji 👇"}
+      ]
+    },
+    "instagram": {
+      "section": "Instagram",
+      "formules": [
+        {"id": "question", "partie": "ligne1", "motif": "\\?", "consigne": "La 1re ligne est une question que le lecteur se pose", "exemple": "Et si une seule phrase refaisait tout ton diaporama ?"},
+        {"id": "chiffre", "partie": "ligne1", "motif": "\\d", "consigne": "La 1re ligne porte le chiffre le plus frappant de la source", "exemple": "200 signalements à la police en un été : ChatGPT ne laisse plus rien passer"},
+        {"id": "toi", "partie": "ligne1", "motif": "\\b(tu|ton|ta|tes|toi)\\b|\\bt'", "consigne": "La 1re ligne dit ce que ça change pour toi", "exemple": "Tes diapos vont se refaire toutes seules dans Google Slides 🤓"}
+      ]
+    },
+    "youtube": {
+      "section": "YouTube",
+      "formules": [
+        {"id": "nom-fait", "partie": "titre", "motif": "^(?!pourquoi|comment)[^?]+$", "consigne": "Le nom connu puis le fait, sans question", "exemple": "ChatGPT coupe la discussion si tu dérapes"},
+        {"id": "pourquoi", "partie": "titre", "motif": "^pourquoi .+\\?$", "consigne": "« Pourquoi … ? », la question que les gens tapent", "exemple": "Pourquoi ChatGPT coupe certaines discussions ?"},
+        {"id": "chiffre", "partie": "titre", "motif": "\\d", "consigne": "Le nom connu et un chiffre de la source", "exemple": "ChatGPT : 200 signalements à la police en 3 mois"}
+      ]
+    },
+    "linkedin": {
+      "section": "LinkedIn",
+      "formules": [
+        {"id": "metier", "partie": "question", "motif": "équipe|entreprise|métier|boîte|service|collègue|client|manager", "consigne": "Une question sur le travail du lecteur, qui appelle un récit", "exemple": "Dans ton équipe, qui passe le plus de temps sur les diaporamas ?"},
+        {"id": "pour-contre", "partie": "question", "motif": "pour ou contre", "consigne": "Pour ou contre, avec l'enjeu", "exemple": "Pour ou contre une IA qui coupe une conversation professionnelle ?"},
+        {"id": "horizon", "partie": "question", "motif": "dans \\d+ (ans?|mois)|d'ici (20\\d\\d|\\d+ ans)", "consigne": "Une prédiction datée", "exemple": "Dans 2 ans, qui fera encore ses slides à la main ?"}
+      ]
+    },
+    "threads": {
+      "section": "Threads",
+      "formules": [
+        {"id": "avis", "partie": "ligne1", "motif": "^mon avis\\s*:", "consigne": "Ouvrir par « Mon avis : » et une position tranchée, finir par une question", "exemple": "Mon avis : c'est la fin des réunions où l'on attend que les slides chargent. Et toi ?"},
+        {"id": "pari", "partie": "texte", "motif": "je parie", "consigne": "Un pari daté, puis inviter à le contredire", "exemple": "Je parie que dans un an, plus personne n'aligne ses diapos à la main. Qui me contredit ?"},
+        {"id": "question-d-abord", "partie": "texte", "motif": "^[^.!\\n]*\\?", "consigne": "La 1re phrase est la question, l'actu vient après", "exemple": "Tu laisserais une IA refaire ton diaporama la veille d'une réunion ?"}
+      ]
+    },
+    "relance": {
+      "section": "Threads relance",
+      "formules": [
+        {"id": "dilemme", "partie": "question", "motif": "tu préfères|plutôt", "consigne": "Un dilemme entre deux choix concrets", "exemple": "Tu préfères une IA qui coupe trop tôt, ou une qui laisse tout passer ?"},
+        {"id": "vecu", "partie": "question", "motif": "déjà", "consigne": "Une expérience vécue à raconter", "exemple": "Qui a déjà refait un diaporama entier la veille au soir ?"},
+        {"id": "horizon", "partie": "question", "motif": "dans \\d+ (ans?|mois)|d'ici", "consigne": "Une prédiction datée", "exemple": "Dans 5 ans, qui fera encore une présentation sans IA ?"}
+      ]
+    }
+  }
+}

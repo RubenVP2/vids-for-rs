@@ -95,6 +95,9 @@ Facebook le texte d'Instagram. À revoir le jour où ils sont connectés.
 
 ## Ce qu'on mesure (skill `bilan`)
 
+Les textes (question de fin, 1re ligne, titre) suivent des gabarits en rotation, comparés
+par le bilan : `docs/publication.md`.
+
 Chaque ligne d'hypothèse de `docs/apprentissages.md` (Publier) se vérifie réseau par
 réseau : rang (principal ou second), créneau (`npm run bilan` donne le jour et l'heure de chaque post), format
 (carrousel contre vidéo sur LinkedIn), relance Threads (réponses obtenues). Un créneau

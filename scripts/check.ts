@@ -4,6 +4,7 @@ import {execFileSync} from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import {dossierEpisode, lireEpisode, lireTimings, nomEpisode} from './lib/episode';
+import {controler, numeroDe, reglages as gabarits} from './lib/gabarits';
 
 const dossier = dossierEpisode(process.argv[2]);
 const nom = nomEpisode(dossier);
@@ -81,6 +82,13 @@ if (!fs.existsSync(pub)) {
   // X et Bluesky (pas connectés aujourd'hui) : facultatif, 280 caractères (limite de X).
   const court = section('Court');
   if (court !== undefined) verifier(court.length <= 280, `Court (X, Bluesky) : ${court.length} caractères`, `Court (X, Bluesky) : ${court.length} caractères (max 280)`);
+  // Gabarits et textes (docs/publication.md) : à partir de l'épisode brand/publication.json → depuis.
+  const n = numeroDe(dossier);
+  if (n >= gabarits.depuis) {
+    const r = controler(texte, n, section);
+    ok.push(...r.ok);
+    ko.push(...r.ko);
+  }
 }
 
 ok.forEach((m) => console.log(`OK  ${m}`));

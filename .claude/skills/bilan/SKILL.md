@@ -40,6 +40,11 @@ moins bien 3 semaines de suite : proposer une autre heure. Les vues d'un épisod
 baissent depuis l'arrivée de l'autre : le dire (le rythme de 2 par jour est un pari).
 Compter aussi les vetos et les brouillons retenus par les garde-fous de la semaine.
 
+Les textes (`docs/publication.md`) : la table « Gabarits de texte » de `npm run bilan`
+donne, réseau par réseau, la moyenne des chiffres de chaque gabarit. Le chiffre qui
+compte dépend de la partie vérifiée : commentaires pour une question (TikTok, LinkedIn,
+Threads), envois et partages pour Instagram, vues pour un titre YouTube.
+
 Une conclusion ne vaut que si elle repose sur **au moins 3 épisodes** qui vont dans le
 même sens ; sinon c'est une piste, notée comme telle. Ne jamais inventer d'explication
 que les chiffres ne montrent pas.
@@ -58,6 +63,9 @@ que les chiffres ne montrent pas.
    **proposer** un nouveau poids pour `brand/veille.json` dans le message final, sans le
    changer (l'utilisateur décide). `docs/sujets.md` (dernier repli, à la main) : retirer
    les sujets périmés ou déjà traités, sans en ajouter.
+4. Gabarits (`brand/publication.json`) : un gabarit qui fait nettement moins bien que les
+   autres du même réseau sur au moins 3 posts publiés chacun : **proposer** de le retirer
+   ou de le réécrire dans le message final, sans changer le fichier.
 
 Ne pas modifier les skills, `AGENTS.md` ni les créneaux de `brand/postiz.json` :
 proposer le changement dans le message final, l'utilisateur tranche.
