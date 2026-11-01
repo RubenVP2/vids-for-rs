@@ -290,18 +290,36 @@ if (args.includes('--programmer') || args.includes('--annuler')) {
   if (!fs.existsSync(journal)) throw new Error('Aucun brouillon envoyé pour cet épisode : lancer d’abord --envoyer.');
   const envoi = JSON.parse(fs.readFileSync(journal, 'utf8')) as Journal;
   const veto = args.includes('--annuler');
+  let changements = 0;
   for (const p of envoi.postes.filter((p) => retenu(p.reseau))) {
     const quand = lisible(p.date ?? envoi.date);
-    if (veto && (p.statut !== 'programmé' || new Date(p.date ?? envoi.date).getTime() <= Date.now())) {
-      console.log(`Inchangé : ${p.reseau}, ${quand} (${p.statut === 'programmé' ? 'déjà parti' : 'déjà en brouillon'})`);
+    const parti = new Date(p.date ?? envoi.date).getTime() <= Date.now();
+    // Jamais de posts:status sur un post déjà programmé : repasser un post déjà parti en
+    // « schedule » le republie sur le réseau (doublons Threads du 01/11/2026 sur #008).
+    // Une commande « ok » répétée doit être sans effet, pas une seconde publication.
+    if (!veto && p.statut === 'programmé') {
+      console.log(`Inchangé : ${p.reseau}, ${quand} (${parti ? 'déjà parti' : 'déjà programmé'})`);
+      continue;
+    }
+    if (veto && (p.statut !== 'programmé' || parti)) {
+      console.log(`Inchangé : ${p.reseau}, ${quand} (${parti ? 'déjà parti' : 'déjà en brouillon'})`);
       continue;
     }
     cli('posts:status', p.postId, '--status', veto ? 'draft' : 'schedule');
     p.statut = veto ? 'brouillon' : 'programmé';
+    changements++;
     console.log(`${veto ? 'Repassé en brouillon' : 'Programmé'} : ${p.reseau} (${p.postId}), ${quand}`);
   }
   const statut: Statut = envoi.postes.every((p) => p.statut === 'programmé') ? 'programmé' : 'brouillon';
   fs.writeFileSync(journal, JSON.stringify({...envoi, statut}, null, 2) + '\n');
+  if (!changements) {
+    console.log(
+      veto
+        ? '\nRien à annuler : aucun post programmé qui ne soit déjà parti.'
+        : '\nRien à programmer : ces posts sont déjà dans Postiz (programmés ou partis). `npm run postiz -- <épisode> --annuler` pour un veto.',
+    );
+    process.exit(0);
+  }
   console.log(veto ? '\nVeto appliqué : ces posts attendent en brouillon dans Postiz (--programmer pour les remettre).' : '\nDates enregistrées dans Postiz.');
   process.exit(0);
 }

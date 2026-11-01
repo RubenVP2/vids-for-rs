@@ -81,7 +81,7 @@ elif [ -f "${dossier}urgent.json" ] && [ ! -f "${dossier}postiz-envoi.json" ]; t
 else
   sortie="$(npm run -s postiz -- "$numero" --programmer ${reseaux:+--reseaux "$reseaux"} 2>&1)"; code=$?
 fi
-grep -E '^(Programmé|Repassé|Inchangé|Pas de post|Proche|Non connectés|Error|.*Envoi annulé|.*Déjà envoyé|  - )' <<<"$sortie" | sed 's/ ([^)]*)//' || true
+grep -E '^(Programmé|Repassé|Inchangé|Pas de post|Proche|Rien à programmer|Rien à annuler|Non connectés|Error|.*Envoi annulé|.*Déjà envoyé|  - )' <<<"$sortie" | sed 's/ ([^)]*)//' || true
 [ "$code" = 0 ] || { echo "Échec (npm run postiz, code $code) :"; tail -5 <<<"$sortie"; }
 
 # Le journal de l'épisode (postiz-envoi.json) part sur main, même après un échec partiel :
