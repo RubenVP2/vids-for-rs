@@ -1,0 +1,162 @@
+[
+  {
+    "type": "draft",
+    "date": "2026-11-01T17:30:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsaogt206kfor1cddnosuhf"
+        },
+        "value": [
+          {
+            "content": "Ton électricité pourrait bientôt être soulagée par des serveurs d'IA envoyés dans l'espace 🤓\n\nGoogle a fait tourner son modèle Gemma 4 sur un satellite en orbite :\n→ Un poème généré à bord et renvoyé sur Terre\n→ Des puces alimentées directement par l'énergie solaire\n→ Quinze minutes de calcul par session pour éviter la surchauffe\n\nL'idée : installer de futurs centres de données dans l'espace pour ne plus saturer nos réseaux électriques.\n\nEnvoie-la à quelqu’un qui a la tête dans les étoiles !\n\n#IA #Google #espace #vulgarisation #matou",
+            "image": [
+              {
+                "id": "8cc808d9-81fc-408f-b2f4-4de65122c409",
+                "path": "https://uploads.postiz.com/exZ57k4Q7N.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Sources : Clubic (https://www.clubic.com/actualite-637000-un-satellite-une-ia-et-un-poeme-google-vient-de-reussir-une-experience-assez-folle-dans-l-espace.html)",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "instagram-standalone",
+          "post_type": "post",
+          "is_trial_reel": false
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-01T18:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsakeo602wupg1crmgz7g9n"
+        },
+        "value": [
+          {
+            "content": "Google a fait composer un poème à son IA depuis l'espace, pour tester des serveurs solaires en orbite 🛰️ Tu lui mets combien sur 10, à cette idée ?\n\n#IA #Google #espace #apprendresurtiktok #matou",
+            "image": [
+              {
+                "id": "8cc808d9-81fc-408f-b2f4-4de65122c409",
+                "path": "https://uploads.postiz.com/exZ57k4Q7N.mp4"
+              }
+            ]
+          }
+        ],
+        "settings": {
+          "__type": "tiktok-business",
+          "content_posting_method": "DIRECT_POST",
+          "privacy_level": "PUBLIC_TO_EVERYONE",
+          "duet": true,
+          "stitch": true,
+          "comment": true,
+          "autoAddMusic": "no",
+          "brand_content_toggle": false,
+          "brand_organic_toggle": false,
+          "video_made_with_ai": true
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-01T18:30:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb2y1q03efpg1c3j45vgui"
+        },
+        "value": [
+          {
+            "content": "Plutôt serveurs d'IA solaires dans l'espace, ou centrales dédiées sur Terre ?\n\nGoogle vient de faire tourner son modèle Gemma 4 directement sur un satellite en orbite. Les puces ne tournent que 15 minutes d'affilée pour ne pas surchauffer, mais le but est d'alimenter de futurs data centers au Soleil d'ici dix ans.\n\nSource : Clubic\n\n#IA",
+            "image": [
+              {
+                "id": "8cc808d9-81fc-408f-b2f4-4de65122c409",
+                "path": "https://uploads.postiz.com/exZ57k4Q7N.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Sources : Clubic (https://www.clubic.com/actualite-637000-un-satellite-une-ia-et-un-poeme-google-vient-de-reussir-une-experience-assez-folle-dans-l-espace.html)",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "threads"
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-01T19:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb3xwh07l1or1cvp01pod9"
+        },
+        "value": [
+          {
+            "content": "Google a réussi à faire tourner son IA sur un satellite pour lui faire écrire un haïku depuis l'espace.\nLe but : tester des centres de données solaires en orbite pour soulager la Terre.\n\nSource : https://www.clubic.com/actualite-637000-un-satellite-une-ia-et-un-poeme-google-vient-de-reussir-une-experience-assez-folle-dans-l-espace.html\n\n#shorts #IA #Google #matou",
+            "image": [
+              {
+                "id": "8cc808d9-81fc-408f-b2f4-4de65122c409",
+                "path": "https://uploads.postiz.com/exZ57k4Q7N.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Sources : Clubic (https://www.clubic.com/actualite-637000-un-satellite-une-ia-et-un-poeme-google-vient-de-reussir-une-experience-assez-folle-dans-l-espace.html)",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "youtube",
+          "type": "public",
+          "selfDeclaredMadeForKids": "no",
+          "title": "Google : 1 million de dollars pour un poème écrit par son IA",
+          "thumbnail": {
+            "id": "1db3a855-de45-4d0b-8e03-8a0c9115ea5f",
+            "path": "https://uploads.postiz.com/gY8OihA7wA.png"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-01T20:30:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb2y1q03efpg1c3j45vgui"
+        },
+        "value": [
+          {
+            "content": "Dans 10 ans, combien de nos calculs d'IA tourneront directement en orbite autour de la Terre ?\n\nGoogle prouve qu'une puce peut calculer dans l'espace, mais la facture ne baissera que si SpaceX casse les prix des fusées.\n\n#IA",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "threads"
+        }
+      }
+    ]
+  }
+]

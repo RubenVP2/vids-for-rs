@@ -1,0 +1,85 @@
+{
+  "numero": 9,
+  "slug": "google-ia-dans-lespace",
+  "serie": "decrypte",
+  "source": {
+    "nom": "Clubic",
+    "url": "https://www.clubic.com/actualite-637000-un-satellite-une-ia-et-un-poeme-google-vient-de-reussir-une-experience-assez-folle-dans-l-espace.html",
+    "date": "2026-11-01",
+    "type": "article"
+  },
+  "statut": "annonce",
+  "verdict": "prometteur",
+  "miniature": "Google envoie son IA dans ==l'espace==",
+  "musique": true,
+  "gabarit": {
+    "ouverture": "chiffre",
+    "corps": "liste"
+  },
+  "scenes": [
+    {
+      "type": "hook",
+      "texte": "Google vient d'écrire le poème le plus ==cher du monde== : un million de dollars le vers.",
+      "titre": "Poème à ==1 million de dollars==",
+      "icone": "fusee",
+      "visuel": {
+        "type": "chiffre",
+        "valeur": "1 M$"
+      },
+      "matou": "surpris"
+    },
+    {
+      "type": "liste",
+      "texte": "Clubic le révèle : Google a réussi à faire tourner son IA dans un ==satellite en orbite==.",
+      "titre": "Une IA dans l'==espace==",
+      "elements": [
+        {
+          "texte": "L'IA Gemma 4 en orbite",
+          "icone": "fusee",
+          "quand": "réussi"
+        },
+        {
+          "texte": "Un poème capté sur Terre",
+          "icone": "document",
+          "quand": "satellite"
+        }
+      ],
+      "matou": "parle"
+    },
+    {
+      "type": "point",
+      "texte": "En fait, le but est d'alimenter de futurs centres de données directement grâce au ==Soleil==.",
+      "titre": "Pourquoi en ==orbite== ?",
+      "corps": "Profiter du Soleil non-stop pour alimenter de futurs data centers.",
+      "icone": "ampoule",
+      "matou": "enFait"
+    },
+    {
+      "type": "chiffre",
+      "texte": "Mais dans le vide spatial, les puces ne tournent que ==quinze minutes== d'affilée pour ne pas surchauffer.",
+      "valeur": "15 min",
+      "legende": "de calcul d'affilée au maximum pour éviter la ==surchauffe==",
+      "quand": "quinze",
+      "matou": "sceptique"
+    },
+    {
+      "type": "pourquoi",
+      "texte": "Et pour toi ? Déplacer ces serveurs géants réduirait la ==consommation d'électricité== sur Terre.",
+      "titre": "Et pour toi ?",
+      "corps": "Des serveurs en orbite allègeraient le réseau sur Terre.",
+      "icone": "eclair",
+      "matou": "neutre"
+    },
+    {
+      "type": "verdict",
+      "texte": "Hype-mètre : prometteur. Mon avis : l'exploit est bien réel, mais le data center solaire attendra dix ans.",
+      "raison": "L'exploit fonctionne en orbite, mais la rentabilité dépend des fusées de 2035.",
+      "matou": "verdict"
+    },
+    {
+      "type": "fin",
+      "texte": "Bref, pour rentabiliser ce poème hors de prix, il faudra attendre que le coût des fusées baisse.",
+      "matou": "content"
+    }
+  ]
+}
