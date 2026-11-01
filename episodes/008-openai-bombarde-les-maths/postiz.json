@@ -1,0 +1,162 @@
+[
+  {
+    "type": "draft",
+    "date": "2026-11-01T08:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb2y1q03efpg1c3j45vgui"
+        },
+        "value": [
+          {
+            "content": "OpenAI noie les mathématiciens sous des centaines de résultats bruts par IA, tout en gardant secrètes ses plus grandes découvertes. Sam Altman l'assume : il refuse de ralentir. Je parie que d'ici deux ans, les labos privés d'IA auront totalement distancé les universités publiques sur la recherche de pointe. Qui parie le contraire ? Source : The Verge. #IA",
+            "image": [
+              {
+                "id": "f492a4c1-2945-4c22-8edb-43fdea78800c",
+                "path": "https://uploads.postiz.com/h8evDD9pzs.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Sources : The Verge https://www.theverge.com/ai-artificial-intelligence/1023054/altman-cheeky-pint-ai-math-interview",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "threads"
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-01T11:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsaogt206kfor1cddnosuhf"
+        },
+        "value": [
+          {
+            "content": "10 millions de dollars pour une seule équation : OpenAI bombarde les maths avec son IA 🤓\n\nSam Altman admet submerger les chercheurs avec une avalanche de résultats bruts :\n→ des centaines de preuves publiées ce mois-ci sans vérification approfondie\n→ plus de 10 millions de dollars investis rien que sur l'équation de Navier-Stokes\n→ mais les détails des découvertes majeures restent gardés secrets\n\nPour Matou, c'est du pur buzz : noyer la recherche publique sous des calculs bruts en cachant les vraies preuves, c'est de la communication.\n\nSource : The Verge, lien en commentaire.\nEnvoie-la à quelqu'un qui adore les maths et l'IA ☝️\n\n#IA #OpenAI #Mathématiques #vulgarisation #matou",
+            "image": [
+              {
+                "id": "f492a4c1-2945-4c22-8edb-43fdea78800c",
+                "path": "https://uploads.postiz.com/h8evDD9pzs.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Sources : The Verge https://www.theverge.com/ai-artificial-intelligence/1023054/altman-cheeky-pint-ai-math-interview",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "instagram-standalone",
+          "post_type": "post",
+          "is_trial_reel": false
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-01T11:30:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsakeo602wupg1crmgz7g9n"
+        },
+        "value": [
+          {
+            "content": "OpenAI bombarde les mathématiciens avec des centaines de résultats par IA. Team « génie scientifique » ou team « coup de com » ?\n\n#IA #OpenAI #Maths #apprendresurtiktok #matou",
+            "image": [
+              {
+                "id": "f492a4c1-2945-4c22-8edb-43fdea78800c",
+                "path": "https://uploads.postiz.com/h8evDD9pzs.mp4"
+              }
+            ]
+          }
+        ],
+        "settings": {
+          "__type": "tiktok-business",
+          "content_posting_method": "DIRECT_POST",
+          "privacy_level": "PUBLIC_TO_EVERYONE",
+          "duet": true,
+          "stitch": true,
+          "comment": true,
+          "autoAddMusic": "no",
+          "brand_content_toggle": false,
+          "brand_organic_toggle": false,
+          "video_made_with_ai": true
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-01T12:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb3xwh07l1or1cvp01pod9"
+        },
+        "value": [
+          {
+            "content": "OpenAI noie les mathématiciens sous une avalanche de résultats générés par IA, tout en gardant les preuves clés sous clé. Sam Altman refuse de ralentir. Mon avis sur ce coup de com.\nSource : https://www.theverge.com/ai-artificial-intelligence/1023054/altman-cheeky-pint-ai-math-interview\n\n#IA #OpenAI #shorts #matou",
+            "image": [
+              {
+                "id": "f492a4c1-2945-4c22-8edb-43fdea78800c",
+                "path": "https://uploads.postiz.com/h8evDD9pzs.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Sources : The Verge https://www.theverge.com/ai-artificial-intelligence/1023054/altman-cheeky-pint-ai-math-interview",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "youtube",
+          "type": "public",
+          "selfDeclaredMadeForKids": "no",
+          "title": "Pourquoi OpenAI bombarde les maths avec son IA ?",
+          "thumbnail": {
+            "id": "1dee5b95-2748-4340-8f95-e51e30d76f87",
+            "path": "https://uploads.postiz.com/oVuZdQcBus.png"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-01T14:30:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb2y1q03efpg1c3j45vgui"
+        },
+        "value": [
+          {
+            "content": "OpenAI qui dépense 10 millions de dollars sur une seule équation et balance des calculs non vérifiés aux chercheurs : qui a déjà essayé d'utiliser une IA pour résoudre un problème complexe et s'est retrouvé avec des pages de résultats impossibles à vérifier ? Racontez vos expériences en commentaire ! #IA",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "threads"
+        }
+      }
+    ]
+  }
+]
