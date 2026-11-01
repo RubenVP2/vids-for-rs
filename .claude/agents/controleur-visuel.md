@@ -23,7 +23,9 @@ Pour chaque image, vérifie :
    sur un texte).
 4. **Orthographe** : fautes, accents, majuscules, espaces avant « ? ! : » en français.
 5. **Conformité** : ce qui s'affiche correspond à `scenes.json`, tampon de statut
-   présent sur la scène source, Hype-mètre entouré sur le bon niveau.
+   présent sur la 2e scène (sur la scène source dans les anciens épisodes), Hype-mètre
+   entouré sur le bon niveau. La 1re image montre le hook sans en-tête ; la dernière
+   reprend l'image du hook (fin en boucle).
 6. **Miniature** : titre lisible en petit, Matou visible, numéro d'épisode présent.
 7. **Carrousel** : chaque diapo se lit seule dans un fil LinkedIn (titre gros, rien de
    coupé ni hors cadre), la 1re donne envie de feuilleter, la source est en pied de page.

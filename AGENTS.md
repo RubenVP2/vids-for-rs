@@ -31,11 +31,17 @@ Détail : `docs/routines.md`.
 
 - **Audience** : grand public + pros hors tech. Aucun jargon non expliqué.
 - **Format** : 1080×1920. Série `flash` ~30 s (une annonce), `decrypte` ≤ 45 s (un
-  article de blog). Une seule idée par vidéo.
+  article de blog). Un sujet qui le demande passe en **format long** (≤ 60 s), avec sa
+  raison : on ne tasse pas pour tenir 30 s. Une seule idée par vidéo.
 - **Ton** : pédagogie d'abord, humour pince-sans-rire (inspiration Fireship).
 - **Matou** : chat blanc à lunettes dessiné par l'utilisateur, c'est **lui qui parle**
-  (voix masculine). Rituels : « En fait… » pour expliquer, Hype-mètre à la fin
-  (pur buzz / prometteur / game changer), « C'était Matou, et c'est tout. » pour finir.
+  (voix masculine), et il a **un avis** (le verdict est sa position). Rituels : « En
+  fait… » pour expliquer, Hype-mètre à la fin (pur buzz / prometteur / game changer),
+  annoncé par l'en-tête. **Fin en boucle** : la dernière phrase renvoie au hook, l'écran
+  reprend le hook, signature sonore « Ma-tou ! » ; ni « abonne-toi » ni formule d'adieu.
+- **Montage varié** : l'ouverture et la 2e scène suivent un gabarit en rotation
+  (`brand/montage.json`, `npm run gabarits`), la mise en page passe en miroir un épisode
+  sur deux. Raisons et sources : `docs/viralite.md`.
 - **À l'écran** : jamais l'utilisateur. Univers « cahier de Matou » : `docs/design-system.md`.
 - **Voix** : V1 synthèse via OpenRouter (`brand/voix.json`) ; V2 la voix de l'utilisateur.
 - **Rythme (production)** : **2 épisodes par jour**, au minimum 1. **Un épisode = un

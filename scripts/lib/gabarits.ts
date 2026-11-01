@@ -2,6 +2,7 @@
 // Réglages : brand/publication.json ; règles et raisons : docs/publication.md.
 import fs from 'node:fs';
 import path from 'node:path';
+import {rang} from '../../src/rotation';
 import {RACINE} from './episode';
 
 type Partie = 'ligne1' | 'question' | 'titre' | 'texte';
@@ -15,16 +16,11 @@ const NOMS_CONNUS = [...new Set([...Object.keys(veille.entites), ...Object.value
 
 export const numeroDe = (dossier: string) => Number(/^(\d+)/.exec(path.basename(dossier))?.[1] ?? NaN);
 
-/**
- * Le gabarit de chaque réseau pour l'épisode n : rotation sur le numéro, sans tirage.
- * Principal et second alternent pairs et impairs : ⌊n/2⌋ avance d'un cran par jour pour
- * chacun des deux (avec n seul, 4 formules → le principal n'en verrait que 2), et + n % 2
- * décale le second pour que les deux épisodes du jour n'aient pas le même.
- */
+/** Le gabarit de chaque réseau pour l'épisode n : rotation sur le numéro (`rang`, src/rotation.ts). */
 export const attendus = (n: number) =>
   Object.fromEntries(RESEAUX.map((r) => {
     const f = reglages.reseaux[r].formules;
-    return [r, f[(Math.floor(n / 2) + (n % 2)) % f.length]];
+    return [r, f[rang(n, f.length)]];
   })) as Record<string, Formule>;
 
 /** Ligne « Gabarits : tiktok=camp · youtube=chiffre (raison) … » de publication.md. */

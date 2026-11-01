@@ -1,13 +1,23 @@
-// Les gabarits de texte d'un épisode (skill publication) : un par réseau, en rotation sur le numéro.
+// Les gabarits d'un épisode, en rotation sur le numéro : montage de la vidéo (skill
+// ecriture-matou) et textes de publication (skill publication), un par réseau.
 // Usage : npm run gabarits -- <numéro>     (ex. 008 ; l'épisode n'a pas besoin d'exister)
-// Réglages : brand/publication.json ; règles : docs/publication.md.
+// Réglages : brand/montage.json et brand/publication.json ; règles : docs/viralite.md et docs/publication.md.
 import {attendus, reglages, RESEAUX} from './lib/gabarits';
+import {montageAttendu} from './lib/montage';
 
 const n = Number(process.argv[2]);
 if (!Number.isInteger(n)) throw new Error('Préciser le numéro de l’épisode (ex. npm run gabarits -- 008).');
 
-const prevus = attendus(n);
+const {ouverture, corps} = montageAttendu(n);
 console.log(`Gabarits de l'épisode #${String(n).padStart(3, '0')}\n`);
+console.log('# Montage (scenes.json)\n');
+console.log(`## Ouverture : ${ouverture.id}\n${ouverture.consigne}. Exemple : ${ouverture.exemple}\n`);
+console.log(`## Corps : ${corps.id}\n${corps.consigne}.\n`);
+console.log('Champ à mettre dans scenes.json (un autre gabarit seulement avec sa raison) :');
+console.log(`"gabarit": {"ouverture": "${ouverture.id}", "corps": "${corps.id}"}\n`);
+
+const prevus = attendus(n);
+console.log('# Textes (publication.md)\n');
 for (const r of RESEAUX) {
   const f = prevus[r];
   console.log(`## ${reglages.reseaux[r].section} : ${f.id}\n${f.consigne}. Exemple : ${f.exemple}\n`);

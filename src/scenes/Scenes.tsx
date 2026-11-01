@@ -2,8 +2,10 @@ import React from 'react';
 import {interpolate, spring, useCurrentFrame, useVideoConfig} from 'remotion';
 import {Carte} from '../components/Carte';
 import {dateCourte} from '../components/EnTete';
+import {Fenetre} from '../components/Fenetre';
 import {HypeMetre} from '../components/HypeMetre';
 import {Icone} from '../components/Icones';
+import {useMiroir} from '../components/MiseEnPage';
 import {Tampon} from '../components/Tampon';
 import {TexteMarque} from '../components/TexteMarque';
 import type {Episode, Scene} from '../schema';
@@ -52,12 +54,15 @@ const Entree: React.FC<{children: React.ReactNode; debut?: number; de?: 'bas' | 
   const frame = useCurrentFrame();
   const s = useEntree(debut);
   const d = interpolate(s, [0, 1], [1, 0]);
+  // en miroir (mise en page de l'épisode), on entre par l'autre bord
+  const miroir = useMiroir();
+  const sens = miroir && de === 'gauche' ? 'droite' : miroir && de === 'droite' ? 'gauche' : de;
   const transform =
-    de === 'zoom'
+    sens === 'zoom'
       ? `scale(${interpolate(s, [0, 1], [0.6, 1])})`
-      : de === 'gauche'
+      : sens === 'gauche'
         ? `translateX(${-d * 700}px) rotate(${-d * 8}deg)`
-        : de === 'droite'
+        : sens === 'droite'
           ? `translateX(${d * 700}px) rotate(${d * 8}deg)`
           : `translateY(${d * 500}px) rotate(${d * 6}deg)`;
   return <div style={{transform, opacity: frame < debut ? 0 : 1}}>{children}</div>;
@@ -79,12 +84,13 @@ const titreStyle = (taille: number): React.CSSProperties => ({
   color: C.encre,
 });
 
-const Zone: React.FC<{children: React.ReactNode; centre?: boolean}> = ({children, centre = true}) => (
+// `haute` : la zone remonte sous la marge du haut (hook avec visuel, l'en-tête n'est pas encore là).
+const Zone: React.FC<{children: React.ReactNode; centre?: boolean; haute?: boolean}> = ({children, centre = true, haute = false}) => (
   <div
     style={{
       position: 'absolute',
-      top: ZONE.top,
-      height: ZONE.hauteur,
+      top: haute ? tokens.safeZone.top + 20 : ZONE.top,
+      height: haute ? ZONE.top + ZONE.hauteur - tokens.safeZone.top - 20 : ZONE.hauteur,
       left: tokens.safeZone.left,
       right: tokens.safeZone.right,
       display: 'flex',
@@ -99,10 +105,42 @@ const Zone: React.FC<{children: React.ReactNode; centre?: boolean}> = ({children
 
 const LARGEUR = 1080 - tokens.safeZone.left - tokens.safeZone.right;
 
-export const SceneHook: React.FC<SceneProps<'hook'>> = ({scene}) => {
+export const SceneHook: React.FC<SceneProps<'hook'>> = ({scene, mots}) => {
   const frame = useCurrentFrame();
   // le titre est déjà là à l'image 0 (lecture auto sur les réseaux), il « claque » juste un peu
   const echelle = interpolate(frame, [0, 5, 9], [0.92, 1.04, 1], {extrapolateRight: 'clamp'});
+  const v = scene.visuel;
+  if (v) {
+    // La 1re image montre la chose (fenêtre d'app) ou le chiffre, avec le titre : gabarit d'ouverture.
+    const titre = (
+      <div style={{...titreStyle(tokens.typo.tailles.hook - 30), textAlign: 'center', transform: `scale(${echelle}) rotate(-2deg)`}}>
+        <TexteMarque texte={scene.titre} debut={3} />
+      </div>
+    );
+    if (v.type === 'chiffre') {
+      // dès l'image 0 en entier dans le cadre, il claque juste un peu ; la taille suit la longueur
+      const claque = interpolate(frame, [0, 4, 8], [1.1, 0.96, 1], {extrapolateRight: 'clamp'});
+      const taille = Math.min(tokens.typo.tailles.chiffre + 40, Math.round(1100 / Math.max(3, v.valeur.length)));
+      return (
+        <Zone haute>
+          <div style={{...titreStyle(taille), transform: `scale(${claque}) rotate(-3deg)`, textShadow: `8px 8px 0 ${C.surligneur}`}}>
+            {v.valeur}
+          </div>
+          {titre}
+        </Zone>
+      );
+    }
+    // 1re bulle presque posée dès l'image 0, les suivantes au mot `quand` (sinon au fil du hook)
+    const apparitions = v.messages.map((m, i) => (i === 0 ? -6 : imageDuMot(mots, m.quand, 20 * i)));
+    return (
+      <Zone haute>
+        {titre}
+        <div style={{marginTop: 30}}>
+          <Fenetre app={v.app} messages={v.messages} apparitions={apparitions} largeur={LARGEUR - 40} />
+        </div>
+      </Zone>
+    );
+  }
   return (
     <Zone>
       {scene.icone ? (
@@ -141,7 +179,7 @@ export const SceneSource: React.FC<SceneProps<'source'>> = ({scene, episode}) =>
 export const ScenePoint: React.FC<SceneProps<'point'>> = ({scene}) => (
   <Zone>
     <Entree>
-      <Carte largeur={LARGEUR - 20} hauteur={scene.corps ? 560 : 420} rotation={-1.2}>
+      <Carte largeur={LARGEUR - 20} hauteur={scene.corps ? 560 : 330} rotation={-1.2}>
         <div style={{display: 'flex', alignItems: 'center', gap: 28}}>
           {scene.icone ? <Icone nom={scene.icone} taille={120} /> : null}
           <div style={{...titreStyle(tokens.typo.tailles.titre - 8), flex: 1}}>
@@ -273,22 +311,57 @@ export const SceneVerdict: React.FC<SceneProps<'verdict'>> = ({scene, episode}) 
   </Zone>
 );
 
-export const SceneFin: React.FC<SceneProps<'fin'>> = () => (
-  <Zone>
-    <Entree de="zoom">
-      <div style={{...titreStyle(96), textAlign: 'center', transform: 'rotate(-2deg)'}}>
-        C'était <TexteMarque texte="==Matou==" debut={6} />,
-        <br />
-        et c'est tout.
+export const SceneFenetre: React.FC<SceneProps<'fenetre'>> = ({scene, mots, duree}) => {
+  const n = scene.messages.length;
+  // chaque bulle au mot `quand`, sinon au fil de la scène ; jamais dans les 20 dernières images
+  const apparitions = scene.messages.map((m, i) =>
+    Math.min(imageDuMot(mots, m.quand, Math.round(6 + (i * duree * 0.6) / n)), duree - 20),
+  );
+  return (
+    <Zone>
+      <Entree>
+        <Fenetre app={scene.app} messages={scene.messages} apparitions={apparitions} largeur={LARGEUR - 30} rotation={-1} />
+      </Entree>
+    </Zone>
+  );
+};
+
+/** Image (relative à la scène de fin) où part le « Ma-tou ! » : juste après le dernier mot, jamais dessous. */
+export const imageSignature = (mots: MotScene[]) => (mots.at(-1)?.fin ?? 0) + 6;
+
+/**
+ * La fin reprend l'image du hook pendant la phrase de boucle : quand la vidéo repart, le
+ * raccord ne se voit pas. Pas d'appel à s'abonner (il fait balayer) ; la signature est le
+ * « Ma-tou ! » sonore, avec son tampon, après la dernière phrase.
+ */
+export const SceneFin: React.FC<SceneProps<'fin'>> = (props) => {
+  const frame = useCurrentFrame();
+  const {fps} = useVideoConfig();
+  const hook = props.episode.scenes[0];
+  const signature = imageSignature(props.mots);
+  const s = spring({frame: frame - signature, fps, config: {damping: 12, stiffness: 260, mass: 0.5}});
+  return (
+    <>
+      {hook.type === 'hook' ? <SceneHook {...props} scene={hook} /> : null}
+      <div
+        style={{
+          position: 'absolute',
+          top: ZONE.top + ZONE.hauteur - 100,
+          right: tokens.safeZone.right + 30,
+          fontFamily: POLICE_TITRE,
+          fontSize: 58,
+          color: C.encre,
+          background: C.surligneur,
+          padding: '4px 24px',
+          transform: `rotate(-6deg) scale(${interpolate(s, [0, 1], [2, 1])})`,
+          opacity: frame < signature ? 0 : 1,
+        }}
+      >
+        Ma-tou !
       </div>
-    </Entree>
-    <Entree debut={14}>
-      <div style={{...texteStyle(46), textAlign: 'center', marginTop: 40}}>
-        Abonne-toi pour la suite.
-      </div>
-    </Entree>
-  </Zone>
-);
+    </>
+  );
+};
 
 export const SceneVue: React.FC<SceneProps<Scene['type']>> = (props) => {
   switch (props.scene.type) {
@@ -296,6 +369,8 @@ export const SceneVue: React.FC<SceneProps<Scene['type']>> = (props) => {
       return <SceneHook {...(props as SceneProps<'hook'>)} />;
     case 'source':
       return <SceneSource {...(props as SceneProps<'source'>)} />;
+    case 'fenetre':
+      return <SceneFenetre {...(props as SceneProps<'fenetre'>)} />;
     case 'point':
       return <ScenePoint {...(props as SceneProps<'point'>)} />;
     case 'chiffre':
@@ -317,6 +392,7 @@ export const SceneVue: React.FC<SceneProps<Scene['type']>> = (props) => {
 export const MATOU_PAR_DEFAUT: Record<Scene['type'], NonNullable<Scene['matou']>> = {
   hook: 'surpris',
   source: 'neutre',
+  fenetre: 'parle',
   point: 'enFait',
   chiffre: 'surpris',
   liste: 'neutre',

@@ -4,6 +4,7 @@ import {z} from 'zod';
 import {DefsBouillonne} from './components/Bouillonne';
 import {Carte} from './components/Carte';
 import {dateCourte, numeroEpisode} from './components/EnTete';
+import {Fenetre} from './components/Fenetre';
 import {FondCahier} from './components/FondCahier';
 import {HypeMetre} from './components/HypeMetre';
 import {Icone} from './components/Icones';
@@ -20,10 +21,10 @@ chargerPolices();
 export const DIAPO = {largeur: 1080, hauteur: 1350};
 const MARGE = 90;
 
-type Contenu = Extract<Scene, {type: 'point' | 'chiffre' | 'liste' | 'comparaison' | 'pourquoi'}>;
+type Contenu = Extract<Scene, {type: 'fenetre' | 'point' | 'chiffre' | 'liste' | 'comparaison' | 'pourquoi'}>;
 export type Diapo = {type: 'couverture'} | {type: 'scene'; scene: Contenu} | {type: 'verdict'} | {type: 'fin'};
 
-const CONTENUS = ['point', 'chiffre', 'liste', 'comparaison', 'pourquoi'];
+const CONTENUS = ['fenetre', 'point', 'chiffre', 'liste', 'comparaison', 'pourquoi'];
 /** Les diapos de l'épisode : couverture, une par scène de contenu, Hype-mètre, fin. */
 export const diapos = (episode: Episode): Diapo[] => [
   {type: 'couverture'},
@@ -49,6 +50,8 @@ const Marque: React.FC<{t: string}> = ({t}) => <TexteMarque texte={t} debut={-10
 
 const Scene: React.FC<{scene: Contenu}> = ({scene}) => {
   switch (scene.type) {
+    case 'fenetre':
+      return <Fenetre app={scene.app} messages={scene.messages} largeur={880} />;
     case 'chiffre':
       return (
         <>

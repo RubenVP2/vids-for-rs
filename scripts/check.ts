@@ -3,7 +3,7 @@
 import {execFileSync} from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-import {dossierEpisode, lireEpisode, lireTimings, nomEpisode} from './lib/episode';
+import {budgetDe, dossierEpisode, lireEpisode, lireTimings, nomEpisode} from './lib/episode';
 import {controler, numeroDe, reglages as gabarits} from './lib/gabarits';
 
 const dossier = dossierEpisode(process.argv[2]);
@@ -24,8 +24,8 @@ if (fs.existsSync(mp4)) {
     execFileSync('ffprobe', ['-v', 'error', '-show_entries', 'format=duration:stream=width,height,codec_name', '-of', 'json', mp4]).toString(),
   );
   const duree = Number(info.format.duration);
-  const max = episode.serie === 'flash' ? 40 : 50;
-  verifier(duree <= max, `Durée ${duree.toFixed(1)} s (max ${max} s)`, `Trop long : ${duree.toFixed(1)} s (max ${max} s pour ${episode.serie})`);
+  const {video: max, nom: format} = budgetDe(episode);
+  verifier(duree <= max, `Durée ${duree.toFixed(1)} s (max ${max} s)`, `Trop long : ${duree.toFixed(1)} s (max ${max} s en ${format})`);
   const video = info.streams.find((s: {codec_name: string}) => s.codec_name === 'h264');
   verifier(video?.width === 1080 && video?.height === 1920, 'Format 1080×1920 H.264', 'Format inattendu (attendu 1080×1920 H.264)');
   verifier(info.streams.some((s: {codec_name: string}) => s.codec_name === 'aac'), 'Piste audio AAC', 'Pas de piste audio');

@@ -1,4 +1,5 @@
 import React from 'react';
+import {interpolate, spring, useCurrentFrame, useVideoConfig} from 'remotion';
 import type {Episode} from '../schema';
 import {AXES_TEXTE, C, POLICE_TEXTE, POLICE_TITRE, tokens} from '../theme';
 
@@ -17,9 +18,35 @@ const TYPES: Record<Episode['source']['type'], string> = {
   post: 'post',
 };
 
-// En-tête toujours visible : numéro d'épisode, série, et la source (règle : toujours citer).
-export const EnTete: React.FC<{episode: Episode}> = ({episode}) => {
+// En-tête : numéro d'épisode, Hype-mètre à venir, et la source (règle : toujours citer).
+// Il descend après le hook (`apparition`) et remonte pour la fin (`fin`) : la 1re et la
+// dernière image sont toutes au hook, et la boucle ne se voit pas. Jusqu'au verdict
+// (`verdict`), la pastille « Hype-mètre ? » annonce la fin (boucle ouverte) ; sans ces
+// images (ancien rendu), l'en-tête est là d'un bout à l'autre, avec la série.
+export const EnTete: React.FC<{episode: Episode; apparition?: number; verdict?: number; fin?: number}> = ({
+  episode,
+  apparition,
+  verdict,
+  fin,
+}) => {
   const {safeZone} = tokens;
+  const frame = useCurrentFrame();
+  const {fps} = useVideoConfig();
+  const ressort = (debut: number) => spring({frame: frame - debut, fps, config: tokens.mouvement.ressort});
+  const s = (apparition === undefined ? 1 : ressort(apparition)) - (fin === undefined ? 0 : ressort(fin));
+  const teaser = verdict !== undefined && frame < verdict;
+  const pastille: React.CSSProperties = {
+    fontFamily: POLICE_TEXTE,
+    fontVariationSettings: AXES_TEXTE,
+    fontWeight: 800,
+    fontSize: 24,
+    letterSpacing: 1,
+    color: C.encre,
+    border: `4px solid ${C.encre}`,
+    borderRadius: 30,
+    padding: '2px 12px',
+    whiteSpace: 'nowrap',
+  };
   return (
     <div
       style={{
@@ -30,46 +57,43 @@ export const EnTete: React.FC<{episode: Episode}> = ({episode}) => {
         display: 'flex',
         alignItems: 'center',
         gap: 18,
+        transform: `translateY(${interpolate(s, [0, 1], [-160, 0])}px)`,
+        opacity: s <= 0.01 ? 0 : 1,
       }}
     >
       <div
         style={{
           fontFamily: POLICE_TITRE,
-          fontSize: 46,
+          fontSize: 40,
           color: C.encre,
           background: C.surligneur,
           padding: '2px 16px',
           transform: 'rotate(-2deg)',
+          whiteSpace: 'nowrap',
         }}
       >
         MATOU {numeroEpisode(episode.numero)}
       </div>
-      <div
-        style={{
-          fontFamily: POLICE_TEXTE,
-          fontVariationSettings: AXES_TEXTE,
-          fontWeight: 800,
-          fontSize: 30,
-          letterSpacing: 2,
-          color: C.encre,
-          border: `4px solid ${C.encre}`,
-          borderRadius: 30,
-          padding: '2px 16px',
-        }}
-      >
-        {episode.serie === 'flash' ? 'FLASH' : 'DÉCRYPTÉ'}
-      </div>
+      {teaser ? (
+        <div style={{...pastille, background: C.blanc}}>
+          HYPE-MÈTRE{' '}
+          <span style={{display: 'inline-block', color: C.stylo.rouge, transform: `rotate(${Math.sin(frame / 5) * 14}deg)`}}>?</span>
+        </div>
+      ) : verdict === undefined ? (
+        <div style={pastille}>{episode.serie === 'flash' ? 'FLASH' : 'DÉCRYPTÉ'}</div>
+      ) : null}
       <div
         style={{
           marginLeft: 'auto',
           fontFamily: POLICE_TEXTE,
           fontVariationSettings: AXES_TEXTE,
           fontWeight: 700,
-          fontSize: tokens.typo.tailles.source,
+          fontSize: tokens.typo.tailles.source - 4,
           color: C.encre,
           opacity: 0.85,
           textAlign: 'right',
           lineHeight: 1.1,
+          whiteSpace: 'nowrap',
         }}
       >
         Source : {episode.source.nom}

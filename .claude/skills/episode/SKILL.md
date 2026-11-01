@@ -57,7 +57,9 @@ qu'aucun retour « décroche » du spectateur n'est resté sans réponse.
 
 - Alignement < 85 % → la voix a mal lu (mot étranger, sigle). Réécrire le mot comme il
   se prononce avec `{affiché|prononcé}` (voir `ecriture-matou`), puis `--force`.
-- Durée > 36 s (flash) ou > 46 s (décrypté) → raccourcir le script, revalider, `--force`.
+- Durée > 36 s (flash), > 46 s (décrypté) ou > 62 s (format long, champ `long`) →
+  raccourcir le script, revalider, `--force`. Un sujet trop riche pour 30 s passe en
+  format long (skill `ecriture-matou`) plutôt que d'être tassé.
 
 **Fait quand** `timings.json` existe, alignement ≥ 85 %, durée dans la limite.
 

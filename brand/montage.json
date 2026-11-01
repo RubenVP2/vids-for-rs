@@ -1,0 +1,15 @@
+{
+  "_doc": "Gabarits de montage de scenes.json (docs/viralite.md, skill ecriture-matou) : une ouverture (le hook) et un corps (la 1re scène après le hook) par épisode, en rotation sur le numéro (src/rotation.ts) pour que deux vidéos ne se ressemblent pas. npm run gabarits -- NNN les donne, npm run validate -- NNN les vérifie. Ouverture : `visuel` = type de hook.visuel exigé, `motif` = regex sur le titre et le texte du hook. Corps : `scene` = type de la 2e scène.",
+  "depuis": 8,
+  "ouvertures": [
+    {"id": "fenetre", "visuel": "fenetre", "consigne": "Montrer la chose : une fenêtre de l'app (hook.visuel fenetre), avec ce que la source dit qu'elle fait", "exemple": "Gemini · toi : « Passe mes slides en bleu » · app : « C'est fait, 12 diapos modifiées »"},
+    {"id": "chiffre", "visuel": "chiffre", "consigne": "Le chiffre le plus frappant de la source, en géant dès la 1re image (hook.visuel chiffre)", "exemple": "+200 · « ChatGPT a déjà prévenu la police »"},
+    {"id": "question", "motif": "\\?\\s*$", "consigne": "La question que le spectateur se pose, dite et affichée (titre qui finit par « ? »)", "exemple": "ChatGPT peut-il te couper la parole ?"},
+    {"id": "toi", "motif": "\\b(tu|ton|ta|tes|toi)\\b|\\bt'", "consigne": "Ce que ça change pour toi, à la 2e personne, dès la 1re phrase", "exemple": "Tes slides vont se refaire toutes seules."}
+  ],
+  "corps": [
+    {"id": "comparaison", "scene": "comparaison", "consigne": "Avant / après juste après le hook : ce qui change, d'un coup d'œil"},
+    {"id": "fenetre", "scene": "fenetre", "consigne": "Montrer la chose juste après le hook : une fenêtre de l'app, les messages au fil de la voix"},
+    {"id": "liste", "scene": "liste", "consigne": "Les 2 à 4 nouveautés juste après le hook, une par une"}
+  ]
+}

@@ -28,8 +28,8 @@ image, et ça tranche avec les comptes IA sombres et néon.
 
 | Zone | Y (px) | Contenu |
 | --- | --- | --- |
-| En-tête | 220–300 | `MATOU #NNN` surligné, série (FLASH / DÉCRYPTÉ), source + date |
-| Contenu | 370–1000 | la scène (carte, chiffre, liste, Hype-mètre…) |
+| En-tête | 220–300 | `MATOU #NNN` surligné, « Hype-mètre ? » jusqu'au verdict, source + date ; absent pendant le hook et la fin |
+| Contenu | 370–1000 | la scène (carte, chiffre, liste, Hype-mètre…) ; le hook avec `visuel` remonte à 240 |
 | Sous-titres | 1010–1170 | une ligne, mot prononcé au fluo |
 | Matou | ~1150–1500 | posé sur la limite basse, se déplace selon la scène |
 
@@ -94,25 +94,31 @@ ou chargement.
 | Surligneur | `src/components/TexteMarque.tsx` | `==mot==` → fluo qui se dessine de gauche à droite |
 | Tampon | `src/components/Tampon.tsx` | ANNONCÉ / DISPONIBLE / RUMEUR, posé d'un coup sec |
 | Sous-titres | `src/components/SousTitres.tsx` | une ligne ≤ 24 caractères, mot prononcé au fluo |
-| En-tête | `src/components/EnTete.tsx` | numéro, série, source toujours visible |
+| En-tête | `src/components/EnTete.tsx` | numéro, « Hype-mètre ? », source ; descend après le hook, remonte pour la fin |
+| Fenêtre | `src/components/Fenetre.tsx` | fenêtre d'app au feutre (reconstitution), bulles toi / app au fil de la voix |
+| Mise en page | `src/components/MiseEnPage.tsx` | miroir un épisode sur deux : Matou de l'autre côté, cartes et entrées inversées |
 | Hype-mètre | `src/components/HypeMetre.tsx` | la flèche hésite puis se pose, le stylo rouge entoure |
 | Icônes | `src/components/Icones.tsx` | 16 icônes au feutre (pas d'emoji à l'écran) |
 
-Les 9 types de scènes (hook, source, point, chiffre, liste, comparaison, pourquoi,
-verdict, fin) sont dans `src/scenes/Scenes.tsx` ; leur catalogue d'usage est dans le
-skill `.claude/skills/ecriture-matou/`.
+Les types de scènes (hook, fenetre, point, chiffre, liste, comparaison, pourquoi,
+verdict, fin ; source pour les anciens épisodes) sont dans `src/scenes/Scenes.tsx` ;
+leur catalogue d'usage est dans le skill `.claude/skills/ecriture-matou/`.
 
 ## Mouvement
 
 Entrées rapides et sèches (ressort, ~8 images), jamais de fondu lent. Les visuels
 arrivent 4 images avant la voix : l'œil précède l'oreille. La première image de la
-vidéo montre déjà le titre du hook (lecture automatique sur les réseaux).
+vidéo montre déjà le hook en entier, sans en-tête : le titre, et selon le gabarit la
+fenêtre d'app ou le chiffre géant (lecture automatique sur les réseaux). La fin reprend
+cette image, pour que la boucle ne se voie pas. Le tampon de statut claque sur la 2e
+scène, en haut de la carte.
 
 ## Son
 
 - Voix : −16 LUFS à la génération, mixage final normalisé à −14 LUFS.
 - Musique : boucle marimba / pizzicato à 7 %, fondu d'entrée et de sortie.
 - Bruitages (35 %) : feuille qui glisse aux transitions, tampon, « ding » du verdict,
-  **signature « Ma-tou ! »** (trois notes de marimba : sol, mi, do) sur l'écran de fin.
+  **signature « Ma-tou ! »** (trois notes de marimba : sol, mi, do) sur l'écran de fin,
+  avec son tampon « Ma-tou ! » : c'est la seule signature (plus de phrase d'adieu).
 
 Détail et origine des fichiers : `public/brand/sons/LISEZMOI.md`.

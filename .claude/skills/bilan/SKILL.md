@@ -31,6 +31,10 @@ Comparer les épisodes entre eux, réseau par réseau (les ordres de grandeur di
 d'un réseau à l'autre pour les additionner). Pour chaque épisode, regarder ce qui le
 distingue : entreprise citée, type de sujet (produit grand public, sécurité, emploi,
 argent…), série, hook (`scenes.json`, première scène), verdict du Hype-mètre, jour.
+La vidéo elle-même (`docs/viralite.md`) : gabarit de montage (`scenes.json` → `gabarit`),
+et format long (champ `long`, jusqu'à ~60 s) contre ~30 s. Pour la durée, regarder les
+vues et les likes, et la rétention relevée à la main dans TikTok Studio si l'utilisateur
+l'a notée : un format long qui fait moins de vues 3 semaines de suite, le dire.
 
 Puis la stratégie par réseau (`docs/reseaux.md`) : le rang (colonne « Rang » : principal
 du matin et de midi contre second du soir, depuis le 31/10 ; avant, l'inverse), le créneau de chaque post (colonne « Créneau »), le
