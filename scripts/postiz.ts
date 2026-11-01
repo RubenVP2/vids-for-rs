@@ -16,7 +16,8 @@
 //         --reseaux linkedin,x : seulement ces réseaux (rattrapage d'un réseau connecté après coup :
 //         les posts s'ajoutent au journal, les autres réseaux ne sont pas renvoyés)
 //         --publier : avec --envoyer, programme les brouillons dans la foulée (le feu vert est déjà donné)
-//         npm run postiz -- <épisode> --programmer   brouillons → programmés
+//         npm run postiz -- <épisode> --programmer   brouillons → programmés (jamais un post déjà
+//         publié ou déjà dans la file : Postiz en recréerait un → doublon sur le réseau)
 //         npm run postiz -- <épisode> --annuler      veto : les posts programmés pas encore partis → brouillons
 //         npm run postiz -- --canaux                 comptes connectés + règles de chaque réseau
 // Accès : CLI officielle `postiz` authentifiée par OAuth2 device flow (postiz auth:login,
@@ -290,18 +291,56 @@ if (args.includes('--programmer') || args.includes('--annuler')) {
   if (!fs.existsSync(journal)) throw new Error('Aucun brouillon envoyé pour cet épisode : lancer d’abord --envoyer.');
   const envoi = JSON.parse(fs.readFileSync(journal, 'utf8')) as Journal;
   const veto = args.includes('--annuler');
+  // L'état réel dans Postiz fait foi, pas le journal : `posts:status --status schedule` sur un post
+  // déjà PUBLISHED crée un NOUVEAU post (Postiz ne dédoublonne pas) → doublon sur le réseau.
+  const etats = (): Record<string, string> => {
+    try {
+      const posts = enListe<{id: string; state?: string}>(cli('posts:list'), 'posts');
+      return Object.fromEntries(posts.map((p) => [p.id, String(p.state ?? '').toUpperCase()]));
+    } catch (e) {
+      console.log(`ATTENTION état Postiz illisible (${(e as Error).message.slice(0, 200)}) : décision sur la date et le journal seuls.`);
+      return {};
+    }
+  };
+  const reel = etats();
+  const echecs: string[] = [];
   for (const p of envoi.postes.filter((p) => retenu(p.reseau))) {
     const quand = lisible(p.date ?? envoi.date);
-    if (veto && (p.statut !== 'programmé' || new Date(p.date ?? envoi.date).getTime() <= Date.now())) {
-      console.log(`Inchangé : ${p.reseau}, ${quand} (${p.statut === 'programmé' ? 'déjà parti' : 'déjà en brouillon'})`);
+    const passe = new Date(p.date ?? envoi.date).getTime() <= Date.now();
+    if (reel[p.postId] === 'PUBLISHED') {
+      // Journalisé « programmé » : le post n'est plus à programmer, il est parti.
+      p.statut = 'programmé';
+      console.log(`Inchangé : ${p.reseau}, ${quand} (déjà publié)`);
       continue;
     }
-    cli('posts:status', p.postId, '--status', veto ? 'draft' : 'schedule');
-    p.statut = veto ? 'brouillon' : 'programmé';
-    console.log(`${veto ? 'Repassé en brouillon' : 'Programmé'} : ${p.reseau} (${p.postId}), ${quand}`);
+    if (veto) {
+      if (p.statut !== 'programmé' || passe) {
+        console.log(`Inchangé : ${p.reseau}, ${quand} (${p.statut === 'programmé' ? 'déjà parti' : 'déjà en brouillon'})`);
+        continue;
+      }
+    } else if (passe) {
+      // Date passée : le post est parti ou en cours de départ. Le remettre en file le republierait.
+      console.log(`Inchangé : ${p.reseau}, ${quand} (date passée : rien à programmer)`);
+      continue;
+    } else if (p.statut === 'programmé' && reel[p.postId] === 'QUEUE') {
+      console.log(`Inchangé : ${p.reseau}, ${quand} (déjà dans la file)`);
+      continue;
+    }
+    // Un post qui échoue n'annule pas les autres : le journal doit refléter ce qui est réellement fait.
+    try {
+      cli('posts:status', p.postId, '--status', veto ? 'draft' : 'schedule');
+      p.statut = veto ? 'brouillon' : 'programmé';
+      console.log(`${veto ? 'Repassé en brouillon' : 'Programmé'} : ${p.reseau} (${p.postId}), ${quand}`);
+    } catch (e) {
+      echecs.push(`${p.reseau} (${p.postId}) : ${(e as Error).message.slice(0, 200)}`);
+    }
   }
   const statut: Statut = envoi.postes.every((p) => p.statut === 'programmé') ? 'programmé' : 'brouillon';
   fs.writeFileSync(journal, JSON.stringify({...envoi, statut}, null, 2) + '\n');
+  if (echecs.length) {
+    console.log(`\nÉchec sur ${echecs.length} post(s) :\n${echecs.map((e) => `  - ${e}`).join('\n')}`);
+    process.exit(1);
+  }
   console.log(veto ? '\nVeto appliqué : ces posts attendent en brouillon dans Postiz (--programmer pour les remettre).' : '\nDates enregistrées dans Postiz.');
   process.exit(0);
 }
