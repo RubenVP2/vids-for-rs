@@ -35,11 +35,43 @@ veto) ont laissé en brouillon, avant les créneaux de midi et du soir.
 **Programmation automatique** (`MATOU_AUTO=1`, défaut) : le lanceur programme seulement
 si l'agent finit par `PROGRAMMER: oui`, que `npm run check -- NNN` passe et que les
 brouillons existent. Sinon le message Discord dit « NON programmé » et pourquoi. Veto :
-dans Postiz (repasser en brouillon), « veto #NNN » à Claude, ou
-`npm run postiz -- NNN --annuler` dans `~/vids-for-rs` (après `git pull`).
+« veto #NNN » dans #matou (Hermes, voir plus bas), dans Postiz (repasser en brouillon),
+ou `npm run postiz -- NNN --annuler` dans `~/vids-for-rs` (après `git pull`).
 
 Hermes ne fait que planifier : un épisode dépasse le délai d'un script de cron (1 h),
 donc le script Hermes rend la main tout de suite et `lancer.sh` livre lui-même.
+
+## Sur Discord : urgent, feu vert, veto
+
+Hermes a un skill **`matou`** (`~/.hermes/skills/social-media/matou/SKILL.md`, copie
+versionnée dans `scripts/routines/hermes/`) et répond sans mention dans #matou
+(`discord.free_response_channels` de `~/.hermes/config.yaml`). Il passe toujours par
+`~/.hermes/scripts/matou.sh`, qui lit `lancer.sh` et `commande.sh` sur `origin/main`
+(`git show`) : le clone des routines n'est remis à jour qu'au passage d'une routine.
+
+| Sur Discord | Commande | Effet |
+| --- | --- | --- |
+| « urgent <lien> [réseaux] » | `matou.sh urgent <lien> [réseaux]` | `lancer.sh urgent` en tâche de fond : l'épisode sur ce lien (skill `episode-urgent`), sans veille ni Postiz, livré sur #matou avec « réponds ok #NNN » |
+| « ok #NNN [réseaux] » | `matou.sh ok NNN` → `commande.sh ok NNN` | urgent : brouillons puis programmés d'un coup, 5 à 15 min après (`--rang urgent --publier`) ; autre épisode : ses brouillons → programmés |
+| « veto #NNN [réseaux] » | `commande.sh veto NNN` | les posts pas encore partis → brouillons |
+| « état » | `commande.sh etat` | ce qui part aujourd'hui et demain, et les urgents qui attendent |
+| « stats » | `commande.sh stats` | `npm run bilan`, sans rien écrire |
+
+- **Urgent** : ~45 min de production (le lanceur attend la fin d'une routine en cours et le
+  dit sur Discord). Le « ok » remplace le délai de veto : les créneaux du rang `urgent`
+  (`brand/postiz.json`) sont en minutes après l'envoi, sans créneau libre exigé (un post
+  Matou à moins de 90 min sur le même réseau est seulement signalé : « Proche »).
+  `urgent.json` dans le dossier de l'épisode garde le lien et les réseaux demandés. Un
+  urgent publié l'après-midi (après midi) tient lieu d'épisode second : la routine de
+  14 h 13 s'arrête sans rien produire.
+- `commande.sh` travaille dans un worktree jetable d'`origin/main` (jamais dans le clone
+  des routines, qu'une routine peut remettre à zéro), reprend `node_modules` et, pour un
+  urgent, la vidéo du clone des routines, puis committe et pousse le journal
+  (`postiz-envoi.json`). Il n'attend pas le verrou des routines.
+- Installer ou mettre à jour le côté Hermes (après un changement dans
+  `scripts/routines/hermes/`) :
+  `cp scripts/routines/hermes/SKILL.md ~/.hermes/skills/social-media/matou/SKILL.md` et
+  `install -m 755 scripts/routines/hermes/matou.sh ~/.hermes/scripts/`.
 
 | Routine | Hermes | Quand (Paris) | Agent |
 | --- | --- | --- | --- |
@@ -47,6 +79,7 @@ donc le script Hermes rend la main tout de suite et `lancer.sh` livre lui-même.
 | `episode-du-jour second` | Matou — épisode second | tous les jours, 14 h 13 | agy, skill `episode-du-jour` |
 | `rappel` | Matou — rappel de relecture | tous les jours, 11 h 07 et 17 h 07 | aucun (`npm run bilan -- --attente`) |
 | `bilan` | Matou — bilan du lundi | lundi, 10 h 37 | agy, skill `bilan` |
+| `urgent <lien> [réseaux]` | aucun cron : « urgent <lien> » sur Discord | à la demande | agy, skill `episode-urgent` |
 
 ## Pourquoi un clone dédié
 

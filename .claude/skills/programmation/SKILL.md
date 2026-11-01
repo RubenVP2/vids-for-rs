@@ -23,6 +23,9 @@ passer en programmé :
   `npm run check`). L'utilisateur garde un **droit de veto** jusqu'à l'heure de chaque
   post (décision du 2026-10-30). Un agent ne lance jamais `--programmer` de lui-même en
   routine.
+- **En urgent** : le « ok #NNN » de l'utilisateur sur Discord, que Hermes traduit en
+  `scripts/routines/commande.sh ok NNN` (`--rang urgent --envoyer --publier` : posts 5 à
+  15 min après). Détail : `docs/routines.md`.
 
 ## 0. Prérequis
 

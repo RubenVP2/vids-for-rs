@@ -8,11 +8,14 @@
 // Usage : npm run postiz -- <épisode>                aperçu : écrit postiz.json (charges utiles -j), n'envoie rien
 //         npm run postiz -- <épisode> --envoyer [--rang second] [--date 2026-10-29[T18:00]] [--commentaire] [--force]
 //         --rang principal (défaut) ou second : la grille de créneaux de l'épisode
+//         --rang urgent : chaque réseau quelques minutes après l'envoi (épisode urgent, feu vert de
+//         l'utilisateur sur Discord : pas de délai de veto ni de créneau à respecter)
 //         sans --date : aujourd'hui, chaque réseau à son heure, sinon 2 h 30 plus tard (libre, au moins
 //         delaiVeto h après maintenant) ; sinon pas de post : une actu ne passe jamais au lendemain
 //         --date AAAA-MM-JJ : ce jour-là, chaque réseau à son heure ; --date AAAA-MM-JJTHH:MM : tous à cette heure
 //         --reseaux linkedin,x : seulement ces réseaux (rattrapage d'un réseau connecté après coup :
 //         les posts s'ajoutent au journal, les autres réseaux ne sont pas renvoyés)
+//         --publier : avec --envoyer, programme les brouillons dans la foulée (le feu vert est déjà donné)
 //         npm run postiz -- <épisode> --programmer   brouillons → programmés
 //         npm run postiz -- <épisode> --annuler      veto : les posts programmés pas encore partis → brouillons
 //         npm run postiz -- --canaux                 comptes connectés + règles de chaque réseau
@@ -26,8 +29,10 @@ import {cli, enListe} from './lib/postiz-cli';
 
 type Reseau = 'tiktok' | 'instagram' | 'youtube' | 'facebook' | 'threads' | 'linkedin' | 'x' | 'bluesky';
 type Texte = 'tiktok' | 'instagram' | 'youtube' | 'linkedin' | 'threads' | 'relance' | 'court'; // sections de publication.md
-type Creneau = {heure: string; jours?: number[]; relance?: string};
-type Rang = 'principal' | 'second';
+// heure : « HH:MM » du jour ; apres : minutes après l'envoi (rang urgent). relance : une heure, ou
+// des minutes après le post.
+type Creneau = {heure?: string; apres?: number; jours?: number[]; relance?: string | number};
+type Rang = 'principal' | 'second' | 'urgent';
 type Reglages = {
   fuseau: string;
   delaiVeto: number;
@@ -148,6 +153,7 @@ const REPLI = 150 * 60_000;
  */
 const creneauPour = (c: Creneau, pris: number[], impose?: string): string | undefined => {
   if (impose?.includes('T')) return versUtc(impose);
+  if (c.apres !== undefined) return new Date(Date.now() + c.apres * 60_000).toISOString();
   const j = impose ?? jour(Date.now());
   if (c.jours && !c.jours.includes(jourSemaine(j))) return undefined;
   const heure = new Date(versUtc(`${j}T${c.heure}`)).getTime();
@@ -179,6 +185,7 @@ const planifier = (pub: Publication, reseaux: Reseau[], carrousel: string[], ran
   const pris = postsExistants();
   const envois: Envoi[] = [];
   const sautes: string[] = [];
+  const proches: string[] = [];
   for (const r of reseaux) {
     const texte = texteDe(pub, r);
     const c = reglages.creneaux[rang][r];
@@ -192,14 +199,19 @@ const planifier = (pub: Publication, reseaux: Reseau[], carrousel: string[], ran
       sautes.push(`${NOMS[r]} : aucun créneau libre ce jour-là (heure, repli 2 h 30 plus tard, jours permis), pas de post pour cet épisode`);
       continue;
     }
+    // Un urgent passe même près d'un autre post Matou : on le signale seulement.
+    if (c.apres !== undefined && occupe(pris[r], date)) proches.push(`${NOMS[r]} : un autre post Matou part à moins de 90 min`);
     envois.push({reseau: r, date, texte, carrousel: r === 'linkedin' && !!pub.linkedin && carrousel.length >= 2});
     const relance = c.relance;
     if (relance && r === 'threads' && pub.relance) {
-      const dateRelance = versUtc(`${jour(new Date(date).getTime())}T${relance}`);
+      const dateRelance =
+        typeof relance === 'number'
+          ? new Date(new Date(date).getTime() + relance * 60_000).toISOString()
+          : versUtc(`${jour(new Date(date).getTime())}T${relance}`);
       if (dateRelance > date) envois.push({reseau: r, relance: true, date: dateRelance, texte: pub.relance, carrousel: false});
     }
   }
-  return {envois, sautes};
+  return {envois, sautes, proches};
 };
 
 /** Une charge utile `posts:create` par date (Postiz n'en prend qu'une par envoi). */
@@ -317,17 +329,18 @@ for (const r of RESEAUX) {
 if ((pub.relance?.length ?? 0) > INFOS.threads.limite) alertes.push(`Threads relance : ${pub.relance!.length} caractères (max ${INFOS.threads.limite})`);
 if (pub.titre.length > LIMITE_TITRE_YOUTUBE) alertes.push(`YouTube : titre de ${pub.titre.length} caractères (max ${LIMITE_TITRE_YOUTUBE})`);
 
-const resume = (envois: Envoi[], sautes: string[]) => {
+const resume = (envois: Envoi[], sautes: string[], proches: string[]) => {
   for (const e of envois) {
     const format = e.relance ? 'texte seul' : e.carrousel ? `carrousel de ${carrousel.length} diapos` : 'vidéo';
     console.log(`${(NOMS[e.reseau] + (e.relance ? ' (relance)' : '')).padEnd(19)} ${lisible(e.date).padEnd(36)} ${format}, ${e.texte.length} caractères`);
   }
   sautes.forEach((s) => console.log(`Pas de post : ${s}`));
+  proches.forEach((s) => console.log(`Proche : ${s}`));
 };
 const passees = (envois: Envoi[]) => envois.filter((e) => new Date(e.date).getTime() < Date.now()).map((e) => `Date passée (${NOMS[e.reseau]}) : ${lisible(e.date)}`);
 
 if (!args.includes('--envoyer')) {
-  const {envois, sautes} = planifier(pub, RESEAUX.filter(retenu), carrousel, rang, impose);
+  const {envois, sautes, proches} = planifier(pub, RESEAUX.filter(retenu), carrousel, rang, impose);
   console.log(`Épisode ${rang}`);
   alertes.push(...passees(envois));
   const fictifs = Object.fromEntries(RESEAUX.map((r) => [r, {id: `<id ${NOMS[r]}>`, identifier: INFOS[r].identifiants[0]}]));
@@ -337,7 +350,7 @@ if (!args.includes('--envoyer')) {
     carrousel: carrousel.map((f) => ({id: `<id de ${path.basename(f)}>`, path: `<chemin de carrousel/${path.basename(f)}>`})),
   };
   fs.writeFileSync(path.join(dossier, 'postiz.json'), JSON.stringify(construire(pub, envois, fictifs, medias, commentaire), null, 2) + '\n');
-  resume(envois, sautes);
+  resume(envois, sautes, proches);
   console.log(`YouTube : titre « ${pub.titre} »`);
   console.log(`Commentaire de sources : ${commentaire ? '1er commentaire partout, à la main sur TikTok' : pub.commentaire ? 'à poster à la main (--commentaire : partout sauf TikTok)' : 'absent de publication.md'}`);
   alertes.forEach((a) => console.log(`ATTENTION ${a}`));
@@ -359,7 +372,7 @@ const absents = RESEAUX.filter((r) => retenu(r) && !canaux[r]);
 if (!Object.keys(canaux).length) throw new Error(`Aucun compte connecté dans Postiz (${RESEAUX.filter(retenu).map((r) => NOMS[r]).join(', ')}).`);
 if (absents.length) console.log(`Non connectés dans Postiz, ignorés : ${absents.map((r) => NOMS[r]).join(', ')}.`);
 
-const {envois, sautes} = planifier(pub, RESEAUX.filter((r) => canaux[r]), carrousel, rang, impose);
+let {envois, sautes, proches} = planifier(pub, RESEAUX.filter((r) => canaux[r]), carrousel, rang, impose);
 const passe = passees(envois);
 if (passe.length) throw new Error(`Envoi annulé :\n${passe.map((a) => `  - ${a}`).join('\n')}`);
 if (!envois.length) throw new Error(`Aucun post à créer : ${sautes.join(' ; ')}`);
@@ -367,6 +380,10 @@ if (!envois.length) throw new Error(`Aucun post à créer : ${sautes.join(' ; ')
 const video = await televerser(mp4);
 const miniature = canaux.youtube && fs.existsSync(png) ? await televerser(png) : undefined;
 const images = envois.some((e) => e.carrousel) ? await Promise.all(carrousel.map(televerser)) : [];
+// Urgent : les minutes comptent depuis la fin du téléversement (il peut prendre plusieurs minutes sur le Pi).
+if (!impose && Object.values(reglages.creneaux[rang]).some((c) => c?.apres !== undefined)) {
+  ({envois, sautes, proches} = planifier(pub, RESEAUX.filter((r) => canaux[r]), carrousel, rang, impose));
+}
 const charges = construire(pub, envois, canaux, {video, miniature, carrousel: images}, commentaire);
 fs.writeFileSync(path.join(dossier, 'postiz.json'), JSON.stringify(charges, null, 2) + '\n');
 
@@ -392,5 +409,21 @@ const envoi: Journal =
     : {envoye: new Date().toISOString(), date: premiere, rang, statut: 'brouillon', video: video.path, miniature: miniature?.path, carrousel: images.map((m) => m.path), postes: nouveaux};
 fs.writeFileSync(journal, JSON.stringify(envoi, null, 2) + '\n');
 nouveaux.forEach((p) => console.log(`Brouillon : ${p.reseau} (${p.postId}), ${lisible(p.date!)}`));
+// --publier : le journal est écrit avant, pour qu'un échec en route ne laisse pas de brouillon orphelin.
+const publier = args.includes('--publier');
+if (publier) {
+  for (const p of nouveaux) {
+    cli('posts:status', p.postId, '--status', 'schedule');
+    p.statut = 'programmé';
+    console.log(`Programmé : ${p.reseau} (${p.postId}), ${lisible(p.date!)}`);
+  }
+  if (envoi.postes.every((p) => p.statut === 'programmé')) envoi.statut = 'programmé';
+  fs.writeFileSync(journal, JSON.stringify(envoi, null, 2) + '\n');
+}
 sautes.forEach((s) => console.log(`Pas de post : ${s}`));
-console.log('\nRien n’est publié : --programmer met ces brouillons dans la file (veto ensuite : --annuler).');
+proches.forEach((s) => console.log(`Proche : ${s}`));
+console.log(
+  publier
+    ? '\nPublié dans la file de Postiz (veto encore possible avant l’heure : --annuler).'
+    : '\nRien n’est publié : --programmer met ces brouillons dans la file (veto ensuite : --annuler).',
+);

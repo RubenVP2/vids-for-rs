@@ -19,7 +19,8 @@ chaque lundi **`bilan`** (chiffres Postiz → `docs/apprentissages.md`, poids de
 proposés). Elles
 poussent sur **`main`**. Le lanceur programme les posts si les garde-fous passent ;
 l'étape humaine : le **veto** avant l'heure du post, et relire ce que les garde-fous
-ont retenu en brouillon.
+ont retenu en brouillon. **À la demande**, sur une grosse actu : « urgent <lien> » à
+Hermes sur Discord → skill **`episode-urgent`**, publié au « ok #NNN » de l'utilisateur.
 
 **Harnais** : les routines tournent sur le Raspberry Pi. Hermes (cron) lance
 `scripts/routines/lancer.sh`, qui prépare `main`, confie le travail à **`agy`**
@@ -65,14 +66,15 @@ Détail : `docs/routines.md`.
 - Rien ne part sans garde-fou : en session, le « oui » de l'utilisateur ; en routine, la
   programmation automatique seulement si les faits sont vérifiés sans réserve et que
   `npm run check` passe, avec un **droit de veto** de l'utilisateur jusqu'à l'heure du
-  post (au moins 2 h). Au moindre doute : brouillon, l'utilisateur relit.
+  post (au moins 2 h) ; en urgent, le « ok #NNN » de l'utilisateur sur Discord, après
+  avoir vu la vidéo. Au moindre doute : brouillon, l'utilisateur relit.
 
 ## Outils du dépôt
 
 - Skills (`.claude/skills/`) : `episode` (la recette), `ecriture-matou` (voix et
   scènes), `publication` (un texte par réseau, hashtags), `veille-ia` (choisir un sujet),
   `programmation` (brouillons Postiz, programmation, veto),
-  `episode-du-jour` et `bilan` (les routines) et `postiz` (skill officiel de Postiz,
+  `episode-du-jour`, `episode-urgent` et `bilan` (les routines) et `postiz` (skill officiel de Postiz,
   copié tel quel).
 - Sous-agents (`.claude/agents/`) : `documentaliste` (article → `source.md`),
   `verificateur-faits` (script contre source), `spectateur` (test grand public),
