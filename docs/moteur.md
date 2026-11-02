@@ -65,20 +65,23 @@ episodes/NNN-slug/
    par la voix de `brand/voix.json` (Gemini TTS « Puck » ; secours MAI « Marc » puis
    ElevenLabs « Brian » si la première échoue).
 2. Silences de début et fin coupés, volume normalisé.
-3. **Chaque prise est mesurée** (`scripts/lib/qualite-voix.ts`, hauteur par corrélation croisée
-   normalisée) : intonation (écart p10–p90 en demi-tons), pauses ≥ 250 ms rapportées aux
-   phrases, débit en mots par minute. Calibrage sur 000–010 : Puck donne 10,5 à 14 demi-tons,
-   la prise plate de #010 (voix de secours) 6,4 — le plancher est à **8**. La synthèse n'étant
-   pas déterministe, on essaie **trois prises** et on s'arrête à la première conforme ; le
-   modèle principal est réessayé trois fois (15 s) avant toute bascule.
-4. **La voix de secours n'est jamais publiée** : elle est écrite dans `voix.secours.mp3`,
-   `voix.mp3` reste intact et la commande échoue. `npm run check` refuse aussi tout `timings`
+3. **Chaque prise est mesurée** (`scripts/lib/qualite-voix.ts`) : hauteur par corrélation
+   croisée normalisée, lissée (médiane glissante, sauts de plus de 7 demi-tons rejetés) ;
+   intonation = écart **p20–p80** en demi-tons ; pauses ≥ 250 ms rapportées aux phrases ;
+   débit en mots par minute, recalé par `atempo` **avant** de juger. Calibrage (000–010, plus
+   trois prises d'essai) : Puck donne 5,8 à 9,6 demi-tons, une prise volontairement plate de
+   Puck 3,2 à 4,8, MAI « Marc » 4,3 — plancher **5,5**. La synthèse n'étant pas déterministe,
+   on essaie **trois prises** et on s'arrête à la première conforme ; le modèle est réessayé
+   trois fois (15 s) avant d'abandonner.
+4. **Ni voix de secours, ni prise plate ne sont publiées** : la meilleure prise non conforme
+   part dans `voix.refaire.mp3`, un secours demandé à la main (`--secours`) dans
+   `voix.secours.mp3`, `voix.mp3` reste intact et la commande échoue (code 1). `npm run check` refuse aussi tout `timings`
    dont la voix n'est pas celle de `brand/voix.json`. Le profil de hauteur (`profil`) n'est
    qu'une **alerte** : deux voix d'homme partagent la même plage, seule l'identité du modèle
    tranche. Un débit trop rapide est recalé avec `atempo` (hauteur gardée) ; s'il reste rapide,
    c'est le texte qu'il faut raccourcir.
-5. La provenance (modèle, voix) est écrite dans `voix.meta.json` **avant** Whisper : un échec
-   de transcription ne fait pas perdre l'information.
+5. La provenance (modèle, voix, **sha256 du mp3**) est écrite dans `voix.meta.json` : `check`
+   compare l'empreinte, donc un fichier déplacé à la main ne passe pas pour Matou.
 6. OpenRouter ne renvoie pas de minutage avec la voix : on **retranscrit** l'audio
    (Whisper large v3, horodatage par mot) puis on **aligne** les mots du script sur les
    mots entendus (`scripts/lib/alignement.ts`, alignement de séquences). Le script garde

@@ -1,5 +1,6 @@
 // Contrôle qualité APRÈS le rendu : la vidéo est-elle publiable ?
 // Usage : npm run check -- <épisode>
+import {createHash} from 'node:crypto';
 import {execFileSync} from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -44,6 +45,17 @@ verifier(
   `Voix de Matou (${timings.voix.modele} / ${timings.voix.voix})`,
   `Voix de secours (${timings.voix.modele} / ${timings.voix.voix}) : ce n'est pas Matou (${reglagesVoix.modele} / ${reglagesVoix.voix}) — voix.mp3 à refaire quand l'API répond`,
 );
+
+// Provenance liée au CONTENU de voix.mp3 : un fichier remplacé à la main ne passe pas.
+try {
+  const meta = JSON.parse(fs.readFileSync(path.join(dossier, 'voix.meta.json'), 'utf8')) as {sha256?: string};
+  if (meta.sha256) {
+    const reel = createHash('sha256').update(fs.readFileSync(path.join(dossier, 'voix.mp3'))).digest('hex');
+    verifier(reel === meta.sha256, 'Provenance de voix.mp3 vérifiée (sha256)', 'voix.mp3 ne correspond pas à voix.meta.json : fichier remplacé à la main ?');
+  }
+} catch {
+  console.log('Provenance absente (épisode antérieur ou voix non régénérée) : identité vérifiée par le modèle seul.');
+}
 
 // Mesures de la prise : plate ou hachée = refus. Débit rapide et hauteur inhabituelle = alertes.
 if (timings.qualite) {

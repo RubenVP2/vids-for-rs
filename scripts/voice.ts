@@ -4,6 +4,7 @@
 // 3. transcription horodatée (OpenRouter, Whisper) puis alignement des mots du script ;
 // 4. enveloppe du volume par image, pour animer la bouche de Matou.
 // Usage : npm run voice -- <épisode> [--force]
+import {createHash} from 'node:crypto';
 import {execFileSync} from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -18,6 +19,10 @@ import tokens from '../brand/tokens.json';
 const args = process.argv.slice(2);
 const dossier = dossierEpisode(args.find((a) => !a.startsWith('--')));
 const force = args.includes('--force');
+/** --secours : une seule prise avec la première voix de secours, pour écoute seulement. */
+const secoursDemande = args.includes('--secours');
+/** empreinte d'un fichier : lie la provenance au CONTENU de voix.mp3. */
+const empreinte = (f: string) => createHash('sha256').update(fs.readFileSync(f)).digest('hex');
 /** La synthèse varie d'une prise à l'autre : on en essaie trois au plus. */
 const PRISES_MAX = 3;
 /** Tentatives sur le modèle principal avant de passer à une voix de secours (API capricieuse). */
@@ -51,6 +56,15 @@ const provenance = path.join(dossier, 'voix.meta.json');
 let qualite: QualiteVoix | undefined;
 let voix: {modele: string; voix: string; secours?: boolean} | undefined;
 
+if (secoursDemande) {
+  const r = reglages.secours[0];
+  if (!r) throw new Error('Aucune voix de secours dans brand/voix.json.');
+  const f = path.join(dossier, 'voix.secours.mp3');
+  console.warn(`Prise d'écoute avec ${r.modele} / ${r.voix} : elle ne remplacera jamais voix.mp3.`);
+  await synthetiser(texte, r, f);
+  throw new Error(`Voix de secours écrite dans ${path.basename(f)} (écoute seulement) : voix.mp3 intact.`);
+}
+
 if (!fs.existsSync(mp3) || force) {
   // Coupe les silences au début et à la fin, normalise le volume (-16 LUFS, norme réseaux sociaux).
   const normaliserVolume = (f: string) => {
@@ -69,68 +83,73 @@ if (!fs.existsSync(mp3) || force) {
     }
   };
   try {
-    const essais = [reglages, ...reglages.secours];
-    let retenu: {fichier: string; q: QualiteVoix; secours: boolean} | undefined;
-    for (const [rang, r] of essais.entries()) {
-      const principal = rang === 0;
-      let conforme: {fichier: string; q: QualiteVoix} | undefined; // prise sans défaut
-      let moindre: {fichier: string; q: QualiteVoix} | undefined; // meilleure des prises défectueuses
-      let panne = false;
-      for (let prise = 1; prise <= PRISES_MAX && !conforme; prise++) {
-        const candidat = mp3.replace(/\.mp3$/, `.prise${prise}.mp3`);
-        let obtenu = false;
-        // Panne passagère : on réessaie le même modèle avant de changer de voix.
-        for (let appel = 1; appel <= (principal ? ESSAIS_API : 1) && !obtenu; appel++) {
-          try {
-            console.log(`Voix : ${r.modele} / ${r.voix}, prise ${prise}/${PRISES_MAX}${appel > 1 ? ` (appel ${appel})` : ''}…`);
-            await synthetiser(texte, r, candidat);
-            obtenu = true;
-          } catch (e) {
-            console.warn(`  échec : ${(e as Error).message.slice(0, 200)}`);
-            if (appel < (principal ? ESSAIS_API : 1)) await new Promise((f) => setTimeout(f, 15000));
-          }
-        }
-        if (!obtenu) {
-          panne = true;
-          break;
-        }
-        normaliserVolume(candidat);
-        const q = mesurer(candidat, nombreMots, 0, 0, phrases);
-        const defautsPrise = defauts(q);
-        console.log(`  ${resume(q)}${defautsPrise.length ? ` — ${defautsPrise.join(' ; ')}` : ' — OK'}`);
-        if (!defautsPrise.length) {
-          conforme = {fichier: candidat, q};
-          break; // une prise conforme : inutile d'en produire d'autres
-        }
-        // Pas encore de prise conforme : on garde la plus vivante, sans écraser une conforme.
-        if (!moindre || score(q) > score(moindre.q)) {
-          if (moindre) fs.rmSync(moindre.fichier, {force: true});
-          moindre = {fichier: candidat, q};
-        } else {
-          fs.rmSync(candidat, {force: true});
+    let conforme: {fichier: string; q: QualiteVoix} | undefined; // prise sans défaut
+    let moindre: {fichier: string; q: QualiteVoix} | undefined; // meilleure des prises défectueuses
+    let panne = false;
+    for (let prise = 1; prise <= PRISES_MAX && !conforme; prise++) {
+      const candidat = mp3.replace(/\.mp3$/, `.prise${prise}.mp3`);
+      let obtenu = false;
+      // Panne passagère : on réessaie le même modèle (une voix de secours n'est pas Matou).
+      for (let appel = 1; appel <= ESSAIS_API && !obtenu; appel++) {
+        try {
+          console.log(`Voix : ${reglages.modele} / ${reglages.voix}, prise ${prise}/${PRISES_MAX}${appel > 1 ? ` (appel ${appel})` : ''}…`);
+          await synthetiser(texte, reglages, candidat);
+          obtenu = true;
+        } catch (e) {
+          console.warn(`  échec : ${(e as Error).message.slice(0, 200)}`);
+          if (appel < ESSAIS_API) await new Promise((f) => setTimeout(f, 15000));
         }
       }
-      const garde = conforme ?? moindre;
-      if (garde) {
-        if (conforme && moindre) fs.rmSync(moindre.fichier, {force: true});
-        retenu = {...garde, secours: !principal};
-        voix = principal ? {modele: r.modele, voix: r.voix} : {modele: r.modele, voix: r.voix, secours: true};
-        if (!principal) console.warn(`VOIX DE SECOURS (${r.modele} / ${r.voix}) : ce n'est pas la voix de Matou.`);
+      if (!obtenu) {
+        panne = true;
         break;
       }
-      if (!panne) break; // aucune prise exploitable sans panne : inutile d'insister
+      // Une réponse tronquée est traitée comme un échec de prise, pas comme un arrêt de la commande.
+      let q: QualiteVoix;
+      try {
+        normaliserVolume(candidat);
+        q = mesurer(candidat, nombreMots, 0, 0, phrases);
+      } catch (e) {
+        console.warn(`  prise illisible : ${(e as Error).message.slice(0, 200)}`);
+        fs.rmSync(candidat, {force: true});
+        continue;
+      }
+      // Le débit se recale AVANT de juger : la mesure qui décide doit porter sur l'audio final.
+      let final = q;
+      if (avertissements(q).length) final = calerDebit(candidat, q, nombreMots);
+      const defautsPrise = defauts(final);
+      console.log(`  ${resume(final)}${defautsPrise.length ? ` — ${defautsPrise.join(' ; ')}` : ' — OK'}`);
+      if (!defautsPrise.length) {
+        conforme = {fichier: candidat, q: final};
+        break; // une prise conforme : inutile d'en produire d'autres
+      }
+      // Aucune prise conforme pour l'instant : on garde la plus vivante.
+      if (!moindre || score(q) > score(moindre.q)) {
+        if (moindre) fs.rmSync(moindre.fichier, {force: true});
+        moindre = {fichier: candidat, q: final};
+      } else {
+        fs.rmSync(candidat, {force: true});
+      }
     }
-    if (!retenu) throw new Error('Aucune voix n’a fonctionné.');
-    // Une voix de secours ne remplace jamais la voix de Matou : fichier à part, échec explicite.
-    if (retenu.secours) {
-      fs.renameSync(retenu.fichier, path.join(dossier, 'voix.secours.mp3'));
+    if (!conforme && moindre) {
+      // Aucune prise conforme : on ne touche pas à voix.mp3, on met la meilleure à part.
+      fs.rmSync(path.join(dossier, 'voix.refaire.mp3'), {force: true});
+      fs.renameSync(moindre.fichier, path.join(dossier, 'voix.refaire.mp3'));
       throw new Error(
-        'Voix de secours écrite dans voix.secours.mp3 (modèle principal indisponible) : voix.mp3 laissé intact. Relancer npm run voice quand l’API répond.',
+        `Aucune prise conforme (${defauts(moindre.q).join(' ; ')}) : la meilleure est dans voix.refaire.mp3, voix.mp3 laissé intact. Refaire la voix plus tard.`,
       );
     }
-    fs.renameSync(retenu.fichier, mp3);
-    fs.writeFileSync(provenance, JSON.stringify(voix, null, 1) + '\n');
-    qualite = calerDebit(mp3, retenu.q, nombreMots);
+    if (!conforme) {
+      throw new Error(
+        `Modèle ${reglages.modele} indisponible après ${ESSAIS_API} appels par prise : voix.mp3 laissé intact. Relancer plus tard (ou npm run voice -- ${path.basename(dossier)} --secours pour une prise d'écoute).`,
+      );
+    }
+    fs.renameSync(conforme.fichier, mp3);
+    qualite = conforme.q;
+    // Provenance liée au CONTENU du fichier : un mp3 déplacé à la main ne passera pas `check`.
+    fs.writeFileSync(provenance, JSON.stringify({modele: reglages.modele, voix: reglages.voix, sha256: empreinte(mp3)}, null, 1) + '\n');
+    voix = {modele: reglages.modele, voix: reglages.voix};
+    fs.rmSync(path.join(dossier, 'voix.secours.mp3'), {force: true}); // un secours périmé ne doit pas rester
     const av = avertissements(qualite);
     if (av.length) console.warn(`  ${av.join(' ; ')} : texte dense, à raccourcir plutôt qu’à refaire.`);
   } finally {
@@ -138,15 +157,28 @@ if (!fs.existsSync(mp3) || force) {
   }
 } else {
   console.log('voix.mp3 existe déjà (--force pour la refaire).');
-  // On garde la provenance de ce fichier (une reprise de rendu ne doit pas la réécrire).
+  // Provenance : le fichier doit être celui qu'on a écrit (même empreinte).
+  let meta: {modele?: string; voix?: string; sha256?: string} | undefined;
   try {
-    voix = JSON.parse(fs.readFileSync(provenance, 'utf8')) as typeof voix;
+    meta = JSON.parse(fs.readFileSync(provenance, 'utf8'));
   } catch {
-    try {
-      voix = (JSON.parse(fs.readFileSync(path.join(dossier, 'timings.json'), 'utf8')) as {voix?: typeof voix}).voix;
-    } catch {
-      /* ni provenance ni timings : on retombe sur brand/voix.json */
+    meta = undefined;
+  }
+  if (meta?.sha256) {
+    if (meta.sha256 !== empreinte(mp3)) {
+      throw new Error('voix.mp3 ne correspond pas à sa provenance (voix.meta.json) : fichier modifié à la main ? Relancer avec --force.');
     }
+    voix = {modele: meta.modele ?? reglages.modele, voix: meta.voix ?? reglages.voix};
+  } else {
+    console.warn('Provenance absente (épisode antérieur au 02/11) : identité de la voix non vérifiable.');
+    const ancienne = ((): undefined | {modele: string; voix: string} => {
+      try {
+        return (JSON.parse(fs.readFileSync(path.join(dossier, 'timings.json'), 'utf8')) as {voix?: {modele: string; voix: string}}).voix;
+      } catch {
+        return undefined;
+      }
+    })();
+    voix = ancienne ?? {modele: reglages.modele, voix: reglages.voix};
   }
 }
 

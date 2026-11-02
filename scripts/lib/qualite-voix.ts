@@ -27,10 +27,10 @@ export type QualiteVoix = {
 
 /** Seuils, calibrés sur les épisodes 000-010 mesurés par CE code :
  *  - débit : 155 à 208 mots/min utiles ;
- *  - intonation : Puck donne 10,5 à 14 demi-tons d'écart p10-p90, la prise plate de #010
- *    (voix de secours MAI « Marc ») 6,4 — seuil à 8, à mi-chemin ;
+ *  - intonation : avec le lissage, Puck donne 5,8 à 9,6 demi-tons d'écart p20-p80, une prise
+ *    volontairement plate de Puck 3,2 à 4,8, la voix de secours MAI « Marc » 4,3 — seuil 5,5 ;
  *  - pauses : au moins 0,6 par phrase (une respiration par phrase et demie). */
-export const SEUILS = {motsParMinute: 185, melodieDemiTons: 8, pausesParPhrase: 0.6};
+export const SEUILS = {motsParMinute: 185, melodieDemiTons: 5.5, pausesParPhrase: 0.6};
 
 const FENETRE = 0.04; // 40 ms
 const PAS = 0.02; // 20 ms
@@ -85,6 +85,28 @@ const hauteurs = (x: Float32Array, sr: number): number[] => {
   return f0;
 };
 
+/**
+ * Lisse la suite de hauteurs : une octave parasite isolée (pic à la demi-période) est écartée
+ * en comparant chaque trame à la médiane de ses voisines (fenêtre 5) et en refusant les sauts
+ * de plus de 7 demi-tons d'une trame à l'autre.
+ */
+const lisser = (f0: number[]): number[] => {
+  if (f0.length < 5) return f0;
+  const mediane = (valeurs: number[]) => [...valeurs].sort((a, b) => a - b)[Math.floor(valeurs.length / 2)];
+  const sortie: number[] = [];
+  for (let i = 0; i < f0.length; i++) {
+    const fenetre = f0.slice(Math.max(0, i - 2), Math.min(f0.length, i + 3));
+    const med = mediane(fenetre);
+    if (f0[i] < 0.6 * med || f0[i] > 1.7 * med) continue; // octave ou valeur aberrante
+    if (sortie.length) {
+      const ecart = Math.abs(12 * Math.log2(f0[i] / sortie[sortie.length - 1]));
+      if (ecart > 7) continue; // saut impossible entre deux trames voisines
+    }
+    sortie.push(f0[i]);
+  }
+  return sortie;
+};
+
 const centile = (valeurs: number[], p: number): number => {
   if (!valeurs.length) return 0;
   const tri = [...valeurs].sort((a, b) => a - b);
@@ -108,15 +130,15 @@ export const mesurer = (mp3: string, mots: number, debut: number, fin: number, p
     maxBuffer: 1 << 28,
   });
   const x = new Float32Array(pcm.buffer, pcm.byteOffset, pcm.byteLength / 4);
-  const f0 = hauteurs(x, 16000);
-  const p10 = centile(f0, 0.1);
-  const p90 = centile(f0, 0.9);
+  const f0 = lisser(hauteurs(x, 16000));
+  const p20 = centile(f0, 0.2);
+  const p80 = centile(f0, 0.8);
   const utile = Math.max(0.5, fin > debut ? fin - debut : x.length / 16000);
   return {
     secondes: Math.round((x.length / 16000) * 100) / 100,
     motsParMinute: Math.round((mots / utile) * 60),
     medianeHz: Math.round(centile(f0, 0.5)),
-    melodieDemiTons: p10 > 0 ? Math.round(12 * Math.log2(p90 / p10) * 10) / 10 : 0,
+    melodieDemiTons: p20 > 0 ? Math.round(12 * Math.log2(p80 / p20) * 10) / 10 : 0,
     pauses: compterPauses(mp3),
     phrases: Math.max(1, phrases),
   };
@@ -165,7 +187,8 @@ export const calerDebit = (mp3: string, q: QualiteVoix, mots: number, debut = 0,
   } finally {
     fs.rmSync(tmp, {force: true});
   }
-  return mesurer(mp3, mots, debut * facteur, fin * facteur, q.phrases);
+  // atempo < 1 ralentit : la durée est divisée par le facteur, pas multipliée.
+  return mesurer(mp3, mots, debut / facteur, fin / facteur, q.phrases);
 };
 
 export const resume = (q: QualiteVoix): string =>
