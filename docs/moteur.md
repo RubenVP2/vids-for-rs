@@ -64,13 +64,19 @@ episodes/NNN-slug/
 1. Toutes les phrases des scènes sont lues **d'un seul tenant** (prosodie naturelle)
    par la voix de `brand/voix.json` (Gemini TTS « Puck » ; secours MAI « Marc » puis
    ElevenLabs « Brian » si la première échoue).
-2. Silences de début et fin coupés, volume normalisé.
-3. OpenRouter ne renvoie pas de minutage avec la voix : on **retranscrit** l'audio
+2. **Chaque prise est mesurée** (`scripts/lib/qualite-voix.ts`) : mélodie (90e centile de la
+   hauteur rapporté à sa médiane), pauses ≥ 250 ms, débit en mots par minute. La synthèse
+   n'est pas déterministe — une prise peut sortir plate et hachée (#010) : on en essaie
+   jusqu'à trois et on garde la meilleure ; la voix de secours ne sert que si le modèle
+   échoue, jamais pour un simple défaut de prise. Un débit trop rapide est recalé avec
+   `atempo` (hauteur gardée) ; s'il reste rapide, c'est le script qu'il faut raccourcir.
+3. Silences de début et fin coupés, volume normalisé.
+4. OpenRouter ne renvoie pas de minutage avec la voix : on **retranscrit** l'audio
    (Whisper large v3, horodatage par mot) puis on **aligne** les mots du script sur les
    mots entendus (`scripts/lib/alignement.ts`, alignement de séquences). Le script garde
    son orthographe ; les mots non retrouvés sont interpolés. Le taux d'alignement est
-   noté dans `timings.json` (≥ 85 % attendu).
-4. Volume RMS par image → `enveloppe` : la bouche de Matou s'ouvre en paliers.
+   noté dans `timings.json` (≥ 85 % attendu), avec les mesures de la prise (`qualite`).
+5. Volume RMS par image → `enveloppe` : la bouche de Matou s'ouvre en paliers.
 
 Changer de voix = modifier `brand/voix.json`. Passer à la voix de l'utilisateur (V2) :
 même fichier, avec un modèle qui clone une voix à partir d'un extrait

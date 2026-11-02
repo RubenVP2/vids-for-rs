@@ -11,11 +11,14 @@ import {texteAffiche, texteParle, type Timings} from '../src/schema';
 import {aligner, normaliser} from './lib/alignement';
 import {dossierEpisode, lireEpisode, RACINE} from './lib/episode';
 import {dureeAudio, synthetiser, transcrire, type ReglagesVoix} from './lib/openrouter';
+import {avertissements, calerDebit, defauts, mesurer, resume, score, type QualiteVoix} from './lib/qualite-voix';
 import tokens from '../brand/tokens.json';
 
 const args = process.argv.slice(2);
 const dossier = dossierEpisode(args.find((a) => !a.startsWith('--')));
 const force = args.includes('--force');
+/** La synthèse varie d'une prise à l'autre : on en essaie trois au plus. */
+const PRISES_MAX = 3;
 const episode = lireEpisode(dossier);
 const reglages = JSON.parse(fs.readFileSync(path.join(RACINE, 'brand', 'voix.json'), 'utf8')) as ReglagesVoix & {
   transcription: string;
@@ -41,36 +44,76 @@ episode.scenes.forEach((s, iScene) => {
 const texte = episode.scenes.map((s) => texteParle(s.texte).trim()).join(' ');
 
 const mp3 = path.join(dossier, 'voix.mp3');
+const nombreMots = motsScript.length;
+let qualite: QualiteVoix | undefined;
 if (!fs.existsSync(mp3) || force) {
+  // Coupe les silences au début et à la fin, normalise le volume (-16 LUFS, norme réseaux sociaux).
+  const normaliser = (f: string) => {
+    const tmp = f.replace(/\.mp3$/, '.tmp.mp3');
+    execFileSync('ffmpeg', [
+      '-y', '-loglevel', 'error', '-i', f,
+      '-af', 'silenceremove=start_periods=1:start_threshold=-45dB,areverse,silenceremove=start_periods=1:start_threshold=-45dB,areverse,loudnorm=I=-16:TP=-1.5:LRA=11',
+      '-ar', '44100', '-b:a', '96k', tmp,
+    ]);
+    fs.renameSync(tmp, f);
+  };
+  // La synthèse n'est pas déterministe : une prise peut sortir plate et hachée (épisode 010).
+  // On mesure chaque prise et on refait tant que la voix est plate ; le débit, lui, se recale
+  // après coup (calerDebit). On ne change de voix de secours que si le modèle échoue.
   const essais = [reglages, ...reglages.secours];
-  let ok = false;
+  let retenu: {fichier: string; q: QualiteVoix} | undefined;
   for (const r of essais) {
-    try {
-      console.log(`Voix : ${r.modele} / ${r.voix}…`);
-      await synthetiser(texte, r, mp3);
-      ok = true;
+    let meilleure: {fichier: string; q: QualiteVoix} | undefined;
+    let modeleMuet = false;
+    for (let prise = 1; prise <= PRISES_MAX; prise++) {
+      const candidat = mp3.replace(/\.mp3$/, `.prise${prise}.mp3`);
+      try {
+        console.log(`Voix : ${r.modele} / ${r.voix}, prise ${prise}/${PRISES_MAX}…`);
+        await synthetiser(texte, r, candidat);
+      } catch (e) {
+        console.warn(`  échec : ${(e as Error).message.slice(0, 200)}`);
+        modeleMuet = true;
+        break; // modèle indisponible : essai suivant
+      }
+      normaliser(candidat);
+      const q = mesurer(candidat, nombreMots, 0, dureeAudio(candidat));
+      const defautsP = defauts(q);
+      console.log(`  ${resume(q)}${defautsP.length ? ` — ${defautsP.join(' ; ')}` : ' — OK'}`);
+      if (!meilleure || score(q) > score(meilleure.q)) {
+        if (meilleure) fs.rmSync(meilleure.fichier, {force: true});
+        meilleure = {fichier: candidat, q};
+      } else {
+        fs.rmSync(candidat, {force: true});
+      }
+      if (!defautsP.length) break;
+    }
+    if (meilleure) {
+      retenu = meilleure;
       reglages.modele = r.modele;
       reglages.voix = r.voix;
-      break;
-    } catch (e) {
-      console.warn(`  échec : ${(e as Error).message.slice(0, 200)}`);
+      break; // ce modèle a rendu quelque chose : on s'y tient (pas de changement de voix)
     }
+    if (!modeleMuet) break; // aucune prise exploitable hors panne : inutile d'insister
   }
-  if (!ok) throw new Error('Aucune voix n’a fonctionné.');
-  // coupe les silences au début et à la fin, normalise le volume (-16 LUFS, norme réseaux sociaux)
-  const tmp = mp3.replace(/\.mp3$/, '.tmp.mp3');
-  execFileSync('ffmpeg', [
-    '-y', '-loglevel', 'error', '-i', mp3,
-    '-af', 'silenceremove=start_periods=1:start_threshold=-45dB,areverse,silenceremove=start_periods=1:start_threshold=-45dB,areverse,loudnorm=I=-16:TP=-1.5:LRA=11',
-    '-ar', '44100', '-b:a', '96k', tmp,
-  ]);
-  fs.renameSync(tmp, mp3);
+  if (!retenu) throw new Error('Aucune voix n’a fonctionné.');
+  fs.renameSync(retenu.fichier, mp3);
+  // Les prises écartées ne doivent pas traîner dans l'épisode (ni partir dans git).
+  for (const f of fs.readdirSync(path.dirname(mp3)).filter((x) => /\.prise\d+\.mp3$/.test(x))) {
+    fs.rmSync(path.join(path.dirname(mp3), f), {force: true});
+  }
+  qualite = retenu.q;
+  // Débit trop rapide : on ralentit légèrement (atempo garde la hauteur et le timbre).
+  qualite = calerDebit(mp3, qualite, nombreMots);
+  if (avertissements(qualite).length) {
+    console.warn(`  ${avertissements(qualite).join(' ; ')} : script dense, raccourcir la scène verdict.`);
+  }
 } else {
   console.log('voix.mp3 existe déjà (--force pour la refaire).');
 }
 
 const duree = dureeAudio(mp3);
-console.log(`Durée de la voix : ${duree.toFixed(1)} s`);
+if (!qualite) qualite = mesurer(mp3, nombreMots, 0, duree);
+console.log(`Durée de la voix : ${duree.toFixed(1)} s — ${resume(qualite)}`);
 console.log(`Transcription horodatée (${reglages.transcription})…`);
 const entendus = await transcrire(mp3, reglages.transcription);
 const alignes = aligner(motsScript.map((m) => m.texte), entendus, duree);
@@ -111,6 +154,7 @@ const timings: Timings = {
   duree: Math.round(duree * 1000) / 1000,
   voix: {modele: reglages.modele, voix: reglages.voix},
   alignement: Math.round((retrouves / alignes.length) * 100) / 100,
+  qualite,
   mots,
   scenes,
   enveloppe,
