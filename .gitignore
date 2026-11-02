@@ -4,5 +4,10 @@ out/
 public/episodes/
 episodes/*/rendu/
 episodes/*/controle/
+# Prises intermédiaires de la voix (nettoyées par voice.ts, jamais versionnées)
+episodes/*/voix.prise*.mp3
+episodes/*/voix.tmp.mp3
+episodes/*/voix.debit.mp3
+episodes/*/voix.secours.mp3
 *.log
 .env
