@@ -5,6 +5,8 @@
   "format": "pcm",
   "frequencePcm": 24000,
   "instructions": "Voix masculine française, jeune et complice, pédagogue, débit posé (environ 170 mots par minute, jamais précipité), articulation nette, intonation variée qui monte et descend (jamais plate ni récitée), petit sourire dans la voix, humour pince-sans-rire. Marque une vraie respiration entre les phrases.",
+  "$profil": "Hauteur médiane de Puck mesurée sur les épisodes 000-009 (119-148 Hz) : une prise hors de cette plage n'est pas la voix de Matou, même si le modèle répond.",
+  "profil": {"medianeHz": 131, "tolerance": 0.1},
   "transcription": "openai/whisper-large-v3",
   "secours": [
     {"modele": "microsoft/mai-voice-2.1", "voix": "fr-FR-Marc:MAI-Voice-2.1", "format": "mp3"},

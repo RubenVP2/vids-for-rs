@@ -105,6 +105,16 @@ export const defauts = (q: QualiteVoix): string[] => {
   return d;
 };
 
+/** Écart au profil de la voix : une prise qui s'éloigne trop de la hauteur de référence n'est
+ *  pas Matou (autre locuteur, autre modèle), même si elle est bien articulée. */
+export const ecartVoix = (q: QualiteVoix, profil: {medianeHz: number; tolerance: number}): string[] => {
+  const mini = profil.medianeHz * (1 - profil.tolerance);
+  const maxi = profil.medianeHz * (1 + profil.tolerance);
+  return q.medianeHz < mini || q.medianeHz > maxi
+    ? [`timbre éloigné (médiane ${q.medianeHz} Hz, attendu ${Math.round(mini)}-${Math.round(maxi)})`]
+    : [];
+};
+
 /** Débit trop rapide : signalé, jamais bloquant (le texte est le même d'une prise à l'autre :
  *  on le recale avec calerDebit, sinon c'est le script qu'il faut raccourcir). */
 export const avertissements = (q: QualiteVoix): string[] =>

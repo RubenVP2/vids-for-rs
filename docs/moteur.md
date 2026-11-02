@@ -67,9 +67,14 @@ episodes/NNN-slug/
 2. **Chaque prise est mesurée** (`scripts/lib/qualite-voix.ts`) : mélodie (90e centile de la
    hauteur rapporté à sa médiane), pauses ≥ 250 ms, débit en mots par minute. La synthèse
    n'est pas déterministe — une prise peut sortir plate et hachée (#010) : on en essaie
-   jusqu'à trois et on garde la meilleure ; la voix de secours ne sert que si le modèle
-   échoue, jamais pour un simple défaut de prise. Un débit trop rapide est recalé avec
-   `atempo` (hauteur gardée) ; s'il reste rapide, c'est le script qu'il faut raccourcir.
+   jusqu'à trois et on garde la meilleure. La **hauteur médiane** doit rester dans la plage
+   du profil (`brand/voix.json` → `profil`, 131 Hz ± 10 % pour Puck) : une prise qui en sort
+   n'est pas Matou et se refait. Le modèle principal est réessayé trois fois avant qu'une
+   voix de secours (MAI « Marc », ElevenLabs « Brian ») ne prenne le relais — celle-ci est
+   alors **marquée** dans `timings.json` (`voix.secours`) et `npm run check` la refuse : une
+   voix de secours n'est jamais publiée en silence (#010, MAI « Marc »). Un débit trop rapide
+   est recalé avec `atempo` (hauteur gardée) ; s'il reste rapide, c'est le script qu'il faut
+   raccourcir.
 3. Silences de début et fin coupés, volume normalisé.
 4. OpenRouter ne renvoie pas de minutage avec la voix : on **retranscrit** l'audio
    (Whisper large v3, horodatage par mot) puis on **aligne** les mots du script sur les

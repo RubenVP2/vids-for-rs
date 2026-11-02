@@ -153,7 +153,8 @@ export type Episode = z.infer<typeof episodeSchema>;
 export const timingsSchema = z.object({
   audio: z.string(),
   duree: z.number().positive(),
-  voix: z.object({modele: z.string(), voix: z.string()}),
+  /** `secours` : la voix n'est pas celle de Matou (Gemini indisponible) — refusé par `check`. */
+  voix: z.object({modele: z.string(), voix: z.string(), secours: z.boolean().optional()}),
   /** Part des mots du script retrouvés par la transcription (0–1). Bas = voix qui a mal lu. */
   alignement: z.number().min(0).max(1).optional(),
   mots: z.array(

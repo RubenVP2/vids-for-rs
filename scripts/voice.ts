@@ -11,7 +11,7 @@ import {texteAffiche, texteParle, type Timings} from '../src/schema';
 import {aligner, normaliser} from './lib/alignement';
 import {dossierEpisode, lireEpisode, RACINE} from './lib/episode';
 import {dureeAudio, synthetiser, transcrire, type ReglagesVoix} from './lib/openrouter';
-import {avertissements, calerDebit, defauts, mesurer, resume, score, type QualiteVoix} from './lib/qualite-voix';
+import {avertissements, calerDebit, defauts, ecartVoix, mesurer, resume, score, type QualiteVoix} from './lib/qualite-voix';
 import tokens from '../brand/tokens.json';
 
 const args = process.argv.slice(2);
@@ -23,7 +23,11 @@ const episode = lireEpisode(dossier);
 const reglages = JSON.parse(fs.readFileSync(path.join(RACINE, 'brand', 'voix.json'), 'utf8')) as ReglagesVoix & {
   transcription: string;
   secours: ReglagesVoix[];
+  /** Hauteur médiane de référence + tolérance : la voix de Matou ne doit pas dériver. */
+  profil?: {medianeHz: number; tolerance: number};
 };
+/** Tentatives sur le modèle principal avant de passer à une voix de secours (API capricieuse). */
+const ESSAIS_API = 3;
 
 // Texte lu : les scènes bout à bout. Chaque mot garde sa scène et son surlignage.
 type MotScript = {texte: string; scene: number; surligne: boolean};
@@ -46,6 +50,9 @@ const texte = episode.scenes.map((s) => texteParle(s.texte).trim()).join(' ');
 const mp3 = path.join(dossier, 'voix.mp3');
 const nombreMots = motsScript.length;
 let qualite: QualiteVoix | undefined;
+/** Voix réellement utilisée pour ce fichier : relue si voix.mp3 existait déjà, sinon remplie
+ *  à la synthèse (une voix de secours est marquée pour que `check` la refuse). */
+let voix: {modele: string; voix: string; secours?: boolean} | undefined;
 if (!fs.existsSync(mp3) || force) {
   // Coupe les silences au début et à la fin, normalise le volume (-16 LUFS, norme réseaux sociaux).
   const normaliser = (f: string) => {
@@ -61,23 +68,31 @@ if (!fs.existsSync(mp3) || force) {
   // On mesure chaque prise et on refait tant que la voix est plate ; le débit, lui, se recale
   // après coup (calerDebit). On ne change de voix de secours que si le modèle échoue.
   const essais = [reglages, ...reglages.secours];
-  let retenu: {fichier: string; q: QualiteVoix} | undefined;
-  for (const r of essais) {
+  let retenu: {fichier: string; q: QualiteVoix; secours: boolean} | undefined;
+  for (const [rang, r] of essais.entries()) {
+    const principal = rang === 0;
     let meilleure: {fichier: string; q: QualiteVoix} | undefined;
     let modeleMuet = false;
     for (let prise = 1; prise <= PRISES_MAX; prise++) {
       const candidat = mp3.replace(/\.mp3$/, `.prise${prise}.mp3`);
-      try {
-        console.log(`Voix : ${r.modele} / ${r.voix}, prise ${prise}/${PRISES_MAX}…`);
-        await synthetiser(texte, r, candidat);
-      } catch (e) {
-        console.warn(`  échec : ${(e as Error).message.slice(0, 200)}`);
-        modeleMuet = true;
-        break; // modèle indisponible : essai suivant
+      // Le modèle principal est réessayé à l'identique (panne passagère de l'API) avant
+      // de changer de voix : une voix de secours n'est pas Matou.
+      for (let appel = 1; appel <= (principal ? ESSAIS_API : 1); appel++) {
+        try {
+          console.log(`Voix : ${r.modele} / ${r.voix}, prise ${prise}/${PRISES_MAX}${appel > 1 ? ` (appel ${appel})` : ''}…`);
+          await synthetiser(texte, r, candidat);
+          modeleMuet = false;
+          break;
+        } catch (e) {
+          console.warn(`  échec : ${(e as Error).message.slice(0, 200)}`);
+          modeleMuet = true;
+          if (appel < (principal ? ESSAIS_API : 1)) await new Promise((f) => setTimeout(f, 15000));
+        }
       }
+      if (modeleMuet) break; // modèle indisponible : essai suivant
       normaliser(candidat);
       const q = mesurer(candidat, nombreMots, 0, dureeAudio(candidat));
-      const defautsP = defauts(q);
+      const defautsP = [...defauts(q), ...(principal && reglages.profil ? ecartVoix(q, reglages.profil) : [])];
       console.log(`  ${resume(q)}${defautsP.length ? ` — ${defautsP.join(' ; ')}` : ' — OK'}`);
       if (!meilleure || score(q) > score(meilleure.q)) {
         if (meilleure) fs.rmSync(meilleure.fichier, {force: true});
@@ -88,7 +103,9 @@ if (!fs.existsSync(mp3) || force) {
       if (!defautsP.length) break;
     }
     if (meilleure) {
-      retenu = meilleure;
+      retenu = {...meilleure, secours: !principal};
+      voix = {...{modele: r.modele, voix: r.voix}, ...(principal ? {} : {secours: true})};
+      if (!principal) console.warn(`VOIX DE SECOURS (${r.modele} / ${r.voix}) : ce n'est pas la voix de Matou.`);
       reglages.modele = r.modele;
       reglages.voix = r.voix;
       break; // ce modèle a rendu quelque chose : on s'y tient (pas de changement de voix)
@@ -109,6 +126,13 @@ if (!fs.existsSync(mp3) || force) {
   }
 } else {
   console.log('voix.mp3 existe déjà (--force pour la refaire).');
+  // On garde la voix d'origine de ce fichier (une reprise de render ne doit pas la réécrire).
+  try {
+    const ancien = JSON.parse(fs.readFileSync(path.join(dossier, 'timings.json'), 'utf8')) as {voix?: typeof voix};
+    if (ancien.voix) voix = ancien.voix;
+  } catch {
+    /* pas de timings : on garde la voix de brand/voix.json */
+  }
 }
 
 const duree = dureeAudio(mp3);
@@ -152,7 +176,7 @@ const scenes = episode.scenes.map((_, i) => {
 const timings: Timings = {
   audio: 'voix.mp3',
   duree: Math.round(duree * 1000) / 1000,
-  voix: {modele: reglages.modele, voix: reglages.voix},
+  voix: voix ?? {modele: reglages.modele, voix: reglages.voix},
   alignement: Math.round((retrouves / alignes.length) * 100) / 100,
   qualite,
   mots,

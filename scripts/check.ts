@@ -3,9 +3,9 @@
 import {execFileSync} from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-import {budgetDe, dossierEpisode, lireEpisode, lireTimings, nomEpisode} from './lib/episode';
+import {budgetDe, dossierEpisode, lireEpisode, lireTimings, nomEpisode, RACINE} from './lib/episode';
 import {controler, numeroDe, reglages as gabarits} from './lib/gabarits';
-import {avertissements as avertVoix, defauts as defautsVoix, resume as resumeVoix} from './lib/qualite-voix';
+import {avertissements as avertVoix, defauts as defautsVoix, ecartVoix, resume as resumeVoix} from './lib/qualite-voix';
 
 const dossier = dossierEpisode(process.argv[2]);
 const nom = nomEpisode(dossier);
@@ -42,11 +42,28 @@ if (timings.qualite) {
     `Voix posée (${resumeVoix(timings.qualite)})`,
     `Voix à refaire : ${defauts.join(' ; ')} — relancer npm run voice -- ${nom} --force`,
   );
+  // La hauteur doit rester celle de Matou : une prise qui dérive (autre locuteur) est refusée.
+  const profil = (
+    JSON.parse(fs.readFileSync(path.join(RACINE, 'brand', 'voix.json'), 'utf8')) as {
+      profil?: {medianeHz: number; tolerance: number};
+    }
+  ).profil;
+  if (profil) {
+    const ecart = ecartVoix(timings.qualite, profil);
+    verifier(!ecart.length, 'Timbre de Matou', `${ecart.join(' ; ')} — relancer npm run voice -- ${nom} --force`);
+  }
   const rapide = avertVoix(timings.qualite);
   if (rapide.length) console.log(`Voix rapide (${rapide.join(' ; ')}) : raccourcir le texte plutôt que refaire la prise.`);
 } else {
   console.log('Voix non mesurée (épisode antérieur au 02/11) : débit et mélodie non contrôlés.');
 }
+
+// Voix de secours = autre locuteur : la chaîne doit garder UNE voix (épisode 010, MAI « Marc »).
+verifier(
+  !timings.voix.secours,
+  `Voix de Matou (${timings.voix.modele} / ${timings.voix.voix})`,
+  `Voix de secours (${timings.voix.modele} / ${timings.voix.voix}) : ce n'est pas Matou — relancer npm run voice -- ${nom} --force quand Gemini répond`,
+);
 
 const alignement = timings.alignement ?? 0;
 verifier(alignement >= 0.85, `Voix fidèle au script (${Math.round(alignement * 100)} % des mots retrouvés)`, `Voix douteuse : ${Math.round(alignement * 100)} % des mots retrouvés. Réécouter, refaire la voix (npm run voice -- ${nom} --force).`);
