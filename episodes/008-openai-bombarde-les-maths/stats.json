@@ -1,0 +1,92 @@
+{
+  "maj": "2026-11-02T09:39:35.166Z",
+  "jours": 30,
+  "date": "2026-11-01T08:00:00.000Z",
+  "rang": "principal",
+  "postes": [
+    {
+      "reseau": "threads",
+      "postId": "cmvxcjx7o03sqqd1j0sjcavoc",
+      "integration": "cmvsb2y1q03efpg1c3j45vgui",
+      "date": "2026-11-01T08:00:00.000Z",
+      "statut": "programmé",
+      "etat": "PUBLISHED",
+      "url": "https://www.threads.com/@matou_ai/post/DfMr6YUk5oP",
+      "manquant": false,
+      "gabarit": "pari",
+      "stats": {
+        "Views": 4,
+        "Likes": 0,
+        "Replies": 1,
+        "Reposts": 0,
+        "Quotes": 0
+      }
+    },
+    {
+      "reseau": "instagram",
+      "postId": "cmvxcjxwp03ssqd1j8hlpciso",
+      "integration": "cmvsaogt206kfor1cddnosuhf",
+      "date": "2026-11-01T11:00:00.000Z",
+      "statut": "programmé",
+      "etat": "PUBLISHED",
+      "url": "https://www.instagram.com/reel/DfMr56NFLYA/",
+      "manquant": false,
+      "gabarit": "chiffre",
+      "stats": {
+        "Views": 148,
+        "Reach": 136,
+        "Saves": 0,
+        "Likes": 1,
+        "Comments": 1,
+        "Shares": 0
+      }
+    },
+    {
+      "reseau": "tiktok",
+      "postId": "cmvxcjyl403suqd1j6iye92e8",
+      "integration": "cmvsakeo602wupg1crmgz7g9n",
+      "date": "2026-11-01T11:30:00.000Z",
+      "statut": "programmé",
+      "etat": "PUBLISHED",
+      "url": "https://www.tiktok.com/@matou_ai",
+      "manquant": false,
+      "gabarit": "camp",
+      "stats": {
+        "Views": 250,
+        "Likes": 1,
+        "Comments": 0,
+        "Shares": 0
+      }
+    },
+    {
+      "reseau": "youtube",
+      "postId": "cmvxcjz9m03szqd1jzjmpkxht",
+      "integration": "cmvsb3xwh07l1or1cvp01pod9",
+      "date": "2026-11-01T12:00:00.000Z",
+      "statut": "programmé",
+      "etat": "PUBLISHED",
+      "url": "https://www.youtube.com/watch?v=m36ZH_VuPzE",
+      "manquant": false,
+      "gabarit": "pourquoi",
+      "stats": {}
+    },
+    {
+      "reseau": "threads-relance",
+      "postId": "cmvxck00503blpd1jijjtxmbc",
+      "integration": "cmvsb2y1q03efpg1c3j45vgui",
+      "date": "2026-11-01T14:30:00.000Z",
+      "statut": "programmé",
+      "etat": "PUBLISHED",
+      "url": "https://www.threads.com/@matou_ai/post/DfM81UAlsP_",
+      "manquant": false,
+      "gabarit": "vecu",
+      "stats": {
+        "Views": 2,
+        "Likes": 0,
+        "Replies": 0,
+        "Reposts": 0,
+        "Quotes": 0
+      }
+    }
+  ]
+}

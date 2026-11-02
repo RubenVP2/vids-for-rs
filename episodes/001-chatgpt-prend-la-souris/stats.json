@@ -1,5 +1,5 @@
 {
-  "maj": "2026-10-29T23:07:18.961Z",
+  "maj": "2026-11-02T09:38:46.780Z",
   "jours": 30,
   "date": "2026-10-29T07:00:00.000Z",
   "rang": "principal",
@@ -9,11 +9,12 @@
       "postId": "cmvsc2fss04o8pg1clad32j8x",
       "integration": "cmvsakeo602wupg1crmgz7g9n",
       "etat": "PUBLISHED",
-      "url": "https://www.tiktok.com/@matou_ai",
+      "url": "https://www.tiktok.com/@matou_ai/video/7701981131704438048",
       "manquant": false,
+      "gabarit": null,
       "stats": {
-        "Views": 259,
-        "Likes": 7,
+        "Views": 264,
+        "Likes": 9,
         "Comments": 0,
         "Shares": 0
       }
@@ -25,9 +26,10 @@
       "etat": "PUBLISHED",
       "url": "https://www.instagram.com/reel/DfEa8z4k8F_/",
       "manquant": false,
+      "gabarit": null,
       "stats": {
-        "Views": 51,
-        "Reach": 49,
+        "Views": 110,
+        "Reach": 103,
         "Saves": 0,
         "Likes": 0,
         "Comments": 1,
@@ -41,9 +43,10 @@
       "etat": "PUBLISHED",
       "url": "https://www.youtube.com/watch?v=t9zefgPepcY",
       "manquant": false,
+      "gabarit": null,
       "stats": {
-        "Views": 233,
-        "Likes": 6,
+        "Views": 252,
+        "Likes": 8,
         "Comments": 0,
         "Favorites": 0
       }
@@ -55,8 +58,9 @@
       "etat": "PUBLISHED",
       "url": "https://www.threads.com/@matou_ai/post/DfEa8ncDMjw",
       "manquant": false,
+      "gabarit": null,
       "stats": {
-        "Views": 15,
+        "Views": 19,
         "Likes": 0,
         "Replies": 1,
         "Reposts": 0,
