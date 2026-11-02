@@ -31,8 +31,8 @@ lancer.sh episode-du-jour <rang>
 | Reddit (r/ChatGPT, r/OpenAI, r/artificial, r/LocalLLaMA, top du jour) | 4 par post lié, plafond 12 | Ce dont les utilisateurs parlent |
 | Google Trends France : une recherche en hausse correspond au sujet | 20 | Ce que les Français cherchent maintenant |
 
-**Seuil : 45.** Au-dessus : l'actu du jour. En dessous, la réserve dans l'ordre des
-scores : sujets du jour entre 25 et 45, puis les bons sujets des 7 derniers jours non
+**Seuil : 35.** Au-dessus : l'actu du jour. En dessous, la réserve dans l'ordre des
+scores : sujets du jour entre 25 et 35, puis les bons sujets des 7 derniers jours non
 choisis (`veille/reserve.json`, rempli et purgé par le script). Plus rien : le premier de
 `docs/sujets.md` (liste à la main), sinon pas d'épisode.
 

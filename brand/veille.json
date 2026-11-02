@@ -1,7 +1,7 @@
 {
   "$commentaire": "Veille déterministe (scripts/veille.ts, docs/veille.md). Les poids se changent ici, jamais dans la consigne de l'agent ; le bilan du lundi propose les ajustements.",
   "fenetreHeures": 48,
-  "seuil": 45,
+  "seuil": 35,
   "seuilReserve": 25,
   "reserveJours": 7,
   "points": {
