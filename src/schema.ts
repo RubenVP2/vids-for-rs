@@ -168,6 +168,17 @@ export const timingsSchema = z.object({
   scenes: z.array(z.object({debut: z.number(), fin: z.number()})),
   /** Volume de la voix, une valeur 0–1 par image (30 i/s) : sert à animer la bouche. */
   enveloppe: z.array(z.number()),
+  /** Mesures de la prise retenue (débit, mélodie, pauses) : `npm run check` refuse une voix plate. */
+  qualite: z
+    .object({
+      secondes: z.number().positive(),
+      motsParMinute: z.number().positive(),
+      medianeHz: z.number().nonnegative(),
+      melodieHz: z.number().nonnegative(),
+      ratioMelodie: z.number().nonnegative(),
+      pauses: z.number().int().nonnegative(),
+    })
+    .optional(),
 });
 export type Timings = z.infer<typeof timingsSchema>;
 

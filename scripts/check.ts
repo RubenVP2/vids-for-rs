@@ -5,6 +5,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {budgetDe, dossierEpisode, lireEpisode, lireTimings, nomEpisode} from './lib/episode';
 import {controler, numeroDe, reglages as gabarits} from './lib/gabarits';
+import {avertissements as avertVoix, defauts as defautsVoix, resume as resumeVoix} from './lib/qualite-voix';
 
 const dossier = dossierEpisode(process.argv[2]);
 const nom = nomEpisode(dossier);
@@ -33,6 +34,20 @@ if (fs.existsSync(mp4)) {
   const lufs = Number(/"input_i" : "(-?[\d.]+)"/.exec(sortie)?.[1]);
   verifier(Math.abs(lufs + 14) <= 1.5, `Volume ${lufs} LUFS`, `Volume ${lufs} LUFS (viser -14)`);
 }
+// Voix plate ou précipitée : mesuré à la synthèse (timings.qualite), refusé ici avant publication.
+if (timings.qualite) {
+  const defauts = defautsVoix(timings.qualite);
+  verifier(
+    defauts.length === 0,
+    `Voix posée (${resumeVoix(timings.qualite)})`,
+    `Voix à refaire : ${defauts.join(' ; ')} — relancer npm run voice -- ${nom} --force`,
+  );
+  const rapide = avertVoix(timings.qualite);
+  if (rapide.length) console.log(`Voix rapide (${rapide.join(' ; ')}) : raccourcir le texte plutôt que refaire la prise.`);
+} else {
+  console.log('Voix non mesurée (épisode antérieur au 02/11) : débit et mélodie non contrôlés.');
+}
+
 const alignement = timings.alignement ?? 0;
 verifier(alignement >= 0.85, `Voix fidèle au script (${Math.round(alignement * 100)} % des mots retrouvés)`, `Voix douteuse : ${Math.round(alignement * 100)} % des mots retrouvés. Réécouter, refaire la voix (npm run voice -- ${nom} --force).`);
 
