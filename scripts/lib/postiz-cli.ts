@@ -5,14 +5,33 @@ import {execFileSync} from 'node:child_process';
 
 /** Exécute `postiz <args…>` et renvoie sa sortie JSON. Les commandes préfixent parfois d'un libellé : on prend le premier JSON. */
 export const cli = <T>(...args: string[]): T => {
-  let sortie: string;
-  try {
-    // Sans jeton OAuth, la CLI lit POSTIZ_API_KEY : on y reprend POSTIZ_ENV (nom de la clé dans les sessions cloud).
-    const env = {...process.env, POSTIZ_API_KEY: process.env.POSTIZ_API_KEY ?? process.env.POSTIZ_ENV};
-    sortie = execFileSync('postiz', args, {encoding: 'utf8', maxBuffer: 16 * 1024 * 1024, env});
-  } catch (e) {
-    const err = e as {stdout?: string; stderr?: string; message?: string};
-    throw new Error(`postiz ${args.join(' ')} : ${(err.stdout ?? err.stderr ?? err.message ?? '').trim()}`);
+  let sortie: string = '';
+  const maxTentatives = 3;
+  for (let tentative = 1; tentative <= maxTentatives; tentative++) {
+    try {
+      // Sans jeton OAuth, la CLI lit POSTIZ_API_KEY : on y reprend POSTIZ_ENV (nom de la clé dans les sessions cloud).
+      const env = {...process.env, POSTIZ_API_KEY: process.env.POSTIZ_API_KEY ?? process.env.POSTIZ_ENV};
+      sortie = execFileSync('postiz', args, {encoding: 'utf8', maxBuffer: 16 * 1024 * 1024, env});
+      break;
+    } catch (e) {
+      const err = e as {stdout?: string; stderr?: string; message?: string};
+      const msg = (err.stdout ?? err.stderr ?? err.message ?? '').trim();
+      if (
+        tentative < maxTentatives &&
+        (msg.includes('502') ||
+          msg.includes('503') ||
+          msg.includes('504') ||
+          msg.includes('Bad Gateway') ||
+          msg.includes('ECONNRESET') ||
+          msg.includes('ETIMEDOUT'))
+      ) {
+        const attente = tentative * 2000;
+        console.warn(`postiz ${args.join(' ')} : erreur transitoire (${msg.slice(0, 80)}…), nouvelle tentative dans ${attente / 1000} s…`);
+        Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, attente);
+        continue;
+      }
+      throw new Error(`postiz ${args.join(' ')} : ${msg}`);
+    }
   }
   const debuts = ['[', '{'].map((c) => sortie.indexOf(c)).filter((i) => i >= 0);
   if (!debuts.length) throw new Error(`postiz ${args.join(' ')} : sortie sans JSON (${sortie.trim()})`);
