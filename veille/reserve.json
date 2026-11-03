@@ -1,5 +1,19 @@
 [
   {
+    "titre": "Cities Worldwide Build and Scale AI Services With NVIDIA Physical and Agentic AI",
+    "url": "https://blogs.nvidia.com/blog/cities-physical-agentic-ai-applications/",
+    "date": "2026-11-03T07:00:12.000Z",
+    "score": 35,
+    "ajoute": "2026-11-03T13:13:21.117Z"
+  },
+  {
+    "titre": "Heimstaden is changing residential real estate management with AI",
+    "url": "https://openai.com/index/heimstaden",
+    "date": "2026-11-03T08:00:00.000Z",
+    "score": 35,
+    "ajoute": "2026-11-03T13:13:21.117Z"
+  },
+  {
     "titre": "Preparing our next security sprint to harden OpenAI",
     "url": "https://openai.com/index/preparing-our-next-security-sprint-to-harden-openai",
     "date": "2026-11-02T18:00:00.000Z",
@@ -14,11 +28,25 @@
     "ajoute": "2026-11-03T04:13:21.952Z"
   },
   {
-    "titre": "Scaling Git at OpenAI",
-    "url": "https://openai.com/index/scaling-git-at-openai",
-    "date": "2026-11-02T15:30:00.000Z",
-    "score": 33,
-    "ajoute": "2026-11-03T04:13:21.952Z"
+    "titre": "La Samsung Galaxy Watch Ultra 2 passe à moins de 500 € pour le Black Friday et fait oublier l’Apple Watch Ultra",
+    "url": "https://www.frandroid.com/bons-plans/3308007_la-samsung-galaxy-watch-ultra-2-passe-a-moins-de-500-e-pour-le-black-friday-et-fait-oublier-lapple-watch-ultra",
+    "date": "2026-11-03T11:16:00.000Z",
+    "score": 31,
+    "ajoute": "2026-11-03T13:13:21.117Z"
+  },
+  {
+    "titre": "The latest AI news we announced in October 2026",
+    "url": "https://blog.google/innovation-and-ai/technology/ai/google-ai-updates-october-2026/",
+    "date": "2026-11-02T17:45:00.000Z",
+    "score": 30,
+    "ajoute": "2026-11-03T13:13:21.117Z"
+  },
+  {
+    "titre": "Transformers Model Integration Contracts",
+    "url": "https://huggingface.co/blog/transformers-mic",
+    "date": "2026-11-03T00:00:00.000Z",
+    "score": 30,
+    "ajoute": "2026-11-03T13:13:21.117Z"
   },
   {
     "titre": "Sam Altman affirme que l’IA est désormais plus intelligente que la plupart des scientifiques",
@@ -42,11 +70,25 @@
     "ajoute": "2026-11-03T04:13:21.952Z"
   },
   {
+    "titre": "Elon Musk throttles Grok Bot limits due to ‘unsustainably high’ costs",
+    "url": "https://techcrunch.com/2026/11/02/elon-musk-throttles-grok-bot-limits-due-to-unsustainably-high-costs/",
+    "date": "2026-11-02T16:23:21.000Z",
+    "score": 26,
+    "ajoute": "2026-11-03T13:13:21.117Z"
+  },
+  {
     "titre": "Anthropic ne veut plus que Claude copie des jeux vidéo",
     "url": "https://www.01net.com/actualites/anthropic-ne-veut-plus-que-claude-copie-des-jeux-video.html",
     "date": "2026-11-02T13:00:03.000Z",
     "score": 26,
     "ajoute": "2026-11-03T04:13:21.952Z"
+  },
+  {
+    "titre": "Siri AI, « une IA que personne ne remarque » : le nouveau patron d’Apple reste serein malgré les retards",
+    "url": "https://www.01net.com/actualites/siri-ia-que-personne-ne-remarque-nouveau-patron-apple-reste-serein-malgre-retards.html",
+    "date": "2026-11-02T14:00:16.000Z",
+    "score": 26,
+    "ajoute": "2026-11-03T13:13:21.117Z"
   },
   {
     "titre": "Amazon casse déjà les prix des iPhone 18 Pro pour les avant premières du Black Friday",
