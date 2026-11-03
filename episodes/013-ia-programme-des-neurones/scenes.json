@@ -1,0 +1,72 @@
+{
+  "numero": 13,
+  "slug": "ia-programme-des-neurones",
+  "serie": "flash",
+  "source": {
+    "nom": "MIT CSAIL",
+    "url": "https://rikiyat.github.io/blog/weight-space-programming/",
+    "date": "2026-11-02",
+    "type": "blog"
+  },
+  "statut": "disponible",
+  "verdict": "prometteur",
+  "miniature": "Une IA qui ==reprogramme== l'IA",
+  "musique": true,
+  "gabarit": {
+    "ouverture": "toi",
+    "corps": "fenetre"
+  },
+  "scenes": [
+    {
+      "type": "hook",
+      "texte": "Tu pensais qu'il fallait tout réentraîner pour ==corriger une IA== ? Regarde bien.",
+      "titre": "Une IA qui ==reprogramme== l'IA",
+      "icone": "eclair",
+      "matou": "surpris"
+    },
+    {
+      "type": "fenetre",
+      "texte": "Au {MIT|M I T}, des chercheurs ont réussi à faire corriger les neurones d'un modèle par une autre IA.",
+      "app": "MIT CSAIL",
+      "messages": [
+        {
+          "de": "toi",
+          "texte": "Répare ce réseau de neurones sans l'entraîner"
+        },
+        {
+          "de": "app",
+          "texte": "0,016 % des poids modifiés : le modèle remarche",
+          "quand": "corriger"
+        }
+      ],
+      "matou": "parle"
+    },
+    {
+      "type": "point",
+      "texte": "En fait, sans aucun entraînement, l'IA a réécrit une poignée de nombres qui bloquaient ses calculs.",
+      "titre": "Reprogrammé ==sans réentraîner==",
+      "corps": "Elle réécrit directement les connexions qui bloquaient les calculs.",
+      "icone": "cerveau",
+      "matou": "enFait"
+    },
+    {
+      "type": "pourquoi",
+      "texte": "Et pour toi ? Bientôt, tes assistants pourront corriger leurs propres bugs instantanément, sans attendre de mise à jour.",
+      "titre": "Et pour toi ?",
+      "corps": "Des assistants capables de corriger leurs bugs en direct sans mise à jour.",
+      "icone": "robot",
+      "matou": "reflechit"
+    },
+    {
+      "type": "verdict",
+      "texte": "Hype-mètre : prometteur. Mon avis : c'est magique pour réparer un bug, mais ça n'invente rien.",
+      "raison": "Réparation ciblée bluffante, mais incapable d'inventer un savoir absent.",
+      "matou": "verdict"
+    },
+    {
+      "type": "fin",
+      "texte": "Bref, pour corriger une IA, tu n'attendras plus des semaines de réentraînement.",
+      "matou": "content"
+    }
+  ]
+}
