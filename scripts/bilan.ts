@@ -19,8 +19,15 @@ type Canal = {id: string; name: string; identifier: string; disabled: boolean};
 const args = process.argv.slice(2);
 const jours = Number(args[args.indexOf('--jours') + 1]) || 30;
 /** « jeu. 30, 18:30 » : chaque réseau a son créneau (brand/postiz.json), le bilan les compare. */
-const creneau = (iso: string) =>
-  new Date(iso).toLocaleString('fr-FR', {timeZone: 'Europe/Paris', weekday: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'});
+const creneau = (quand: string | number) =>
+  new Date(quand).toLocaleString('fr-FR', {
+    timeZone: 'Europe/Paris',
+    weekday: 'short',
+    day: 'numeric',
+    month: 'short',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
 
 /** Une série Postiz → un nombre : la somme des jours, ou leur moyenne pour une durée moyenne. */
 const resumer = (series: Serie[]) =>
@@ -47,13 +54,45 @@ const posts = enListe<Post>(cli('posts:list', '--startDate', debut, '--endDate',
 const parId = new Map(posts.map((p) => [p.id, p]));
 
 if (args.includes('--attente')) {
-  const enAttente = envois.filter(({envoi}) => (envoi.postes as Poste[]).some((p) => parId.get(p.postId)?.state === 'DRAFT'));
-  for (const {d, envoi} of enAttente) {
-    // le créneau le plus proche : celui avant lequel il faut relire
-    const dates = (envoi.postes as Poste[]).filter((p) => parId.get(p.postId)?.state === 'DRAFT').map((p) => p.date ?? envoi.date).sort();
-    console.log(`${d} : brouillons à relire avant ${creneau(dates[0])}`);
+  // Un brouillon dont l'heure est passée ne se relit plus : il est périmé, et le dire avec sa
+  // date passée (« à relire avant sam. 31 ») n'a aucun sens. On sépare les deux cas.
+  const maintenant = Date.now();
+  // La date qui fait foi est celle de Postiz (`publishDate`) : un brouillon reprogrammé dans
+  // l'interface web sans toucher au journal ne doit pas être déclaré périmé à tort.
+  const brouillonsDe = (envoi: {postes?: Poste[]; date: string}) =>
+    ((envoi.postes ?? []) as Poste[])
+      .filter((p) => parId.get(p.postId)?.state === 'DRAFT')
+      .map((p) => ({poste: p, quand: new Date(parId.get(p.postId)?.publishDate ?? p.date ?? envoi.date).getTime()}))
+      .filter((b) => Number.isFinite(b.quand)); // une date illisible ne doit pas disparaître en silence
+  const aVenir: {d: string; dates: number[]}[] = [];
+  const perimes: {d: string; detail: string; ids: string[]}[] = [];
+  for (const {d, envoi} of envois) {
+    const brouillons = brouillonsDe(envoi);
+    const futurs = brouillons.filter((b) => b.quand > maintenant);
+    const passes = brouillons.filter((b) => b.quand <= maintenant);
+    if (futurs.length) aVenir.push({d, dates: futurs.map((b) => b.quand).sort((x, y) => x - y)});
+    if (passes.length) {
+      perimes.push({
+        d,
+        detail: passes.map((b) => `${b.poste.reseau} du ${creneau(b.quand)}`).join(', '),
+        ids: passes.map((b) => b.poste.postId),
+      });
+    }
   }
-  console.log(`${enAttente.length} épisode(s) en attente de relecture.`);
+  for (const {d, dates} of aVenir) {
+    console.log(`${d} : brouillons à relire avant ${creneau(new Date(dates[0]).toISOString())}`);
+  }
+  if (aVenir.length) console.log(`${aVenir.length} épisode(s) en attente de relecture.`);
+  // Les brouillons périmés restent dans Postiz tant que personne ne les supprime : on donne
+  // la commande exacte plutôt qu'une échéance qui n'existe plus.
+  for (const {d, detail, ids} of perimes) {
+    // Sortie bornée : Discord coupe à 2 000 caractères, et un épisode complet a six posts.
+    const montres = ids.slice(0, 3);
+    const reste = ids.length - montres.length;
+    const commande = montres.map((id) => `postiz posts:delete ${id}`).join(' ; ');
+    console.log(`PÉRIMÉ ${d} : ${detail} — plus publiable ; supprimer : ${commande}${reste > 0 ? ` (+${reste})` : ''}`);
+  }
+  if (perimes.length) console.log(`${perimes.reduce((n, p) => n + p.ids.length, 0)} brouillon(s) périmé(s) à supprimer dans Postiz.`);
   process.exit(0);
 }
 

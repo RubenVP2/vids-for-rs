@@ -133,10 +133,11 @@ fi
 # 3. Rappel de relecture : pas besoin d'agent, le script suffit. Silencieux s'il n'y a rien.
 if [ "$routine" = rappel ]; then
   attente="$(npm run -s bilan -- --attente 2>>"$journal")" || echouer "npm run bilan -- --attente a échoué"
-  if ! grep -q '^0 épisode' <<<"$attente"; then
-    livrer "Matou — brouillons retenus par les garde-fous (ou par ton veto), à relire dans Postiz :
+  # Silence quand il n'y a rien : `bilan --attente` ne sort plus de ligne « 0 épisode… ».
+  if [ -n "$attente" ]; then
+    livrer "Matou — brouillons dans Postiz :
 $attente
-Un brouillon dont l'heure est passée ne part pas : programme-le dans Postiz, ou lance \`npm run postiz -- NNN --programmer\`."
+Un brouillon à venir se programme après relecture (\`npm run postiz -- NNN --programmer\`) ; un brouillon PÉRIMÉ ne partira plus : supprimer avec la commande affichée."
   fi
   exit 0
 fi
