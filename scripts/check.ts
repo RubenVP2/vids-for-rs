@@ -1,11 +1,13 @@
 // Contrôle qualité APRÈS le rendu : la vidéo est-elle publiable ?
 // Usage : npm run check -- <épisode>
+import {createHash} from 'node:crypto';
 import {execFileSync} from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-import {budgetDe, dossierEpisode, lireEpisode, lireTimings, nomEpisode} from './lib/episode';
+import {budgetDe, dossierEpisode, lireEpisode, lireTimings, nomEpisode, RACINE} from './lib/episode';
 import {controler, numeroDe, reglages as gabarits} from './lib/gabarits';
-import {avertissements as avertVoix, defauts as defautsVoix, resume as resumeVoix} from './lib/qualite-voix';
+import {alerteTimbre, avertissements as avertVoix, defauts as defautsVoix, resume as resumeVoix} from './lib/qualite-voix';
+import {lireReglagesVoix} from './lib/reglages-voix';
 
 const dossier = dossierEpisode(process.argv[2]);
 const nom = nomEpisode(dossier);
@@ -34,7 +36,28 @@ if (fs.existsSync(mp4)) {
   const lufs = Number(/"input_i" : "(-?[\d.]+)"/.exec(sortie)?.[1]);
   verifier(Math.abs(lufs + 14) <= 1.5, `Volume ${lufs} LUFS`, `Volume ${lufs} LUFS (viser -14)`);
 }
-// Voix plate ou précipitée : mesuré à la synthèse (timings.qualite), refusé ici avant publication.
+// Voix : l'IDENTITÉ du modèle fait foi (la hauteur seule ne distingue pas deux voix d'homme).
+// Une voix de secours, marquée ou non, est refusée : la chaîne garde une seule voix (#010).
+const reglagesVoix = lireReglagesVoix();
+const modeleMatou = timings.voix.modele === reglagesVoix.modele && timings.voix.voix === reglagesVoix.voix;
+verifier(
+  modeleMatou,
+  `Voix de Matou (${timings.voix.modele} / ${timings.voix.voix})`,
+  `Voix de secours (${timings.voix.modele} / ${timings.voix.voix}) : ce n'est pas Matou (${reglagesVoix.modele} / ${reglagesVoix.voix}) — voix.mp3 à refaire quand l'API répond`,
+);
+
+// Provenance liée au CONTENU de voix.mp3 : un fichier remplacé à la main ne passe pas.
+try {
+  const meta = JSON.parse(fs.readFileSync(path.join(dossier, 'voix.meta.json'), 'utf8')) as {sha256?: string};
+  if (meta.sha256) {
+    const reel = createHash('sha256').update(fs.readFileSync(path.join(dossier, 'voix.mp3'))).digest('hex');
+    verifier(reel === meta.sha256, 'Provenance de voix.mp3 vérifiée (sha256)', 'voix.mp3 ne correspond pas à voix.meta.json : fichier remplacé à la main ?');
+  }
+} catch {
+  console.log('Provenance absente (épisode antérieur ou voix non régénérée) : identité vérifiée par le modèle seul.');
+}
+
+// Mesures de la prise : plate ou hachée = refus. Débit rapide et hauteur inhabituelle = alertes.
 if (timings.qualite) {
   const defauts = defautsVoix(timings.qualite);
   verifier(
@@ -44,8 +67,12 @@ if (timings.qualite) {
   );
   const rapide = avertVoix(timings.qualite);
   if (rapide.length) console.log(`Voix rapide (${rapide.join(' ; ')}) : raccourcir le texte plutôt que refaire la prise.`);
+  if (reglagesVoix.profil) {
+    const alerte = alerteTimbre(timings.qualite, reglagesVoix.profil);
+    if (alerte.length) console.log(`ALERTE ${alerte.join(' ; ')} : à écouter (profil dans brand/voix.json).`);
+  }
 } else {
-  console.log('Voix non mesurée (épisode antérieur au 02/11) : débit et mélodie non contrôlés.');
+  console.log('Voix non mesurée (épisode antérieur au 02/11) : intonation et pauses non contrôlées.');
 }
 
 const alignement = timings.alignement ?? 0;

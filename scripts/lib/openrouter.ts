@@ -27,8 +27,10 @@ export const synthetiser = async (texte: string, r: ReglagesVoix, sortie: string
   const corps: Record<string, unknown> = {model: r.modele, input: texte, voice: r.voix, response_format: r.format};
   if (r.instructions) corps.instructions = r.instructions;
   if (r.vitesse && r.vitesse !== 1) corps.speed = r.vitesse;
+  // Délai dur : sans lui, une connexion bloquée fait attendre undici ~300 s par appel.
   const rep = await fetch(`${BASE}/audio/speech`, {
     method: 'POST',
+    signal: AbortSignal.timeout(120_000),
     headers: {Authorization: `Bearer ${cleOpenRouter()}`, 'Content-Type': 'application/json'},
     body: JSON.stringify(corps),
   });
@@ -58,6 +60,7 @@ export const transcrire = async (fichier: string, modele = 'openai/whisper-large
   form.append('timestamp_granularities[]', 'word');
   const rep = await fetch(`${BASE}/audio/transcriptions`, {
     method: 'POST',
+    signal: AbortSignal.timeout(180_000),
     headers: {Authorization: `Bearer ${cleOpenRouter()}`},
     body: form,
   });

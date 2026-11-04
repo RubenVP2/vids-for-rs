@@ -153,7 +153,8 @@ export type Episode = z.infer<typeof episodeSchema>;
 export const timingsSchema = z.object({
   audio: z.string(),
   duree: z.number().positive(),
-  voix: z.object({modele: z.string(), voix: z.string()}),
+  /** `secours` : la voix n'est pas celle de Matou (Gemini indisponible) — refusé par `check`. */
+  voix: z.object({modele: z.string(), voix: z.string(), secours: z.boolean().optional()}),
   /** Part des mots du script retrouvés par la transcription (0–1). Bas = voix qui a mal lu. */
   alignement: z.number().min(0).max(1).optional(),
   mots: z.array(
@@ -168,15 +169,15 @@ export const timingsSchema = z.object({
   scenes: z.array(z.object({debut: z.number(), fin: z.number()})),
   /** Volume de la voix, une valeur 0–1 par image (30 i/s) : sert à animer la bouche. */
   enveloppe: z.array(z.number()),
-  /** Mesures de la prise retenue (débit, mélodie, pauses) : `npm run check` refuse une voix plate. */
+  /** Mesures de la prise retenue (débit, intonation, pauses) : `npm run check` refuse une voix plate. */
   qualite: z
     .object({
-      secondes: z.number().positive(),
-      motsParMinute: z.number().positive(),
+      secondes: z.number().nonnegative(),
+      motsParMinute: z.number().nonnegative(),
       medianeHz: z.number().nonnegative(),
-      melodieHz: z.number().nonnegative(),
-      ratioMelodie: z.number().nonnegative(),
+      melodieDemiTons: z.number().nonnegative(),
       pauses: z.number().int().nonnegative(),
+      phrases: z.number().int().positive(),
     })
     .optional(),
 });
