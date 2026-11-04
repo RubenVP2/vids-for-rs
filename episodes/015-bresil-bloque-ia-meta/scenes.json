@@ -1,0 +1,92 @@
+{
+  "numero": 15,
+  "slug": "bresil-bloque-ia-meta",
+  "serie": "flash",
+  "source": {
+    "nom": "AFP",
+    "url": "https://actu.orange.fr/economie/la-justice-bresilienne-interdit-a-meta-d-utiliser-des-contenus-de-presse-pour-entrainer-son-ia-CNT000002txTbG.html",
+    "date": "2026-11-04",
+    "type": "article"
+  },
+  "statut": "disponible",
+  "verdict": "prometteur",
+  "miniature": "Meta interdit de ==piller la presse==",
+  "musique": true,
+  "gabarit": {
+    "ouverture": "fenetre",
+    "corps": "liste"
+  },
+  "scenes": [
+    {
+      "type": "hook",
+      "texte": "La justice brésilienne vient d'interdire à Meta de piller la ==presse== pour son IA.",
+      "titre": "Meta interdit de ==piller la presse==",
+      "icone": "attention",
+      "visuel": {
+        "type": "fenetre",
+        "app": "Instagram",
+        "messages": [
+          {
+            "de": "toi",
+            "texte": "On publie nos articles ?"
+          },
+          {
+            "de": "app",
+            "texte": "Oui, si vos textes nourrissent mon IA !"
+          }
+        ]
+      },
+      "matou": "surpris"
+    },
+    {
+      "type": "liste",
+      "texte": "L'AFP l'annonce : un juge bloque Meta avec trois limites : interdiction de ==collecter==, interdiction de punir, et lourde amende.",
+      "titre": "3 limites pour Meta",
+      "elements": [
+        {
+          "texte": "Interdiction de collecter",
+          "icone": "cadenas",
+          "quand": "collecter"
+        },
+        {
+          "texte": "Interdiction de punir",
+          "icone": "croix",
+          "quand": "punir"
+        },
+        {
+          "texte": "162 000 € / jour",
+          "icone": "euro",
+          "quand": "amende"
+        }
+      ],
+      "matou": "parle"
+    },
+    {
+      "type": "point",
+      "texte": "En fait, Meta exigeait un péage : donner ses articles gratuitement, ou être banni d'Instagram.",
+      "titre": "Un péage jugé ==abusif==",
+      "corps": "Céder gratuitement ses textes pour rester visible sur les réseaux.",
+      "icone": "document",
+      "matou": "enFait"
+    },
+    {
+      "type": "pourquoi",
+      "texte": "Et pour toi ? Si les créateurs sont pillés gratuitement, l'information fiable va disparaître.",
+      "titre": "Et pour toi ?",
+      "corps": "Si les créateurs ne sont plus payés, l'information fiable risque de disparaître.",
+      "icone": "ampoule",
+      "matou": "reflechit"
+    },
+    {
+      "type": "verdict",
+      "texte": "Hype-mètre : prometteur. Mon avis : c'est le premier juge au monde qui ose poser une vraie limite.",
+      "raison": "Le premier frein judiciaire mondial contre le pillage des créateurs par l'IA.",
+      "matou": "verdict"
+    },
+    {
+      "type": "fin",
+      "texte": "Bref, pour son IA, Meta ne pourra plus piller la presse.",
+      "matou": "content"
+    }
+  ]
+}

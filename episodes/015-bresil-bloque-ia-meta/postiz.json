@@ -1,0 +1,162 @@
+[
+  {
+    "type": "draft",
+    "date": "2026-11-04T17:30:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsaogt206kfor1cddnosuhf"
+        },
+        "value": [
+          {
+            "content": "Tes réseaux sociaux préférés ne pourront plus piller les journaux pour nourrir leur IA ! ☝️\n\nLa justice brésilienne vient de bloquer net les nouvelles règles de Meta :\n→ Interdiction d'aspirer les articles des médias pour entraîner l'IA\n→ Interdiction de bannir les journaux qui refusent de céder leurs textes\n→ 162 000 euros d'amende par jour de retard\n\nLe juge qualifie de « péage abusif » le fait de forcer les créateurs à donner leurs textes gratuitement pour rester visibles sur Instagram et Facebook.\n\nEnvoie-la à quelqu'un qui suit l'actu des médias et des réseaux ! 🤓\n\n#IA #Meta #Instagram #vulgarisation #matou",
+            "image": [
+              {
+                "id": "daba3d98-b583-487f-ba86-fb4240d67828",
+                "path": "https://uploads.postiz.com/MZpivmgHDK.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Sources : AFP (https://actu.orange.fr/economie/la-justice-bresilienne-interdit-a-meta-d-utiliser-des-contenus-de-presse-pour-entrainer-son-ia-CNT000002txTbG.html)",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "instagram-standalone",
+          "post_type": "post",
+          "is_trial_reel": false
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-04T18:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsakeo602wupg1crmgz7g9n"
+        },
+        "value": [
+          {
+            "content": "Meta n'a plus le droit de piller la presse pour son IA au Brésil. Team « victoire pour les créateurs » ou team « frein pour l'IA » ?\n\n#IA #Meta #Instagram #apprendresurtiktok #matou",
+            "image": [
+              {
+                "id": "daba3d98-b583-487f-ba86-fb4240d67828",
+                "path": "https://uploads.postiz.com/MZpivmgHDK.mp4"
+              }
+            ]
+          }
+        ],
+        "settings": {
+          "__type": "tiktok-business",
+          "content_posting_method": "DIRECT_POST",
+          "privacy_level": "PUBLIC_TO_EVERYONE",
+          "duet": true,
+          "stitch": true,
+          "comment": true,
+          "autoAddMusic": "no",
+          "brand_content_toggle": false,
+          "brand_organic_toggle": false,
+          "video_made_with_ai": true
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-04T18:30:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb2y1q03efpg1c3j45vgui"
+        },
+        "value": [
+          {
+            "content": "Forcer les médias à donner leurs articles gratuitement pour rester sur Instagram, c'est du racket ?\n\nLa justice brésilienne vient d'interdire à Meta de piller la presse pour entraîner son IA, sous peine de 162 000 € d'amende par jour. Le juge qualifie cette pratique d'« abus manifeste de droit ». C'est le premier coup d'arrêt mondial contre ce pillage unilatéral.\n\nSource : AFP\n\n#IA",
+            "image": [
+              {
+                "id": "daba3d98-b583-487f-ba86-fb4240d67828",
+                "path": "https://uploads.postiz.com/MZpivmgHDK.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Sources : AFP (https://actu.orange.fr/economie/la-justice-bresilienne-interdit-a-meta-d-utiliser-des-contenus-de-presse-pour-entrainer-son-ia-CNT000002txTbG.html)",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "threads"
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-04T19:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb3xwh07l1or1cvp01pod9"
+        },
+        "value": [
+          {
+            "content": "La justice interdit à Meta d'utiliser les articles de presse pour entraîner son IA sans payer les créateurs.\nUn juge brésilien suspend les nouvelles règles sous peine d'une lourde astreinte quotidienne.\n\nSource : https://actu.orange.fr/economie/la-justice-bresilienne-interdit-a-meta-d-utiliser-des-contenus-de-presse-pour-entrainer-son-ia-CNT000002txTbG.html\n\n#shorts #IA #Meta #matou",
+            "image": [
+              {
+                "id": "daba3d98-b583-487f-ba86-fb4240d67828",
+                "path": "https://uploads.postiz.com/MZpivmgHDK.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Sources : AFP (https://actu.orange.fr/economie/la-justice-bresilienne-interdit-a-meta-d-utiliser-des-contenus-de-presse-pour-entrainer-son-ia-CNT000002txTbG.html)",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "youtube",
+          "type": "public",
+          "selfDeclaredMadeForKids": "no",
+          "title": "Meta : 162 000 € d'amende par jour pour son IA",
+          "thumbnail": {
+            "id": "f025fe2b-3627-487f-aa20-1bce44480cb7",
+            "path": "https://uploads.postiz.com/ySDfXFCOrg.png"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-04T20:30:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb2y1q03efpg1c3j45vgui"
+        },
+        "value": [
+          {
+            "content": "Si tous les tribunaux bloquent l'aspiration des articles de presse pour nourrir l'IA :\n\nDans 3 ans, les modèles payeront-ils chaque source ou perdront-ils toute info fraîche ?\n\n#IA",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "threads"
+        }
+      }
+    ]
+  }
+]
