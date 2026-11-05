@@ -73,8 +73,8 @@ Détail : `docs/routines.md`.
 
 - Skills (`.claude/skills/`) : `episode` (la recette), `ecriture-matou` (voix et
   scènes), `publication` (un texte par réseau, hashtags), `veille-ia` (choisir un sujet),
-  `programmation` (brouillons Postiz, programmation, veto),
-  `episode-du-jour`, `episode-urgent` et `bilan` (les routines) et `postiz` (skill officiel de Postiz,
+  `programmation` (brouillons Postiz, programmation, veto), `article` (version blog de
+  l'épisode), `episode-du-jour`, `episode-urgent` et `bilan` (les routines) et `postiz` (skill officiel de Postiz,
   copié tel quel).
 - Sous-agents (`.claude/agents/`) : `documentaliste` (article → `source.md`),
   `verificateur-faits` (script contre source), `spectateur` (test grand public),
@@ -86,6 +86,9 @@ Détail : `docs/routines.md`.
 - Postiz : CLI officielle `postiz` (dépendance du projet), authentifiée par OAuth
   (`postiz auth:login`, sur le Pi) ou par la clé `POSTIZ_API_KEY` / `POSTIZ_ENV`.
 - Moteur (Remotion + scripts) : `docs/moteur.md`. Commandes : `package.json`.
+- Site (Astro, Cloudflare Workers) : dépôt à part, **RubenVP2/jev-game** (à renommer). Il lit
+  `episodes/` et `brand/` de ce dépôt à chaque build ; ce qu'il attend : `docs/site.md`. Chaque
+  épisode y gagne un article (skill `article`), mis en ligne seul une fois la vidéo programmée.
 
 ## Une seule copie pour tous les harnais
 
