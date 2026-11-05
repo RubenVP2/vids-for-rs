@@ -1,0 +1,162 @@
+[
+  {
+    "type": "draft",
+    "date": "2026-11-05T17:30:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsaogt206kfor1cddnosuhf"
+        },
+        "value": [
+          {
+            "content": "Et si OpenAI gérait bientôt le code de toutes tes applis ?\n\nOpenAI vient d'annoncer le rachat de Pierre Computer pour adapter le stockage de code à ses robots d'IA.\n\nCe que ça prépare :\n→ Un rival direct pour GitHub et Microsoft\n→ Des robots qui modifient et corrigent les fichiers en continu\n→ Des applications réparées en direct sans attendre un humain\n\nEnvoie-la à quelqu'un qui passe ses journées à coder ! 🤓\n\n#IA #OpenAI #tech #vulgarisation #matou",
+            "image": [
+              {
+                "id": "2fefa80c-33f7-4003-af18-48c209656260",
+                "path": "https://uploads.postiz.com/AbBd9DiOdx.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Sources : OpenAI (https://openai.com/index/openai-to-acquire-pierre)",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "instagram-standalone",
+          "post_type": "post",
+          "is_trial_reel": false
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-05T18:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsakeo602wupg1crmgz7g9n"
+        },
+        "value": [
+          {
+            "content": "OpenAI veut confier le code de tes applis à des robots. Tu lui mets combien sur 10, à cette idée ?\n\n#IA #OpenAI #programmation #apprendresurtiktok #matou",
+            "image": [
+              {
+                "id": "2fefa80c-33f7-4003-af18-48c209656260",
+                "path": "https://uploads.postiz.com/AbBd9DiOdx.mp4"
+              }
+            ]
+          }
+        ],
+        "settings": {
+          "__type": "tiktok-business",
+          "content_posting_method": "DIRECT_POST",
+          "privacy_level": "PUBLIC_TO_EVERYONE",
+          "duet": true,
+          "stitch": true,
+          "comment": true,
+          "autoAddMusic": "no",
+          "brand_content_toggle": false,
+          "brand_organic_toggle": false,
+          "video_made_with_ai": true
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-05T18:30:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb2y1q03efpg1c3j45vgui"
+        },
+        "value": [
+          {
+            "content": "Mon avis : OpenAI ne veut plus dépendre de GitHub pour héberger le code de ses robots. En rachetant Pierre Computer, ils posent les fondations d'un tout nouvel écosystème où l'IA programme et stocke ses propres versions.\n\nStatut : annoncé.\nSource : OpenAI.\n\nÀ quel moment laisseras-tu une IA modifier ton code sans relecture humaine ? #IA",
+            "image": [
+              {
+                "id": "2fefa80c-33f7-4003-af18-48c209656260",
+                "path": "https://uploads.postiz.com/AbBd9DiOdx.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Sources : OpenAI (https://openai.com/index/openai-to-acquire-pierre)",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "threads"
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-05T19:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb3xwh07l1or1cvp01pod9"
+        },
+        "value": [
+          {
+            "content": "OpenAI annonce le rachat de Pierre Computer pour stocker le code généré par ses robots et concurrencer GitHub.\nDes outils pour adapter Git au rythme effréné des agents d'IA.\n\nSource : https://openai.com/index/openai-to-acquire-pierre\n\n#IA #OpenAI #shorts #matou",
+            "image": [
+              {
+                "id": "2fefa80c-33f7-4003-af18-48c209656260",
+                "path": "https://uploads.postiz.com/AbBd9DiOdx.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Sources : OpenAI (https://openai.com/index/openai-to-acquire-pierre)",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "youtube",
+          "type": "public",
+          "selfDeclaredMadeForKids": "no",
+          "title": "OpenAI veut gérer ton code",
+          "thumbnail": {
+            "id": "ca6c2d3f-fbd3-41b1-b6ff-c57b90a1ede7",
+            "path": "https://uploads.postiz.com/3TVpgQDgA0.png"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-05T20:30:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb2y1q03efpg1c3j45vgui"
+        },
+        "value": [
+          {
+            "content": "Pour développer une application, tu préfères une armée d'agents d'IA ultra-rapides qui écrivent des milliers de lignes par minute, ou un petit groupe de développeurs humains qui vérifie chaque virgule ? #IA",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "threads"
+        }
+      }
+    ]
+  }
+]

@@ -1,10 +1,10 @@
 [
   {
-    "titre": "OpenAI to acquire Pierre Computer Company, Inc.",
-    "url": "https://openai.com/index/openai-to-acquire-pierre",
-    "date": "2026-11-04T14:30:00.000Z",
-    "score": 38,
-    "ajoute": "2026-11-05T04:13:22.913Z"
+    "titre": "ChatGPT peut maintenant créer vos GIF : voici comment animer vos images",
+    "url": "https://www.numerama.com/tech/2368175-chatgpt-peut-maintenant-creer-vos-gif-voici-comment-animer-vos-images.html",
+    "date": "2026-11-05T09:30:00.000Z",
+    "score": 39,
+    "ajoute": "2026-11-05T13:13:41.030Z"
   },
   {
     "titre": "Cities Worldwide Build and Scale AI Services With NVIDIA Physical and Agentic AI",
@@ -63,6 +63,13 @@
     "ajoute": "2026-11-03T04:13:21.952Z"
   },
   {
+    "titre": "Setting a new standard for responsible AI infrastructure",
+    "url": "https://openai.com/index/setting-new-standard-responsible-ai-infrastructure",
+    "date": "2026-11-05T02:00:00.000Z",
+    "score": 35,
+    "ajoute": "2026-11-05T13:13:41.030Z"
+  },
+  {
     "titre": "Apple Watch’s AI features for rewinding and recapping conversations begin beta testing",
     "url": "https://techcrunch.com/2026/11/02/apple-watchs-ai-features-for-rewinding-and-recapping-conversations-begin-beta-testing/",
     "date": "2026-11-03T07:20:00.000Z",
@@ -70,11 +77,32 @@
     "ajoute": "2026-11-04T04:13:22.920Z"
   },
   {
+    "titre": "Google contraint de faire machine arrière sur l'IA après une fronde massive de parents et d'écoles",
+    "url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxPTGQyQ1Z3d0VGd3kyTG5xTTdnRFFRSTQ1RTZVeGdiTG9wVjBQS0RVMVhxLU84OUw3LW9hQ1I4YmxiOGhQUTBSU1V1ODNtSGdWZXFnVC13ZDkxZ251ZzE3Q2c4TWM2UEhHZWRfN2d2VVZjZUVsYktVazdnTnktYnQyTzI2ZEJwcEd6QzRjZUcxYXpYZ3VOLW5lZ1cxc1pLcVY4OWhyam9KbEhMM0d3cW83azg3WnE1M245czJPSVRsN2dRUEx2QS1ZMTFwMHN4Wm1kbVE?oc=5",
+    "date": "2026-11-05T06:23:23.000Z",
+    "score": 31,
+    "ajoute": "2026-11-05T13:13:41.030Z"
+  },
+  {
+    "titre": "7 chaînes YouTube à suivre pour se former à l’IA",
+    "url": "https://www.blogdumoderateur.com/7-chaines-youtube-former-ia/",
+    "date": "2026-11-05T06:00:26.000Z",
+    "score": 31,
+    "ajoute": "2026-11-05T13:13:41.030Z"
+  },
+  {
     "titre": "La Samsung Galaxy Watch Ultra 2 passe à moins de 500 € pour le Black Friday et fait oublier l’Apple Watch Ultra",
     "url": "https://www.frandroid.com/bons-plans/3308007_la-samsung-galaxy-watch-ultra-2-passe-a-moins-de-500-e-pour-le-black-friday-et-fait-oublier-lapple-watch-ultra",
     "date": "2026-11-03T11:16:00.000Z",
     "score": 31,
     "ajoute": "2026-11-03T13:13:21.117Z"
+  },
+  {
+    "titre": "1 280 dollars pour dénicher et exploiter une faille du noyau Linux : OpenAI affirme avoir industrialisé la chasse aux bugs",
+    "url": "https://www.numerama.com/cyberguerre/2368203-1-280-dollars-pour-denicher-et-exploiter-une-faille-du-noyau-linux-openai-affirme-avoir-industrialise-la-chasse-aux-bugs.html",
+    "date": "2026-11-05T09:56:18.000Z",
+    "score": 31,
+    "ajoute": "2026-11-05T13:13:41.030Z"
   },
   {
     "titre": "Black Friday : voici les meilleures offres chez Amazon, Fnac, Boulanger ce mardi 3 novembre",
@@ -110,6 +138,13 @@
     "date": "2026-11-03T16:00:45.000Z",
     "score": 30,
     "ajoute": "2026-11-04T04:13:22.920Z"
+  },
+  {
+    "titre": "A Closer Look at Phonon TTS. Launching High-Quality On-Device Speech That Tops the Benchmarks.",
+    "url": "https://huggingface.co/blog/phonon-tts",
+    "date": "2026-11-05T00:00:00.000Z",
+    "score": 30,
+    "ajoute": "2026-11-05T13:13:41.030Z"
   },
   {
     "titre": "Transformers Model Integration Contracts",
