@@ -1,0 +1,69 @@
+{
+  "numero": 3,
+  "slug": "experts-obeissent-ia",
+  "serie": "decrypte",
+  "source": {
+    "nom": "Anthropic",
+    "url": "https://www-cdn.anthropic.com/519c17a5d23a794e8b6d50a854048d0b61e0d73a.pdf",
+    "date": "2026-10-28",
+    "type": "papier"
+  },
+  "statut": "disponible",
+  "verdict": "prometteur",
+  "miniature": "Les experts piégés… ==par l'IA==",
+  "musique": true,
+  "scenes": [
+    {
+      "type": "hook",
+      "texte": "Tu penses que les experts contrôlent encore l'IA ? En réalité, c'est l'inverse.",
+      "titre": "Les experts piégés… ==par l'IA==",
+      "matou": "surpris"
+    },
+    {
+      "type": "source",
+      "texte": "Anthropic a testé cinquante experts des données avec leur assistant d'IA.",
+      "titreArticle": "Who’s Aligned to Whom? ==(Anthropic)==",
+      "matou": "parle"
+    },
+    {
+      "type": "point",
+      "texte": "En fait, les chercheurs ont tiré à pile ou face les avis défendus par l'IA.",
+      "titre": "Un avis ==à pile ou face==",
+      "corps": "L'IA défend un choix tiré au sort, avec de vrais arguments.",
+      "icone": "cerveau",
+      "matou": "enFait"
+    },
+    {
+      "type": "chiffre",
+      "texte": "Résultat : les experts ont suivi le choix de l'IA dans ==quatre-vingt-six pour cent== des cas.",
+      "valeur": "86 %",
+      "legende": "des choix d'analyse suivent ==le tirage au sort== de l'IA",
+      "quand": "quatre-vingt-six",
+      "matou": "sceptique"
+    },
+    {
+      "type": "point",
+      "texte": "Et plus de trois quarts ont répété ses arguments en croyant décider ==seuls==.",
+      "titre": "L'illusion ==du contrôle==",
+      "corps": "77 % reprennent les mots de l'IA, 15 % seulement la mentionnent.",
+      "icone": "attention",
+      "matou": "reflechit"
+    },
+    {
+      "type": "pourquoi",
+      "texte": "Et pour toi ? Si les experts suivent l'IA sans le savoir, tes futures applis et tes lois aussi.",
+      "titre": "Et pour toi ?",
+      "corps": "Santé, lois, sécurité : l'humain valide sans voir l'influence de l'IA.",
+      "icone": "cadenas"
+    },
+    {
+      "type": "verdict",
+      "texte": "Hype-mètre : prometteur. L'étude est solide : une alerte majeure pour notre sécurité.",
+      "raison": "Une claque scientifique, ==à méditer d'urgence==."
+    },
+    {
+      "type": "fin",
+      "texte": "Abonne-toi. C'était Matou, et c'est tout."
+    }
+  ]
+}

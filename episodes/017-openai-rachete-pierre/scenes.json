@@ -1,0 +1,70 @@
+{
+  "numero": 17,
+  "slug": "openai-rachete-pierre",
+  "serie": "flash",
+  "source": {
+    "nom": "OpenAI",
+    "url": "https://openai.com/index/openai-to-acquire-pierre",
+    "date": "2026-11-04",
+    "type": "communique"
+  },
+  "statut": "annonce",
+  "verdict": "prometteur",
+  "miniature": "OpenAI veut gérer ==ton code==",
+  "musique": true,
+  "gabarit": {
+    "ouverture": "toi",
+    "corps": "comparaison",
+    "raison": "aucun chiffre marquant dans l'annonce officielle"
+  },
+  "scenes": [
+    {
+      "type": "hook",
+      "texte": "OpenAI veut que le code de tes logiciels soit géré en direct par des ==robots==.",
+      "titre": "OpenAI veut gérer ==ton code==",
+      "icone": "robot",
+      "matou": "surpris"
+    },
+    {
+      "type": "comparaison",
+      "texte": "OpenAI annonce le rachat de Pierre Computer pour stocker le travail de ses robots de ==code==.",
+      "avant": {
+        "titre": "Git traditionnel",
+        "texte": "Le placard pensé pour des humains qui codent à la main"
+      },
+      "apres": {
+        "titre": "Nouveau moteur",
+        "texte": "Pensé pour des robots qui créent du code en continu",
+        "quand": "robots"
+      },
+      "matou": "parle"
+    },
+    {
+      "type": "point",
+      "texte": "En fait, pour rivaliser avec GitHub, OpenAI utilisait déjà ces outils pour afficher les ==différences==.",
+      "titre": "Le rival de ==GitHub== ?",
+      "corps": "OpenAI veut son propre espace pour héberger tout le code.",
+      "icone": "eclair",
+      "matou": "enFait"
+    },
+    {
+      "type": "pourquoi",
+      "texte": "Et pour toi ? Les programmes seront corrigés et mis à jour en continu par l'==IA==.",
+      "titre": "Et pour toi ?",
+      "corps": "Des logiciels corrigés et mis à jour en continu par l'IA.",
+      "icone": "ampoule",
+      "matou": "reflechit"
+    },
+    {
+      "type": "verdict",
+      "texte": "Hype-mètre : prometteur. Mon avis : pour rivaliser avec GitHub, OpenAI devait posséder la boîte où dort le ==code==.",
+      "raison": "Repenser le stockage du code pour les robots de programmation.",
+      "matou": "verdict"
+    },
+    {
+      "type": "fin",
+      "texte": "Bref, bientôt, ce sont des robots qui géreront ==ton code== en continu.",
+      "matou": "neutre"
+    }
+  ]
+}

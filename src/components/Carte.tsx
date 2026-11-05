@@ -1,6 +1,7 @@
 import React from 'react';
 import {C} from '../theme';
 import {FILTRE_BOUILLONNE} from './Bouillonne';
+import {useMiroir} from './MiseEnPage';
 
 // Une feuille blanche posée sur le cahier, contour au feutre, morceau de scotch.
 export const Carte: React.FC<{
@@ -11,7 +12,8 @@ export const Carte: React.FC<{
   fond?: string;
   scotch?: boolean;
   style?: React.CSSProperties;
-}> = ({children, largeur, hauteur, rotation = -1, fond = C.blanc, scotch = true, style}) => {
+}> = ({children, largeur, hauteur, rotation: penche = -1, fond = C.blanc, scotch = true, style}) => {
+  const rotation = useMiroir() ? -penche : penche;
   const m = 10;
   // contour légèrement irrégulier, comme tracé à main levée
   const d = `M ${m + 2} ${m + 4} L ${largeur - m - 3} ${m} L ${largeur - m} ${hauteur - m - 3} L ${m} ${hauteur - m} Z`;

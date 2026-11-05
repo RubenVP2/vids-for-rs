@@ -1,0 +1,72 @@
+{
+  "numero": 14,
+  "slug": "google-ecoles-sans-ia",
+  "serie": "flash",
+  "source": {
+    "nom": "TechCrunch",
+    "url": "https://techcrunch.com/2026/11/03/google-will-let-schools-disable-its-ai-tools-but-not-without-sacrificing-search/",
+    "date": "2026-11-03",
+    "type": "article"
+  },
+  "statut": "annonce",
+  "verdict": "buzz",
+  "miniature": "Sans IA, ==plus de recherche==",
+  "musique": true,
+  "gabarit": {
+    "ouverture": "toi",
+    "corps": "fenetre"
+  },
+  "scenes": [
+    {
+      "type": "hook",
+      "texte": "Si ton école veut bloquer l'IA, tu n'auras plus accès au ==moteur Google==.",
+      "titre": "Sans IA, ==plus de recherche==",
+      "icone": "attention",
+      "matou": "surpris"
+    },
+    {
+      "type": "fenetre",
+      "texte": "TechCrunch le rapporte : l'an prochain, couper l'IA dans ton école bloquera aussi le moteur Google.",
+      "app": "Google",
+      "messages": [
+        {
+          "de": "toi",
+          "texte": "Recherche pour mon devoir"
+        },
+        {
+          "de": "app",
+          "texte": "Accès bloqué par votre établissement",
+          "quand": "bloquera"
+        }
+      ],
+      "matou": "parle"
+    },
+    {
+      "type": "point",
+      "texte": "En fait, l'IA et le moteur sont indissociables : impossible de couper les résumés sans couper le moteur.",
+      "titre": "Recherche et IA ==inséparables==",
+      "corps": "Les résumés IA et le moteur ne forment qu'un bloc.",
+      "icone": "cadenas",
+      "matou": "enFait"
+    },
+    {
+      "type": "pourquoi",
+      "texte": "Et pour toi ? Si tes profs refusent l'IA aux devoirs, ils devront quitter le moteur Google.",
+      "titre": "Et pour toi ?",
+      "corps": "Pour interdire l'IA pendant les devoirs, les profs devront quitter le moteur Google.",
+      "icone": "robot",
+      "matou": "reflechit"
+    },
+    {
+      "type": "verdict",
+      "texte": "Hype-mètre : pur buzz. Mon avis : forcer l'IA pour garder la recherche n'est pas un vrai choix.",
+      "raison": "Bloquer le moteur pour imposer l'IA n'est pas un vrai choix pour les écoles.",
+      "matou": "verdict"
+    },
+    {
+      "type": "fin",
+      "texte": "Bref, pour bloquer l'IA, ton école devra se passer du moteur Google.",
+      "matou": "content"
+    }
+  ]
+}

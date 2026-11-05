@@ -1,0 +1,83 @@
+{
+  "numero": 7,
+  "slug": "chatgpt-coupe-la-discussion",
+  "serie": "flash",
+  "source": {
+    "nom": "OpenAI",
+    "url": "https://openai.com/index/community-safety-report-and-new-protections-for-teens/",
+    "date": "2026-10-30",
+    "type": "blog"
+  },
+  "statut": "disponible",
+  "verdict": "prometteur",
+  "miniature": "ChatGPT va ==couper court==",
+  "musique": true,
+  "scenes": [
+    {
+      "type": "hook",
+      "texte": "Si la discussion dérape, ChatGPT va te couper la parole.",
+      "titre": "ChatGPT va ==couper court==",
+      "icone": "attention",
+      "matou": "surpris"
+    },
+    {
+      "type": "source",
+      "texte": "OpenAI déploie une sécurité pour bloquer les violences dans {ChatGPT|Tchatte G P T}.",
+      "titreArticle": "Nouvelles sécurités et ==coupure automatique==",
+      "matou": "parle"
+    },
+    {
+      "type": "point",
+      "texte": "En fait, en cas de fixation sur la violence, la discussion se ferme net.",
+      "titre": "Coupure ==immédiate==",
+      "corps": "En cas d'obsession violente, le chat s'arrête net.",
+      "icone": "croix",
+      "matou": "enFait"
+    },
+    {
+      "type": "liste",
+      "texte": "Pour les mineurs, il refuse les armes et prévient les parents.",
+      "titre": "Pour les ==ados==",
+      "elements": [
+        {
+          "texte": "Zéro info sur les armes",
+          "icone": "cadenas",
+          "quand": "armes"
+        },
+        {
+          "texte": "Alerte aux parents",
+          "icone": "bulle",
+          "quand": "parents"
+        }
+      ],
+      "matou": "reflechit"
+    },
+    {
+      "type": "chiffre",
+      "texte": "OpenAI a déjà transmis plus de deux cents dossiers à la police.",
+      "valeur": "+200",
+      "legende": "signalements à la police face à des ==menaces imminentes==",
+      "quand": "deux",
+      "matou": "sceptique"
+    },
+    {
+      "type": "pourquoi",
+      "texte": "Et pour toi ? Les jeunes sont protégés, mais espérons zéro coupure par erreur.",
+      "titre": "Et pour toi ?",
+      "corps": "Les jeunes sont protégés, mais espérons zéro coupure par erreur.",
+      "icone": "coche",
+      "matou": "neutre"
+    },
+    {
+      "type": "verdict",
+      "texte": "Hype-mètre : prometteur. Stopper les drames en direct, c'est capital.",
+      "raison": "Disponible, protège les mineurs, ==attention aux blocages par erreur==.",
+      "matou": "verdict"
+    },
+    {
+      "type": "fin",
+      "texte": "Abonne-toi. C'était Matou, et c'est tout.",
+      "matou": "neutre"
+    }
+  ]
+}

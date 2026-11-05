@@ -1,86 +1,105 @@
 // Étape « programmation » : un épisode prêt → brouillons Postiz sur chaque réseau connecté
 // (TikTok, Instagram, YouTube, Facebook, Threads, LinkedIn, X, Bluesky).
-// Rien n'est publié sans le feu vert de l'utilisateur : les posts sont créés en BROUILLON,
-// et --programmer ne fait que les passer dans la file de publication de Postiz.
-// Usage : npm run postiz -- <épisode>                aperçu : écrit postiz.json et postiz-mcp.json, n'envoie rien
-//         npm run postiz -- <épisode> --envoyer [--date 2026-10-29T18:00] [--commentaire] [--force]
-//         sans --date : le premier jour libre du calendrier Postiz, aujourd'hui compris s'il reste 3 h
+// Chaque réseau a son texte (section de publication.md), son format (vidéo, ou carrousel
+// sur LinkedIn) et son créneau (brand/postiz.json → creneaux ; stratégie : docs/reseaux.md).
+// Deux épisodes par jour : le principal (matin et midi, tous les réseaux) et le second (soir,
+// tous sauf LinkedIn). Les posts sont créés en BROUILLON ; --programmer les passe dans la file
+// de Postiz (feu vert de l'utilisateur, ou garde-fous de la routine), --annuler (veto) les y retire.
+// Usage : npm run postiz -- <épisode>                aperçu : écrit postiz.json (charges utiles -j), n'envoie rien
+//         npm run postiz -- <épisode> --envoyer [--rang second] [--date 2026-10-29[T18:00]] [--commentaire] [--force]
+//         --rang principal (défaut) ou second : la grille de créneaux de l'épisode
+//         --rang urgent : chaque réseau quelques minutes après l'envoi (épisode urgent, feu vert de
+//         l'utilisateur sur Discord : pas de délai de veto ni de créneau à respecter)
+//         sans --date : aujourd'hui, chaque réseau à son heure, sinon 2 h 30 plus tard (libre, au moins
+//         delaiVeto h après maintenant) ; sinon pas de post : une actu ne passe jamais au lendemain
+//         --date AAAA-MM-JJ : ce jour-là, chaque réseau à son heure ; --date AAAA-MM-JJTHH:MM : tous à cette heure
 //         --reseaux linkedin,x : seulement ces réseaux (rattrapage d'un réseau connecté après coup :
 //         les posts s'ajoutent au journal, les autres réseaux ne sont pas renvoyés)
-//         npm run postiz -- <épisode> --programmer   après le feu vert : brouillons → programmés
+//         --publier : avec --envoyer, programme les brouillons dans la foulée (le feu vert est déjà donné)
+//         npm run postiz -- <épisode> --programmer   brouillons → programmés (jamais un post déjà
+//         publié ou déjà dans la file : Postiz en recréerait un → doublon sur le réseau)
+//         npm run postiz -- <épisode> --annuler      veto : les posts programmés pas encore partis → brouillons
 //         npm run postiz -- --canaux                 comptes connectés + règles de chaque réseau
-// Accès : secret réseau sur api.postiz.com (en-tête Authorization, sans préfixe) ou variable POSTIZ_API_KEY
-// (ou POSTIZ_ENV, le nom choisi dans l'environnement de l'utilisateur).
-// Sans clé, passer par le MCP Postiz : postiz-mcp.json est l'argument de integrationSchedulePostTool,
-// une fois les <…> remplacés (skill programmation).
+// Accès : CLI officielle `postiz` authentifiée par OAuth2 device flow (postiz auth:login,
+// jeton dans ~/.postiz/credentials.json) — aucune clé API nécessaire.
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import {dossierEpisode, nomEpisode, RACINE} from './lib/episode';
+import {cli, enListe} from './lib/postiz-cli';
 
 type Reseau = 'tiktok' | 'instagram' | 'youtube' | 'facebook' | 'threads' | 'linkedin' | 'x' | 'bluesky';
-type Texte = 'tiktok' | 'instagram' | 'youtube' | 'court'; // sections de publication.md
-type Reglages = {fuseau: string; heure: string; comptes: Partial<Record<Reseau, string>>} & Record<Reseau, Record<string, unknown>>;
+type Texte = 'tiktok' | 'instagram' | 'youtube' | 'linkedin' | 'threads' | 'relance' | 'court'; // sections de publication.md
+// heure : « HH:MM » du jour ; apres : minutes après l'envoi (rang urgent). relance : une heure, ou
+// des minutes après le post.
+type Creneau = {heure?: string; apres?: number; jours?: number[]; relance?: string | number};
+type Rang = 'principal' | 'second' | 'urgent';
+type Reglages = {
+  fuseau: string;
+  delaiVeto: number;
+  creneaux: Record<Rang, Partial<Record<Reseau, Creneau>>>;
+  comptes: Partial<Record<Reseau, string>>;
+} & Record<Reseau, Record<string, unknown>>;
 type Canal = {id: string; name: string; identifier: string; disabled: boolean};
 type Media = {id: string; path: string};
-type Publication = Record<Texte, string> & {titre: string; commentaire?: string};
-// date et statut d'un poste : présents quand il a été rattrapé (--reseaux) à part du reste de l'épisode.
-type Poste = {reseau: string; postId: string; integration: string; date?: string; statut?: Journal['statut']};
-type Journal = {envoye: string; date: string; statut: 'brouillon' | 'programmé'; video: string; miniature?: string; postes: Poste[]};
+type Publication = Partial<Record<Texte, string>> & {titre: string; commentaire?: string};
+type Statut = 'brouillon' | 'programmé';
+// reseau « threads-relance » : le 2e post Threads (texte seul) du même épisode.
+type Poste = {reseau: string; postId: string; integration: string; date?: string; statut?: Statut};
+type Journal = {envoye: string; date: string; rang?: Rang; statut: Statut; video: string; miniature?: string; carrousel?: string[]; postes: Poste[]};
+/** Un post à créer : un réseau, son texte, ses médias, sa date. */
+type Envoi = {reseau: Reseau; relance?: boolean; date: string; texte: string; carrousel: boolean};
 
-const API = (process.env.POSTIZ_API_URL ?? 'https://api.postiz.com').replace(/\/$/, '');
 const reglages = JSON.parse(fs.readFileSync(path.join(RACINE, 'brand', 'postiz.json'), 'utf8')) as Reglages;
-// Par réseau : identifiants Postiz, section de publication.md reprise, limite de caractères du texte.
-const INFOS: Record<Reseau, {nom: string; identifiants: string[]; texte: Texte; limite: number}> = {
-  tiktok: {nom: 'TikTok', identifiants: ['tiktok', 'tiktok-business'], texte: 'tiktok', limite: 2000},
-  instagram: {nom: 'Instagram', identifiants: ['instagram', 'instagram-standalone'], texte: 'instagram', limite: 2200},
-  youtube: {nom: 'YouTube', identifiants: ['youtube'], texte: 'youtube', limite: 5000},
-  facebook: {nom: 'Facebook', identifiants: ['facebook'], texte: 'instagram', limite: 63206},
-  threads: {nom: 'Threads', identifiants: ['threads'], texte: 'court', limite: 500},
-  linkedin: {nom: 'LinkedIn', identifiants: ['linkedin', 'linkedin-page'], texte: 'instagram', limite: 3000},
-  x: {nom: 'X', identifiants: ['x'], texte: 'court', limite: 280},
-  bluesky: {nom: 'Bluesky', identifiants: ['bluesky'], texte: 'court', limite: 300},
+// Par réseau : identifiants Postiz, sections de publication.md (la 1re présente est prise :
+// les anciens épisodes n'ont ni LinkedIn ni Threads), limite de caractères du texte.
+const INFOS: Record<Reseau, {nom: string; identifiants: string[]; textes: Texte[]; limite: number}> = {
+  tiktok: {nom: 'TikTok', identifiants: ['tiktok', 'tiktok-business'], textes: ['tiktok'], limite: 2000},
+  instagram: {nom: 'Instagram', identifiants: ['instagram', 'instagram-standalone'], textes: ['instagram'], limite: 2200},
+  youtube: {nom: 'YouTube', identifiants: ['youtube'], textes: ['youtube'], limite: 5000},
+  facebook: {nom: 'Facebook', identifiants: ['facebook'], textes: ['instagram'], limite: 63206},
+  threads: {nom: 'Threads', identifiants: ['threads'], textes: ['threads', 'court'], limite: 500},
+  linkedin: {nom: 'LinkedIn', identifiants: ['linkedin', 'linkedin-page'], textes: ['linkedin', 'instagram'], limite: 3000},
+  x: {nom: 'X', identifiants: ['x'], textes: ['court'], limite: 280},
+  bluesky: {nom: 'Bluesky', identifiants: ['bluesky'], textes: ['court'], limite: 300},
 };
 const RESEAUX = Object.keys(INFOS) as Reseau[];
 const NOMS = Object.fromEntries(RESEAUX.map((r) => [r, INFOS[r].nom])) as Record<Reseau, string>;
 const LIMITE_TITRE_YOUTUBE = 100;
-
-const appeler = async <T>(chemin: string, init: RequestInit = {}): Promise<T> => {
-  const entetes = new Headers(init.headers);
-  // Sans variable, la clé est ajoutée par le proxy de la session (secret réseau).
-  const cle = process.env.POSTIZ_API_KEY ?? process.env.POSTIZ_ENV;
-  if (cle) entetes.set('Authorization', cle);
-  if (typeof init.body === 'string') entetes.set('Content-Type', 'application/json');
-  const rep = await fetch(`${API}/public/v1${chemin}`, {...init, headers: entetes});
-  if (rep.status === 401) {
-    throw new Error(
-      'Postiz refuse l’accès (401). Ajouter la clé API Postiz (Settings › Developers › Public API) à l’environnement : ' +
-        'secret réseau sur api.postiz.com (en-tête Authorization, sans préfixe) ou variable POSTIZ_API_KEY, puis ouvrir une nouvelle session.',
-    );
-  }
-  if (!rep.ok) throw new Error(`Postiz ${init.method ?? 'GET'} ${chemin} : HTTP ${rep.status} ${await rep.text()}`);
-  return (await rep.json()) as T;
+const SECTIONS: Record<Texte, string> = {
+  tiktok: 'TikTok',
+  instagram: 'Instagram',
+  youtube: 'YouTube',
+  linkedin: 'LinkedIn',
+  threads: 'Threads',
+  relance: 'Threads relance',
+  court: 'Court',
 };
+const reseauDe = (identifiant: string) => RESEAUX.find((r) => INFOS[r].identifiants.includes(identifiant));
 
 const lirePublication = (dossier: string): Publication => {
   const texte = fs.readFileSync(path.join(dossier, 'publication.md'), 'utf8');
-  const blocs = texte.split(/^## /m);
+  const blocs = texte.split(/^## /m).slice(1);
+  // « ## Threads » ne doit pas attraper « ## Threads relance » : on compare le titre entier
+  // (une précision entre parenthèses est permise : « ## Court (X, Bluesky) »).
   const section = (titre: string) => {
-    const bloc = blocs.find((b) => b.startsWith(titre));
-    if (!bloc) throw new Error(`publication.md : section « ## ${titre} » absente.`);
-    return bloc.slice(bloc.indexOf('\n') + 1).trim();
+    const bloc = blocs.find((b) => b.slice(0, b.indexOf('\n')).replace(/\s*\(.*\)\s*$/, '').trim() === titre);
+    return bloc?.slice(bloc.indexOf('\n') + 1).trim() || undefined;
   };
-  const youtube = section('YouTube');
-  const titre = /^\*\*Titre\*\*\s*:\s*(.+)$/m.exec(youtube)?.[1].trim();
+  const pub = Object.fromEntries((Object.keys(SECTIONS) as Texte[]).map((t) => [t, section(SECTIONS[t])])) as Partial<Record<Texte, string>>;
+  for (const t of ['tiktok', 'instagram', 'youtube'] as const) {
+    if (!pub[t]) throw new Error(`publication.md : section « ## ${SECTIONS[t]} » absente.`);
+  }
+  const titre = /^\*\*Titre\*\*\s*:\s*(.+)$/m.exec(pub.youtube!)?.[1].trim();
   if (!titre) throw new Error('publication.md : ligne « **Titre** : … » absente de la section YouTube.');
   return {
-    tiktok: section('TikTok'),
-    instagram: section('Instagram'),
-    youtube: youtube.replace(/^\*\*Titre\*\*.*\n+/m, '').trim(),
-    court: section('Court'),
+    ...pub,
+    youtube: pub.youtube!.replace(/^\*\*Titre\*\*.*\n+/m, '').trim(),
     titre,
     commentaire: /^Commentaire à épingler[^:]*:\s*(.+)$/m.exec(texte)?.[1].trim(),
   };
 };
+const texteDe = (pub: Publication, r: Reseau) => INFOS[r].textes.map((t) => pub[t]).find(Boolean);
 
 /** Décalage du fuseau de Matou à l'instant t, en ms (« GMT+01:00 » → 3 600 000). */
 const decalage = (t: number) => {
@@ -95,32 +114,58 @@ const decalage = (t: number) => {
 const versUtc = (date: string) => {
   if (/(Z|[+-]\d\d:\d\d)$/.test(date)) return new Date(date).toISOString();
   const m = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})$/.exec(date);
-  if (!m) throw new Error(`Date « ${date} » : attendu AAAA-MM-JJTHH:MM (heure de ${reglages.fuseau}).`);
+  if (!m) throw new Error(`Date « ${date} » : attendu AAAA-MM-JJ ou AAAA-MM-JJTHH:MM (heure de ${reglages.fuseau}).`);
   const naif = Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3]), Number(m[4]), Number(m[5]));
   return new Date(naif - decalage(naif - decalage(naif))).toISOString();
 };
 
+const JOUR = 86_400_000;
 const jour = (t: number) => new Intl.DateTimeFormat('en-CA', {timeZone: reglages.fuseau}).format(t);
-const demain = () => `${jour(Date.now() + 86_400_000)}T${reglages.heure}`;
-
-/** Premier jour sans post dans le calendrier Postiz, à l'heure de brand/postiz.json, au moins 3 h après maintenant. */
-const prochainCreneau = async () => {
-  const [debut, fin] = [Date.now() - 86_400_000, Date.now() + 15 * 86_400_000].map((t) => new Date(t).toISOString());
-  let pris: Set<string>;
-  try {
-    const {posts} = await appeler<{posts: {publishDate: string}[]}>(`/posts?startDate=${debut}&endDate=${fin}`);
-    pris = new Set(posts.map((p) => jour(new Date(p.publishDate).getTime())));
-  } catch {
-    return demain(); // sans clé (voie MCP) : vérifier le jour avec postsListTool
-  }
-  for (let i = 0; i < 15; i++) {
-    const creneau = `${jour(Date.now() + i * 86_400_000)}T${reglages.heure}`;
-    if (new Date(versUtc(creneau)).getTime() - Date.now() >= 3 * 3_600_000 && !pris.has(creneau.slice(0, 10))) return creneau;
-  }
-  throw new Error('Aucun jour libre dans les 15 prochains jours du calendrier Postiz : préciser --date.');
-};
+/** 1 = lundi … 7 = dimanche, pour un jour « AAAA-MM-JJ ». */
+const jourSemaine = (j: string) => ((new Date(`${j}T12:00:00Z`).getUTCDay() + 6) % 7) + 1;
 const lisible = (iso: string) =>
   new Intl.DateTimeFormat('fr-FR', {timeZone: reglages.fuseau, dateStyle: 'full', timeStyle: 'short'}).format(new Date(iso));
+
+/** Instants déjà occupés dans Postiz, par réseau (ms). Un brouillon (veto, garde-fou) ne partira pas : il ne compte pas. Postiz injoignable : aucun. */
+const postsExistants = (): Record<Reseau, number[]> => {
+  const pris = Object.fromEntries(RESEAUX.map((r) => [r, [] as number[]])) as Record<Reseau, number[]>;
+  const [debut, fin] = [Date.now() - JOUR, Date.now() + 2 * JOUR].map((t) => new Date(t).toISOString());
+  try {
+    const posts = enListe<{publishDate: string; state?: string; integration?: {providerIdentifier?: string}}>(cli('posts:list', '--startDate', debut, '--endDate', fin));
+    for (const p of posts) {
+      const r = reseauDe(p.integration?.providerIdentifier ?? '');
+      if (r && p.state !== 'DRAFT') pris[r].push(new Date(p.publishDate).getTime());
+    }
+  } catch {
+    console.log('ATTENTION calendrier Postiz illisible (postiz auth:status) : créneaux calculés sans lui.');
+  }
+  return pris;
+};
+/** Un créneau est pris si le réseau a déjà un post à moins de 90 min (le principal et le second ne se gênent pas). */
+const occupe = (pris: number[], date: string) => pris.some((t) => Math.abs(t - new Date(date).getTime()) < 90 * 60_000);
+
+/** Créneau pris ou trop proche : on retente une fois, REPLI plus tard le même jour. */
+const REPLI = 150 * 60_000;
+
+/**
+ * Le créneau d'un réseau pour ce rang, le jour même (ou le jour imposé par --date) : son heure,
+ * sinon REPLI plus tard, libre et au moins delaiVeto h après maintenant. Une actu ne glisse
+ * jamais au lendemain : undefined, pas de post sur ce réseau.
+ */
+const creneauPour = (c: Creneau, pris: number[], impose?: string): string | undefined => {
+  if (impose?.includes('T')) return versUtc(impose);
+  if (c.apres !== undefined) return new Date(Date.now() + c.apres * 60_000).toISOString();
+  const j = impose ?? jour(Date.now());
+  if (c.jours && !c.jours.includes(jourSemaine(j))) return undefined;
+  const heure = new Date(versUtc(`${j}T${c.heure}`)).getTime();
+  for (const t of [heure, heure + REPLI]) {
+    if (jour(t) !== j) continue;
+    if (!impose && t - Date.now() < reglages.delaiVeto * 3_600_000) continue;
+    const date = new Date(t).toISOString();
+    if (!occupe(pris, date)) return date;
+  }
+  return undefined;
+};
 
 const choisirCanaux = (canaux: Canal[]) => {
   const choisis: Partial<Record<Reseau, Canal>> = {};
@@ -136,51 +181,81 @@ const choisirCanaux = (canaux: Canal[]) => {
   return choisis;
 };
 
-const construire = (pub: Publication, canaux: Partial<Record<Reseau, Pick<Canal, 'id' | 'identifier'>>>, video: Media, miniature: Media | undefined, date: string, commentaire: boolean) => ({
-  type: 'draft',
-  date,
-  shortLink: false, // les URL de source restent lisibles
-  tags: [],
-  posts: RESEAUX.filter((r) => canaux[r]).map((r) => {
-    const canal = canaux[r]!;
-    const valeur: {content: string; image: Media[]}[] = [{content: pub[INFOS[r].texte], image: [video]}];
-    // Commentaire = 1re réponse du fil sur Threads, X et Bluesky. TikTok ne permet pas aux
-    // applications de commenter : commentaire à la main là-bas.
-    if (commentaire && pub.commentaire && r !== 'tiktok') valeur.push({content: pub.commentaire, image: []});
-    const settings: Record<string, unknown> = {__type: canal.identifier, ...reglages[r]};
-    if (r === 'youtube') {
-      settings.title = pub.titre;
-      if (miniature) settings.thumbnail = miniature;
+/** Les posts de l'épisode, un par réseau retenu (plus la relance Threads), chacun à son créneau. */
+const planifier = (pub: Publication, reseaux: Reseau[], carrousel: string[], rang: Rang, impose?: string) => {
+  const pris = postsExistants();
+  const envois: Envoi[] = [];
+  const sautes: string[] = [];
+  const proches: string[] = [];
+  for (const r of reseaux) {
+    const texte = texteDe(pub, r);
+    const c = reglages.creneaux[rang][r];
+    if (!texte) continue;
+    if (!c) {
+      sautes.push(`${NOMS[r]} : réservé à l'épisode principal`);
+      continue;
     }
-    if (r === 'facebook') settings.title = pub.titre;
-    return {integration: {id: canal.id}, value: valeur, settings};
-  }),
-});
+    const date = creneauPour(c, pris[r], impose);
+    if (!date) {
+      sautes.push(`${NOMS[r]} : aucun créneau libre ce jour-là (heure, repli 2 h 30 plus tard, jours permis), pas de post pour cet épisode`);
+      continue;
+    }
+    // Un urgent passe même près d'un autre post Matou : on le signale seulement.
+    if (c.apres !== undefined && occupe(pris[r], date)) proches.push(`${NOMS[r]} : un autre post Matou part à moins de 90 min`);
+    envois.push({reseau: r, date, texte, carrousel: r === 'linkedin' && !!pub.linkedin && carrousel.length >= 2});
+    const relance = c.relance;
+    if (relance && r === 'threads' && pub.relance) {
+      const dateRelance =
+        typeof relance === 'number'
+          ? new Date(new Date(date).getTime() + relance * 60_000).toISOString()
+          : versUtc(`${jour(new Date(date).getTime())}T${relance}`);
+      if (dateRelance > date) envois.push({reseau: r, relance: true, date: dateRelance, texte: pub.relance, carrousel: false});
+    }
+  }
+  return {envois, sautes, proches};
+};
 
-// Le MCP veut du HTML (une ligne = un <p>), les réglages en paires clé/valeur, et accepte une
-// couverture par vidéo (thumbnail) : elle sert aussi sur TikTok, Instagram et Facebook.
-const html = (texte: string) =>
-  texte.split('\n').map((l) => `<p>${l.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</p>`).join('');
-const versMcp = (corps: ReturnType<typeof construire>, miniature: string) => ({
-  socialPost: corps.posts.map((p) => ({
-    integrationId: p.integration.id,
-    isPremium: false,
-    date: corps.date,
-    shortLink: false,
+/** Une charge utile `posts:create` par date (Postiz n'en prend qu'une par envoi). */
+const construire = (
+  pub: Publication,
+  envois: Envoi[],
+  canaux: Partial<Record<Reseau, Pick<Canal, 'id' | 'identifier'>>>,
+  medias: {video: Media; miniature?: Media; carrousel: Media[]},
+  commentaire: boolean,
+) => {
+  const dates = [...new Set(envois.map((e) => e.date))].sort();
+  return dates.map((date) => ({
     type: 'draft',
-    postsAndComments: p.value.map((v) => ({content: html(v.content), attachments: v.image.map((m) => ({path: m.path, thumbnail: miniature}))})),
-    settings: Object.entries(p.settings)
-      .filter(([cle]) => cle !== '__type')
-      .map(([key, value]) => ({key, value})),
-  })),
-});
+    date,
+    shortLink: false, // les URL de source restent lisibles
+    tags: [],
+    posts: envois
+      .filter((e) => e.date === date && canaux[e.reseau])
+      .map((e) => {
+        const canal = canaux[e.reseau]!;
+        const images = e.relance ? [] : e.carrousel ? medias.carrousel : [medias.video];
+        const valeur: {content: string; image: Media[]}[] = [{content: e.texte, image: images}];
+        // Commentaire = 1re réponse du fil sur Threads, X et Bluesky. TikTok ne permet pas aux
+        // applications de commenter : commentaire à la main là-bas. La relance n'en a pas.
+        if (commentaire && pub.commentaire && e.reseau !== 'tiktok' && !e.relance) valeur.push({content: pub.commentaire, image: []});
+        const settings: Record<string, unknown> = {__type: canal.identifier, ...reglages[e.reseau]};
+        if (e.reseau === 'youtube') {
+          settings.title = pub.titre;
+          if (medias.miniature) settings.thumbnail = medias.miniature;
+        }
+        if (e.reseau === 'facebook') settings.title = pub.titre;
+        if (e.reseau === 'linkedin') {
+          settings.post_as_images_carousel = e.carrousel;
+          if (e.carrousel) settings.carousel_name = pub.titre.replace(/\s*#\d+$/, '');
+        }
+        return {integration: {id: canal.id}, value: valeur, settings};
+      }),
+  }));
+};
 
 const televerser = async (fichier: string): Promise<Media> => {
-  const form = new FormData();
-  const type = fichier.endsWith('.mp4') ? 'video/mp4' : 'image/png';
-  form.append('file', await fs.openAsBlob(fichier, {type}), path.basename(fichier));
-  const r = await appeler<{id?: string; path: string}>('/upload', {method: 'POST', body: form});
-  console.log(`Téléversé : ${path.basename(fichier)} → ${r.path}`);
+  const r = cli<{id?: string; path: string}>('upload', fichier);
+  console.log(`Téléversé : ${path.relative(RACINE, fichier)} → ${r.path}`);
   return {id: r.id ?? path.basename(fichier), path: r.path};
 };
 
@@ -191,10 +266,10 @@ const valeurDe = (option: string) => {
 };
 
 if (args.includes('--canaux')) {
-  const canaux = await appeler<Canal[]>('/integrations');
+  const canaux = enListe<Canal>(cli('integrations:list'), 'integrations');
   for (const c of canaux) console.log(`${c.identifier.padEnd(22)} ${c.id}  ${c.name}${c.disabled ? ' (désactivé)' : ''}`);
   for (const [r, c] of Object.entries(choisirCanaux(canaux)) as [Reseau, Canal][]) {
-    const rep = await appeler<{output?: unknown}>(`/integration-settings/${c.id}`);
+    const rep = cli<{output?: unknown}>('integrations:settings', c.id);
     console.log(`\n=== ${NOMS[r]} (${c.name}) : règles et réglages ===\n${JSON.stringify(rep.output ?? rep, null, 2)}`);
   }
   process.exit(0);
@@ -203,58 +278,122 @@ if (args.includes('--canaux')) {
 const choix = valeurDe('--reseaux')?.split(',') as Reseau[] | undefined;
 const inconnus = choix?.filter((r) => !RESEAUX.includes(r)) ?? [];
 if (inconnus.length) throw new Error(`--reseaux : ${inconnus.join(', ')} inconnu (attendu parmi ${RESEAUX.join(', ')}).`);
-const retenu = (reseau: string) => !choix || choix.includes(reseau as Reseau);
+const retenu = (reseau: string) => !choix || choix.includes(reseau.replace(/-relance$/, '') as Reseau);
 
-const dossier = dossierEpisode(args.find((a, i) => !a.startsWith('--') && !['--date', '--reseaux'].includes(args[i - 1])));
+const rang = (valeurDe('--rang') ?? 'principal') as Rang;
+if (!(rang in reglages.creneaux)) throw new Error(`--rang ${rang} : attendu ${Object.keys(reglages.creneaux).join(' ou ')}.`);
+
+const dossier = dossierEpisode(args.find((a, i) => !a.startsWith('--') && !['--date', '--reseaux', '--rang'].includes(args[i - 1])));
 const nom = nomEpisode(dossier);
 const journal = path.join(dossier, 'postiz-envoi.json');
 
-if (args.includes('--programmer')) {
+if (args.includes('--programmer') || args.includes('--annuler')) {
   if (!fs.existsSync(journal)) throw new Error('Aucun brouillon envoyé pour cet épisode : lancer d’abord --envoyer.');
   const envoi = JSON.parse(fs.readFileSync(journal, 'utf8')) as Journal;
+  const veto = args.includes('--annuler');
+  // L'état réel dans Postiz fait foi, pas le journal : `posts:status --status schedule` sur un post
+  // déjà PUBLISHED crée un NOUVEAU post (Postiz ne dédoublonne pas) → doublon sur le réseau.
+  const etats = (): Record<string, string> => {
+    try {
+      const posts = enListe<{id: string; state?: string}>(cli('posts:list'), 'posts');
+      return Object.fromEntries(posts.map((p) => [p.id, String(p.state ?? '').toUpperCase()]));
+    } catch (e) {
+      console.log(`ATTENTION état Postiz illisible (${(e as Error).message.slice(0, 200)}) : décision sur la date et le journal seuls.`);
+      return {};
+    }
+  };
+  const reel = etats();
+  const echecs: string[] = [];
   for (const p of envoi.postes.filter((p) => retenu(p.reseau))) {
-    await appeler(`/posts/${p.postId}/status`, {method: 'PUT', body: JSON.stringify({status: 'schedule'})});
-    if (p.statut) p.statut = 'programmé';
-    console.log(`Programmé : ${p.reseau} (${p.postId}), ${lisible(p.date ?? envoi.date)}`);
+    const quand = lisible(p.date ?? envoi.date);
+    const passe = new Date(p.date ?? envoi.date).getTime() <= Date.now();
+    if (reel[p.postId] === 'PUBLISHED') {
+      // Journalisé « programmé » : le post n'est plus à programmer, il est parti.
+      p.statut = 'programmé';
+      console.log(`Inchangé : ${p.reseau}, ${quand} (déjà publié)`);
+      continue;
+    }
+    if (veto) {
+      if (p.statut !== 'programmé' || passe) {
+        console.log(`Inchangé : ${p.reseau}, ${quand} (${p.statut === 'programmé' ? 'déjà parti' : 'déjà en brouillon'})`);
+        continue;
+      }
+    } else if (passe) {
+      // Date passée : le post est parti ou en cours de départ. Le remettre en file le republierait.
+      console.log(`Inchangé : ${p.reseau}, ${quand} (date passée : rien à programmer)`);
+      continue;
+    } else if (p.statut === 'programmé' && reel[p.postId] === 'QUEUE') {
+      console.log(`Inchangé : ${p.reseau}, ${quand} (déjà dans la file)`);
+      continue;
+    }
+    // Un post qui échoue n'annule pas les autres : le journal doit refléter ce qui est réellement fait.
+    try {
+      cli('posts:status', p.postId, '--status', veto ? 'draft' : 'schedule');
+      p.statut = veto ? 'brouillon' : 'programmé';
+      console.log(`${veto ? 'Repassé en brouillon' : 'Programmé'} : ${p.reseau} (${p.postId}), ${quand}`);
+    } catch (e) {
+      echecs.push(`${p.reseau} (${p.postId}) : ${(e as Error).message.slice(0, 200)}`);
+    }
   }
-  const statut = choix && envoi.postes.some((p) => !retenu(p.reseau)) ? envoi.statut : 'programmé';
+  const statut: Statut = envoi.postes.every((p) => p.statut === 'programmé') ? 'programmé' : 'brouillon';
   fs.writeFileSync(journal, JSON.stringify({...envoi, statut}, null, 2) + '\n');
-  console.log('\nDates enregistrées dans Postiz.');
+  if (echecs.length) {
+    console.log(`\nÉchec sur ${echecs.length} post(s) :\n${echecs.map((e) => `  - ${e}`).join('\n')}`);
+    process.exit(1);
+  }
+  console.log(veto ? '\nVeto appliqué : ces posts attendent en brouillon dans Postiz (--programmer pour les remettre).' : '\nDates enregistrées dans Postiz.');
   process.exit(0);
 }
 
 const pub = lirePublication(dossier);
 const mp4 = path.join(dossier, 'rendu', `${nom}.mp4`);
 const png = path.join(dossier, 'rendu', `${nom}-miniature.png`);
-const date = versUtc(valeurDe('--date') ?? (await prochainCreneau()));
+const dossierCarrousel = path.join(dossier, 'rendu', 'carrousel');
+const carrousel = fs.existsSync(dossierCarrousel)
+  ? fs.readdirSync(dossierCarrousel).filter((f) => f.endsWith('.png')).sort().map((f) => path.join(dossierCarrousel, f))
+  : [];
 const commentaire = args.includes('--commentaire');
+const impose = valeurDe('--date');
 
 const alertes: string[] = [];
 if (!fs.existsSync(mp4)) alertes.push(`Vidéo absente : ${path.relative(RACINE, mp4)} (npm run render)`);
+if (pub.linkedin && carrousel.length < 2) alertes.push(`Carrousel LinkedIn absent : ${path.relative(RACINE, dossierCarrousel)} (npm run carrousel)`);
 for (const r of RESEAUX) {
-  const n = pub[INFOS[r].texte].length;
+  const n = texteDe(pub, r)?.length ?? 0;
   if (n > INFOS[r].limite) alertes.push(`${NOMS[r]} : texte de ${n} caractères (max ${INFOS[r].limite})`);
   if (commentaire && r !== 'tiktok' && (pub.commentaire?.length ?? 0) > INFOS[r].limite) {
     alertes.push(`${NOMS[r]} : commentaire de sources de ${pub.commentaire!.length} caractères (max ${INFOS[r].limite})`);
   }
 }
+if ((pub.relance?.length ?? 0) > INFOS.threads.limite) alertes.push(`Threads relance : ${pub.relance!.length} caractères (max ${INFOS.threads.limite})`);
 if (pub.titre.length > LIMITE_TITRE_YOUTUBE) alertes.push(`YouTube : titre de ${pub.titre.length} caractères (max ${LIMITE_TITRE_YOUTUBE})`);
-if (new Date(date).getTime() < Date.now()) alertes.push(`Date passée : ${lisible(date)}`);
+
+const resume = (envois: Envoi[], sautes: string[], proches: string[]) => {
+  for (const e of envois) {
+    const format = e.relance ? 'texte seul' : e.carrousel ? `carrousel de ${carrousel.length} diapos` : 'vidéo';
+    console.log(`${(NOMS[e.reseau] + (e.relance ? ' (relance)' : '')).padEnd(19)} ${lisible(e.date).padEnd(36)} ${format}, ${e.texte.length} caractères`);
+  }
+  sautes.forEach((s) => console.log(`Pas de post : ${s}`));
+  proches.forEach((s) => console.log(`Proche : ${s}`));
+};
+const passees = (envois: Envoi[]) => envois.filter((e) => new Date(e.date).getTime() < Date.now()).map((e) => `Date passée (${NOMS[e.reseau]}) : ${lisible(e.date)}`);
 
 if (!args.includes('--envoyer')) {
+  const {envois, sautes, proches} = planifier(pub, RESEAUX.filter(retenu), carrousel, rang, impose);
+  console.log(`Épisode ${rang}`);
+  alertes.push(...passees(envois));
   const fictifs = Object.fromEntries(RESEAUX.map((r) => [r, {id: `<id ${NOMS[r]}>`, identifier: INFOS[r].identifiants[0]}]));
-  const [cheminVideo, cheminMiniature] = [`<chemin de ${path.basename(mp4)}>`, `<chemin de ${path.basename(png)}>`];
-  const corps = construire(pub, fictifs, {id: '<id de la vidéo>', path: cheminVideo}, {id: '<id de la miniature>', path: cheminMiniature}, date, commentaire);
-  fs.writeFileSync(path.join(dossier, 'postiz.json'), JSON.stringify(corps, null, 2) + '\n');
-  fs.writeFileSync(path.join(dossier, 'postiz-mcp.json'), JSON.stringify(versMcp(corps, cheminMiniature), null, 2) + '\n');
-  for (const r of RESEAUX) {
-    const {texte, limite} = INFOS[r];
-    console.log(`${NOMS[r].padEnd(10)} ${pub[texte].length}/${limite} caractères (section ${texte})${r === 'youtube' ? ` · titre « ${pub.titre} »` : ''}`);
-  }
-  console.log(`Date      ${lisible(date)} (brouillon)`);
+  const medias = {
+    video: {id: '<id de la vidéo>', path: `<chemin de ${path.basename(mp4)}>`},
+    miniature: {id: '<id de la miniature>', path: `<chemin de ${path.basename(png)}>`},
+    carrousel: carrousel.map((f) => ({id: `<id de ${path.basename(f)}>`, path: `<chemin de carrousel/${path.basename(f)}>`})),
+  };
+  fs.writeFileSync(path.join(dossier, 'postiz.json'), JSON.stringify(construire(pub, envois, fictifs, medias, commentaire), null, 2) + '\n');
+  resume(envois, sautes, proches);
+  console.log(`YouTube : titre « ${pub.titre} »`);
   console.log(`Commentaire de sources : ${commentaire ? '1er commentaire partout, à la main sur TikTok' : pub.commentaire ? 'à poster à la main (--commentaire : partout sauf TikTok)' : 'absent de publication.md'}`);
   alertes.forEach((a) => console.log(`ATTENTION ${a}`));
-  console.log('\nAperçu écrit dans postiz.json (API) et postiz-mcp.json (MCP). Rien n’a été envoyé.');
+  console.log('\nAperçu écrit dans postiz.json (charges utiles de `postiz posts:create --json`). Rien n’a été envoyé.');
   process.exit(alertes.length ? 1 : 0);
 }
 
@@ -266,24 +405,64 @@ if (precedent && (!choix || dejaLa.length) && !args.includes('--force')) {
   throw new Error(`Déjà envoyé${quoi} (${path.relative(RACINE, journal)}) : vérifier dans Postiz avant de recommencer (--force crée des doublons).`);
 }
 
-const tous = choisirCanaux(await appeler<Canal[]>('/integrations'));
+const tous = choisirCanaux(enListe<Canal>(cli('integrations:list'), 'integrations'));
 const canaux = Object.fromEntries(Object.entries(tous).filter(([r]) => retenu(r))) as typeof tous;
 const absents = RESEAUX.filter((r) => retenu(r) && !canaux[r]);
 if (!Object.keys(canaux).length) throw new Error(`Aucun compte connecté dans Postiz (${RESEAUX.filter(retenu).map((r) => NOMS[r]).join(', ')}).`);
 if (absents.length) console.log(`Non connectés dans Postiz, ignorés : ${absents.map((r) => NOMS[r]).join(', ')}.`);
 
+let {envois, sautes, proches} = planifier(pub, RESEAUX.filter((r) => canaux[r]), carrousel, rang, impose);
+const passe = passees(envois);
+if (passe.length) throw new Error(`Envoi annulé :\n${passe.map((a) => `  - ${a}`).join('\n')}`);
+if (!envois.length) throw new Error(`Aucun post à créer : ${sautes.join(' ; ')}`);
+
 const video = await televerser(mp4);
 const miniature = canaux.youtube && fs.existsSync(png) ? await televerser(png) : undefined;
-const corps = construire(pub, canaux, video, miniature, date, commentaire);
-fs.writeFileSync(path.join(dossier, 'postiz.json'), JSON.stringify(corps, null, 2) + '\n');
-const reponse = await appeler<{postId: string; integration: string}[]>('/posts', {method: 'POST', body: JSON.stringify(corps)});
+const images = envois.some((e) => e.carrousel) ? await Promise.all(carrousel.map(televerser)) : [];
+// Urgent : les minutes comptent depuis la fin du téléversement (il peut prendre plusieurs minutes sur le Pi).
+if (!impose && Object.values(reglages.creneaux[rang]).some((c) => c?.apres !== undefined)) {
+  ({envois, sautes, proches} = planifier(pub, RESEAUX.filter((r) => canaux[r]), carrousel, rang, impose));
+}
+const charges = construire(pub, envois, canaux, {video, miniature, carrousel: images}, commentaire);
+fs.writeFileSync(path.join(dossier, 'postiz.json'), JSON.stringify(charges, null, 2) + '\n');
 
-const nouveaux: Poste[] = reponse.map((p) => ({reseau: RESEAUX.find((r) => canaux[r]?.id === p.integration) ?? p.integration, postId: p.postId, integration: p.integration}));
-// Rattrapage : le journal de l'épisode garde ses posts, les nouveaux s'y ajoutent avec leur date.
+const nouveaux: Poste[] = [];
+for (const charge of charges) {
+  const fichier = path.join(os.tmpdir(), `postiz-${nom}-${Date.now()}.json`);
+  fs.writeFileSync(fichier, JSON.stringify(charge));
+  const reponse = enListe<{postId?: string; id?: string; integration?: string; integrationId?: string}>(cli('posts:create', '--json', fichier));
+  fs.rmSync(fichier, {force: true});
+  for (const p of reponse) {
+    const integration = p.integration ?? p.integrationId ?? '';
+    const r = RESEAUX.find((x) => canaux[x]?.id === integration);
+    const relance = envois.some((e) => e.relance && e.date === charge.date && e.reseau === r);
+    nouveaux.push({reseau: r ? `${r}${relance ? '-relance' : ''}` : integration, postId: p.postId ?? p.id ?? '', integration, date: charge.date, statut: 'brouillon'});
+  }
+}
+
+// Rattrapage : le journal de l'épisode garde ses posts, les nouveaux s'y ajoutent.
+const premiere = charges[0].date;
 const envoi: Journal =
   choix && precedent
-    ? {...precedent, postes: [...precedent.postes.filter((p) => !retenu(p.reseau)), ...nouveaux.map((p) => ({...p, date, statut: 'brouillon' as const}))]}
-    : {envoye: new Date().toISOString(), date, statut: 'brouillon', video: video.path, miniature: miniature?.path, postes: nouveaux};
+    ? {...precedent, statut: 'brouillon', postes: [...precedent.postes.filter((p) => !retenu(p.reseau)), ...nouveaux]}
+    : {envoye: new Date().toISOString(), date: premiere, rang, statut: 'brouillon', video: video.path, miniature: miniature?.path, carrousel: images.map((m) => m.path), postes: nouveaux};
 fs.writeFileSync(journal, JSON.stringify(envoi, null, 2) + '\n');
-nouveaux.forEach((p) => console.log(`Brouillon : ${p.reseau} (${p.postId})`));
-console.log(`\nDate prévue : ${lisible(date)}. Rien n’est publié : relire dans Postiz, puis --programmer après le feu vert.`);
+nouveaux.forEach((p) => console.log(`Brouillon : ${p.reseau} (${p.postId}), ${lisible(p.date!)}`));
+// --publier : le journal est écrit avant, pour qu'un échec en route ne laisse pas de brouillon orphelin.
+const publier = args.includes('--publier');
+if (publier) {
+  for (const p of nouveaux) {
+    cli('posts:status', p.postId, '--status', 'schedule');
+    p.statut = 'programmé';
+    console.log(`Programmé : ${p.reseau} (${p.postId}), ${lisible(p.date!)}`);
+  }
+  if (envoi.postes.every((p) => p.statut === 'programmé')) envoi.statut = 'programmé';
+  fs.writeFileSync(journal, JSON.stringify(envoi, null, 2) + '\n');
+}
+sautes.forEach((s) => console.log(`Pas de post : ${s}`));
+proches.forEach((s) => console.log(`Proche : ${s}`));
+console.log(
+  publier
+    ? '\nPublié dans la file de Postiz (veto encore possible avant l’heure : --annuler).'
+    : '\nRien n’est publié : --programmer met ces brouillons dans la file (veto ensuite : --annuler).',
+);

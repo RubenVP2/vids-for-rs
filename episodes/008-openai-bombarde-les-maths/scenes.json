@@ -1,0 +1,103 @@
+{
+  "numero": 8,
+  "slug": "openai-bombarde-les-maths",
+  "serie": "decrypte",
+  "source": {
+    "nom": "The Verge",
+    "url": "https://www.theverge.com/ai-artificial-intelligence/1023054/altman-cheeky-pint-ai-math-interview",
+    "date": "2026-10-30",
+    "type": "article"
+  },
+  "statut": "disponible",
+  "verdict": "buzz",
+  "miniature": "OpenAI ==bombarde les maths==",
+  "musique": true,
+  "gabarit": {
+    "ouverture": "fenetre",
+    "corps": "liste"
+  },
+  "scenes": [
+    {
+      "type": "hook",
+      "texte": "OpenAI noie les mathématiciens sous une ==avalanche== de résultats générés par intelligence artificielle.",
+      "titre": "OpenAI ==bombarde les maths==",
+      "icone": "attention",
+      "visuel": {
+        "type": "fenetre",
+        "app": "OpenAI",
+        "messages": [
+          {
+            "de": "toi",
+            "texte": "Résous ce problème de maths"
+          },
+          {
+            "de": "app",
+            "texte": "Des centaines de résultats trouvés"
+          }
+        ]
+      },
+      "matou": "surpris"
+    },
+    {
+      "type": "liste",
+      "texte": "The Verge le révèle : Sam Altman admet déborder les chercheurs, mais ==refuse de ralentir==.",
+      "titre": "L'aveu de ==Sam Altman==",
+      "elements": [
+        {
+          "texte": "Des centaines de preuves publiées",
+          "icone": "document",
+          "quand": "chercheurs"
+        },
+        {
+          "texte": "Refus total de ralentir",
+          "icone": "fusee",
+          "quand": "refuse"
+        }
+      ],
+      "matou": "parle"
+    },
+    {
+      "type": "point",
+      "texte": "En fait, l'entreprise investit des ==centaines de millions== de dollars dans les calculs mathématiques.",
+      "titre": "Calculs ==hors de prix==",
+      "corps": "Des centaines de millions de dollars investis dans les maths.",
+      "icone": "euro",
+      "matou": "enFait"
+    },
+    {
+      "type": "chiffre",
+      "texte": "Elle a mis dix millions de dollars sur une seule énigme : l'équation de Navier-Stokes.",
+      "valeur": "10 M$",
+      "legende": "dépensés par OpenAI rien que sur ==Navier-Stokes==",
+      "quand": "dix",
+      "matou": "reflechit"
+    },
+    {
+      "type": "point",
+      "texte": "Mais les chercheurs s'agacent : résumés sommaires, et les percées majeures restent ==gardées sous clé==.",
+      "titre": "Des preuves ==sous clé==",
+      "corps": "Résumés sommaires et découvertes clés gardées secrètes.",
+      "icone": "cadenas",
+      "matou": "sceptique"
+    },
+    {
+      "type": "pourquoi",
+      "texte": "Et pour toi ? Si les labos privés monopolisent les découvertes, la ==recherche publique== décroche.",
+      "titre": "Et pour toi ?",
+      "corps": "Avec de tels budgets, les labos privés risquent de privatiser la science.",
+      "icone": "attention",
+      "matou": "neutre"
+    },
+    {
+      "type": "verdict",
+      "texte": "Hype-mètre : pur buzz. Mon avis : submerger la science sans donner les preuves complètes, c'est de la communication.",
+      "raison": "Des résultats bruts non vérifiés et les détails clés gardés secrets.",
+      "matou": "verdict"
+    },
+    {
+      "type": "fin",
+      "texte": "Face à cette avalanche de résultats, les mathématiciens doivent tout vérifier tout seuls.",
+      "matou": "neutre"
+    }
+  ]
+}

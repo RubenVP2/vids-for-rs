@@ -1,0 +1,69 @@
+{
+  "numero": 11,
+  "slug": "google-vids-avatar-photo",
+  "serie": "flash",
+  "source": {
+    "nom": "Google",
+    "url": "http://workspaceupdates.googleblog.com/2026/11/create-a-custom-avatar-google-vids.html",
+    "date": "2026-11-02",
+    "type": "blog"
+  },
+  "statut": "disponible",
+  "verdict": "prometteur",
+  "miniature": "Une photo pour ==ton avatar==",
+  "musique": true,
+  "gabarit": {
+    "ouverture": "question",
+    "corps": "comparaison"
+  },
+  "scenes": [
+    {
+      "type": "hook",
+      "texte": "Et si une simple photo suffisait pour créer ==ton avatar== en vidéo ?",
+      "titre": "Une photo pour ==ton avatar== ?",
+      "icone": "ampoule",
+      "matou": "surpris"
+    },
+    {
+      "type": "comparaison",
+      "texte": "Google l'ajoute à Vids, son outil vidéo : fini de partir de zéro, tu importes ta photo.",
+      "avant": {
+        "titre": "Avant",
+        "texte": "Créer un personnage générique de zéro"
+      },
+      "apres": {
+        "titre": "Maintenant",
+        "texte": "Importe ta photo depuis ton PC ou Drive",
+        "quand": "importes"
+      },
+      "matou": "parle"
+    },
+    {
+      "type": "point",
+      "texte": "En fait, l'outil détourre l'image, règle la lumière et garde ton personnage dans tout ==le projet==.",
+      "titre": "Retouche et ==cohérence==",
+      "corps": "Détourage automatique, lumière corrigée et réutilisation dans toute la vidéo.",
+      "icone": "coche",
+      "matou": "enFait"
+    },
+    {
+      "type": "pourquoi",
+      "texte": "Et pour toi ? Si tu veux faire passer un message sans te montrer, plus besoin de caméra.",
+      "titre": "Et pour toi ?",
+      "corps": "Explique tes projets en vidéo sans allumer ta caméra.",
+      "icone": "cadenas",
+      "matou": "reflechit"
+    },
+    {
+      "type": "verdict",
+      "texte": "Hype-mètre : prometteur. Mon avis : c'est idéal pour ceux qui ont horreur de se filmer.",
+      "raison": "Une personnalisation très simple et réutilisable pour les vidéos d'équipe.",
+      "matou": "verdict"
+    },
+    {
+      "type": "fin",
+      "texte": "Bref, choisis une jolie photo, et laisse ton avatar parler à ta place.",
+      "matou": "content"
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "numero": 10,
+  "slug": "010-altman-veut-ta-ram",
+  "serie": "decrypte",
+  "source": {
+    "nom": "Tom's Hardware",
+    "url": "https://www.tomshardware.com/tech-industry/data-centers/openai-ceo-says-its-quite-terrible-for-your-pc-to-have-ram-sam-altman-says-data-centers-offer-better-utilization",
+    "date": "2026-10-30",
+    "type": "article"
+  },
+  "statut": "disponible",
+  "verdict": "buzz",
+  "miniature": "Sam Altman veut ==ta mémoire==",
+  "musique": true,
+  "gabarit": {
+    "ouverture": "chiffre",
+    "corps": "liste"
+  },
+  "scenes": [
+    {
+      "type": "hook",
+      "texte": "Selon le patron d'OpenAI, ta mémoire vive ne sert que ==cinq pour cent== du temps.",
+      "titre": "5 % de ta ==RAM utilisée==",
+      "icone": "attention",
+      "visuel": {
+        "type": "chiffre",
+        "valeur": "5 %"
+      },
+      "matou": "surpris"
+    },
+    {
+      "type": "liste",
+      "texte": "Tom's Hardware rapporte l'aveu de Sam Altman : laisser cette mémoire sur nos PC est ==franchement terrible==.",
+      "titre": "L'aveu de ==Sam Altman==",
+      "elements": [
+        {
+          "texte": "Nos ordinateurs jugés inefficaces",
+          "icone": "croix",
+          "quand": "laisser"
+        },
+        {
+          "texte": "Priorité absolue aux data centers",
+          "icone": "fusee",
+          "quand": "terrible"
+        }
+      ],
+      "matou": "parle"
+    },
+    {
+      "type": "point",
+      "texte": "En fait, les serveurs d'intelligence artificielle manquent de composants et doivent tourner ==jour et nuit==.",
+      "titre": "Le cloud ==avant tout==",
+      "corps": "Les data centers d'IA manquent de composants et tournent 24h/24.",
+      "icone": "cerveau",
+      "matou": "enFait"
+    },
+    {
+      "type": "pourquoi",
+      "texte": "Et pour toi ? Si l'IA confisque la mémoire, le risque est de devoir tout ==louer dans le cloud==.",
+      "titre": "Et pour toi ?",
+      "corps": "Moins de mémoire pour nos PC et l'obligation de tout louer dans le cloud.",
+      "icone": "cadenas",
+      "matou": "reflechit"
+    },
+    {
+      "type": "verdict",
+      "texte": "Hype-mètre : pur buzz. Mon avis : ce n'est pas à Sam Altman de décider ce qu'on installe sur nos machines.",
+      "raison": "Un avis provocateur pour justifier les besoins démesurés des data centers.",
+      "matou": "verdict"
+    },
+    {
+      "type": "fin",
+      "texte": "Bref, même si tu ne t'en sers pas tout le temps, garde bien ta mémoire vive chez toi.",
+      "matou": "content"
+    }
+  ]
+}

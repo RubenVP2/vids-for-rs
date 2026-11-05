@@ -25,19 +25,45 @@ const element = z.object({
   quand: z.string().optional(),
 });
 
+/** Une bulle de la fenêtre d'app : ce que tu écris (`toi`) ou ce que l'app répond (`app`). */
+const message = z.object({
+  de: z.enum(['toi', 'app']),
+  texte: z.string().min(1).max(80),
+  quand: z.string().optional(),
+});
+/** Fenêtre d'app dessinée (reconstitution) : montre ce que la source dit que l'outil fait. */
+const fenetre = {
+  /** Nom de l'app tel que le public le connaît : « ChatGPT », « Gemini »… */
+  app: z.string().min(1).max(24),
+  messages: z.array(message).min(1).max(3),
+};
+
 export const sceneSchema = z.discriminatedUnion('type', [
   z.object({
     type: z.literal('hook'),
     ...base,
-    /** Gros titre à l'écran, 2 à 7 mots. */
+    /** Gros titre à l'écran, 2 à 6 mots. */
     titre: z.string().min(1).max(60),
     icone: icone.optional(),
+    /** Ce que montre la 1re image avec le titre : la chose elle-même ou le chiffre (gabarit d'ouverture). */
+    visuel: z
+      .discriminatedUnion('type', [
+        z.object({type: z.literal('fenetre'), app: fenetre.app, messages: fenetre.messages.max(2)}),
+        z.object({type: z.literal('chiffre'), valeur: z.string().min(1).max(10)}),
+      ])
+      .optional(),
   }),
   z.object({
+    // Ancien format (jusqu'à #007) : remplacé par l'incrustation du tampon pendant la 2e scène.
     type: z.literal('source'),
     ...base,
     /** Titre de l'article tel que publié (ou sa traduction courte), pour la carte source. */
     titreArticle: z.string().min(1).max(110),
+  }),
+  z.object({
+    type: z.literal('fenetre'),
+    ...base,
+    ...fenetre,
   }),
   z.object({
     type: z.literal('point'),
@@ -105,12 +131,18 @@ export const episodeSchema = z
     /** Titre de la miniature (couverture), 2 à 6 mots. Par défaut, le titre du hook. */
     miniature: z.string().max(50).optional(),
     musique: z.boolean().default(true),
+    /**
+     * Format long (jusqu'à ~60 s au lieu de ~30 s) : la raison, quand le sujet le demande
+     * (plusieurs faits clés, une démo pas à pas). Absent : le budget de la série.
+     */
+    long: z.string().min(10).optional(),
+    /** Gabarit de montage (brand/montage.json, npm run gabarits) ; un autre que prévu : sa raison. */
+    gabarit: z.object({ouverture: z.string(), corps: z.string(), raison: z.string().optional()}).optional(),
     scenes: z.array(sceneSchema).min(4).max(10),
   })
   .superRefine((ep, ctx) => {
     const types = ep.scenes.map((s) => s.type);
     if (types[0] !== 'hook') ctx.addIssue({code: 'custom', message: 'La première scène doit être le hook.'});
-    if (!types.includes('source')) ctx.addIssue({code: 'custom', message: 'Il faut une scène « source ».'});
     if (types[types.length - 1] !== 'fin') ctx.addIssue({code: 'custom', message: 'La dernière scène doit être « fin ».'});
     if (types[types.length - 2] !== 'verdict')
       ctx.addIssue({code: 'custom', message: 'L’avant-dernière scène doit être le verdict (Hype-mètre).'});
@@ -121,7 +153,8 @@ export type Episode = z.infer<typeof episodeSchema>;
 export const timingsSchema = z.object({
   audio: z.string(),
   duree: z.number().positive(),
-  voix: z.object({modele: z.string(), voix: z.string()}),
+  /** `secours` : la voix n'est pas celle de Matou (Gemini indisponible) — refusé par `check`. */
+  voix: z.object({modele: z.string(), voix: z.string(), secours: z.boolean().optional()}),
   /** Part des mots du script retrouvés par la transcription (0–1). Bas = voix qui a mal lu. */
   alignement: z.number().min(0).max(1).optional(),
   mots: z.array(
@@ -136,6 +169,17 @@ export const timingsSchema = z.object({
   scenes: z.array(z.object({debut: z.number(), fin: z.number()})),
   /** Volume de la voix, une valeur 0–1 par image (30 i/s) : sert à animer la bouche. */
   enveloppe: z.array(z.number()),
+  /** Mesures de la prise retenue (débit, intonation, pauses) : `npm run check` refuse une voix plate. */
+  qualite: z
+    .object({
+      secondes: z.number().nonnegative(),
+      motsParMinute: z.number().nonnegative(),
+      medianeHz: z.number().nonnegative(),
+      melodieDemiTons: z.number().nonnegative(),
+      pauses: z.number().int().nonnegative(),
+      phrases: z.number().int().positive(),
+    })
+    .optional(),
 });
 export type Timings = z.infer<typeof timingsSchema>;
 

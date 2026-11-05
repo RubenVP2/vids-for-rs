@@ -1,0 +1,97 @@
+{
+  "maj": "2026-11-02T09:39:22.379Z",
+  "jours": 30,
+  "date": "2026-10-31T08:00:00.000Z",
+  "rang": "principal",
+  "postes": [
+    {
+      "reseau": "threads",
+      "postId": "cmvvwu90z0wtvpa1cij4axnco",
+      "integration": "cmvsb2y1q03efpg1c3j45vgui",
+      "date": "2026-10-31T08:00:00.000Z",
+      "statut": "programmé",
+      "etat": "PUBLISHED",
+      "url": "https://www.threads.com/@matou_ai/post/DfJrxxlDWpZ",
+      "manquant": false,
+      "gabarit": null,
+      "stats": {
+        "Views": 22,
+        "Likes": 0,
+        "Replies": 1,
+        "Reposts": 0,
+        "Quotes": 0
+      }
+    },
+    {
+      "reseau": "instagram",
+      "postId": "cmvvwu9ww0xtoo91cdw2ds1v8",
+      "integration": "cmvsaogt206kfor1cddnosuhf",
+      "date": "2026-10-31T11:00:00.000Z",
+      "statut": "programmé",
+      "etat": "PUBLISHED",
+      "url": "https://www.instagram.com/reel/DfKAIIwjOCP/",
+      "manquant": false,
+      "gabarit": null,
+      "stats": {
+        "Views": 126,
+        "Reach": 119,
+        "Saves": 0,
+        "Likes": 1,
+        "Comments": 1,
+        "Shares": 0
+      }
+    },
+    {
+      "reseau": "tiktok",
+      "postId": "cmvvwuapp0xtqo91cyxtfegps",
+      "integration": "cmvsakeo602wupg1crmgz7g9n",
+      "date": "2026-10-31T11:30:00.000Z",
+      "statut": "programmé",
+      "etat": "PUBLISHED",
+      "url": "https://www.tiktok.com/@matou_ai",
+      "manquant": false,
+      "gabarit": null,
+      "stats": {
+        "Views": 255,
+        "Likes": 2,
+        "Comments": 1,
+        "Shares": 0
+      }
+    },
+    {
+      "reseau": "youtube",
+      "postId": "cmvvwubjt0wtypa1c4untftvh",
+      "integration": "cmvsb3xwh07l1or1cvp01pod9",
+      "date": "2026-10-31T12:00:00.000Z",
+      "statut": "programmé",
+      "etat": "PUBLISHED",
+      "url": "https://www.youtube.com/watch?v=kHxltx0ZzL8",
+      "manquant": false,
+      "gabarit": null,
+      "stats": {
+        "Views": 300,
+        "Likes": 5,
+        "Comments": 0,
+        "Favorites": 0
+      }
+    },
+    {
+      "reseau": "threads-relance",
+      "postId": "cmvvwucgx0wu0pa1c60xohbaw",
+      "integration": "cmvsb2y1q03efpg1c3j45vgui",
+      "date": "2026-10-31T14:30:00.000Z",
+      "statut": "programmé",
+      "etat": "PUBLISHED",
+      "url": "https://www.threads.com/@matou_ai/post/DfKYCjsm1l8",
+      "manquant": false,
+      "gabarit": null,
+      "stats": {
+        "Views": 25,
+        "Likes": 0,
+        "Replies": 0,
+        "Reposts": 0,
+        "Quotes": 0
+      }
+    }
+  ]
+}

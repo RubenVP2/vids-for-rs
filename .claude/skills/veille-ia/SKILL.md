@@ -5,52 +5,47 @@ description: Trouve et classe les annonces IA du moment pour choisir le sujet du
 
 # Veille : choisir le sujet du jour
 
-## Où chercher (sources de premier rang d'abord)
+La veille est **déterministe** : un script collecte une liste fixe de flux, regroupe les
+articles qui parlent de la même annonce et note chaque sujet par règles fixes
+(`docs/veille.md`, poids dans `brand/veille.json`). Tu ne cherches pas l'actu toi-même
+(pas de recherche web pour trouver un sujet) et tu ne changes pas l'ordre du classement.
 
-- Blogs et salles de presse officiels : Anthropic (anthropic.com/news), OpenAI
-  (openai.com/news), Google DeepMind (deepmind.google/discover/blog), Google
-  (blog.google/technology/ai), Meta AI (ai.meta.com/blog), Mistral AI (mistral.ai/news),
-  Microsoft (blogs.microsoft.com/ai), Apple (machinelearning.apple.com), NVIDIA
-  (blogs.nvidia.com), Hugging Face (huggingface.co/blog), xAI (x.ai/news).
-- Médias pour recouper : The Verge, TechCrunch, Ars Technica, Les Échos, Le Monde Pixels,
-  Numerama.
+## Lancer
 
-Une rumeur ne vient que d'un média reconnu qui cite ses sources ; elle sera traitée
-avec le statut `rumeur` et Matou `sceptique`.
+```
+npm run veille -- --rang principal    # ou --rang second
+```
 
-## Avant de chercher
+Sous `lancer.sh`, c'est déjà fait : lis `veille/AAAA-MM-JJ-<rang>.md` (le classement
+complet) et la dernière ligne de la sortie, « CHOIX: <id> <url> ».
 
-Lire `docs/apprentissages.md` (ce qui a fait des vues chez Matou) et `docs/sujets.md`
-(la réserve). Lister les sujets déjà traités : `episodes/*/scenes.json` (source et hook).
+Le script écarte déjà : ce qui est déjà traité (même article, ou même annonce depuis
+moins de 7 jours), ce qui n'a ni source officielle ni deux médias, la finance et la
+bourse, et pour le **second** tout sujet de la même entreprise que le principal du jour.
 
-## Classer
+## Ton seul rôle : le veto
 
-Pour chaque candidat des 48 dernières heures, noter de 1 à 3 :
+Prends le sujet choisi. Tu peux l'**écarter**, et seulement pour une de ces raisons :
 
-1. **Impact grand public** : est-ce que ça change quelque chose pour quelqu'un qui
-   n'est pas dans la tech (travail, école, téléphone, prix, vie privée) ?
-2. **Potentiel de trafic** : un nom que tout le monde connaît (ChatGPT, Google, Apple,
-   Meta, WhatsApp…), un effet « quoi ?! » (chiffre, risque, première fois), une actu
-   reprise par plusieurs médias grand public, ou ce que `docs/apprentissages.md` a
-   confirmé. Une annonce de moins de 24 h prend +1 (plafonné à 3).
-3. **Concret** : disponible ou datée > vague promesse.
-4. **Explicable en 30 s** : une seule idée tient la vidéo.
+- on ne peut pas l'expliquer honnêtement en 30 s (une seule idée ne tient pas la vidéo) ;
+- rumeur fragile ou polémique sans fait vérifiable ;
+- trop technique pour quelqu'un qui n'est pas dans la tech, sans effet sur son quotidien ;
+- le `documentaliste` le juge mal sourcé (source introuvable ou illisible).
 
-Écarter ce qui est déjà traité (même annonce, ou même idée il y a moins de 7 jours) et
-ce qui n'a pas de source de premier rang ni de média reconnu. Total sur 12 ; **seuil :
-8**. En dessous, ce n'est pas l'actu du jour : prendre la réserve (`docs/sujets.md`).
+Pour écarter : `npm run veille -- --rang <rang> --ecarter <id> --raison "<raison courte>"`.
+Le script note la raison dans le fichier du jour et rend le candidat suivant (même
+ordre, toujours) : prends-le, sans juger s'il est « meilleur ». Trois veto au plus ; au
+quatrième, ou si la sortie dit « CHOIX: aucun », prends le premier sujet de
+`docs/sujets.md` (et retire-le) ; s'il est vide, arrête la routine avec `EPISODE: aucun`.
 
-Le sens avant le buzz : un sujet qui fait du clic mais qu'on ne peut pas expliquer
-honnêtement en 30 s (rumeur fragile, polémique sans fait vérifiable) est écarté.
+Le lien du choix peut être un article de média : la source de l'épisode reste la source
+de premier rang (le billet officiel cité par l'article), retrouvée par le `documentaliste`.
 
-**Fait quand** tu proposes à l'utilisateur 3 sujets classés, chacun avec : titre de
-hook possible, source (URL), statut, série (`flash` / `decrypte`), la note et la raison
-du classement. L'utilisateur choisit ; ensuite, skill `episode`.
+**Fait quand** un sujet est retenu, et que chaque veto a sa raison dans `veille/`.
 
-## Mode autonome
+## Mode manuel
 
-Tâche planifiée (`episode-du-jour`), ou l'utilisateur t'a laissé le choix (« fais la
-plus populaire », « choisis », « fais-moi une vidéo sur l'actu ») : montre le classement
-en quelques lignes, prends le premier au-dessus du seuil (sinon le premier de la
-réserve, retiré de `docs/sujets.md`) et enchaîne directement avec le skill `episode`,
-sans attendre de réponse.
+L'utilisateur demande « quoi publier » : lance le script et propose-lui les 3 premiers
+candidats (titre de hook possible, source, statut, série `flash` / `decrypte`, score et
+détail du score). Il choisit ; ensuite, skill `episode`. S'il te laisse le choix (« fais
+la plus populaire », « choisis ») : prends le CHOIX, comme en mode autonome.

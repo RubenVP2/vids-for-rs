@@ -27,9 +27,15 @@ Verdicts :
 - **À NUANCER** : vrai mais formulation qui pourrait tromper le grand public. Donne la
   reformulation.
 
-Sont acceptés sans source : les rituels de Matou (« En fait… », « C'était Matou, et
-c'est tout. », appel à s'abonner), les analogies pédagogiques clairement présentées
-comme telles, et le verdict du Hype-mètre (c'est une opinion) s'il est cohérent avec les faits.
+Sont acceptés sans source : les rituels de Matou (« En fait… », la phrase de fin qui
+renvoie au hook ; « C'était Matou, et c'est tout. » dans les anciens épisodes), les
+analogies pédagogiques clairement présentées comme telles, et le verdict du Hype-mètre
+avec l'avis de Matou (c'est une opinion) s'il est cohérent avec les faits.
+
+Les fenêtres d'app (`visuel` du hook, scènes `fenetre`) sont des reconstitutions : chaque
+bulle doit dire ce que la source dit que l'outil fait. BLOQUANT : une fonction que la
+source n'annonce pas, ou une phrase présentée comme une vraie réponse de l'app ou d'une
+personne alors que la source ne la cite pas.
 
 Vérifie aussi `scenes.json` → `source` (nom, URL, date, type) et `statut` contre
 l'en-tête de `source.md`.

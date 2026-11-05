@@ -57,13 +57,16 @@ qu'aucun retour « décroche » du spectateur n'est resté sans réponse.
 
 - Alignement < 85 % → la voix a mal lu (mot étranger, sigle). Réécrire le mot comme il
   se prononce avec `{affiché|prononcé}` (voir `ecriture-matou`), puis `--force`.
-- Durée > 36 s (flash) ou > 46 s (décrypté) → raccourcir le script, revalider, `--force`.
+- Durée > 36 s (flash), > 46 s (décrypté) ou > 62 s (format long, champ `long`) →
+  raccourcir le script, revalider, `--force`. Un sujet trop riche pour 30 s passe en
+  format long (skill `ecriture-matou`) plutôt que d'être tassé.
 
 **Fait quand** `timings.json` existe, alignement ≥ 85 %, durée dans la limite.
 
 ## 5. Rendu et contrôle visuel
 
-`npm run render -- NNN`, puis `npm run stills -- NNN` (une image par scène, avec
+`npm run render -- NNN`, `npm run carrousel -- NNN` (les diapos 4:5 du carrousel
+LinkedIn, tirées des scènes), puis `npm run stills -- NNN` (une image par scène, avec
 l'interface des réseaux simulée par-dessus).
 
 Lancer le sous-agent **`controleur-visuel`** sur le dossier. Corriger chaque problème
@@ -74,7 +77,8 @@ BLOQUANT dans `scenes.json` (texte trop long, mot coupé…), puis refaire rendu
 ## 6. Publication
 
 Suivre le skill **`publication`** pour écrire `publication.md` (TikTok, Instagram,
-YouTube, et le texte court de Threads, X et Bluesky). Puis `npm run check -- NNN`.
+YouTube, LinkedIn, Threads et sa relance : un texte taillé pour chaque réseau). Puis
+`npm run check -- NNN`.
 
 **Fait quand** `npm run check` affiche « Prêt pour la relecture humaine. »
 
@@ -92,11 +96,11 @@ site le publie seul une fois la vidéo programmée et sa date passée.
    en une phrase, le verdict du Hype-mètre et les points que tu n'as pas pu vérifier.
 3. `git add` du dossier (avec `article.md` et `miniature.jpg` ; les rendus sont ignorés par git), commit, push.
 
-L'utilisateur relit toujours avant de publier : ne présente jamais l'épisode comme publié.
+Ne présente jamais l'épisode comme publié.
 
 ## 8. Programmer dans Postiz
 
-Suivre le skill **`programmation`** : brouillons dans Postiz (clé d'API `POSTIZ_ENV`,
-sinon MCP Postiz), relecture de l'utilisateur, puis programmation sur son feu vert.
-Sans accès à Postiz (`npm run postiz -- --canaux` refusé et outils `mcp__Postiz__*`
-absents), le dire en une ligne et s'arrêter à l'étape 7.
+Suivre le skill **`programmation`** : brouillons dans Postiz (CLI `postiz`), puis
+programmation sur le feu vert de l'utilisateur (en routine : par le lanceur, après les
+garde-fous, avec droit de veto). Sans accès à Postiz
+(`npm run postiz -- --canaux` refusé), le dire en une ligne et s'arrêter à l'étape 7.

@@ -1,0 +1,69 @@
+{
+  "numero": 12,
+  "slug": "les-ia-cassent-git",
+  "serie": "decrypte",
+  "source": {
+    "nom": "OpenAI",
+    "url": "https://openai.com/index/scaling-git-at-openai",
+    "date": "2026-11-02",
+    "type": "blog"
+  },
+  "statut": "disponible",
+  "verdict": "prometteur",
+  "miniature": "Des IA font ==planter Git==",
+  "musique": true,
+  "gabarit": {
+    "ouverture": "question",
+    "corps": "comparaison"
+  },
+  "scenes": [
+    {
+      "type": "hook",
+      "texte": "Des robots de code peuvent-ils faire planter ==le logiciel== de tous les développeurs ?",
+      "titre": "Des IA qui font ==planter Git== ?",
+      "icone": "attention",
+      "matou": "surpris"
+    },
+    {
+      "type": "comparaison",
+      "texte": "OpenAI vient de l'avouer : leurs robots de code envoyaient tellement de modifications que Git bloquait une sauvegarde sur dix.",
+      "avant": {
+        "titre": "Avant",
+        "texte": "Git saturé par les robots de code"
+      },
+      "apres": {
+        "titre": "Nouveau moteur",
+        "texte": "Cinq fois plus rapide, sans rien changer aux commandes",
+        "quand": "Cinq"
+      },
+      "matou": "parle"
+    },
+    {
+      "type": "point",
+      "texte": "En fait, ils ont reconstruit tout le moteur avec leurs propres IA en dix semaines, sans changer la moindre commande.",
+      "titre": "Moteur reconstruit ==par l'IA==",
+      "corps": "Développé en dix semaines pour absorber tout le code.",
+      "icone": "eclair",
+      "matou": "enFait"
+    },
+    {
+      "type": "pourquoi",
+      "texte": "Et pour toi ? Les applications que tu utilises sur ton téléphone ou au travail devront être renforcées pour éviter les pannes.",
+      "titre": "Et pour toi ?",
+      "corps": "Les applications du quotidien devront être renforcées face au déluge de code.",
+      "icone": "cerveau",
+      "matou": "reflechit"
+    },
+    {
+      "type": "verdict",
+      "texte": "Hype-mètre : prometteur. Mon avis : faire réparer le système par les robots qui l'ont cassé, c'est du génie.",
+      "raison": "Git sauvé en interne par les IA, avec des améliorations reversées à tous.",
+      "matou": "verdict"
+    },
+    {
+      "type": "fin",
+      "texte": "Bref, même quand des IA font planter Git, c'est encore elles qui viennent le réparer.",
+      "matou": "content"
+    }
+  ]
+}

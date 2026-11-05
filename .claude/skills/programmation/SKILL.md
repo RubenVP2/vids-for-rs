@@ -1,130 +1,126 @@
 ---
 name: programmation
-description: Envoie un épisode de Matou prêt dans Postiz en brouillons (TikTok, Instagram, YouTube, Facebook, Threads, LinkedIn, X, Bluesky : les réseaux connectés), puis le programme sur le feu vert de l'utilisateur. À utiliser après l'étape 7 du skill episode, ou quand l'utilisateur dit « envoie dans Postiz », « programme », « planifie la vidéo ».
+description: Envoie un épisode de Matou prêt dans Postiz en brouillons (TikTok, Instagram, YouTube, Facebook, Threads, LinkedIn, X, Bluesky : les réseaux connectés), puis le programme (feu vert de l'utilisateur, ou garde-fous de la routine) et applique son veto. À utiliser après l'étape 7 du skill episode, ou quand l'utilisateur dit « envoie dans Postiz », « programme », « planifie la vidéo », « veto », « annule le #NNN ».
 ---
 
 # Programmation : épisode prêt → Postiz
 
 Postiz en abonnement cloud (formule Standard : 5 canaux). Comptes connectés : TikTok,
-Instagram, YouTube, Threads ; le 5e est à choisir par l'utilisateur. Il connecte lui-même
-ses comptes dans Postiz (« Add channel »). Deux accès :
+Instagram, YouTube, Threads, page LinkedIn « Matou AI ». L'utilisateur connecte lui-même
+ses comptes dans Postiz (« Add channel »).
 
-- **Clé d'API** (variable `POSTIZ_ENV` de l'environnement) : la voie normale. Si
-  `npm run postiz -- --canaux` liste les comptes, suivre la section « Avec la clé d'API »
-  en bas : le script téléverse la vidéo lui-même.
-- **MCP Postiz** (outils `mcp__Postiz__*`) : sans clé, étapes 0 à 4 ci-dessous ; la vidéo
-  doit alors être déposée à la main dans Postiz. Le MCP sert aussi, avec la clé, à
-  consulter le calendrier (`postsListTool`) ou supprimer un post.
+Accès : `npm run postiz` passe par la **CLI officielle `postiz`** (`scripts/lib/postiz-cli.ts`),
+qui s'authentifie avec son jeton OAuth (`postiz auth:login`, fait une fois sur le Pi) ou
+avec une clé (`POSTIZ_API_KEY`, ou `POSTIZ_ENV`). Le script téléverse lui-même la vidéo
+et la miniature. Pour le reste (statistiques, calendrier, suppression d'un post), le
+skill officiel **`postiz`** s'applique.
 
-Pour le reste (statistiques…), le skill officiel **`postiz`** s'applique.
+**Règle d'or** : les posts sont créés en **brouillon**. Deux chemins seulement les font
+passer en programmé :
 
-**Règle d'or** : rien n'est publié sans un « oui » explicite de l'utilisateur, dans cette
-session, pour cet épisode (une tâche planifiée n'est pas un « oui » : la routine
-`episode-du-jour` s'arrête aux brouillons). Les posts sont créés en **brouillon** (`type: "draft"`) ; ils ne
-passent en programmé qu'après ce « oui ».
+- **En session** : le « oui » explicite de l'utilisateur pour cet épisode.
+- **En routine** : `scripts/routines/lancer.sh`, après ses garde-fous (avis de l'agent,
+  `npm run check`). L'utilisateur garde un **droit de veto** jusqu'à l'heure de chaque
+  post (décision du 2026-10-30). Un agent ne lance jamais `--programmer` de lui-même en
+  routine.
+- **En urgent** : le « ok #NNN » de l'utilisateur sur Discord, que Hermes traduit en
+  `scripts/routines/commande.sh ok NNN` (`--rang urgent --envoyer --publier` : posts 5 à
+  15 min après). Détail : `docs/routines.md`.
 
 ## 0. Prérequis
 
 - `npm run check -- NNN` affiche « Prêt pour la relecture humaine. »
-- `mcp__Postiz__integrationList` renvoie au moins un compte. Liste vide : dire à
-  l'utilisateur de connecter ses réseaux dans Postiz. Outils `mcp__Postiz__*` absents :
-  le connecteur Postiz n'est pas branché sur cette session.
-- **La vidéo est dans la médiathèque Postiz.** Le MCP ne lit pas les fichiers de la
-  session, et `uploadFromUrlTool` exige une URL publique. Envoyer à l'utilisateur la vidéo
-  et la miniature (`rendu/`), lui demander de les déposer dans Postiz (Media › Upload),
-  puis les retrouver avec `mcp__Postiz__mediaListTool` (`search` : `NNN-slug`). Ne jamais
-  publier la vidéo sur un hébergeur tiers pour obtenir une URL.
+- `npm run postiz -- --canaux` liste au moins un compte, avec les règles de chaque
+  réseau. Refusé : `npx postiz auth:status` dit pourquoi (jeton absent ou expiré : à
+  l'utilisateur de relancer `postiz auth:login` sur le Pi) ; s'arrêter et le dire.
 
 Réseaux gérés (un brouillon par compte connecté, les autres ignorés) : TikTok, Instagram,
 YouTube, Facebook (page), Threads, LinkedIn (profil ou page), X, Bluesky.
 
-**Fait quand** les comptes sont listés et que la vidéo et la miniature ont un `path` dans
-la médiathèque.
+**Fait quand** les comptes sont listés.
 
 ## 1. Lire les règles des réseaux (une fois par session)
 
-Pour chaque réseau connecté : `mcp__Postiz__integrationSchema` (`platform` = son
-`identifier`, `isPremium: false`). Comparer `settings.required` et les `enum` avec
-`brand/postiz.json` : un réglage qui ne s'applique pas est **ignoré sans erreur** (règle 4
-du skill `postiz`). Si un champ obligatoire manque, corriger `brand/postiz.json` et le
-signaler.
+Dans la sortie de `--canaux`, comparer pour chaque réseau `settings.required` et les
+`enum` avec `brand/postiz.json` : un réglage qui ne s'applique pas est **ignoré sans
+erreur** (règle 4 du skill `postiz`). Si un champ obligatoire manque, corriger
+`brand/postiz.json` et le signaler.
 
 Choix déjà faits dans `brand/postiz.json` (ne pas changer sans l'utilisateur) :
 TikTok en `DIRECT_POST` (`UPLOAD` ne publie pas) ; mention « fait avec l'IA » sur TikTok
 et X (voix de synthèse, pour éviter les sanctions) ; Instagram en Reel (`post_type: post`) ;
 YouTube public, pas « pour enfants » ; Facebook en publication (pas en story) ; X ouvert
-aux réponses de tous.
+aux réponses de tous ; LinkedIn en carrousel (`post_as_images_carousel`).
 
 ## 2. Aperçu
 
-`npm run postiz -- NNN --commentaire [--date AAAA-MM-JJTHH:MM]`
+`npm run postiz -- NNN --commentaire [--rang second] [--date AAAA-MM-JJ]`
 
-- Date : avec la clé, le premier jour sans post dans le calendrier Postiz, à l'heure de
-  `brand/postiz.json` (18 h, heure de Paris), aujourd'hui compris s'il reste 3 h. Sans
-  clé : demain, à vérifier avec `mcp__Postiz__postsListTool`. Rythme visé : 1 vidéo par
-  jour. Si l'utilisateur a donné un jour, le prendre (`--date`).
+- Chaque réseau a son format, son texte et son **créneau** (`docs/reseaux.md`,
+  `brand/postiz.json` → `creneaux`), selon le **rang** de l'épisode :
+  - principal (défaut, épisode du matin) : LinkedIn 8 h 30 en semaine (carrousel de
+    `rendu/carrousel/`), Threads 9 h (vidéo) puis 15 h 30 (relance, texte seul),
+    Instagram 12 h, TikTok 12 h 30, YouTube 13 h ;
+  - second (`--rang second`, épisode du soir) : Instagram 18 h 30, TikTok 19 h, Threads
+    19 h 30 puis 21 h 30 (relance), YouTube 20 h ; pas de LinkedIn (« réservé à
+    l'épisode principal », c'est voulu : un seul post par jour ouvré).
+- Le script place chaque réseau **le jour même** : à son heure si le créneau est libre
+  (aucun post programmé à moins de 90 min sur ce réseau ; un brouillon ne compte pas) et
+  au moins `delaiVeto` (2 h) après maintenant, sinon 2 h 30 plus tard. Sinon → « Pas de
+  post : … » : une actu ne glisse jamais au lendemain. Un épisode fini trop tard pour
+  le jour même n'a donc aucun post sans `--date` (« Aucun post à créer »).
+- Si l'utilisateur a donné un jour : `--date AAAA-MM-JJ` (chaque réseau à son heure ce
+  jour-là). `--date AAAA-MM-JJTHH:MM` met tous les réseaux à cette heure : seulement s'il
+  le demande.
 - `--commentaire` ajoute la ligne « Commentaire à épingler » de `publication.md` en
-  premier commentaire partout sauf sur TikTok (qui ne le permet pas) ; sur Threads, X et
-  Bluesky, c'est la première réponse du fil. Il reste à l'épingler à la main là où c'est
-  possible, et à le poster à la main sur TikTok.
-- Le script écrit `postiz-mcp.json` : l'argument de `integrationSchedulePostTool` pour les
-  8 réseaux, textes en HTML, couverture sur chaque vidéo.
+  premier commentaire partout sauf sur TikTok (qui ne le permet pas) et la relance ; sur
+  Threads, X et Bluesky, c'est la première réponse du fil. Il reste à l'épingler à la main
+  là où c'est possible, et à le poster à la main sur TikTok.
+- Le script écrit `postiz.json` (les charges utiles de `postiz posts:create --json`, une
+  par date) et n'envoie rien. Il affiche réseau, date, format et longueur de chaque post.
 
 **Fait quand** la sortie ne contient aucune ligne ATTENTION.
 
 ## 3. Créer les brouillons
 
-Partir de `postiz-mcp.json` :
+La même commande avec `--envoyer` : téléverse la vidéo, la miniature et le carrousel,
+crée un brouillon par réseau à son créneau, écrit `postiz-envoi.json` (`{envoye, date
+(la plus proche), rang, statut, video, miniature, carrousel, postes: [{reseau, postId,
+integration, date, statut}]}` ; la relance Threads a pour réseau `threads-relance`).
+Committer `postiz.json` et `postiz-envoi.json`.
 
-1. Garder les entrées des réseaux connectés ; remplacer `<id Réseau>` par l'`id` du compte
-   (`integrationList`). Deux comptes pour un même réseau : demander lequel.
-2. Remplacer `<chemin de …mp4>` et `<chemin de …png>` par les `path` de la médiathèque ;
-   dans le réglage YouTube `thumbnail`, mettre aussi l'`id` de la miniature.
-3. Appeler `mcp__Postiz__integrationSchedulePostTool` avec `socialPost`, `type` restant
-   `"draft"`. En cas d'`output.errors`, corriger et relancer.
+Le script refuse de renvoyer un épisode qui a déjà un `postiz-envoi.json` : vérifier
+d'abord dans Postiz (`npx postiz posts:list`) ; `--force` crée des doublons.
 
-Écrire `postiz-envoi.json` dans le dossier de l'épisode : `{envoye, date, statut:
-"brouillon", video, miniature, postes: [{reseau, postId, integration}]}`, ids tirés de la
-réponse. Committer `postiz-mcp.json` et `postiz-envoi.json`. Ne jamais recréer des
-brouillons si `postiz-envoi.json` existe : vérifier d'abord avec `postsListTool`.
-
-**Fait quand** `postiz-envoi.json` existe et que les liens `previewUrl` sont donnés à
-l'utilisateur.
-
-**Réseau connecté après coup** (rattraper un épisode déjà parti ailleurs) : avec la clé,
+**Réseau connecté après coup** (rattraper un épisode déjà parti ailleurs) :
 `npm run postiz -- NNN --envoyer --reseaux linkedin [--date …] [--commentaire]`, puis
 `--programmer --reseaux linkedin` sur feu vert. Seuls ces réseaux sont envoyés ; leurs
 posts s'ajoutent à `postiz-envoi.json` avec leur propre `date` et `statut`.
 
+**Fait quand** `postiz-envoi.json` existe.
+
 ## 4. Faire relire, puis programmer
 
-Dire à l'utilisateur : les brouillons sont dans le calendrier Postiz, à la date prévue
-(donner les `previewUrl`). Ce qu'il doit regarder :
+Dire à l'utilisateur : les brouillons sont dans le calendrier Postiz, chacun à son
+créneau, et le premier à relire (celui qui part le plus tôt).
+Ce qu'il doit regarder :
 
-- la vidéo et le texte de chaque réseau ;
-- la couverture ;
+- la vidéo et le texte de chaque réseau, la relance Threads ;
+- le carrousel LinkedIn et la couverture ;
 - le commentaire de sources à épingler.
 
 Ne jamais présenter l'épisode comme publié.
 
-Sur un « oui » explicite (« programme », « vas-y », « publie ») : le MCP n'a pas d'outil
-pour changer le statut d'un post. Soit l'utilisateur programme les brouillons lui-même
-dans Postiz, soit tu rappelles `integrationSchedulePostTool` avec le même `socialPost` en
-`type: "schedule"`, puis tu supprimes les brouillons (`deletePostTool`, ids de
-`postiz-envoi.json`) et tu vérifies avec `postsListTool` qu'il reste un seul post par
-réseau. Avec une clé d'API, `npm run postiz -- NNN --programmer` suffit. Mettre ensuite
-`statut: "programmé"` et les nouveaux ids dans `postiz-envoi.json`, et committer.
+Sur un « oui » explicite (« programme », « vas-y », « publie ») :
+`npm run postiz -- NNN --programmer` (ou l'utilisateur programme lui-même dans Postiz),
+puis committer `postiz-envoi.json`.
 
 **Fait quand** l'utilisateur a donné son feu vert et que `postiz-envoi.json` dit « programmé ».
 
-## Avec la clé d'API
+## 5. Veto
 
-Clé lue dans `POSTIZ_ENV` (ou `POSTIZ_API_KEY`, ou secret réseau sur `api.postiz.com`).
-Mêmes règles que ci-dessus (brouillons, relecture, « oui » explicite), en trois commandes :
-
-1. `npm run postiz -- --canaux` : comptes et règles de chaque réseau (étapes 0 et 1).
-2. `npm run postiz -- NNN --commentaire` (aperçu, étape 2), puis la même commande avec
-   `--envoyer` : téléverse la vidéo et la miniature, crée un brouillon par compte, écrit
-   `postiz-envoi.json`. Committer `postiz.json`, `postiz-mcp.json` et `postiz-envoi.json`.
-3. Après le « oui » : `npm run postiz -- NNN --programmer`, puis committer
-   `postiz-envoi.json`.
+L'utilisateur dit « veto #NNN » (ou « annule », « retiens #NNN », éventuellement pour
+un réseau seulement) : `npm run postiz -- NNN --annuler [--reseaux tiktok]`. Les posts
+programmés qui ne sont pas encore partis repassent en brouillon ; ceux déjà publiés ne
+bougent pas (le dire, et proposer de les supprimer dans Postiz s'il le faut : jamais sans
+son accord). Committer `postiz-envoi.json`. Pour les remettre : `--programmer`.

@@ -1,0 +1,91 @@
+{
+  "maj": "2026-11-02T09:39:06.914Z",
+  "jours": 30,
+  "date": "2026-10-31T08:00:00.000Z",
+  "rang": "principal",
+  "postes": [
+    {
+      "reseau": "instagram",
+      "postId": "cmvupweqq030yn01c8kfo7j3d",
+      "integration": "cmvsaogt206kfor1cddnosuhf",
+      "date": "2026-10-30T17:30:00.000Z",
+      "statut": "programmé",
+      "etat": "PUBLISHED",
+      "url": "https://www.instagram.com/reel/DfIH7uNifa7/",
+      "manquant": false,
+      "gabarit": null,
+      "stats": {
+        "Views": 168,
+        "Reach": 158,
+        "Saves": 0,
+        "Likes": 0,
+        "Comments": 1,
+        "Shares": 0
+      }
+    },
+    {
+      "reseau": "tiktok",
+      "postId": "cmvupwk7y032rlc1cfpnmaujv",
+      "integration": "cmvsakeo602wupg1crmgz7g9n",
+      "date": "2026-10-30T18:00:00.000Z",
+      "statut": "programmé",
+      "etat": "PUBLISHED",
+      "url": "https://www.tiktok.com/@matou_ai",
+      "manquant": false,
+      "gabarit": null,
+      "stats": {
+        "Views": 262,
+        "Likes": 6,
+        "Comments": 0,
+        "Shares": 0
+      }
+    },
+    {
+      "reseau": "youtube",
+      "postId": "cmvupwqyi032vlc1c9k5k9sb0",
+      "integration": "cmvsb3xwh07l1or1cvp01pod9",
+      "date": "2026-10-30T19:00:00.000Z",
+      "statut": "programmé",
+      "etat": "PUBLISHED",
+      "url": "https://www.youtube.com/watch?v=hYoPeiYFgBo",
+      "manquant": false,
+      "gabarit": null,
+      "stats": {
+        "Views": 265,
+        "Likes": 8,
+        "Comments": 0,
+        "Favorites": 0
+      }
+    },
+    {
+      "reseau": "threads",
+      "postId": "cmvupwwfi031gn01cab2gwg7v",
+      "integration": "cmvsb2y1q03efpg1c3j45vgui",
+      "date": "2026-10-30T20:00:00.000Z",
+      "statut": "programmé",
+      "etat": "PUBLISHED",
+      "url": "https://www.threads.com/@matou_ai/post/DfIZXhEFN0W",
+      "manquant": false,
+      "gabarit": null,
+      "stats": {
+        "Views": 3,
+        "Likes": 0,
+        "Replies": 1,
+        "Reposts": 0,
+        "Quotes": 0
+      }
+    },
+    {
+      "reseau": "threads-relance",
+      "postId": "cmvuhp0s946rvor1c68u8qtxy",
+      "integration": "cmvsb2y1q03efpg1c3j45vgui",
+      "date": "2026-10-31T18:30:00.000Z",
+      "statut": "brouillon",
+      "etat": "DRAFT",
+      "url": null,
+      "manquant": false,
+      "gabarit": null,
+      "stats": {}
+    }
+  ]
+}

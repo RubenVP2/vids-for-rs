@@ -2,6 +2,7 @@ import React from 'react';
 import {AbsoluteFill, Composition, Still} from 'remotion';
 import demoEpisode from '../episodes/000-bande-annonce/scenes.json';
 import demoTimings from '../episodes/000-bande-annonce/timings.json';
+import {DIAPO, DiapoCarrousel, diapoPropsSchema} from './Carrousel';
 import {SurcoucheReseaux} from './components/SurcoucheReseaux';
 import {dureeEnImages, EpisodeVideo} from './Episode';
 import {Miniature} from './Miniature';
@@ -48,6 +49,14 @@ export const Racine: React.FC = () => (
       calculateMetadata={({props}) => ({durationInFrames: dureeEnImages(props, FPS)})}
     />
     <Still id="Miniature" component={Miniature} width={W} height={H} schema={episodePropsSchema} defaultProps={demo} />
+    <Still
+      id="DiapoCarrousel"
+      component={DiapoCarrousel}
+      width={DIAPO.largeur}
+      height={DIAPO.hauteur}
+      schema={diapoPropsSchema}
+      defaultProps={{episode: demo.episode, index: 0}}
+    />
     <Still id="PlancheMarque" component={PlancheMarque} width={W} height={H} />
     <Still id="PlancheMatou" component={PlancheMatou} width={W} height={H} />
     <Still id="Avatar" component={Avatar} width={1080} height={1080} />

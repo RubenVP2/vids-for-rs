@@ -4,7 +4,9 @@
   "voix": "Puck",
   "format": "pcm",
   "frequencePcm": 24000,
-  "instructions": "Voix masculine française, jeune et complice, pédagogue, rythme vif mais articulé, petit sourire dans la voix, humour pince-sans-rire. Marque une courte pause entre les phrases.",
+  "instructions": "Voix masculine française, jeune et complice, pédagogue, débit posé (environ 170 mots par minute, jamais précipité), articulation nette, intonation variée qui monte et descend (jamais plate ni récitée), petit sourire dans la voix, humour pince-sans-rire. Marque une vraie respiration entre les phrases.",
+  "$profil": "Hauteur médiane de Puck mesurée sur les épisodes 000-009 (118-147 Hz). Sert d'ALERTE, pas de refus : deux voix d'homme peuvent partager la même plage, seule l'identité du modèle fait foi.",
+  "profil": {"medianeHz": 125, "tolerance": 0.15},
   "transcription": "openai/whisper-large-v3",
   "secours": [
     {"modele": "microsoft/mai-voice-2.1", "voix": "fr-FR-Marc:MAI-Voice-2.1", "format": "mp3"},
