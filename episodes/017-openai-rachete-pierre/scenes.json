@@ -29,21 +29,21 @@
       "type": "comparaison",
       "texte": "OpenAI annonce le rachat de Pierre Computer pour stocker le travail de ses robots de ==code==.",
       "avant": {
-        "titre": "Git traditionnel",
-        "texte": "Le placard pensé pour des humains qui codent à la main"
+        "titre": "Git classique",
+        "texte": "Pensé pour des ==humains=="
       },
       "apres": {
-        "titre": "Nouveau moteur",
-        "texte": "Pensé pour des robots qui créent du code en continu",
-        "quand": "robots"
+        "titre": "Pierre Computer",
+        "texte": "Taillé pour des ==robots==",
+        "quand": "annonce"
       },
       "matou": "parle"
     },
     {
       "type": "point",
       "texte": "En fait, pour rivaliser avec GitHub, OpenAI utilisait déjà ces outils pour afficher les ==différences==.",
-      "titre": "Le rival de ==GitHub== ?",
-      "corps": "OpenAI veut son propre espace pour héberger tout le code.",
+      "titre": "Déjà au cœur d'==OpenAI==",
+      "corps": "Objectif : détrôner ==GitHub==",
       "icone": "eclair",
       "matou": "enFait"
     },
@@ -51,14 +51,14 @@
       "type": "pourquoi",
       "texte": "Et pour toi ? Les programmes seront corrigés et mis à jour en continu par l'==IA==.",
       "titre": "Et pour toi ?",
-      "corps": "Des logiciels corrigés et mis à jour en continu par l'IA.",
+      "corps": "Logiciels mis à jour ==en continu==",
       "icone": "ampoule",
       "matou": "reflechit"
     },
     {
       "type": "verdict",
       "texte": "Hype-mètre : prometteur. Mon avis : pour rivaliser avec GitHub, OpenAI devait posséder la boîte où dort le ==code==.",
-      "raison": "Repenser le stockage du code pour les robots de programmation.",
+      "raison": "Posséder la boîte où dort ==le code==",
       "matou": "verdict"
     },
     {

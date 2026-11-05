@@ -32,7 +32,8 @@
           },
           {
             "de": "app",
-            "texte": "Budget quotidien réduit à 200 $ !"
+            "texte": "Budget réduit à ==200 $ / jour== !",
+            "quand": "trouve"
           }
         ]
       },
@@ -41,17 +42,17 @@
     {
       "type": "liste",
       "texte": "C'est une rumeur signée Bloomberg : Apple couperait les budgets, deux cents dollars pour les ==ingénieurs==, et cent pour les autres.",
-      "titre": "Les coupes d'Apple",
+      "titre": "Plafonds IA chez ==Apple==",
       "elements": [
         {
-          "texte": "Ingénieurs : 200 $ / jour",
+          "texte": "Ingénieurs : ==200 $ / jour==",
           "icone": "euro",
-          "quand": "ingénieurs"
+          "quand": "couperait"
         },
         {
-          "texte": "Autres équipes : 100 $ / jour",
+          "texte": "Autres équipes : ==100 $ / jour==",
           "icone": "croix",
-          "quand": "autres"
+          "quand": "deux"
         }
       ],
       "matou": "parle"
@@ -59,8 +60,8 @@
     {
       "type": "point",
       "texte": "En fait, avec une R&D en hausse de 32 %, la facture de l'==IA== explose.",
-      "titre": "Une facture qui ==explose==",
-      "corps": "La R&D a bondi de 32 % en un an avec l'IA.",
+      "titre": "R&D Apple : ==+32 %==",
+      "corps": "La facture ==IA explose==",
       "icone": "graphique",
       "matou": "enFait"
     },
@@ -68,14 +69,14 @@
       "type": "pourquoi",
       "texte": "Et pour toi ? Si même Apple compte ses sous, l'IA gratuite ne va pas ==durer==.",
       "titre": "Et pour toi ?",
-      "corps": "Si les géants brident leurs équipes, l'IA gratuite deviendra bientôt payante.",
+      "corps": "La fin de l'==IA gratuite== ?",
       "icone": "ampoule",
       "matou": "reflechit"
     },
     {
       "type": "verdict",
       "texte": "Hype-mètre : pur buzz. Mon avis : nous vendre l'IA magique tout en bridant ses équipes, c'est gonflé.",
-      "raison": "Vendre l'IA magique aux clients en coupant le robinet à ses ingénieurs.",
+      "raison": "IA ==magique== en pub, ==rationnée== en interne",
       "matou": "verdict"
     },
     {

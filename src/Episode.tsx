@@ -10,20 +10,23 @@ import {chargerPolices} from './fonts';
 import {Matou} from './mascot/Matou';
 import type {EtatMatou} from './mascot/MatouSvg';
 import {rang} from './rotation';
-import {imageSignature, MATOU_PAR_DEFAUT, type MotScene, SceneVue, ZONE} from './scenes/Scenes';
+import {imageSignature, imagesPop, MATOU_PAR_DEFAUT, type MotScene, SceneVue, ZONE} from './scenes/Scenes';
 import type {EpisodeProps, Scene} from './schema';
 import {tokens} from './theme';
 
 chargerPolices();
 
 /**
- * Après le dernier mot : le temps du « Ma-tou ! » (1,6 s, joué après la voix, voir
- * `imageSignature`), pour que la fin se pose au lieu de tomber. Avec 1 s et le jingle sous
- * la voix (essai du 01/11), la phrase finissait sur un silence et la vidéo semblait coupée.
+ * Après le dernier mot : le temps du « Ma-tou ! » (~0,95 s utiles dans signature.wav, joué
+ * juste après la voix, voir `imageSignature`), pour boucler net dès la dernière note sans
+ * laisser 1 s de silence qui ferait balayer.
  */
-export const QUEUE_SECONDES = 2;
-/** Les visuels arrivent un poil avant la voix : l'œil précède l'oreille. */
-const AVANCE = 4;
+export const QUEUE_SECONDES = 1.25;
+/**
+ * Les visuels arrivent à la coupure entre deux scènes, sans jamais mordre sur le dernier
+ * mot de la scène précédente (pour ne pas écourter la lecture de la carte précédente).
+ */
+const AVANCE = 2;
 
 type Placement = {x: number; y: number; largeur: number};
 // Position de Matou (coin haut-gauche) selon la scène. Toujours au-dessus de la marge du bas.
@@ -59,7 +62,11 @@ export const SONS = {
 };
 
 export const calculerDebuts = (props: EpisodeProps, fps: number) =>
-  props.timings.scenes.map((s, i) => (i === 0 ? 0 : Math.max(0, Math.round(s.debut * fps) - AVANCE)));
+  props.timings.scenes.map((s, i) => {
+    if (i === 0) return 0;
+    const finPrec = Math.round(props.timings.scenes[i - 1].fin * fps);
+    return Math.max(finPrec, Math.round(s.debut * fps) - AVANCE);
+  });
 
 export const dureeEnImages = (props: EpisodeProps, fps: number) =>
   Math.ceil((props.timings.duree + QUEUE_SECONDES) * fps);
@@ -88,14 +95,14 @@ export const EpisodeVideo: React.FC<EpisodeProps> = (props) => {
     y: interpolate(s, [0, 1], [precedent.y, actuel.y]),
     largeur: interpolate(s, [0, 1], [precedent.largeur, actuel.largeur]),
   };
-  const verres = scene.type === 'verdict' && frame - debuts[iScene] > 30 ? iconeVerdict(episode.verdict) : undefined;
+  const verres = scene.type === 'verdict' && frame - debuts[iScene] > 18 ? iconeVerdict(episode.verdict) : undefined;
 
   return (
     <MiseEnPage.Provider value={{miroir}}>
       <AbsoluteFill>
         <FondCahier />
         <DefsBouillonne />
-          <EnTete
+        <EnTete
           episode={episode}
           apparition={debuts[1]}
           verdict={iVerdict >= 0 ? debuts[iVerdict] : undefined}
@@ -105,13 +112,20 @@ export const EpisodeVideo: React.FC<EpisodeProps> = (props) => {
         {episode.scenes.map((sc, i) => {
           const debut = debuts[i];
           const fin = i + 1 < debuts.length ? debuts[i + 1] : durationInFrames;
+          const duree = fin - debut;
           const mots: MotScene[] = timings.mots
             .filter((m) => m.scene === i)
             .map((m) => ({texte: m.texte, debut: Math.round(m.debut * fps) - debut, fin: Math.round(m.fin * fps) - debut}));
+          const pops = imagesPop(sc, mots, duree);
           return (
-            <Sequence key={i} from={debut} durationInFrames={fin - debut} name={`${i + 1}. ${sc.type}`}>
-              <SceneVue scene={sc} episode={episode} mots={mots} duree={fin - debut} />
+            <Sequence key={i} from={debut} durationInFrames={duree} name={`${i + 1}. ${sc.type}`}>
+              <SceneVue scene={sc} episode={episode} mots={mots} duree={duree} />
               {i > 0 ? <Audio src={staticFile(SONS.transition)} volume={tokens.audio.bruitagesVolume * 0.6} /> : null}
+              {pops.map((fPop, j) => (
+                <Sequence key={`pop-${j}`} from={fPop} layout="none">
+                  <Audio src={staticFile(SONS.pop)} volume={tokens.audio.bruitagesVolume * 0.45} />
+                </Sequence>
+              ))}
               {sc.type === 'source' ? (
                 <Sequence from={14} layout="none">
                   <Audio src={staticFile(SONS.tampon)} volume={tokens.audio.bruitagesVolume} />
@@ -128,7 +142,7 @@ export const EpisodeVideo: React.FC<EpisodeProps> = (props) => {
                 </>
               ) : null}
               {sc.type === 'verdict' ? (
-                <Sequence from={30} layout="none">
+                <Sequence from={18} layout="none">
                   <Audio src={staticFile(SONS.verdict)} volume={tokens.audio.bruitagesVolume} />
                 </Sequence>
               ) : null}

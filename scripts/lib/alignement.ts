@@ -78,7 +78,10 @@ export const aligner = (motsScript: string[], entendus: MotTranscrit[], dureeTot
     } else if (i > 0 && (j === 0 || c === 1)) i--;
     else j--;
   }
-  // interpolation des mots non retrouvés, au prorata du nombre de lettres
+  // interpolation des mots non retrouvés, au prorata du nombre de lettres.
+  // Si le mot précédent finit une phrase (., !, ?, :) et que le trou contient un silence
+  // inter-phrase, on colle les mots manquants vers t1 (après la pause) pour ne pas avaler
+  // le silence dans le 1er mot de la scène suivante.
   let k = 0;
   while (k < res.length) {
     if (res[k]) {
@@ -91,9 +94,12 @@ export const aligner = (motsScript: string[], entendus: MotTranscrit[], dureeTot
     const t1 = fin < res.length ? res[fin]!.debut : dureeTotale;
     const poids = motsScript.slice(k, fin).map((w) => Math.max(1, normaliser(w).length));
     const total = poids.reduce((x, y) => x + y, 0);
-    let t = t0;
+    const apresPonctuation = k > 0 && /[.!?:]$/.test(motsScript[k - 1].trim());
+    const dureeEstimee = total * 0.065;
+    let t = apresPonctuation && fin < res.length && t1 - t0 > dureeEstimee + 0.12 ? t1 - dureeEstimee : t0;
+    const plage = Math.max(0.05, t1 - t);
     for (let q = k; q < fin; q++) {
-      const d = ((t1 - t0) * poids[q - k]) / total;
+      const d = (plage * poids[q - k]) / total;
       res[q] = {texte: motsScript[q], debut: t, fin: t + d, trouve: false};
       t += d;
     }

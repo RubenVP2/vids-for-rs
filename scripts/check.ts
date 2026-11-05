@@ -1,10 +1,10 @@
 // Contrôle qualité APRÈS le rendu : la vidéo est-elle publiable ?
 // Usage : npm run check -- <épisode>
 import {createHash} from 'node:crypto';
-import {execFileSync} from 'node:child_process';
+import {execFileSync, spawnSync} from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-import {budgetDe, dossierEpisode, lireEpisode, lireTimings, nomEpisode, RACINE} from './lib/episode';
+import {budgetDe, dossierEpisode, lireEpisode, lireTimings, nomEpisode} from './lib/episode';
 import {controler, numeroDe, reglages as gabarits} from './lib/gabarits';
 import {alerteTimbre, avertissements as avertVoix, defauts as defautsVoix, resume as resumeVoix} from './lib/qualite-voix';
 import {lireReglagesVoix} from './lib/reglages-voix';
@@ -32,8 +32,10 @@ if (fs.existsSync(mp4)) {
   const video = info.streams.find((s: {codec_name: string}) => s.codec_name === 'h264');
   verifier(video?.width === 1080 && video?.height === 1920, 'Format 1080×1920 H.264', 'Format inattendu (attendu 1080×1920 H.264)');
   verifier(info.streams.some((s: {codec_name: string}) => s.codec_name === 'aac'), 'Piste audio AAC', 'Pas de piste audio');
-  const sortie = execFileSync('sh', ['-c', `ffmpeg -hide_banner -i "${mp4}" -af loudnorm=print_format=json -f null - 2>&1 | tail -12`]).toString();
-  const lufs = Number(/"input_i" : "(-?[\d.]+)"/.exec(sortie)?.[1]);
+  const sortie = String(
+    spawnSync('ffmpeg', ['-hide_banner', '-i', mp4, '-af', 'loudnorm=print_format=json', '-f', 'null', '-'], {encoding: 'utf8'}).stderr ?? '',
+  );
+  const lufs = Number(/"input_i"\s*:\s*"(-?[\d.]+)"/.exec(sortie)?.[1]);
   verifier(Math.abs(lufs + 14) <= 1.5, `Volume ${lufs} LUFS`, `Volume ${lufs} LUFS (viser -14)`);
 }
 // Voix : l'IDENTITÉ du modèle fait foi (la hauteur seule ne distingue pas deux voix d'homme).
@@ -57,16 +59,16 @@ try {
   console.log('Provenance absente (épisode antérieur ou voix non régénérée) : identité vérifiée par le modèle seul.');
 }
 
-// Mesures de la prise : plate ou hachée = refus. Débit rapide et hauteur inhabituelle = alertes.
+// Mesures de la prise : plate ou hachée = refus. Débit hors plage et hauteur inhabituelle = alertes.
 if (timings.qualite) {
   const defauts = defautsVoix(timings.qualite);
   verifier(
     defauts.length === 0,
-    `Voix posée (${resumeVoix(timings.qualite)})`,
+    `Voix rythmée (${resumeVoix(timings.qualite)})`,
     `Voix à refaire : ${defauts.join(' ; ')} — relancer npm run voice -- ${nom} --force`,
   );
-  const rapide = avertVoix(timings.qualite);
-  if (rapide.length) console.log(`Voix rapide (${rapide.join(' ; ')}) : raccourcir le texte plutôt que refaire la prise.`);
+  const avDebit = avertVoix(timings.qualite);
+  if (avDebit.length) console.log(`Voix hors plage (${avDebit.join(' ; ')}) : lancer npm run voice -- ${nom} --recaler (ou raccourcir le texte).`);
   if (reglagesVoix.profil) {
     const alerte = alerteTimbre(timings.qualite, reglagesVoix.profil);
     if (alerte.length) console.log(`ALERTE ${alerte.join(' ; ')} : à écouter (profil dans brand/voix.json).`);

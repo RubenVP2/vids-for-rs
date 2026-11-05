@@ -1,24 +1,36 @@
 // Étape « voix » : script → voix.mp3 + timings.json (minutage de chaque mot).
 // 1. synthèse vocale de tout le texte d'un coup (prosodie naturelle) via OpenRouter ;
-// 2. mesure de chaque prise (débit, intonation, pauses) et reprise si la voix est plate ;
-// 3. transcription horodatée (OpenRouter, Whisper) puis alignement des mots du script ;
-// 4. enveloppe du volume par image, pour animer la bouche de Matou.
-// Usage : npm run voice -- <épisode> [--force]
+// 2. raccourcissement des silences internes (> 260 ms → 220 ms, 350 ms entre scènes) et calage du débit (~204 mots/min) ;
+// 3. mesure de chaque prise (débit, intonation, pauses) et reprise si la voix est plate ;
+// 4. transcription horodatée (OpenRouter, Whisper) puis alignement des mots du script ;
+// 5. enveloppe du volume par image, pour animer la bouche de Matou et affiner les débuts de scène.
+// Usage : npm run voice -- <épisode> [--force] [--recaler]
 import {createHash} from 'node:crypto';
 import {execFileSync} from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import {texteAffiche, texteParle, type Timings} from '../src/schema';
 import {aligner, normaliser} from './lib/alignement';
-import {dossierEpisode, lireEpisode, RACINE} from './lib/episode';
+import {dossierEpisode, lireEpisode, lireTimings, RACINE} from './lib/episode';
 import {dureeAudio, synthetiser, transcrire} from './lib/openrouter';
-import {avertissements, calerDebit, defauts, mesurer, resume, score, type QualiteVoix} from './lib/qualite-voix';
+import {
+  avertissements,
+  calerDebit,
+  defauts,
+  mesurer,
+  projeterTemps,
+  raccourcirSilences,
+  resume,
+  score,
+  type QualiteVoix,
+} from './lib/qualite-voix';
 import {lireReglagesVoix} from './lib/reglages-voix';
 import tokens from '../brand/tokens.json';
 
 const args = process.argv.slice(2);
 const dossier = dossierEpisode(args.find((a) => !a.startsWith('--')));
 const force = args.includes('--force');
+const recaler = args.includes('--recaler');
 /** --secours : une seule prise avec la première voix de secours, pour écoute seulement. */
 const secoursDemande = args.includes('--secours');
 /** empreinte d'un fichier : lie la provenance au CONTENU de voix.mp3. */
@@ -56,6 +68,115 @@ const provenance = path.join(dossier, 'voix.meta.json');
 let qualite: QualiteVoix | undefined;
 let voix: {modele: string; voix: string; secours?: boolean} | undefined;
 
+const calculerEnveloppe = (fichierAudio: string) => {
+  const fps = tokens.format.fps;
+  const pcm = execFileSync('ffmpeg', ['-loglevel', 'error', '-i', fichierAudio, '-ac', '1', '-ar', '24000', '-f', 'f32le', '-'], {
+    maxBuffer: 1 << 28,
+  });
+  const x = new Float32Array(pcm.buffer, pcm.byteOffset, pcm.byteLength / 4);
+  const parImage = 24000 / fps;
+  const rms: number[] = [];
+  for (let i = 0; i < x.length; i += parImage) {
+    let s = 0;
+    const fin = Math.min(x.length, i + parImage);
+    for (let k = i; k < fin; k++) s += x[k] * x[k];
+    rms.push(Math.sqrt(s / Math.max(1, fin - i)));
+  }
+  const tries = [...rms].sort((p, q) => p - q);
+  const haut = tries[Math.floor(tries.length * 0.95)] || 1;
+  return rms.map((v) => Math.round(Math.min(1, v / haut) * 100) / 100);
+};
+
+/**
+ * Si le 1er mot d'une scène a absorbé le silence inter-scène (quand Whisper a raté le mot),
+ * on avance son `debut` jusqu'à la reprise de voix qui suit ce creux silencieux dans `enveloppe`.
+ * Ainsi la scène précédente garde sa pause de lecture jusqu'au bout au lieu d'être coupée tôt.
+ */
+const affinerDebutsScenes = <T extends {debut: number; fin: number; scene: number}>(mots: T[], enveloppe: number[]): T[] => {
+  const fps = tokens.format.fps;
+  return mots.map((m, i) => {
+    const debutScene = i > 0 && m.scene > mots[i - 1].scene;
+    if (!debutScene || m.fin - m.debut < 0.25) return m;
+    const f0 = Math.max(0, Math.floor(m.debut * fps));
+    const f1 = Math.min(enveloppe.length - 1, Math.ceil(m.fin * fps));
+    let silence = 0;
+    for (let f = f0; f <= f1; f++) {
+      if (enveloppe[f] <= 0.04) {
+        silence++;
+      } else if (silence >= 3 && enveloppe[f] >= 0.08) {
+        const nouveauDebut = Math.min(m.fin - 0.08, Math.max(m.debut, (f - 0.5) / fps));
+        return {...m, debut: Math.round(nouveauDebut * 1000) / 1000};
+      } else if (f > f0 + 2) {
+        break; // déjà en pleine parole dès le début du mot
+      }
+    }
+    return m;
+  });
+};
+
+// Mode --recaler : resserre les silences internes (> 260 ms → 220 ms, tout en gardant 350 ms entre scènes)
+// et recale le débit (~204 mots/min) sur un voix.mp3 + timings.json existants.
+if (recaler) {
+  if (!fs.existsSync(mp3) || !fs.existsSync(path.join(dossier, 'timings.json'))) {
+    throw new Error('--recaler nécessite voix.mp3 et timings.json existants.');
+  }
+  const ancien = lireTimings(dossier);
+  const avant = mesurer(mp3, ancien.mots.length, ancien.mots[0]?.debut ?? 0, ancien.mots.at(-1)?.fin ?? ancien.duree, phrases);
+  console.log(`Avant recalage : ${ancien.duree.toFixed(1)} s — ${resume(avant)}`);
+  const envAncienne = calculerEnveloppe(mp3);
+  const motsCorriges = affinerDebutsScenes(ancien.mots, envAncienne);
+  const frontieres = episode.scenes
+    .map((_, i) => {
+      const ms = motsCorriges.filter((m) => m.scene === i);
+      return ms[ms.length - 1]?.fin ?? 0;
+    })
+    .slice(0, -1);
+  const coupes = raccourcirSilences(mp3, 0.22, frontieres, 0.35);
+  const debutApresCoupes = projeterTemps(motsCorriges[0]?.debut ?? 0, coupes);
+  const finApresCoupes = projeterTemps(motsCorriges.at(-1)?.fin ?? ancien.duree, coupes);
+  const qSansBlancs = mesurer(mp3, motsCorriges.length, debutApresCoupes, finApresCoupes, phrases);
+  const {facteur, ...qFinale} = calerDebit(mp3, qSansBlancs, motsCorriges.length, debutApresCoupes, finApresCoupes);
+  const dureeFinale = dureeAudio(mp3);
+  const enveloppe = calculerEnveloppe(mp3);
+  const motsProjetes = motsCorriges.map((m, i) => ({
+    texte: motsScript[i]?.texte ?? m.texte,
+    debut: Math.round(projeterTemps(m.debut, coupes, facteur) * 1000) / 1000,
+    fin: Math.round(projeterTemps(m.fin, coupes, facteur) * 1000) / 1000,
+    scene: motsScript[i]?.scene ?? m.scene,
+    surligne: motsScript[i]?.surligne ?? m.surligne,
+  }));
+  const mots = affinerDebutsScenes(motsProjetes, enveloppe);
+  const scenes = episode.scenes.map((_, i) => {
+    const ms = mots.filter((m) => m.scene === i);
+    return {debut: ms[0]?.debut ?? 0, fin: ms[ms.length - 1]?.fin ?? 0};
+  });
+  const debutParole = mots[0]?.debut ?? 0;
+  const finParole = mots.at(-1)?.fin ?? dureeFinale;
+  const mesure: QualiteVoix = {
+    ...qFinale,
+    secondes: Math.round(dureeFinale * 100) / 100,
+    motsParMinute: Math.round((mots.length / Math.max(0.5, finParole - debutParole)) * 60),
+  };
+  const timings: Timings = {
+    ...ancien,
+    duree: Math.round(dureeFinale * 1000) / 1000,
+    qualite: mesure,
+    mots,
+    scenes,
+    enveloppe,
+  };
+  fs.writeFileSync(path.join(dossier, 'timings.json'), JSON.stringify(timings, null, 1));
+  if (fs.existsSync(provenance)) {
+    const meta = JSON.parse(fs.readFileSync(provenance, 'utf8'));
+    fs.writeFileSync(provenance, JSON.stringify({...meta, sha256: empreinte(mp3)}, null, 1) + '\n');
+  }
+  console.log(`Après recalage : ${dureeFinale.toFixed(1)} s (${coupes.length} silence(s) raccourci(s), atempo ×${facteur.toFixed(2)}) — ${resume(mesure)}`);
+  scenes.forEach((s, i) =>
+    console.log(`  scène ${i + 1} (${episode.scenes[i].type}) : ${s.debut.toFixed(2)} → ${s.fin.toFixed(2)} s`),
+  );
+  process.exit(0);
+}
+
 if (secoursDemande) {
   const r = reglages.secours[0];
   if (!r) throw new Error('Aucune voix de secours dans brand/voix.json.');
@@ -78,14 +199,13 @@ if (!fs.existsSync(mp3) || force) {
   };
   // Aucune prise intermédiaire ne doit rester dans l'épisode (elle partirait dans git).
   const nettoyer = () => {
-    for (const f of fs.readdirSync(path.dirname(mp3)).filter((x) => /\.(prise\d+|tmp|debit)\.mp3$/.test(x))) {
+    for (const f of fs.readdirSync(path.dirname(mp3)).filter((x) => /\.(prise\d+|tmp|debit|silences)\.mp3$/.test(x))) {
       fs.rmSync(path.join(path.dirname(mp3), f), {force: true});
     }
   };
   try {
     let conforme: {fichier: string; q: QualiteVoix} | undefined; // prise sans défaut
     let moindre: {fichier: string; q: QualiteVoix} | undefined; // meilleure des prises défectueuses
-    let panne = false;
     for (let prise = 1; prise <= PRISES_MAX && !conforme; prise++) {
       const candidat = mp3.replace(/\.mp3$/, `.prise${prise}.mp3`);
       let obtenu = false;
@@ -100,14 +220,12 @@ if (!fs.existsSync(mp3) || force) {
           if (appel < ESSAIS_API) await new Promise((f) => setTimeout(f, 15000));
         }
       }
-      if (!obtenu) {
-        panne = true;
-        break;
-      }
+      if (!obtenu) break;
       // Une réponse tronquée est traitée comme un échec de prise, pas comme un arrêt de la commande.
       let q: QualiteVoix;
       try {
         normaliserVolume(candidat);
+        raccourcirSilences(candidat);
         q = mesurer(candidat, nombreMots, 0, 0, phrases);
       } catch (e) {
         console.warn(`  prise illisible : ${(e as Error).message.slice(0, 200)}`);
@@ -116,7 +234,10 @@ if (!fs.existsSync(mp3) || force) {
       }
       // Le débit se recale AVANT de juger : la mesure qui décide doit porter sur l'audio final.
       let final = q;
-      if (avertissements(q).length) final = calerDebit(candidat, q, nombreMots);
+      if (avertissements(q).length) {
+        const {facteur: _, ...recale} = calerDebit(candidat, q, nombreMots);
+        final = recale;
+      }
       const defautsPrise = defauts(final);
       console.log(`  ${resume(final)}${defautsPrise.length ? ` — ${defautsPrise.join(' ; ')}` : ' — OK'}`);
       if (!defautsPrise.length) {
@@ -156,7 +277,7 @@ if (!fs.existsSync(mp3) || force) {
     nettoyer();
   }
 } else {
-  console.log('voix.mp3 existe déjà (--force pour la refaire).');
+  console.log('voix.mp3 existe déjà (--force pour la refaire, --recaler pour resserrer les silences et le débit).');
   // Provenance : le fichier doit être celui qu'on a écrit (même empreinte).
   let meta: {modele?: string; voix?: string; sha256?: string} | undefined;
   try {
@@ -196,32 +317,16 @@ console.log(`Alignement : ${retrouves}/${alignes.length} mots retrouvés à l'or
 const debutParole = alignes[0]?.debut ?? 0;
 const finParole = alignes[alignes.length - 1]?.fin ?? duree;
 const mesure: QualiteVoix = {...qualite, motsParMinute: Math.round((nombreMots / Math.max(0.5, finParole - debutParole)) * 60)};
+const enveloppe = calculerEnveloppe(mp3);
 
-// enveloppe du volume, une valeur par image
-const fps = tokens.format.fps;
-const pcm = execFileSync('ffmpeg', ['-loglevel', 'error', '-i', mp3, '-ac', '1', '-ar', '24000', '-f', 'f32le', '-'], {
-  maxBuffer: 1 << 28,
-});
-const x = new Float32Array(pcm.buffer, pcm.byteOffset, pcm.byteLength / 4);
-const parImage = 24000 / fps;
-const rms: number[] = [];
-for (let i = 0; i < x.length; i += parImage) {
-  let s = 0;
-  const fin = Math.min(x.length, i + parImage);
-  for (let k = i; k < fin; k++) s += x[k] * x[k];
-  rms.push(Math.sqrt(s / Math.max(1, fin - i)));
-}
-const tries = [...rms].sort((p, q) => p - q);
-const haut = tries[Math.floor(tries.length * 0.95)] || 1;
-const enveloppe = rms.map((v) => Math.round(Math.min(1, v / haut) * 100) / 100);
-
-const mots = alignes.map((a, i) => ({
+const motsBruts = alignes.map((a, i) => ({
   texte: a.texte,
   debut: Math.round(a.debut * 1000) / 1000,
   fin: Math.round(a.fin * 1000) / 1000,
   scene: motsScript[i].scene,
   surligne: motsScript[i].surligne,
 }));
+const mots = affinerDebutsScenes(motsBruts, enveloppe);
 const scenes = episode.scenes.map((_, i) => {
   const ms = mots.filter((m) => m.scene === i);
   return {debut: ms[0]?.debut ?? 0, fin: ms[ms.length - 1]?.fin ?? 0};

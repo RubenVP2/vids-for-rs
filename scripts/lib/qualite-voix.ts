@@ -1,12 +1,12 @@
-// Mesure objective d'une prise de voix : voix plate, hachée ou précipitée se voient dans les
+// Mesure objective d'une prise de voix : voix plate, hachée ou trop lente/précipitée se voient dans les
 // chiffres avant de s'entendre. La synthèse (Gemini TTS via OpenRouter) n'est pas déterministe :
-// deux prises du même texte peuvent donner une lecture posée ou un débit rapide et monotone.
+// deux prises du même texte peuvent donner une lecture vive et modulée ou un débit lent et monotone.
 //
 // Trois indicateurs :
 //   - débit (mots/min) sur la parole utile (premier au dernier mot) ;
-//   - intonation : écart p10-p90 de la fréquence fondamentale, en demi-tons. Une lecture plate
-//     tient dans 2-3 demi-tons, une voix qui module en fait 4 et plus ;
-//   - pauses : silences >= 250 ms, rapportés au nombre de phrases.
+//   - intonation : écart p20-p80 de la fréquence fondamentale, en demi-tons. Une lecture plate
+//     tient dans 3-4 demi-tons, une voix qui module en fait 5,5 et plus ;
+//   - pauses : silences >= 150 ms, rapportés au nombre de phrases.
 //
 // La hauteur est estimée par corrélation croisée normalisée (NCCF) : une trame n'est retenue que
 // si son pic dépasse VOISEMENT, et c'est le premier pic proche du maximum qui donne la période
@@ -18,19 +18,26 @@ export type QualiteVoix = {
   secondes: number;
   motsParMinute: number;
   medianeHz: number;
-  /** Écart p10-p90 de la hauteur, en demi-tons : mesure de l'intonation. */
+  /** Écart p20-p80 de la hauteur, en demi-tons : mesure de l'intonation. */
   melodieDemiTons: number;
   pauses: number;
   /** Phrases du script, pour rapporter les pauses. */
   phrases: number;
 };
 
-/** Seuils, calibrés sur les épisodes 000-010 mesurés par CE code :
- *  - débit : 155 à 208 mots/min utiles ;
+/** Seuils, calibrés sur #000 et les épisodes 000-017 :
+ *  - débit : entre 198 et 230 mots/min utiles (cible 204 mots/min ~ 3,4 mots/s, vivant mais lisible) ;
  *  - intonation : avec le lissage, Puck donne 5,8 à 9,6 demi-tons d'écart p20-p80, une prise
  *    volontairement plate de Puck 3,2 à 4,8, la voix de secours MAI « Marc » 4,3 — seuil 5,5 ;
- *  - pauses : au moins 0,6 par phrase (une respiration par phrase et demie). */
-export const SEUILS = {motsParMinute: 185, melodieDemiTons: 5.5, pausesParPhrase: 0.6};
+ *  - pauses : au moins 0,5 pause >= 150 ms par phrase (blancs internes > 260 ms ramenés à 220 ms,
+ *    et respirations inter-scènes préservées à 350 ms pour laisser le temps de lire les cartes). */
+export const SEUILS = {
+  motsParMinuteMin: 198,
+  motsParMinuteCible: 204,
+  motsParMinute: 230,
+  melodieDemiTons: 5.5,
+  pausesParPhrase: 0.5,
+};
 
 const FENETRE = 0.04; // 40 ms
 const PAS = 0.02; // 20 ms
@@ -113,12 +120,96 @@ const centile = (valeurs: number[], p: number): number => {
   return tri[Math.min(tri.length - 1, Math.floor(tri.length * p))];
 };
 
-/** Nombre de silences >= 250 ms (silencedetect de ffmpeg écrit sur stderr). */
+/** Nombre de silences >= 150 ms (silencedetect de ffmpeg écrit sur stderr). */
 const compterPauses = (mp3: string): number => {
-  const r = spawnSync('ffmpeg', ['-hide_banner', '-nostats', '-i', mp3, '-af', 'silencedetect=noise=-35dB:d=0.25', '-f', 'null', '-'], {
+  const r = spawnSync('ffmpeg', ['-hide_banner', '-nostats', '-i', mp3, '-af', 'silencedetect=noise=-35dB:d=0.15', '-f', 'null', '-'], {
     encoding: 'utf8',
   });
   return (String(r.stderr ?? '').match(/silence_start/g) ?? []).length;
+};
+
+export type CoupeSilence = {debut: number; fin: number};
+
+/**
+ * Raccourcit les silences internes excessifs (> 260 ms) à `maxPause` (220 ms par défaut),
+ * tout en préservant `pauseScene` (350 ms) aux frontières de scènes pour laisser le temps
+ * de lire chaque carte avant la transition suivante.
+ * Opère en PCM avec un fondu enchaîné de 8 ms.
+ */
+export const raccourcirSilences = (mp3: string, maxPause = 0.22, frontieres: number[] = [], pauseScene = 0.35): CoupeSilence[] => {
+  const det = spawnSync('ffmpeg', ['-hide_banner', '-nostats', '-i', mp3, '-af', 'silencedetect=noise=-38dB:d=0.25', '-f', 'null', '-'], {
+    encoding: 'utf8',
+  });
+  const log = String(det.stderr ?? '');
+  const debuts = [...log.matchAll(/silence_start:\s*([\d.]+)/g)].map((m) => Number(m[1]));
+  const fins = [...log.matchAll(/silence_end:\s*([\d.]+)/g)].map((m) => Number(m[1]));
+  const coupes: CoupeSilence[] = [];
+  for (let i = 0; i < Math.min(debuts.length, fins.length); i++) {
+    const d = debuts[i],
+      f = fins[i];
+    const estFrontiere = frontieres.some((fr) => fr >= d - 0.28 && fr <= f + 0.28);
+    const cible = estFrontiere ? pauseScene : maxPause;
+    const garde = cible / 2;
+    if (d > 0.05 && f - d > cible + 0.04) {
+      coupes.push({debut: d + garde, fin: f - garde});
+    }
+  }
+  if (!coupes.length) return [];
+
+  const sr = 44100;
+  const pcm = execFileSync('ffmpeg', ['-loglevel', 'error', '-i', mp3, '-ac', '1', '-ar', String(sr), '-f', 'f32le', '-'], {
+    maxBuffer: 1 << 28,
+  });
+  const x = new Float32Array(pcm.buffer, pcm.byteOffset, pcm.byteLength / 4);
+  const fondu = Math.round(sr * 0.008);
+  const morceaux: Float32Array[] = [];
+  let curseur = 0;
+  for (const c of coupes) {
+    const iDebut = Math.min(x.length, Math.max(curseur, Math.round(c.debut * sr)));
+    const iFin = Math.min(x.length, Math.max(iDebut, Math.round(c.fin * sr)));
+    if (iDebut > curseur) {
+      const bout = x.slice(curseur, iDebut);
+      for (let k = 0; k < Math.min(fondu, bout.length); k++) {
+        bout[bout.length - 1 - k] *= k / fondu;
+      }
+      morceaux.push(bout);
+    }
+    curseur = Math.max(curseur, iFin);
+    if (curseur < x.length) {
+      for (let k = 0; k < Math.min(fondu, x.length - curseur); k++) {
+        x[curseur + k] *= k / fondu;
+      }
+    }
+  }
+  if (curseur < x.length) morceaux.push(x.slice(curseur));
+  const total = morceaux.reduce((n, m) => n + m.length, 0);
+  const out = new Float32Array(total);
+  let pos = 0;
+  for (const m of morceaux) {
+    out.set(m, pos);
+    pos += m.length;
+  }
+  const tmp = mp3.replace(/\.mp3$/, '.silences.mp3');
+  try {
+    execFileSync(
+      'ffmpeg',
+      ['-y', '-loglevel', 'error', '-f', 'f32le', '-ar', String(sr), '-ac', '1', '-i', 'pipe:0', '-ar', String(sr), '-b:a', '96k', tmp],
+      {input: Buffer.from(out.buffer, out.byteOffset, out.byteLength), maxBuffer: 1 << 28},
+    );
+    fs.renameSync(tmp, mp3);
+  } finally {
+    fs.rmSync(tmp, {force: true});
+  }
+  return coupes;
+};
+
+/** Projette un temps `t` (en secondes) après suppression des `coupes` et application de `facteur` (atempo). */
+export const projeterTemps = (t: number, coupes: CoupeSilence[], facteur = 1): number => {
+  let retire = 0;
+  for (const c of coupes) {
+    if (t > c.debut) retire += Math.min(t, c.fin) - c.debut;
+  }
+  return Math.max(0, (t - retire) / facteur);
 };
 
 /**
@@ -157,12 +248,16 @@ export const defauts = (q: QualiteVoix): string[] => {
   return d;
 };
 
-/** Débit trop rapide : signalé, jamais bloquant. */
-export const avertissements = (q: QualiteVoix): string[] =>
-  q.motsParMinute > SEUILS.motsParMinute ? [`débit ${q.motsParMinute} mots/min (viser ${SEUILS.motsParMinute})`] : [];
+/** Débit hors plage : signalé, jamais bloquant. */
+export const avertissements = (q: QualiteVoix): string[] => {
+  if (q.motsParMinute > SEUILS.motsParMinute) return [`débit ${q.motsParMinute} mots/min (viser ${SEUILS.motsParMinuteCible})`];
+  if (q.motsParMinute < SEUILS.motsParMinuteMin) return [`débit lent ${q.motsParMinute} mots/min (viser ${SEUILS.motsParMinuteCible})`];
+  return [];
+};
 
-/** Score entre deux prises sans défaut : intonation d'abord, puis pauses. */
-export const score = (q: QualiteVoix): number => q.melodieDemiTons * 10 + Math.min(q.pauses, 20) * 0.5;
+/** Score entre deux prises sans défaut : intonation d'abord, puis proximité du débit cible. */
+export const score = (q: QualiteVoix): number =>
+  q.melodieDemiTons * 10 - Math.abs(q.motsParMinute - SEUILS.motsParMinuteCible) * 0.1 + Math.min(q.pauses, 20) * 0.3;
 
 /** Écart au profil de voix : ALERTE, jamais un refus. La hauteur seule ne prouve pas l'identité
  *  du locuteur (une autre voix d'homme tombe dans la même plage) ; c'est le modèle qui fait foi. */
@@ -174,21 +269,44 @@ export const alerteTimbre = (q: QualiteVoix, profil: {medianeHz: number; toleran
     : [];
 };
 
-/** Ralentit la prise si le débit dépasse le seuil (atempo garde hauteur et timbre).
- *  Plancher 0,92 : au-delà la voix traîne. Idempotent : ne fait rien si le débit est bon. */
-export const calerDebit = (mp3: string, q: QualiteVoix, mots: number, debut = 0, fin = 0): QualiteVoix => {
-  if (q.motsParMinute <= SEUILS.motsParMinute) return q;
-  const facteur = Math.max(0.92, SEUILS.motsParMinute / q.motsParMinute);
-  if (facteur > 0.985) return q;
+/** Recale le débit dans la plage [motsParMinuteMin, motsParMinute] (cible 204 mots/min).
+ *  Accélère une prise trop lente (plafond 1,14×) et ralentit une prise précipitée (plancher 0,92×). */
+export const calerDebit = (
+  mp3: string,
+  q: QualiteVoix,
+  mots: number,
+  debut = 0,
+  fin = 0,
+): QualiteVoix & {facteur: number} => {
+  let facteur = 1;
+  if (q.motsParMinute < SEUILS.motsParMinuteMin) {
+    facteur = Math.min(1.14, SEUILS.motsParMinuteCible / Math.max(1, q.motsParMinute));
+  } else if (q.motsParMinute > SEUILS.motsParMinute) {
+    facteur = Math.max(0.92, SEUILS.motsParMinute / q.motsParMinute);
+  }
+  if (Math.abs(facteur - 1) < 0.015) return {...q, facteur: 1};
   const tmp = mp3.replace(/\.mp3$/, '.debit.mp3');
   try {
-    execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-i', mp3, '-af', `atempo=${facteur.toFixed(3)}`, '-ar', '44100', '-b:a', '96k', tmp]);
+    execFileSync('ffmpeg', [
+      '-y',
+      '-loglevel',
+      'error',
+      '-i',
+      mp3,
+      '-af',
+      `atempo=${facteur.toFixed(3)},loudnorm=I=-16:TP=-1.5:LRA=11`,
+      '-ar',
+      '44100',
+      '-b:a',
+      '96k',
+      tmp,
+    ]);
     fs.renameSync(tmp, mp3);
   } finally {
     fs.rmSync(tmp, {force: true});
   }
-  // atempo < 1 ralentit : la durée est divisée par le facteur, pas multipliée.
-  return mesurer(mp3, mots, debut / facteur, fin / facteur, q.phrases);
+  // atempo > 1 accélère (durée divisée par facteur), atempo < 1 ralentit.
+  return {...mesurer(mp3, mots, debut / facteur, fin / facteur, q.phrases), facteur};
 };
 
 export const resume = (q: QualiteVoix): string =>

@@ -22,22 +22,21 @@ try {
 
 const compter = (t: string) => texteParle(t).split(/\s+/).filter((w) => normaliser(w)).length;
 const mots = episode.scenes.reduce((n, s) => n + compter(s.texte), 0);
-// Le débit de la voix varie selon le texte : 3,5 mots/s sur #000, 2,8 sur #001 (sigles,
-// chiffres, phrases courtes = plus de pauses). Le budget se cale sur le débit lent pour
-// que la première prise tienne dans la limite de durée de la voix (`budgetDe`).
-const [DEBIT_LENT, DEBIT_RAPIDE] = [2.7, 3.5];
-const [rapide, lente] = [mots / DEBIT_RAPIDE + 1.4, mots / DEBIT_LENT + 1.4];
+// Le débit de la voix est recalé dans [195, 225] mots/min (~3,25 à 3,75 mots/s, cible 205 mots/min).
+const [DEBIT_LENT, DEBIT_RAPIDE] = [3.2, 3.6];
+const [rapide, lente] = [mots / DEBIT_RAPIDE + 1.25, mots / DEBIT_LENT + 1.25];
 const budget = budgetDe(episode);
 if (mots < budget.viser[0]) alertes.push(`Script court : ${mots} mots (viser ${budget.viser[0]}–${budget.viser[1]} en ${budget.nom}).`);
 if (mots > budget.max) erreurs.push(`Script trop long : ${mots} mots (max ${budget.max} en ${budget.nom}, viser ${budget.viser[0]}–${budget.viser[1]}${episode.long ? '' : ' ; un sujet qui le demande peut passer en format long : champ « long » avec sa raison'}).`);
-else if (mots > budget.viser[1]) alertes.push(`Script long : ${mots} mots, la voix peut dépasser la limite au débit lent (viser ${budget.viser[0]}–${budget.viser[1]} ; garder seulement si le texte est fluide, sans sigles ni chiffres).`);
+else if (mots > budget.viser[1]) alertes.push(`Script long : ${mots} mots, la voix peut dépasser la cible Nerveuse (viser ${budget.viser[0]}–${budget.viser[1]}).`);
 
 // Format de montage actuel (docs/viralite.md) : gabarit en rotation, pas de scène source,
 // fin en boucle. Les épisodes d'avant `depuis` gardent l'ancien format.
 const actuel = episode.numero >= montage.depuis;
 
 const hook = episode.scenes[0];
-if (compter(hook.texte) > 16) erreurs.push(`Hook trop long à l'oral : ${compter(hook.texte)} mots (max 16, il doit tenir en ~3 s).`);
+if (compter(hook.texte) > 16) erreurs.push(`Hook trop long à l'oral : ${compter(hook.texte)} mots (max 16, viser ≤ 12 pour tenir en ~2,5 s).`);
+else if (compter(hook.texte) > 12) alertes.push(`Hook un peu long : ${compter(hook.texte)} mots (viser ≤ 12 mots pour frapper en < 2,5 s).`);
 if (hook.type === 'hook' && compter(hook.titre) > 6) alertes.push(`Titre du hook long : ${compter(hook.titre)} mots (viser 2 à 6, il complète la voix).`);
 episode.scenes.forEach((s, i) => {
   const n = compter(s.texte);
@@ -52,6 +51,7 @@ if (actuel) {
   // La fin boucle sur le hook : un appel à s'abonner ou une formule d'adieu fait balayer.
   if (/abonne/i.test(texteFin)) erreurs.push('La scène « fin » ne demande pas de s’abonner (signal de fin : on balaie). Finir par la phrase qui renvoie au hook.');
   if (/c'était matou/i.test(texteFin)) erreurs.push('La scène « fin » ne dit plus « C’était Matou… » : la signature est le « Ma-tou ! » sonore. Finir par la phrase qui renvoie au hook.');
+  if (/^\s*bref\b/i.test(texteFin)) alertes.push('La scène « fin » commence par « Bref, » (signal de fin qui fait balayer avant la boucle) : attaquer directement la chute.');
   // Une phrase en suspens (« … ») sonne coupée au 1er visionnage : la boucle vient de l'image.
   if (/(…|\.\.\.|,)\s*$/.test(texteFin)) erreurs.push('La phrase de fin reste en suspens (« … ») : la vidéo semble coupée. Une phrase complète, qui reprend un mot du hook.');
   const motsDe = (t: string) => new Set(texteParle(t).split(/\s+/).map(normaliser).filter((w) => w.length >= 4));
@@ -62,6 +62,20 @@ if (actuel) {
   const debut = episode.scenes.slice(0, 3).map((s) => normaliser(texteParle(s.texte))).join(' ');
   if (!debut.includes(normaliser(episode.source.nom.split(/\s+/)[0])))
     alertes.push(`« ${episode.source.nom} » n’est pas dit dans les 3 premières scènes : dire qui annonce (une demi-phrase suffit).`);
+  // Garde-fou anti-décrochage à 8 s : la 2e scène ne doit ni répéter le hook ni s'ouvrir par « X l'annonce : ».
+  const scene2 = episode.scenes[1];
+  if (scene2) {
+    const t2 = texteParle(scene2.texte).replace(/’/g, "'");
+    if (/^[^,.!?]{1,28}\b(l'annonce|le rapporte|annonce que)\s*:/i.test(t2)) {
+      alertes.push('Scène 2 : éviter d’ouvrir par « X l’annonce : » ou « X le rapporte : » (ralentit à 4 s). Glisser la source dans l’action (« Selon X, … », « Chez X, … »).');
+    }
+    const motsHook = motsDe(hook.texte);
+    const motsSc2 = [...motsDe(scene2.texte)];
+    const redits = motsSc2.filter((w) => motsHook.has(w) && w !== normaliser(episode.source.nom.split(/\s+/)[0]));
+    if (motsHook.size >= 3 && redits.length / motsHook.size >= 0.6) {
+      alertes.push(`Scène 2 : répète trop le hook (${redits.join(', ')}). Dès 3 s, donner le « comment » ou un fait nouveau au lieu de paraphraser l’accroche.`);
+    }
+  }
   for (const e of controlerMontage(episode)) erreurs.push(`Gabarit de montage : ${e}.`);
 } else if (!/c'était matou, et c'est tout/i.test(texteFin)) {
   erreurs.push('La scène « fin » doit contenir « C’était Matou, et c’est tout. »');

@@ -71,6 +71,7 @@ export const sceneSchema = z.discriminatedUnion('type', [
     titre: z.string().min(1).max(60),
     corps: z.string().max(120).optional(),
     icone: icone.optional(),
+    quand: z.string().optional(),
   }),
   z.object({
     type: z.literal('chiffre'),
@@ -98,6 +99,7 @@ export const sceneSchema = z.discriminatedUnion('type', [
     titre: z.string().min(1).max(40).default('Et pour toi ?'),
     corps: z.string().min(1).max(120),
     icone: icone.optional(),
+    quand: z.string().optional(),
   }),
   z.object({
     type: z.literal('verdict'),

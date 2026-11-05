@@ -25,6 +25,17 @@ export type SceneProps<T extends Scene['type']> = {
 
 export const ZONE = {top: 370, hauteur: 630};
 
+/**
+ * Temps minimal de lecture garanti à l'écran (en images à 30 i/s) :
+ * tout élément qui apparaît en cours de scène doit laisser au moins ~2,5 s (75 images)
+ * au spectateur pour être lu confortablement avant la transition suivante, et apparaître
+ * dans le premier quart de la scène.
+ */
+const LECTURE_MIN_IMAGES = 75;
+
+const bornerLecture = (imageCible: number, duree: number, min = 6, maxPart = 0.26) =>
+  Math.max(min, Math.min(imageCible, Math.round(duree * maxPart), Math.max(min, duree - LECTURE_MIN_IMAGES)));
+
 const normaliser = (s: string) =>
   s
     .toLowerCase()
@@ -38,6 +49,47 @@ export const imageDuMot = (mots: MotScene[], quand: string | undefined, defaut: 
   const cible = normaliser(quand.split(/\s+/)[0]);
   const m = mots.find((x) => normaliser(x.texte).startsWith(cible));
   return m ? m.debut : defaut;
+};
+
+/**
+ * Images (relatives au début de la scène) où un second temps visuel « claque » à l'écran :
+ * sert à la fois aux composants de scène et aux petits bruitages `pop` dans Episode.tsx.
+ */
+export const imagesPop = (scene: Scene, mots: MotScene[], duree: number): number[] => {
+  switch (scene.type) {
+    case 'hook':
+      if (scene.visuel?.type === 'fenetre' && scene.visuel.messages.length > 1) {
+        return scene.visuel.messages.slice(1).map((m, i) => bornerLecture(imageDuMot(mots, m.quand, 14 * (i + 1)), duree, 10, 0.25));
+      }
+      return [];
+    case 'point':
+      return scene.corps ? [10] : [];
+    case 'pourquoi':
+      return [6];
+    case 'comparaison':
+      return [bornerLecture(imageDuMot(mots, scene.apres.quand, 20), duree, 14, 0.25)];
+    case 'liste':
+      return scene.elements.map((el, i) =>
+        i === 0
+          ? 6
+          : bornerLecture(
+              imageDuMot(mots, el.quand, Math.round(6 + (i * (duree * 0.32)) / Math.max(1, scene.elements.length - 1))),
+              duree,
+              16 * i,
+              0.32,
+            ),
+      );
+    case 'chiffre': {
+      const d = bornerLecture(imageDuMot(mots, scene.quand, 0), duree, 0, 0.2);
+      return d >= 4 ? [d] : [];
+    }
+    case 'fenetre':
+      return scene.messages
+        .map((m, i) => (i === 0 ? 4 : bornerLecture(imageDuMot(mots, m.quand, 16 * i), duree, 12 * i, 0.32)))
+        .filter((d) => d >= 4);
+    default:
+      return [];
+  }
 };
 
 const useEntree = (debut = 0) => {
@@ -105,7 +157,7 @@ const Zone: React.FC<{children: React.ReactNode; centre?: boolean; haute?: boole
 
 const LARGEUR = 1080 - tokens.safeZone.left - tokens.safeZone.right;
 
-export const SceneHook: React.FC<SceneProps<'hook'>> = ({scene, mots}) => {
+export const SceneHook: React.FC<SceneProps<'hook'>> = ({scene, episode, mots, duree}) => {
   const frame = useCurrentFrame();
   // le titre est déjà là à l'image 0 (lecture auto sur les réseaux), il « claque » juste un peu
   const echelle = interpolate(frame, [0, 5, 9], [0.92, 1.04, 1], {extrapolateRight: 'clamp'});
@@ -130,8 +182,10 @@ export const SceneHook: React.FC<SceneProps<'hook'>> = ({scene, mots}) => {
         </Zone>
       );
     }
-    // 1re bulle presque posée dès l'image 0, les suivantes au mot `quand` (sinon au fil du hook)
-    const apparitions = v.messages.map((m, i) => (i === 0 ? -6 : imageDuMot(mots, m.quand, 20 * i)));
+    // 1re bulle posée dès l'image 0, la 2e dès ~0,4 s (bornée pour laisser >= 2,5 s de lecture)
+    const apparitions = v.messages.map((m, i) =>
+      i === 0 ? -6 : bornerLecture(imageDuMot(mots, m.quand, 14 * i), duree, 10, 0.25),
+    );
     return (
       <Zone haute>
         {titre}
@@ -141,15 +195,57 @@ export const SceneHook: React.FC<SceneProps<'hook'>> = ({scene, mots}) => {
       </Zone>
     );
   }
+  // Ouverture sans visuel (« toi » ou « question ») : affiche-choc encadrée dès l'image 0
+  // avec pastille d'icône et étiquette de source pour ne jamais laisser la page vide.
   return (
-    <Zone>
+    <Zone haute>
       {scene.icone ? (
-        <Entree de="zoom" debut={4}>
-          <Icone nom={scene.icone} taille={170} style={{marginBottom: 24}} />
-        </Entree>
+        <div
+          style={{
+            background: C.surligneur,
+            border: `${tokens.trait.epaisseur}px solid ${C.encre}`,
+            borderRadius: '50%',
+            padding: 22,
+            boxShadow: `6px 6px 0 ${C.encre}`,
+            transform: `scale(${echelle}) rotate(-4deg)`,
+            marginBottom: -28,
+            zIndex: 2,
+          }}
+        >
+          <Icone nom={scene.icone} taille={136} />
+        </div>
       ) : null}
-      <div style={{...titreStyle(tokens.typo.tailles.hook), textAlign: 'center', transform: `scale(${echelle}) rotate(-2deg)`}}>
-        <TexteMarque texte={scene.titre} debut={3} />
+      <div style={{transform: `scale(${echelle})`}}>
+        <Carte largeur={LARGEUR - 20} hauteur={370} rotation={-1.5}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: '100%',
+              gap: 18,
+              paddingTop: scene.icone ? 16 : 0,
+            }}
+          >
+            <div style={{...titreStyle(tokens.typo.tailles.hook - 16), textAlign: 'center'}}>
+              <TexteMarque texte={scene.titre} debut={3} />
+            </div>
+            <div
+              style={{
+                ...texteStyle(30),
+                background: '#FFFDF5',
+                border: `3px solid ${C.encre}`,
+                padding: '4px 18px',
+                transform: 'rotate(1deg)',
+                opacity: 0.9,
+                letterSpacing: 1.5,
+              }}
+            >
+              {episode.source.nom.toUpperCase()} · {dateCourte(episode.source.date)}
+            </div>
+          </div>
+        </Carte>
       </div>
     </Zone>
   );
@@ -178,26 +274,45 @@ export const SceneSource: React.FC<SceneProps<'source'>> = ({scene, episode}) =>
 
 export const ScenePoint: React.FC<SceneProps<'point'>> = ({scene}) => (
   <Zone>
-    <Entree>
-      <Carte largeur={LARGEUR - 20} hauteur={scene.corps ? 560 : 330} rotation={-1.2}>
-        <div style={{display: 'flex', alignItems: 'center', gap: 28}}>
-          {scene.icone ? <Icone nom={scene.icone} taille={120} /> : null}
-          <div style={{...titreStyle(tokens.typo.tailles.titre - 8), flex: 1}}>
-            <TexteMarque texte={scene.titre} debut={8} />
+    <Entree de="gauche">
+      <Carte largeur={LARGEUR - 20} hauteur={scene.corps ? 500 : 330} rotation={-1.2}>
+        <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '100%', gap: 28}}>
+          <div style={{display: 'flex', alignItems: 'center', gap: 28}}>
+            {scene.icone ? <Icone nom={scene.icone} taille={116} /> : null}
+            <div style={{...titreStyle(tokens.typo.tailles.titre - 6), flex: 1}}>
+              <TexteMarque texte={scene.titre} debut={4} />
+            </div>
           </div>
+          {scene.corps ? (
+            <Entree debut={10} de="zoom">
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: 20,
+                  background: '#FFFDF5',
+                  border: `4px solid ${C.encre}`,
+                  boxShadow: `6px 6px 0 ${C.encre}`,
+                  padding: '22px 28px',
+                  transform: 'rotate(1deg)',
+                }}
+              >
+                <span style={{...titreStyle(56), color: C.stylo.rouge, lineHeight: 1}}>➔</span>
+                <div style={{...texteStyle(tokens.typo.tailles.carte + 2), textAlign: 'center'}}>
+                  <TexteMarque texte={scene.corps} debut={14} />
+                </div>
+              </div>
+            </Entree>
+          ) : null}
         </div>
-        {scene.corps ? (
-          <div style={{...texteStyle(tokens.typo.tailles.carte - 6), marginTop: 30}}>
-            <TexteMarque texte={scene.corps} debut={14} />
-          </div>
-        ) : null}
       </Carte>
     </Entree>
   </Zone>
 );
 
 export const SceneChiffre: React.FC<SceneProps<'chiffre'>> = ({scene, mots, duree}) => {
-  const debut = Math.min(imageDuMot(mots, scene.quand, 0), duree - 20);
+  const debut = bornerLecture(imageDuMot(mots, scene.quand, 0), duree, 0, 0.2);
   const frame = useCurrentFrame();
   const s = useEntree(debut);
   return (
@@ -227,24 +342,34 @@ export const SceneListe: React.FC<SceneProps<'liste'>> = ({scene, mots, duree}) 
     <Zone centre={false}>
       <Entree de="zoom">
         <div style={{...titreStyle(tokens.typo.tailles.titre - 12), textAlign: 'center', margin: '20px 0 30px'}}>
-          <TexteMarque texte={scene.titre} debut={6} />
+          <TexteMarque texte={scene.titre} debut={4} />
         </div>
       </Entree>
       <div style={{display: 'flex', flexDirection: 'column', gap: 26, width: LARGEUR - 40}}>
         {scene.elements.map((el, i) => {
-          const repli = Math.round(8 + (i * (duree * 0.75)) / n);
-          // jamais dans les 20 dernières images : l'élément doit avoir fini d'entrer avant la scène suivante
-          const debut = Math.min(imageDuMot(mots, el.quand, repli), duree - 20);
+          const repli = Math.round(6 + (i * (duree * 0.32)) / Math.max(1, n - 1));
+          const debut = i === 0 ? 6 : bornerLecture(imageDuMot(mots, el.quand, repli), duree, 16 * i, 0.32);
           return (
             <Entree key={i} debut={debut} de={i % 2 ? 'droite' : 'gauche'}>
-              <div style={{display: 'flex', alignItems: 'center', gap: 22, transform: `rotate(${i % 2 ? 0.8 : -0.8}deg)`}}>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 22,
+                  background: '#FFFDF5',
+                  border: `4px solid ${C.encre}`,
+                  boxShadow: `6px 6px 0 ${C.encre}`,
+                  padding: '16px 24px',
+                  transform: `rotate(${i % 2 ? 0.8 : -0.8}deg)`,
+                }}
+              >
                 {el.icone ? (
-                  <Icone nom={el.icone} taille={88} />
+                  <Icone nom={el.icone} taille={84} />
                 ) : (
-                  <div style={{...titreStyle(64), width: 88, textAlign: 'center', color: C.stylo.bleu}}>{i + 1}.</div>
+                  <div style={{...titreStyle(64), width: 84, textAlign: 'center', color: C.stylo.bleu}}>{i + 1}.</div>
                 )}
                 <div style={{...texteStyle(tokens.typo.tailles.carte), flex: 1}}>
-                  <TexteMarque texte={el.texte} debut={debut + 6} />
+                  <TexteMarque texte={el.texte} debut={debut + 5} />
                 </div>
               </div>
             </Entree>
@@ -256,23 +381,39 @@ export const SceneListe: React.FC<SceneProps<'liste'>> = ({scene, mots, duree}) 
 };
 
 export const SceneComparaison: React.FC<SceneProps<'comparaison'>> = ({scene, mots, duree}) => {
-  const debutApres = Math.min(imageDuMot(mots, scene.apres.quand, Math.round(duree * 0.45)), duree - 20);
-  const col = (LARGEUR - 50) / 2;
-  const bloc = (titre: string, texte: string, couleur: string, debut: number, de: 'gauche' | 'droite', rot: number) => (
+  // La 2e carte (« après ») arrive dès le 1er quart de la scène (~0,6 à 0,9 s) pour laisser >= 2,7 s de lecture
+  const debutApres = bornerLecture(imageDuMot(mots, scene.apres.quand, 20), duree, 14, 0.25);
+  const col = (LARGEUR - 44) / 2;
+  const bloc = (titre: string, texte: string, couleur: string, debut: number, de: 'gauche' | 'droite', rot: number, fond = C.blanc) => (
     <Entree debut={debut} de={de}>
-      <Carte largeur={col} hauteur={520} rotation={rot} scotch={false}>
-        <div style={{...titreStyle(56), color: couleur, textAlign: 'center', marginBottom: 20}}>{titre}</div>
-        <div style={{...texteStyle(46), textAlign: 'center'}}>
-          <TexteMarque texte={texte} debut={debut + 8} />
+      <Carte largeur={col} hauteur={470} rotation={rot} scotch={false} fond={fond}>
+        <div
+          style={{
+            ...titreStyle(50),
+            color: C.blanc,
+            background: couleur,
+            border: `3px solid ${C.encre}`,
+            padding: '4px 14px',
+            textAlign: 'center',
+            marginBottom: 24,
+            transform: `rotate(${rot > 0 ? -1 : 1}deg)`,
+          }}
+        >
+          {titre}
+        </div>
+        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1}}>
+          <div style={{...texteStyle(48), textAlign: 'center'}}>
+            <TexteMarque texte={texte} debut={debut + 6} />
+          </div>
         </div>
       </Carte>
     </Entree>
   );
   return (
     <Zone>
-      <div style={{display: 'flex', gap: 50, alignItems: 'center'}}>
+      <div style={{display: 'flex', gap: 44, alignItems: 'center', position: 'relative'}}>
         {bloc(scene.avant.titre, scene.avant.texte, C.stylo.rouge, 0, 'gauche', -2)}
-        {bloc(scene.apres.titre, scene.apres.texte, C.stylo.vert, debutApres, 'droite', 2)}
+        {bloc(scene.apres.titre, scene.apres.texte, C.stylo.vert, debutApres, 'droite', 2, '#FFFDF5')}
       </div>
     </Zone>
   );
@@ -281,16 +422,18 @@ export const SceneComparaison: React.FC<SceneProps<'comparaison'>> = ({scene, mo
 export const ScenePourquoi: React.FC<SceneProps<'pourquoi'>> = ({scene}) => (
   <Zone>
     <Entree de="zoom">
-      <div style={{...titreStyle(tokens.typo.tailles.titre), textAlign: 'center', marginBottom: 30, transform: 'rotate(-2deg)'}}>
-        <TexteMarque texte={`==${scene.titre.replace(/==/g, '')}==`} debut={4} />
+      <div style={{display: 'flex', alignItems: 'center', gap: 20, marginBottom: 26, transform: 'rotate(-2deg)'}}>
+        {scene.icone ? <Icone nom={scene.icone} taille={112} /> : null}
+        <div style={{...titreStyle(tokens.typo.tailles.titre), textAlign: 'center'}}>
+          <TexteMarque texte={`==${scene.titre.replace(/==/g, '')}==`} debut={3} />
+        </div>
       </div>
     </Entree>
-    <Entree debut={8}>
-      <Carte largeur={LARGEUR - 20} hauteur={380} rotation={1} fond="#FFFDF5">
-        <div style={{display: 'flex', alignItems: 'center', gap: 26, height: '100%'}}>
-          {scene.icone ? <Icone nom={scene.icone} taille={120} /> : null}
-          <div style={{...texteStyle(tokens.typo.tailles.carte - 4), flex: 1}}>
-            <TexteMarque texte={scene.corps} debut={16} />
+    <Entree debut={6} de="droite">
+      <Carte largeur={LARGEUR - 20} hauteur={310} rotation={1.2} fond="#FFFDF5">
+        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%'}}>
+          <div style={{...texteStyle(tokens.typo.tailles.carte + 4), textAlign: 'center'}}>
+            <TexteMarque texte={scene.corps} debut={12} />
           </div>
         </div>
       </Carte>
@@ -303,19 +446,30 @@ export const SceneVerdict: React.FC<SceneProps<'verdict'>> = ({scene, episode}) 
     <Entree de="zoom">
       <HypeMetre verdict={episode.verdict} largeur={LARGEUR - 20} />
     </Entree>
-    <Entree debut={40}>
-      <div style={{...texteStyle(48), textAlign: 'center', marginTop: 40, maxWidth: LARGEUR - 20}}>
-        <TexteMarque texte={scene.raison} debut={46} />
+    <Entree debut={10} de="zoom">
+      <div
+        style={{
+          ...texteStyle(46),
+          textAlign: 'center',
+          marginTop: 34,
+          maxWidth: LARGEUR - 20,
+          background: '#FFFDF5',
+          border: `4px solid ${C.encre}`,
+          boxShadow: `6px 6px 0 ${C.encre}`,
+          padding: '16px 28px',
+          transform: 'rotate(-1deg)',
+        }}
+      >
+        <TexteMarque texte={scene.raison} debut={14} />
       </div>
     </Entree>
   </Zone>
 );
 
 export const SceneFenetre: React.FC<SceneProps<'fenetre'>> = ({scene, mots, duree}) => {
-  const n = scene.messages.length;
-  // chaque bulle au mot `quand`, sinon au fil de la scène ; jamais dans les 20 dernières images
+  // chaque bulle dès le 1er tiers de la scène pour laisser le temps de lire
   const apparitions = scene.messages.map((m, i) =>
-    Math.min(imageDuMot(mots, m.quand, Math.round(6 + (i * duree * 0.6) / n)), duree - 20),
+    i === 0 ? 4 : bornerLecture(imageDuMot(mots, m.quand, 16 * i), duree, 12 * i, 0.32),
   );
   return (
     <Zone>
@@ -326,8 +480,8 @@ export const SceneFenetre: React.FC<SceneProps<'fenetre'>> = ({scene, mots, dure
   );
 };
 
-/** Image (relative à la scène de fin) où part le « Ma-tou ! » : juste après le dernier mot, jamais dessous. */
-export const imageSignature = (mots: MotScene[]) => (mots.at(-1)?.fin ?? 0) + 6;
+/** Image (relative à la scène de fin) où part le « Ma-tou ! » : 3 images (0,1 s) après le dernier mot. */
+export const imageSignature = (mots: MotScene[]) => (mots.at(-1)?.fin ?? 0) + 3;
 
 /**
  * La fin reprend l'image du hook pendant la phrase de boucle : quand la vidéo repart, le
