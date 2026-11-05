@@ -1,5 +1,12 @@
 [
   {
+    "titre": "OpenAI to acquire Pierre Computer Company, Inc.",
+    "url": "https://openai.com/index/openai-to-acquire-pierre",
+    "date": "2026-11-04T14:30:00.000Z",
+    "score": 38,
+    "ajoute": "2026-11-05T04:13:22.913Z"
+  },
+  {
     "titre": "Cities Worldwide Build and Scale AI Services With NVIDIA Physical and Agentic AI",
     "url": "https://blogs.nvidia.com/blog/cities-physical-agentic-ai-applications/",
     "date": "2026-11-03T07:00:12.000Z",
@@ -19,6 +26,13 @@
     "date": "2026-11-03T17:15:21.000Z",
     "score": 35,
     "ajoute": "2026-11-04T04:13:22.920Z"
+  },
+  {
+    "titre": "Dharma Field Extractor: Any Document In, Structured Fields in JSON Out",
+    "url": "https://huggingface.co/blog/Dharma-AI/dharma-field-extractor",
+    "date": "2026-11-04T17:50:10.000Z",
+    "score": 35,
+    "ajoute": "2026-11-05T04:13:22.913Z"
   },
   {
     "titre": "Palette: teaching a small model to build decks in your design language",
@@ -77,6 +91,13 @@
     "ajoute": "2026-11-04T04:13:22.920Z"
   },
   {
+    "titre": "Educators can now add Guided Learning to assignments in Google Classroom to help students get extra support",
+    "url": "http://workspaceupdates.googleblog.com/2026/11/educators-can-now-add-guided-learning-to-assignments-in-Google-Classroom-to-help-students-get-extra-support.html",
+    "date": "2026-11-04T14:39:59.264Z",
+    "score": 30,
+    "ajoute": "2026-11-05T04:13:22.913Z"
+  },
+  {
     "titre": "The latest AI news we announced in October 2026",
     "url": "https://blog.google/innovation-and-ai/technology/ai/google-ai-updates-october-2026/",
     "date": "2026-11-02T17:45:00.000Z",
@@ -105,6 +126,13 @@
     "ajoute": "2026-11-03T04:13:21.952Z"
   },
   {
+    "titre": "A thousand fewer paths to root",
+    "url": "https://openai.com/index/a-thousand-fewer-paths-to-root",
+    "date": "2026-11-04T08:00:00.000Z",
+    "score": 30,
+    "ajoute": "2026-11-05T04:13:22.913Z"
+  },
+  {
     "titre": "Accelerating engineering for the physical world",
     "url": "https://openai.com/index/accelerating-engineering-for-the-physical-world",
     "date": "2026-11-03T12:00:00.000Z",
@@ -117,6 +145,13 @@
     "date": "2026-11-03T08:00:00.000Z",
     "score": 30,
     "ajoute": "2026-11-04T04:13:22.920Z"
+  },
+  {
+    "titre": "Daybreak Red is now available in AWS GovCloud (US-East)",
+    "url": "https://openai.com/index/daybreak-red-aws-govcloud",
+    "date": "2026-11-04T07:00:00.000Z",
+    "score": 30,
+    "ajoute": "2026-11-05T04:13:22.913Z"
   },
   {
     "titre": "Introducing the Grid Protectors Program",

@@ -1,0 +1,87 @@
+{
+  "numero": 16,
+  "slug": "apple-reduit-budget-ia",
+  "serie": "flash",
+  "source": {
+    "nom": "Bloomberg",
+    "url": "https://fr.finance.yahoo.com/actualites/apple-r%C3%A9duit-budgets-quotidiens-d-203245644.html",
+    "date": "2026-11-04",
+    "type": "article"
+  },
+  "statut": "rumeur",
+  "verdict": "buzz",
+  "miniature": "Apple rationne ses ==ingénieurs==",
+  "musique": true,
+  "gabarit": {
+    "ouverture": "fenetre",
+    "corps": "liste"
+  },
+  "scenes": [
+    {
+      "type": "hook",
+      "texte": "Même Apple trouve l'IA trop chère et rationne ses ==ingénieurs==.",
+      "titre": "Apple rationne ses ==ingénieurs==",
+      "icone": "attention",
+      "visuel": {
+        "type": "fenetre",
+        "app": "Apple",
+        "messages": [
+          {
+            "de": "toi",
+            "texte": "Je peux tester mon code avec Claude ?"
+          },
+          {
+            "de": "app",
+            "texte": "Budget quotidien réduit à 200 $ !"
+          }
+        ]
+      },
+      "matou": "surpris"
+    },
+    {
+      "type": "liste",
+      "texte": "C'est une rumeur signée Bloomberg : Apple couperait les budgets, deux cents dollars pour les ==ingénieurs==, et cent pour les autres.",
+      "titre": "Les coupes d'Apple",
+      "elements": [
+        {
+          "texte": "Ingénieurs : 200 $ / jour",
+          "icone": "euro",
+          "quand": "ingénieurs"
+        },
+        {
+          "texte": "Autres équipes : 100 $ / jour",
+          "icone": "croix",
+          "quand": "autres"
+        }
+      ],
+      "matou": "parle"
+    },
+    {
+      "type": "point",
+      "texte": "En fait, avec une R&D en hausse de 32 %, la facture de l'==IA== explose.",
+      "titre": "Une facture qui ==explose==",
+      "corps": "La R&D a bondi de 32 % en un an avec l'IA.",
+      "icone": "graphique",
+      "matou": "enFait"
+    },
+    {
+      "type": "pourquoi",
+      "texte": "Et pour toi ? Si même Apple compte ses sous, l'IA gratuite ne va pas ==durer==.",
+      "titre": "Et pour toi ?",
+      "corps": "Si les géants brident leurs équipes, l'IA gratuite deviendra bientôt payante.",
+      "icone": "ampoule",
+      "matou": "reflechit"
+    },
+    {
+      "type": "verdict",
+      "texte": "Hype-mètre : pur buzz. Mon avis : nous vendre l'IA magique tout en bridant ses équipes, c'est gonflé.",
+      "raison": "Vendre l'IA magique aux clients en coupant le robinet à ses ingénieurs.",
+      "matou": "verdict"
+    },
+    {
+      "type": "fin",
+      "texte": "Bref, pour Apple, l'IA coûte trop cher pour ses ==ingénieurs==.",
+      "matou": "sceptique"
+    }
+  ]
+}

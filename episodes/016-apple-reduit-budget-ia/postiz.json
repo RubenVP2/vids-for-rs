@@ -1,0 +1,215 @@
+[
+  {
+    "type": "draft",
+    "date": "2026-11-05T07:30:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvshkn720a0spg1ci9rzdm7y"
+        },
+        "value": [
+          {
+            "content": "Même Apple commence à rationner l'IA en interne. Face à l'explosion des coûts d'infrastructure, l'entreprise vient de brider les budgets quotidiens accordés à ses salariés pour consommer des modèles d'IA.\n\nSelon les révélations de Bloomberg, la rigueur budgétaire s'installe à Cupertino :\n→ Plafond quotidien des ingénieurs abaissé de 300 $ à 200 $ par personne\n→ Plafond des équipes hors ingénierie maintenu à 100 $ par jour\n→ Des dépenses de R&D en hausse de 32 % sur un an, portées par l'IA\n\nPour les entreprises, le signal est fort. Alors que tout le monde promet des gains de productivité magiques, la réalité des factures de calcul rattrape même le plus riche des géants de la tech. Les requêtes de code et de débogage coûtent cher, et l'heure du retour sur investissement a sonné.\n\nDans 2 ans, combien d'entreprises continueront à financer l'IA sans compter ?\n\nLe détail en images ⤵️\n\n#IA #management #technologie",
+            "image": [
+              {
+                "id": "740ad5e5-6d85-4aba-9851-0ef7aa63c712",
+                "path": "https://uploads.postiz.com/grUvMg8kC7.png"
+              },
+              {
+                "id": "1cacd689-ad63-4dbc-b5a1-332ff4cdb03f",
+                "path": "https://uploads.postiz.com/s74tPnhNo5.png"
+              },
+              {
+                "id": "c6ce77ec-e786-4ee9-b6c3-bbc03e24e41d",
+                "path": "https://uploads.postiz.com/CNIUxoxwjj.png"
+              },
+              {
+                "id": "1d138d03-368e-44c0-81b2-ca1ff1bc4b4f",
+                "path": "https://uploads.postiz.com/4oAatb7PAG.png"
+              },
+              {
+                "id": "f2a662d6-dbf5-4bdf-88cd-aaa6e9ead23d",
+                "path": "https://uploads.postiz.com/Q2vgPZayOD.png"
+              },
+              {
+                "id": "ed53c851-c75a-4c64-ba7a-cca4dc6cf55e",
+                "path": "https://uploads.postiz.com/a8BlnPqaC4.png"
+              }
+            ]
+          },
+          {
+            "content": "Sources : Bloomberg (https://fr.finance.yahoo.com/actualites/apple-r%C3%A9duit-budgets-quotidiens-d-203245644.html)",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "linkedin-page",
+          "post_as_images_carousel": true,
+          "carousel_name": "Apple : le budget IA de ses ingénieurs passe à 200 $"
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-05T08:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb2y1q03efpg1c3j45vgui"
+        },
+        "value": [
+          {
+            "content": "Tu savais que même Apple n'a plus les moyens de payer l'IA de ses salariés ?\n\nBloomberg révèle que l'entreprise rationne ses équipes en interne : le budget quotidien d'IA des ingénieurs vient de passer de 300 $ à 200 $ par jour. Vendre une technologie magique au grand public tout en coupant le robinet à ses propres développeurs, c'est quand même gonflé.\n\nÀ quand la fin de l'IA gratuite pour nous tous ?\n\nSource : Bloomberg\n\n#IA",
+            "image": [
+              {
+                "id": "a39a8905-d5e3-4e02-8745-bf7f2a50f038",
+                "path": "https://uploads.postiz.com/vOheIvW8bn.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Sources : Bloomberg (https://fr.finance.yahoo.com/actualites/apple-r%C3%A9duit-budgets-quotidiens-d-203245644.html)",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "threads"
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-05T11:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsaogt206kfor1cddnosuhf"
+        },
+        "value": [
+          {
+            "content": "Ton accès gratuit à l'IA risque de ne pas durer très longtemps ! ☝️\n\nMême Apple trouve la facture trop salée et rationne ses salariés :\n→ Plafond des ingénieurs abaissé à 200 $ par jour\n→ Plafond des autres équipes bloqué à 100 $\n→ Des dépenses de R&D qui ont bondi de 32 % en un an\n\nSi l'entreprise la plus riche du monde commence à couper le robinet en interne, les outils d'IA gratuits pour le public vont vite devenir payants.\n\nEnvoie-la à quelqu'un qui utilise l'IA tous les jours ! 🤓\n\n#IA #Apple #technologie #vulgarisation #matou",
+            "image": [
+              {
+                "id": "a39a8905-d5e3-4e02-8745-bf7f2a50f038",
+                "path": "https://uploads.postiz.com/vOheIvW8bn.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Sources : Bloomberg (https://fr.finance.yahoo.com/actualites/apple-r%C3%A9duit-budgets-quotidiens-d-203245644.html)",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "instagram-standalone",
+          "post_type": "post",
+          "is_trial_reel": false
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-05T11:30:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsakeo602wupg1crmgz7g9n"
+        },
+        "value": [
+          {
+            "content": "Apple rationne l'IA de ses ingénieurs pour freiner ses coûts. Team « normal, l'IA coûte trop cher » ou team « la honte pour Apple » ?\n\n#IA #Apple #tech #apprendresurtiktok #matou",
+            "image": [
+              {
+                "id": "a39a8905-d5e3-4e02-8745-bf7f2a50f038",
+                "path": "https://uploads.postiz.com/vOheIvW8bn.mp4"
+              }
+            ]
+          }
+        ],
+        "settings": {
+          "__type": "tiktok-business",
+          "content_posting_method": "DIRECT_POST",
+          "privacy_level": "PUBLIC_TO_EVERYONE",
+          "duet": true,
+          "stitch": true,
+          "comment": true,
+          "autoAddMusic": "no",
+          "brand_content_toggle": false,
+          "brand_organic_toggle": false,
+          "video_made_with_ai": true
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-05T12:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb3xwh07l1or1cvp01pod9"
+        },
+        "value": [
+          {
+            "content": "Même Apple trouve que l'intelligence artificielle coûte trop cher et rationne ses équipes.\nPlafonds quotidiens coupés et R&D en hausse de 32 % : les géants de la tech serrent la vis.\n\nSource : https://fr.finance.yahoo.com/actualites/apple-r%C3%A9duit-budgets-quotidiens-d-203245644.html\n\n#shorts #IA #Apple #matou",
+            "image": [
+              {
+                "id": "a39a8905-d5e3-4e02-8745-bf7f2a50f038",
+                "path": "https://uploads.postiz.com/vOheIvW8bn.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Sources : Bloomberg (https://fr.finance.yahoo.com/actualites/apple-r%C3%A9duit-budgets-quotidiens-d-203245644.html)",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "youtube",
+          "type": "public",
+          "selfDeclaredMadeForKids": "no",
+          "title": "Apple : le budget IA de ses ingénieurs passe à 200 $",
+          "thumbnail": {
+            "id": "a674176b-98f4-4b9f-82aa-54a4a9656f78",
+            "path": "https://uploads.postiz.com/ne6bw9ZgZf.png"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-05T14:30:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb2y1q03efpg1c3j45vgui"
+        },
+        "value": [
+          {
+            "content": "Si même le géant le plus riche de la tech commence à rationner ses requêtes d'IA en interne :\n\nDans 3 ans, quel pourcentage des outils d'IA actuels sera encore accessible gratuitement ?\n\n#IA",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "threads"
+        }
+      }
+    ]
+  }
+]
