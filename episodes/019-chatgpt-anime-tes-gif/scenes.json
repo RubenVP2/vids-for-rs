@@ -1,0 +1,65 @@
+{
+  "numero": 19,
+  "slug": "chatgpt-anime-tes-gif",
+  "serie": "flash",
+  "source": {
+    "nom": "Numerama",
+    "url": "https://www.numerama.com/tech/2368175-chatgpt-peut-maintenant-creer-vos-gif-voici-comment-animer-vos-images.html",
+    "date": "2026-11-05",
+    "type": "article"
+  },
+  "statut": "disponible",
+  "verdict": "prometteur",
+  "miniature": "ChatGPT crée tes ==propres GIF==",
+  "musique": true,
+  "gabarit": {
+    "ouverture": "question",
+    "corps": "fenetre"
+  },
+  "scenes": [
+    {
+      "type": "hook",
+      "texte": "Et si tu créais tes propres ==GIF== directement dans ChatGPT ?",
+      "titre": "Créer tes propres ==GIF== ?",
+      "icone": "ampoule",
+      "matou": "surpris"
+    },
+    {
+      "type": "fenetre",
+      "texte": "Selon Numerama, avec {Images 2.6|Images deux point six}, OpenAI transforme n'importe quel texte ou photo en ==animation en boucle==.",
+      "app": "ChatGPT",
+      "messages": [
+        {
+          "de": "toi",
+          "texte": "Anime mon dessin de chat"
+        },
+        {
+          "de": "app",
+          "texte": "Voilà ton GIF en boucle !",
+          "quand": "boucle"
+        }
+      ],
+      "matou": "parle"
+    },
+    {
+      "type": "point",
+      "texte": "En fait, tu peux même lui coller un lien existant pour le ==ralentir== ou lui demander des modifications.",
+      "titre": "Retouche en direct",
+      "corps": "Ralentir ou modifier ==au chat==",
+      "quand": "ralentir",
+      "icone": "eclair",
+      "matou": "enFait"
+    },
+    {
+      "type": "verdict",
+      "texte": "Hype-mètre : prometteur. Pour moi, c'est génial pour rigoler sur Slack, mais on reste très loin d'une vraie vidéo ==fluide==.",
+      "raison": "Idéal pour Slack, mais ==pas du cinéma==",
+      "matou": "verdict"
+    },
+    {
+      "type": "fin",
+      "texte": "Tu as enfin de quoi fabriquer tes propres ==GIF==.",
+      "matou": "content"
+    }
+  ]
+}

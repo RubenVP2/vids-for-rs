@@ -1,0 +1,162 @@
+[
+  {
+    "type": "draft",
+    "date": "2026-11-06T17:30:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsaogt206kfor1cddnosuhf"
+        },
+        "value": [
+          {
+            "content": "2.6 : avec Images 2.6, ChatGPT anime désormais tes images en boucle directement dans le chat.\n\nOpenAI intègre enfin un moteur de GIF dans ChatGPT :\n→ Un texte, une photo ou un croquis devient un GIF animé\n→ Retouches et ajustements de vitesse en direct dans la discussion\n→ Déploiement en cours sur toutes les formules de ChatGPT et Codex\n\nEnvoie-la à quelqu'un qui utilise tout le temps des GIF ! ☝️\n\n#vulgarisation #chatgpt #IA #matou",
+            "image": [
+              {
+                "id": "68f14b57-89b2-4d58-aee4-409aacaa2b08",
+                "path": "https://uploads.postiz.com/ksBiR0HAAe.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Sources : Numerama (https://www.numerama.com/tech/2368175-chatgpt-peut-maintenant-creer-vos-gif-voici-comment-animer-vos-images.html)",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "instagram-standalone",
+          "post_type": "post",
+          "is_trial_reel": false
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-06T18:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsakeo602wupg1crmgz7g9n"
+        },
+        "value": [
+          {
+            "content": "ChatGPT crée désormais tes propres GIF animés depuis un simple texte ou un croquis. Qui a déjà passé dix minutes à chercher le GIF parfait ? 🤓\n\n#apprendresurtiktok #chatgpt #IA #matou",
+            "image": [
+              {
+                "id": "68f14b57-89b2-4d58-aee4-409aacaa2b08",
+                "path": "https://uploads.postiz.com/ksBiR0HAAe.mp4"
+              }
+            ]
+          }
+        ],
+        "settings": {
+          "__type": "tiktok-business",
+          "content_posting_method": "DIRECT_POST",
+          "privacy_level": "PUBLIC_TO_EVERYONE",
+          "duet": true,
+          "stitch": true,
+          "comment": true,
+          "autoAddMusic": "no",
+          "brand_content_toggle": false,
+          "brand_organic_toggle": false,
+          "video_made_with_ai": true
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-06T18:30:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb2y1q03efpg1c3j45vgui"
+        },
+        "value": [
+          {
+            "content": "Je parie que d'ici six mois, plus personne ne cherchera un GIF de réaction sur le web : on demandera simplement à ChatGPT de fabriquer l'animation exacte qu'on a en tête.\n\nOpenAI déploie Images 2.6 pour transformer n'importe quel texte ou croquis en boucle animée, avec retouche en direct. C'est en cours de déploiement.\n\nQui prend le pari inverse ? 🤓\n\nSource : Numerama\n#IA",
+            "image": [
+              {
+                "id": "68f14b57-89b2-4d58-aee4-409aacaa2b08",
+                "path": "https://uploads.postiz.com/ksBiR0HAAe.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Sources : Numerama (https://www.numerama.com/tech/2368175-chatgpt-peut-maintenant-creer-vos-gif-voici-comment-animer-vos-images.html)",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "threads"
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-06T19:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb3xwh07l1or1cvp01pod9"
+        },
+        "value": [
+          {
+            "content": "OpenAI lance Images 2.6 pour transformer n'importe quel texte ou dessin en GIF animé directement dans ChatGPT.\nTu peux même coller le lien d'un GIF existant pour le ralentir ou modifier l'animation au fil de la discussion.\n\nSource : https://www.numerama.com/tech/2368175-chatgpt-peut-maintenant-creer-vos-gif-voici-comment-animer-vos-images.html\n\n#shorts #chatgpt #IA #matou",
+            "image": [
+              {
+                "id": "68f14b57-89b2-4d58-aee4-409aacaa2b08",
+                "path": "https://uploads.postiz.com/ksBiR0HAAe.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Sources : Numerama (https://www.numerama.com/tech/2368175-chatgpt-peut-maintenant-creer-vos-gif-voici-comment-animer-vos-images.html)",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "youtube",
+          "type": "public",
+          "selfDeclaredMadeForKids": "no",
+          "title": "Pourquoi ChatGPT anime désormais tes propres GIF ?",
+          "thumbnail": {
+            "id": "c8067ca9-cf3f-417b-a9c9-69fab000550b",
+            "path": "https://uploads.postiz.com/hHLBJHejGX.png"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-06T20:30:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb2y1q03efpg1c3j45vgui"
+        },
+        "value": [
+          {
+            "content": "Maintenant qu'on peut animer n'importe quel dessin en boucle dans ChatGPT, qui a déjà passé vingt minutes à chercher le bon GIF sur Slack pour une simple blague ? #IA",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "threads"
+        }
+      }
+    ]
+  }
+]

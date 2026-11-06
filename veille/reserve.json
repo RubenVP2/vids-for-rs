@@ -1,12 +1,5 @@
 [
   {
-    "titre": "ChatGPT peut maintenant créer vos GIF : voici comment animer vos images",
-    "url": "https://www.numerama.com/tech/2368175-chatgpt-peut-maintenant-creer-vos-gif-voici-comment-animer-vos-images.html",
-    "date": "2026-11-05T09:30:00.000Z",
-    "score": 39,
-    "ajoute": "2026-11-05T13:13:41.030Z"
-  },
-  {
     "titre": "Now available in beta: Automatically apply client-side encryption (CSE) to confidential Docs, Sheets, Slides, and Drive files",
     "url": "http://workspaceupdates.googleblog.com/2026/11/automatically-apply-client-side-encryption-to-confidential-Editors-and-Drive-files-now-available-in-Beta.html",
     "date": "2026-11-05T17:30:01.617Z",
@@ -161,6 +154,13 @@
     "ajoute": "2026-11-03T13:13:21.117Z"
   },
   {
+    "titre": "Amazon : voici le TOP 5 des meilleures offres pour le Black Friday",
+    "url": "https://www.frandroid.com/bons-plans/3313729_amazon-voici-le-top-5-des-meilleures-offres-pour-le-black-friday",
+    "date": "2026-11-06T11:41:16.000Z",
+    "score": 31,
+    "ajoute": "2026-11-06T13:13:41.259Z"
+  },
+  {
     "titre": "Etats-Unis : Google accusé d’avoir laissé son assistant IA Gemini aider une collégienne à planifier un suicide",
     "url": "https://www.lemonde.fr/pixels/article/2026/11/06/etats-unis-google-accuse-d-avoir-laisse-son-assistant-ia-gemini-aider-une-collegienne-a-planifier-son-suicide_6807413_4408996.html",
     "date": "2026-11-06T00:36:12.000Z",
@@ -229,6 +229,13 @@
     "date": "2026-11-05T16:00:05.000Z",
     "score": 30,
     "ajoute": "2026-11-06T04:13:41.599Z"
+  },
+  {
+    "titre": "Egyptian and Nigerian English join the Open ASR Leaderboard",
+    "url": "https://huggingface.co/blog/open-asr-leaderboard-liva",
+    "date": "2026-11-06T00:00:00.000Z",
+    "score": 30,
+    "ajoute": "2026-11-06T13:13:41.259Z"
   },
   {
     "titre": "A Closer Look at Phonon TTS. Launching High-Quality On-Device Speech That Tops the Benchmarks.",
@@ -313,6 +320,13 @@
     "date": "2026-11-02T16:23:21.000Z",
     "score": 26,
     "ajoute": "2026-11-03T13:13:21.117Z"
+  },
+  {
+    "titre": "Claude can now analyze your spending with its new Personal Finance tool",
+    "url": "https://techcrunch.com/2026/11/05/claude-can-now-analyze-your-spending-with-its-new-personal-finance-tool/",
+    "date": "2026-11-05T18:00:00.000Z",
+    "score": 26,
+    "ajoute": "2026-11-06T13:13:41.259Z"
   },
   {
     "titre": "Anthropic ne veut plus que Claude copie des jeux vidéo",
