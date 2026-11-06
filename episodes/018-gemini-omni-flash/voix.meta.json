@@ -1,0 +1,5 @@
+{
+ "modele": "google/gemini-3.8-flash-tts",
+ "voix": "Puck",
+ "sha256": "3448dbf6e8c53c45decdea52fbeca94da188cf112fa9d2ad9edde01c7d9c6efe"
+}

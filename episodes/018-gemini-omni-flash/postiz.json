@@ -1,0 +1,215 @@
+[
+  {
+    "type": "draft",
+    "date": "2026-11-06T07:30:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvshkn720a0spg1ci9rzdm7y"
+        },
+        "value": [
+          {
+            "content": "La vidéo par IA franchit un cap pratique. Avec Gemini Omni 1.2 Flash, Google allonge les clips à 15 secondes et permet enfin de corriger un plan par simple message sans devoir tout relancer.\n\nCe que cette avancée apporte aux équipes marketing, création et communication :\n\n→ Un cycle de production accéléré : au lieu de relancer un rendu complet pour modifier un logo ou une météo, une consigne textuelle ajuste le détail souhaité.\n→ Une baisse de coût bienvenue : l'API voit son prix chuter de 30 % (0,07 $ par seconde en 720p), avec un flux de brouillonnage rapide avant l'export 4K.\n→ Une cohérence de marque préservée : les identités visuelles, typographies et mouvements de caméra restent stables du premier au dernier photogramme.\n\nDans ton équipe, combien d'heures passez-vous chaque semaine à retoucher des vidéos pour les réseaux ou vos campagnes ?\n\nLe détail en images ⤵️\n\n#IA #marketing #creation",
+            "image": [
+              {
+                "id": "808e2333-e38a-4957-8ee4-3ca9e0d64c79",
+                "path": "https://uploads.postiz.com/P81zwYPzwj.png"
+              },
+              {
+                "id": "8ee31fff-6244-4b08-9a48-4496cb08f73c",
+                "path": "https://uploads.postiz.com/2iebsrP2CJ.png"
+              },
+              {
+                "id": "15dac28c-8827-4155-a421-63f4f3033905",
+                "path": "https://uploads.postiz.com/k1GkjmK3PQ.png"
+              },
+              {
+                "id": "0c2a2b50-61e9-44c0-b8d7-e25a0f045a23",
+                "path": "https://uploads.postiz.com/cbfMlHJzSz.png"
+              },
+              {
+                "id": "09dcd489-4dec-49ec-82dd-521569046cd0",
+                "path": "https://uploads.postiz.com/WPGr8ymiNg.png"
+              },
+              {
+                "id": "298f2d74-114d-4d71-b62d-b75cf4f7b308",
+                "path": "https://uploads.postiz.com/r5SKR9Cl9G.png"
+              }
+            ]
+          },
+          {
+            "content": "Sources : Google DeepMind (https://blog.google/innovation-and-ai/technology/developers-tools/introducing-gemini-omni-1-2-flash/)",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "linkedin-page",
+          "post_as_images_carousel": true,
+          "carousel_name": "Google allonge ses vidéos IA à 15 secondes"
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-06T08:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb2y1q03efpg1c3j45vgui"
+        },
+        "value": [
+          {
+            "content": "Mon avis : la retouche par simple message est bien plus importante que les 15 secondes de vidéo. Pouvoir corriger un détail sans repayer un rendu entier transforme enfin ces outils en vrais assistants de production.\n\nStatut : disponible.\nSource : Google DeepMind.\n\nEntre retouche par message et allongement de la durée, qu'est-ce qui te ferait gagner le plus de temps ? #IA",
+            "image": [
+              {
+                "id": "227f9487-d8b0-4230-a28e-04892257c539",
+                "path": "https://uploads.postiz.com/VYWrU5ebSB.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Sources : Google DeepMind (https://blog.google/innovation-and-ai/technology/developers-tools/introducing-gemini-omni-1-2-flash/)",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "threads"
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-06T11:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsaogt206kfor1cddnosuhf"
+        },
+        "value": [
+          {
+            "content": "Et si tu pouvais corriger une vidéo IA d'un simple message sans devoir tout relancer ?\n\nGoogle DeepMind lance Gemini Omni 1.2 Flash, son nouveau modèle vidéo qui passe à 15 secondes et réduit les coûts de 30 %.\n\nCe qui change concrètement :\n→ Des clips natifs jusqu'à 15 secondes sans coupure\n→ Retouche par chat : changer un décor ou un objet sans tout régénérer\n→ Cohérence renforcée des visages, du texte et des couleurs\n\nEnvoie-la à quelqu'un qui crée des vidéos pour ses réseaux ! ☝️\n\n#IA #Google #creation #vulgarisation #matou",
+            "image": [
+              {
+                "id": "227f9487-d8b0-4230-a28e-04892257c539",
+                "path": "https://uploads.postiz.com/VYWrU5ebSB.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Sources : Google DeepMind (https://blog.google/innovation-and-ai/technology/developers-tools/introducing-gemini-omni-1-2-flash/)",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "instagram-standalone",
+          "post_type": "post",
+          "is_trial_reel": false
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-06T11:30:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsakeo602wupg1crmgz7g9n"
+        },
+        "value": [
+          {
+            "content": "Google lance des vidéos IA de 15 secondes modifiables par message. Tu lui mets combien sur 10, à cette idée ?\n\n#IA #Google #video #apprendresurtiktok #matou",
+            "image": [
+              {
+                "id": "227f9487-d8b0-4230-a28e-04892257c539",
+                "path": "https://uploads.postiz.com/VYWrU5ebSB.mp4"
+              }
+            ]
+          }
+        ],
+        "settings": {
+          "__type": "tiktok-business",
+          "content_posting_method": "DIRECT_POST",
+          "privacy_level": "PUBLIC_TO_EVERYONE",
+          "duet": true,
+          "stitch": true,
+          "comment": true,
+          "autoAddMusic": "no",
+          "brand_content_toggle": false,
+          "brand_organic_toggle": false,
+          "video_made_with_ai": true
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-06T12:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb3xwh07l1or1cvp01pod9"
+        },
+        "value": [
+          {
+            "content": "Google DeepMind déploie Gemini Omni 1.2 Flash avec des clips de 15 secondes et une retouche par simple message.\nLe modèle baisse ses tarifs de 30 % et arrive dans l'API et Google Vids.\n\nSource : https://blog.google/innovation-and-ai/technology/developers-tools/introducing-gemini-omni-1-2-flash/\n\n#IA #Google #shorts #matou",
+            "image": [
+              {
+                "id": "227f9487-d8b0-4230-a28e-04892257c539",
+                "path": "https://uploads.postiz.com/VYWrU5ebSB.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Sources : Google DeepMind (https://blog.google/innovation-and-ai/technology/developers-tools/introducing-gemini-omni-1-2-flash/)",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "youtube",
+          "type": "public",
+          "selfDeclaredMadeForKids": "no",
+          "title": "Google allonge ses vidéos IA à 15 secondes",
+          "thumbnail": {
+            "id": "07827868-ea0d-4f50-9541-1ed527a0cb45",
+            "path": "https://uploads.postiz.com/PPU7VJ9Fnv.png"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-06T14:30:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb2y1q03efpg1c3j45vgui"
+        },
+        "value": [
+          {
+            "content": "Pour créer une vidéo promotionnelle, tu préfères un clip de 15 secondes généré en 2 minutes par IA avec quelques défauts de physique, ou un tournage classique d'une demi-journée parfait mais dix fois plus cher ? #IA",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "threads"
+        }
+      }
+    ]
+  }
+]

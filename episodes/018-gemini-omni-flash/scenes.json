@@ -1,0 +1,74 @@
+{
+  "numero": 18,
+  "slug": "gemini-omni-flash",
+  "serie": "flash",
+  "source": {
+    "nom": "Google DeepMind",
+    "url": "https://blog.google/innovation-and-ai/technology/developers-tools/introducing-gemini-omni-1-2-flash/",
+    "date": "2026-11-05",
+    "type": "blog"
+  },
+  "statut": "disponible",
+  "verdict": "prometteur",
+  "miniature": "Des vidéos IA de ==15 secondes==",
+  "musique": true,
+  "gabarit": {
+    "ouverture": "chiffre",
+    "corps": "comparaison"
+  },
+  "scenes": [
+    {
+      "type": "hook",
+      "texte": "Google pousse enfin la vidéo IA jusqu'à ==quinze secondes==.",
+      "titre": "Des vidéos IA de ==15 secondes==",
+      "visuel": {
+        "type": "chiffre",
+        "valeur": "15 s"
+      },
+      "matou": "surpris"
+    },
+    {
+      "type": "comparaison",
+      "texte": "Dans {Gemini Omni 1.2 Flash|Gémini Omni un point deux Flash}, Google réduit en plus la facture de ==trente pour cent==.",
+      "avant": {
+        "titre": "Omni 1.1",
+        "texte": "10 s au ==prix fort=="
+      },
+      "apres": {
+        "titre": "Omni 1.2",
+        "texte": "15 s à ==-30 %==",
+        "quand": "réduit"
+      },
+      "matou": "parle"
+    },
+    {
+      "type": "point",
+      "texte": "En fait, plus besoin de tout relancer : tu retouches le clip par ==simple message==.",
+      "titre": "Retouche par chat",
+      "corps": "Corriger sans ==tout régénérer==",
+      "quand": "retouches",
+      "icone": "ampoule",
+      "matou": "enFait"
+    },
+    {
+      "type": "point",
+      "texte": "Le piège : la physique complexe et le sport rapide font encore ==déraper== l'image.",
+      "titre": "Le revers du décor",
+      "corps": "Physique et sport ==encore fragiles==",
+      "quand": "déraper",
+      "icone": "attention",
+      "matou": "sceptique"
+    },
+    {
+      "type": "verdict",
+      "texte": "Hype-mètre : prometteur. Retoucher au lieu de régénérer change la vie, mais quinze secondes restent trop courtes pour du vrai ==cinéma==.",
+      "raison": "Retouche rapide, mais ==trop court==",
+      "matou": "verdict"
+    },
+    {
+      "type": "fin",
+      "texte": "En attendant, tes vidéos IA tiendront enfin en ==quinze secondes==.",
+      "matou": "neutre"
+    }
+  ]
+}
