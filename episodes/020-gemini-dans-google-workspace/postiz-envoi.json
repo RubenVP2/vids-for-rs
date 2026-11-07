@@ -1,0 +1,46 @@
+{
+  "envoye": "2026-11-07T04:40:41.857Z",
+  "date": "2026-11-07T08:00:00.000Z",
+  "rang": "principal",
+  "statut": "programmé",
+  "video": "https://uploads.postiz.com/bJsBShDntU.mp4",
+  "miniature": "https://uploads.postiz.com/zIYKE6N8no.png",
+  "carrousel": [],
+  "postes": [
+    {
+      "reseau": "threads",
+      "postId": "cmw5x0r0g10pqoj07ygwum65l",
+      "integration": "cmvsb2y1q03efpg1c3j45vgui",
+      "date": "2026-11-07T08:00:00.000Z",
+      "statut": "programmé"
+    },
+    {
+      "reseau": "instagram",
+      "postId": "cmw5x0rp50zspmm08gwerzgsb",
+      "integration": "cmvsaogt206kfor1cddnosuhf",
+      "date": "2026-11-07T11:00:00.000Z",
+      "statut": "programmé"
+    },
+    {
+      "reseau": "tiktok",
+      "postId": "cmw5x0set10psoj07sj8dnfna",
+      "integration": "cmvsakeo602wupg1crmgz7g9n",
+      "date": "2026-11-07T11:30:00.000Z",
+      "statut": "programmé"
+    },
+    {
+      "reseau": "youtube",
+      "postId": "cmw5x0t4q0zsrmm08818vj5t0",
+      "integration": "cmvsb3xwh07l1or1cvp01pod9",
+      "date": "2026-11-07T12:00:00.000Z",
+      "statut": "programmé"
+    },
+    {
+      "reseau": "threads-relance",
+      "postId": "cmw5x0tua0zstmm085bj6a991",
+      "integration": "cmvsb2y1q03efpg1c3j45vgui",
+      "date": "2026-11-07T14:30:00.000Z",
+      "statut": "programmé"
+    }
+  ]
+}

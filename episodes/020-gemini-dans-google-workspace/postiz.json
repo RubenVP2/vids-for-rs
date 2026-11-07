@@ -1,0 +1,162 @@
+[
+  {
+    "type": "draft",
+    "date": "2026-11-07T08:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb2y1q03efpg1c3j45vgui"
+        },
+        "value": [
+          {
+            "content": "Google intègre Gemini dans Forms pour résumer les sondages et dans Classroom pour guider les élèves pas à pas.\n\nJe parie que d'ici un an, plus aucun manager n'épluchera un tableau de réponses à la main pour trouver les tendances d'un formulaire.\n\nQui prend le pari inverse ? 🤓\n\nSource : Google Workspace\n#IA",
+            "image": [
+              {
+                "id": "735a4e1a-93ed-461f-aac9-10e19c230fd0",
+                "path": "https://uploads.postiz.com/bJsBShDntU.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Sources : Google Workspace (http://workspaceupdates.googleblog.com/2026/11/weekly-recap-11-06-2026.html)",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "threads"
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-07T11:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsaogt206kfor1cddnosuhf"
+        },
+        "value": [
+          {
+            "content": "6 nouveautés IA déployées par Google cette semaine : Gemini arrive dans Forms et Classroom 🤓\n\nGoogle muscle sa suite bureautique Workspace avec de l'intelligence artificielle :\n→ Analyse automatique des formulaires Forms avec détection des tendances clés\n→ Mode tuteur dans Classroom pour guider les élèves pas à pas sans donner la solution\n→ Chiffrement côté client étendu en bêta pour sécuriser les documents sensibles\n\nEnvoie-la à quelqu'un qui passe ses journées sur Google Workspace ! ☝️\n\n#vulgarisation #google #IA #matou #workspace",
+            "image": [
+              {
+                "id": "735a4e1a-93ed-461f-aac9-10e19c230fd0",
+                "path": "https://uploads.postiz.com/bJsBShDntU.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Sources : Google Workspace (http://workspaceupdates.googleblog.com/2026/11/weekly-recap-11-06-2026.html)",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "instagram-standalone",
+          "post_type": "post",
+          "is_trial_reel": false
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-07T11:30:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsakeo602wupg1crmgz7g9n"
+        },
+        "value": [
+          {
+            "content": "Google intègre désormais son IA Gemini dans Forms pour analyser les formulaires et dans Classroom pour aider les élèves. Qui a déjà passé des heures à éplucher un questionnaire à la main ? 🤓\n\n#apprendresurtiktok #google #IA #matou #productivité",
+            "image": [
+              {
+                "id": "735a4e1a-93ed-461f-aac9-10e19c230fd0",
+                "path": "https://uploads.postiz.com/bJsBShDntU.mp4"
+              }
+            ]
+          }
+        ],
+        "settings": {
+          "__type": "tiktok-business",
+          "content_posting_method": "DIRECT_POST",
+          "privacy_level": "PUBLIC_TO_EVERYONE",
+          "duet": true,
+          "stitch": true,
+          "comment": true,
+          "autoAddMusic": "no",
+          "brand_content_toggle": false,
+          "brand_organic_toggle": false,
+          "video_made_with_ai": true
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-07T12:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb3xwh07l1or1cvp01pod9"
+        },
+        "value": [
+          {
+            "content": "Google déploie son intelligence artificielle Gemini dans Workspace pour résumer les réponses de formulaires et aider les devoirs dans Classroom.\nLe tuteur guide les élèves étape par étape sans donner directement la réponse pour éviter la triche.\n\nSource : http://workspaceupdates.googleblog.com/2026/11/weekly-recap-11-06-2026.html\n\n#shorts #google #IA #matou",
+            "image": [
+              {
+                "id": "735a4e1a-93ed-461f-aac9-10e19c230fd0",
+                "path": "https://uploads.postiz.com/bJsBShDntU.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Sources : Google Workspace (http://workspaceupdates.googleblog.com/2026/11/weekly-recap-11-06-2026.html)",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "youtube",
+          "type": "public",
+          "selfDeclaredMadeForKids": "no",
+          "title": "Pourquoi Google intègre Gemini dans Forms ?",
+          "thumbnail": {
+            "id": "e2744662-7c3f-4ad2-ba6d-f488b32e1fd4",
+            "path": "https://uploads.postiz.com/zIYKE6N8no.png"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-07T14:30:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb2y1q03efpg1c3j45vgui"
+        },
+        "value": [
+          {
+            "content": "Maintenant que Google Forms résume automatiquement les réponses avec Gemini, qui a déjà passé une soirée entière à lire des centaines de lignes de sondage une par une ? #IA",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "threads"
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,65 @@
+{
+  "numero": 20,
+  "slug": "gemini-dans-google-workspace",
+  "serie": "flash",
+  "source": {
+    "nom": "Google Workspace",
+    "url": "http://workspaceupdates.googleblog.com/2026/11/weekly-recap-11-06-2026.html",
+    "date": "2026-11-06",
+    "type": "blog"
+  },
+  "statut": "disponible",
+  "verdict": "prometteur",
+  "miniature": "Google fait tout ton ==boulot== ?",
+  "musique": true,
+  "gabarit": {
+    "ouverture": "question",
+    "corps": "fenetre"
+  },
+  "scenes": [
+    {
+      "type": "hook",
+      "texte": "Google va-t-il faire tout ton ==boulot== à ta place ?",
+      "titre": "Google fait tout ton ==boulot== ?",
+      "icone": "ampoule",
+      "matou": "surpris"
+    },
+    {
+      "type": "fenetre",
+      "texte": "Dans ses outils, Google intègre désormais Gemini : son ==IA== analyse tes formulaires et résume tes sondages.",
+      "app": "Google Forms",
+      "messages": [
+        {
+          "de": "toi",
+          "texte": "Analyse les réponses du sondage"
+        },
+        {
+          "de": "app",
+          "texte": "Tendances clés détectées et recommandations prêtes",
+          "quand": "résume"
+        }
+      ],
+      "matou": "parle"
+    },
+    {
+      "type": "point",
+      "texte": "En fait, dans Classroom, son tuteur aide les élèves pas à pas sans jamais donner la réponse quand on bloque.",
+      "titre": "Le tuteur pas à pas",
+      "corps": "Il guide ==sans donner== la solution",
+      "quand": "bloque",
+      "icone": "cerveau",
+      "matou": "enFait"
+    },
+    {
+      "type": "verdict",
+      "texte": "Hype-mètre : ==prometteur==. Pour moi, c'est utile au quotidien, mais ça dépend encore du prof ou de ton chef.",
+      "raison": "Pratique au bureau, mais dépend des chefs",
+      "matou": "verdict"
+    },
+    {
+      "type": "fin",
+      "texte": "Pour l'instant, c'est encore toi qui fais le ==boulot==.",
+      "matou": "content"
+    }
+  ]
+}
