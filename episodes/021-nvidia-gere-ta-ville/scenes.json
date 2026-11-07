@@ -1,0 +1,65 @@
+{
+  "numero": 21,
+  "slug": "nvidia-gere-ta-ville",
+  "serie": "flash",
+  "source": {
+    "nom": "NVIDIA",
+    "url": "https://blogs.nvidia.com/blog/cities-physical-agentic-ai-applications/",
+    "date": "2026-11-02",
+    "type": "blog"
+  },
+  "statut": "disponible",
+  "verdict": "prometteur",
+  "miniature": "Une ==IA== règle ta ville ?",
+  "musique": true,
+  "gabarit": {
+    "ouverture": "toi",
+    "corps": "liste"
+  },
+  "scenes": [
+    {
+      "type": "hook",
+      "texte": "Bientôt, c'est une ==IA== qui va régler les feux de ta ville.",
+      "titre": "Une ==IA== règle ta ville ?",
+      "icone": "ampoule",
+      "matou": "surpris"
+    },
+    {
+      "type": "liste",
+      "texte": "Selon {NVIDIA|Nvidia}, des IA autonomes analysent les caméras pour fluidifier le trafic et guider les urgences.",
+      "titre": "L'IA dans la ville",
+      "elements": [
+        {
+          "texte": "Fluidifier le trafic",
+          "icone": "fusee",
+          "quand": "trafic"
+        },
+        {
+          "texte": "Guider les urgences",
+          "icone": "attention",
+          "quand": "urgences"
+        }
+      ],
+      "matou": "parle"
+    },
+    {
+      "type": "chiffre",
+      "texte": "En fait, en Malaisie, ce réglage automatique des feux a réduit les bouchons jusqu'à ==vingt-six pour cent==.",
+      "valeur": "-26 %",
+      "legende": "de bouchons aux heures de pointe",
+      "quand": "vingt-six",
+      "matou": "enFait"
+    },
+    {
+      "type": "verdict",
+      "texte": "Hype-mètre : prometteur. Moins d'embouteillages, c'est bien, mais je refuse que chaque carrefour devienne une caméra espion.",
+      "raison": "Moins de bouchons, mais surveillance accrue",
+      "matou": "verdict"
+    },
+    {
+      "type": "fin",
+      "texte": "Surtout si les ==feux== refusent de passer au vert.",
+      "matou": "sceptique"
+    }
+  ]
+}
