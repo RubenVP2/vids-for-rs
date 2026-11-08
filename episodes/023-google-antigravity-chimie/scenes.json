@@ -1,0 +1,85 @@
+{
+  "numero": 23,
+  "slug": "google-antigravity-chimie",
+  "serie": "decrypte",
+  "source": {
+    "nom": "Google DeepMind",
+    "url": "https://deepmind.google/blog/agentic-cheminformatics-with-google-antigravity/",
+    "date": "2026-11-03",
+    "type": "blog"
+  },
+  "statut": "disponible",
+  "verdict": "prometteur",
+  "miniature": "L'==IA== crée des médicaments ?",
+  "musique": true,
+  "gabarit": {
+    "ouverture": "fenetre",
+    "corps": "comparaison"
+  },
+  "scenes": [
+    {
+      "type": "hook",
+      "texte": "Cette {IA|I A} conçoit des molécules contre le cancer en ==une heure==.",
+      "titre": "L'==IA== crée des médicaments ?",
+      "icone": "ampoule",
+      "visuel": {
+        "type": "fenetre",
+        "app": "Antigravity",
+        "messages": [
+          {
+            "de": "toi",
+            "texte": "Trouve une molécule contre ce cancer"
+          },
+          {
+            "de": "app",
+            "texte": "Structure candidate générée en 1 h"
+          }
+        ]
+      },
+      "matou": "surpris"
+    },
+    {
+      "type": "comparaison",
+      "texte": "Google DeepMind équipe son outil Antigravity pour fouiller des milliers de composés et proposer de nouvelles molécules.",
+      "avant": {
+        "titre": "Avant",
+        "texte": "Des jours de ==tri manuel=="
+      },
+      "apres": {
+        "titre": "Antigravity",
+        "texte": "Des candidats en ==1 heure==",
+        "quand": "proposer"
+      },
+      "matou": "parle"
+    },
+    {
+      "type": "point",
+      "texte": "En fait, l'{IA|I A} verrouille la structure des molécules pour bloquer les tumeurs avec une grande précision.",
+      "titre": "Chimie sur mesure",
+      "corps": "Des molécules ==verrouillées==",
+      "quand": "verrouille",
+      "icone": "cerveau",
+      "matou": "enFait"
+    },
+    {
+      "type": "point",
+      "texte": "Le piège : l'ordinateur formule des hypothèses, mais aucun médicament n'est encore testé en vrai laboratoire.",
+      "titre": "Vrai labo requis",
+      "corps": "Des pistes, ==zéro pilule==",
+      "quand": "testé",
+      "icone": "attention",
+      "matou": "sceptique"
+    },
+    {
+      "type": "verdict",
+      "texte": "Hype-mètre : prometteur. Pour moi, générer des pistes en une heure accélère la recherche, mais la biologie doit valider chaque formule.",
+      "raison": "Calcul fulgurant, mais ==validation humaine==",
+      "matou": "verdict"
+    },
+    {
+      "type": "fin",
+      "texte": "D'ici là, cette {IA|I A} conçoit déjà des molécules contre le cancer en ==une heure==.",
+      "matou": "content"
+    }
+  ]
+}
