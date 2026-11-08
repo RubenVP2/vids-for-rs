@@ -1,0 +1,162 @@
+[
+  {
+    "type": "draft",
+    "date": "2026-11-08T08:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb2y1q03efpg1c3j45vgui"
+        },
+        "value": [
+          {
+            "content": "Et si le plus gros frein des agents IA n'était pas leur intelligence, mais leur facture d'électricité ?\n\nNVIDIA présente sa puce Vera, conçue pour faire tourner les agents IA deux fois plus vite pour chaque watt consommé. Les premiers tests chez Perplexity montrent des tâches de code accélérées de 1,5 fois.\n\nRéduire l'empreinte énergétique des serveurs, c'est indispensable si on veut des agents partout dans nos outils.\n\nSource : NVIDIA\n#IA",
+            "image": [
+              {
+                "id": "9d7cdcf2-19a6-4ca1-9803-c3b9560bdb63",
+                "path": "https://uploads.postiz.com/ppwJlmzMqT.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Sources : NVIDIA (https://blogs.nvidia.com/blog/vera-cpu-highest-throughput-fastest-agents/)",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "threads"
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-08T11:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsaogt206kfor1cddnosuhf"
+        },
+        "value": [
+          {
+            "content": "Tes futurs agents d'IA vont consommer beaucoup moins d'énergie grâce à NVIDIA 🤓\n\nNVIDIA dévoile son processeur Vera, conçu sur mesure pour les usines d'IA et les agents autonomes :\n→ Une puce dédiée aux tâches d'action, de code et d'outils des agents\n→ Jusqu'à 2 fois plus rapide pour la même consommation électrique\n→ Déjà en test chez Perplexity pour accélérer leurs modèles de code\n\nEnvoie-la à quelqu'un qui s'inquiète de la consommation électrique de l'IA ! ☝️\n\n#vulgarisation #nvidia #IA #matou #technologie",
+            "image": [
+              {
+                "id": "9d7cdcf2-19a6-4ca1-9803-c3b9560bdb63",
+                "path": "https://uploads.postiz.com/ppwJlmzMqT.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Sources : NVIDIA (https://blogs.nvidia.com/blog/vera-cpu-highest-throughput-fastest-agents/)",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "instagram-standalone",
+          "post_type": "post",
+          "is_trial_reel": false
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-08T11:30:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsakeo602wupg1crmgz7g9n"
+        },
+        "value": [
+          {
+            "content": "NVIDIA annonce sa puce Vera pour faire tourner les agents IA 2 fois plus vite sans exploser la facture d'électricité. Résume ta réaction en un emoji 👇\n\n#apprendresurtiktok #nvidia #IA #matou #tech",
+            "image": [
+              {
+                "id": "9d7cdcf2-19a6-4ca1-9803-c3b9560bdb63",
+                "path": "https://uploads.postiz.com/ppwJlmzMqT.mp4"
+              }
+            ]
+          }
+        ],
+        "settings": {
+          "__type": "tiktok-business",
+          "content_posting_method": "DIRECT_POST",
+          "privacy_level": "PUBLIC_TO_EVERYONE",
+          "duet": true,
+          "stitch": true,
+          "comment": true,
+          "autoAddMusic": "no",
+          "brand_content_toggle": false,
+          "brand_organic_toggle": false,
+          "video_made_with_ai": true
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-08T12:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb3xwh07l1or1cvp01pod9"
+        },
+        "value": [
+          {
+            "content": "NVIDIA présente son processeur Vera pour les centres de données, capable d'exécuter les agents IA deux fois plus vite pour chaque watt.\nEn test chez Perplexity, la puce accélère les tâches de code de 1,5x.\n\nSource : https://blogs.nvidia.com/blog/vera-cpu-highest-throughput-fastest-agents/\n\n#shorts #nvidia #IA #matou",
+            "image": [
+              {
+                "id": "9d7cdcf2-19a6-4ca1-9803-c3b9560bdb63",
+                "path": "https://uploads.postiz.com/ppwJlmzMqT.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Sources : NVIDIA (https://blogs.nvidia.com/blog/vera-cpu-highest-throughput-fastest-agents/)",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "youtube",
+          "type": "public",
+          "selfDeclaredMadeForKids": "no",
+          "title": "NVIDIA Vera : 2x plus vite pour les agents IA",
+          "thumbnail": {
+            "id": "188248b3-a9d8-41f0-9f59-64d35755308a",
+            "path": "https://uploads.postiz.com/0SdczuqFbw.png"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-08T14:30:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb2y1q03efpg1c3j45vgui"
+        },
+        "value": [
+          {
+            "content": "Avec des puces comme Vera qui doublent l'efficacité des serveurs, dans 3 ans, chaque entreprise aura-t-elle son armée d'agents IA autonomes sans faire exploser sa consommation d'énergie ? #IA",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "threads"
+        }
+      }
+    ]
+  }
+]

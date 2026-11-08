@@ -1,0 +1,65 @@
+{
+  "numero": 22,
+  "slug": "nvidia-vera-agents-ia",
+  "serie": "flash",
+  "source": {
+    "nom": "NVIDIA",
+    "url": "https://blogs.nvidia.com/blog/vera-cpu-highest-throughput-fastest-agents/",
+    "date": "2026-11-05",
+    "type": "blog"
+  },
+  "statut": "annonce",
+  "verdict": "prometteur",
+  "miniature": "Moins de courant pour tes ==IA== ?",
+  "musique": true,
+  "gabarit": {
+    "ouverture": "toi",
+    "corps": "liste"
+  },
+  "scenes": [
+    {
+      "type": "hook",
+      "texte": "Tes futurs agents d'==IA== vont tourner sans faire sauter le compteur.",
+      "titre": "Moins de courant pour tes ==IA== ?",
+      "icone": "eclair",
+      "matou": "surpris"
+    },
+    {
+      "type": "liste",
+      "texte": "{NVIDIA|Nvidia} annonce sa puce Vera, taillée pour accélérer les tâches de code et d'action des agents.",
+      "titre": "Le moteur des agents",
+      "elements": [
+        {
+          "texte": "Coder et exécuter",
+          "icone": "robot",
+          "quand": "code"
+        },
+        {
+          "texte": "Rechercher en direct",
+          "icone": "fusee",
+          "quand": "action"
+        }
+      ],
+      "matou": "parle"
+    },
+    {
+      "type": "chiffre",
+      "texte": "En fait, dans un data center, cette puce fait tourner les agents jusqu'à ==deux fois== plus vite pour chaque watt.",
+      "valeur": "2×",
+      "legende": "plus vite pour chaque watt consommé",
+      "quand": "deux",
+      "matou": "enFait"
+    },
+    {
+      "type": "verdict",
+      "texte": "Hype-mètre : prometteur. Je valide : réduire l'énergie engloutie par l'IA est une urgence, même si ces puces restent dans les data centers.",
+      "raison": "Puces plus sobres, mais réservées au cloud",
+      "matou": "verdict"
+    },
+    {
+      "type": "fin",
+      "texte": "Au moins, ton ==compteur== ne risque plus d'exploser.",
+      "matou": "content"
+    }
+  ]
+}

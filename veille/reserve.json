@@ -1,33 +1,5 @@
 [
   {
-    "titre": "Now available in beta: Automatically apply client-side encryption (CSE) to confidential Docs, Sheets, Slides, and Drive files",
-    "url": "http://workspaceupdates.googleblog.com/2026/11/automatically-apply-client-side-encryption-to-confidential-Editors-and-Drive-files-now-available-in-Beta.html",
-    "date": "2026-11-05T17:30:01.617Z",
-    "score": 35,
-    "ajoute": "2026-11-06T04:13:41.599Z"
-  },
-  {
-    "titre": "Get actionable insights with Gemini in Google Forms",
-    "url": "http://workspaceupdates.googleblog.com/2026/11/get-actionable-insights-with-gemini-in-Google-Forms.html",
-    "date": "2026-11-05T17:34:45.079Z",
-    "score": 35,
-    "ajoute": "2026-11-06T04:13:41.599Z"
-  },
-  {
-    "titre": "Into the Omniverse: How Developers Turn Ideas Into Simulations With Frontier AI Agents",
-    "url": "https://blogs.nvidia.com/blog/developers-simulation-frontier-ai-agents/",
-    "date": "2026-11-05T17:00:35.000Z",
-    "score": 35,
-    "ajoute": "2026-11-06T04:13:41.599Z"
-  },
-  {
-    "titre": "Vera Delivers the Best of Both Worlds: Highest Throughput and Fastest Agents",
-    "url": "https://blogs.nvidia.com/blog/vera-cpu-highest-throughput-fastest-agents/",
-    "date": "2026-11-05T20:00:41.000Z",
-    "score": 35,
-    "ajoute": "2026-11-06T04:13:41.599Z"
-  },
-  {
     "titre": "Agentic cheminformatics with Google Antigravity",
     "url": "https://deepmind.google/blog/agentic-cheminformatics-with-google-antigravity/",
     "date": "2026-11-03T17:01:49.000Z",
@@ -138,6 +110,13 @@
     "date": "2026-11-05T06:23:23.000Z",
     "score": 31,
     "ajoute": "2026-11-05T13:13:41.030Z"
+  },
+  {
+    "titre": "Jensen Huang, patron du géant Nvidia, approché par une espionne de Pékin selon le renseignement américain - Ouest-France",
+    "url": "https://news.google.com/rss/articles/CBMihAJBVV95cUxNbjg2ek5KVDRKVk50V3RGcFgzZUc2MHhrTkticnZlbVphR0IxbXJlTnJxckV4WUl2TU1jSGc1YVlwcEJyVTd6SUF4NEc4LTE1X00zYUlJazFoVzRtMWxCLVZQaHFCTHI2Q0l1MHFiNk5uMGNKWWZLT2dBQlNEQy13Ti1tVmpmcDlpUl91X1YxeWp3UkhOSHF3ekNxbm1adHJzZGpGNDBQZklNQ1lWV3lZTk9od0l1RzMtOWhIdmF3Uld6dHlBT1JkZUJoeHRIbzJxX1pUNW56MkxHV0FxazJFWmpvZktNSTB6VzRTOEIwbmdHdU9yZ1AwRXg0anlGaE1yWFFNWg?oc=5",
+    "date": "2026-11-07T16:37:00.000Z",
+    "score": 31,
+    "ajoute": "2026-11-08T04:13:46.513Z"
   },
   {
     "titre": "Crusoe sells troubled Wyoming data center project to Google",
