@@ -47,39 +47,44 @@ export const budgetDe = (episode: Episode) =>
 export const FRAICHEUR_MAX = 2;
 export const jourParis = (t: string) => new Intl.DateTimeFormat('en-CA', {timeZone: 'Europe/Paris'}).format(new Date(t));
 
-/**
- * Âge de l'info le jour où la vidéo sort : celui de postiz-envoi.json (déjà envoyée), sinon `date`
- * (AAAA-MM-JJ, comme `npm run postiz -- --date`), sinon aujourd'hui : sans --date, la vidéo part le
- * jour même, jamais le lendemain.
- */
-/** Date d'envoi du journal Postiz, ou rien si le fichier manque ou ne se lit pas (rattrapage manuel). */
+/** Journal Postiz d'un épisode : ses postes, leurs statuts et leurs dates programmées. */
 type Envoi = {date?: string; statut?: string; postes?: {date?: string; statut?: string}[]};
+
+/** Jour de sortie retenu pour un envoi, et s'il est déjà parti (aucun brouillon en attente). */
+export type Sortie = {sortie: string; parti: boolean};
+
 /**
- * Date AAAA-MM-JJ (heure tolérée) qui existe vraiment : « 2026-13-45 » passe le regex et
- * « 2026-02-30 » est relu au 2 mars par Date.parse — l'aller-retour les refuse toutes les deux.
+ * Date AAAA-MM-JJ (heure tolérée) qui existe vraiment : « 2026-13-45 » passe le regex, « 2026-02-30 »
+ * est relu au 2 mars par Date.parse. On teste le parse avant `toISOString`, qui lèverait.
  */
 const dateLisible = (d: unknown): d is string => {
   if (typeof d !== 'string' || !/^\d{4}-\d{2}-\d{2}/.test(d)) return false;
   const jour = d.slice(0, 10);
-  return new Date(`${jour}T00:00:00Z`).toISOString().startsWith(jour) && Number.isFinite(Date.parse(d));
+  if (!Number.isFinite(Date.parse(d))) return false;
+  if (!Number.isFinite(Date.parse(`${jour}T00:00:00Z`))) return false;
+  return new Date(`${jour}T00:00:00Z`).toISOString().startsWith(jour);
 };
+
 /**
- * Jour de sortie réel d'un envoi : la plus tardive des dates programmées, journal compris.
- * Un brouillon du jour J repoussé à J+1 porte encore J dans `date` (#024) : c'est J+1 qui compte.
- * Un journal resté en `brouillon` ne vaut rien non plus : rien n'est parti, la fraîcheur s'applique.
- * Absent, illisible ou mal daté, le journal ne vaut rien : le calcul retombe sur « aujourd'hui ».
+ * Jour de sortie réel d'un envoi : le plus tardif des postes encore à venir, sinon des postes partis.
+ * Un brouillon du 9 repoussé au 12 vaut le 12 ; un poste en brouillon daté d'hier vaut aujourd'hui,
+ * car il partira au plus tôt maintenant. `parti` n'est vrai que si plus rien n'attend en brouillon :
+ * c'est la seule situation où « déjà envoyée » peut dispenser du garde-fou.
+ * Absent, illisible ou sans date exploitable, le journal ne vaut rien : `undefined`.
  */
-const journalLisible = (fichier: string): string | undefined => {
+const sortiePrevue = (fichier: string): Sortie | undefined => {
   if (!fs.existsSync(fichier)) return undefined;
   try {
     const e = JSON.parse(fs.readFileSync(fichier, 'utf8')) as Envoi;
-    // Liste blanche : seul « programmé » prouve un départ. Un brouillon, un statut inconnu ou un
-    // journal muet ne blanchissent rien, même daté d'hier — sinon un fichier trafiqué ou d'un
-    // ancien format dispenserait du garde-fou.
-    const partis = (e.postes ?? []).filter((p) => p.statut === 'programmé').map((p) => p.date);
-    if (e.statut === 'programmé') partis.push(e.date);
-    const jours = partis.filter(dateLisible).map((d) => jourParis(d));
-    return jours.length ? jours.sort().at(-1) : undefined;
+    const auj = jourParis(new Date().toISOString());
+    const postes = (e.postes ?? []).filter((p) => dateLisible(p.date)).map((p) => ({jour: jourParis(p.date as string), parti: p.statut === 'programmé'}));
+    const attente = postes.filter((p) => !p.parti).map((p) => p.jour);
+    if (attente.length) return {sortie: [...attente, auj].sort().at(-1) as string, parti: false};
+    const partis = postes.filter((p) => p.parti).map((p) => p.jour);
+    if (partis.length) return {sortie: partis.sort().at(-1) as string, parti: true};
+    // Journal muet sur ses postes : seule sa propre ligne compte, et seulement si elle dit « programmé ».
+    if (e.statut === 'programmé' && dateLisible(e.date)) return {sortie: jourParis(e.date), parti: true};
+    return undefined;
   } catch {
     return undefined;
   }
@@ -87,14 +92,14 @@ const journalLisible = (fichier: string): string | undefined => {
 
 export const fraicheur = (dossier: string, episode: Episode, date?: string) => {
   const journal = path.join(dossier, 'postiz-envoi.json');
-  const envoi = journalLisible(journal);
-  const [sortie, selon] = envoi
-    ? [envoi, 'postiz-envoi.json']
+  const s = sortiePrevue(journal);
+  const [sortie, selon, parti] = s
+    ? [s.sortie, 'postiz-envoi.json', s.parti]
     : date
-      ? [date.slice(0, 10), '--date']
-      : [jourParis(new Date().toISOString()), "aujourd'hui"];
+      ? [date.slice(0, 10), '--date', false]
+      : [jourParis(new Date().toISOString()), "aujourd'hui", false];
   const jours = Math.round((Date.parse(sortie) - Date.parse(episode.source.date)) / 86_400_000);
-  return {jours, sortie, selon};
+  return {jours, sortie, selon, parti};
 };
 
 export const lireTimings = (dossier: string): Timings =>

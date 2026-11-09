@@ -27,18 +27,21 @@ const refus = (m: string): never => {
 if (iDate > 0 && (brut === undefined || brut.startsWith('--'))) refus('--date attend une date (AAAA-MM-JJ, heure tolérée).');
 // Format strict : une heure hors bornes (« T25:99 ») ou un fuseau (« +01:00 ») sont refusés plutôt
 // que relus de travers. Avec une heure, le jour est celui de Paris, pas celui du texte (#024).
-const FORMAT = /^(\d{4}-\d{2}-\d{2})(?:T([01]\d|2[0-3]):([0-5]\d)(?::([0-5]\d)(?:\.\d+)?)?Z?)?$/;
+// Avec une heure, le fuseau doit être dit (`Z`) : sans lui, Node lirait l'heure locale de la machine.
+const FORMAT = /^(\d{4}-\d{2}-\d{2})(?:T([01]\d|2[0-3]):([0-5]\d)(?::([0-5]\d)(?:\.\d+)?)?Z)?$/;
 const mDate = brut === undefined ? null : FORMAT.exec(brut);
 if (brut !== undefined && !mDate) refus(`--date « ${brut} » : attendu AAAA-MM-JJ ou AAAA-MM-JJTHH:MM:SSZ.`);
-const dateSortie = mDate ? (mDate[2] === undefined ? mDate[1] : jourParis(new Date(brut as string).toISOString())) : undefined;
-const valide = (d: string) => /^\d{4}-\d{2}-\d{2}$/.test(d) && new Date(`${d}T00:00:00Z`).toISOString().startsWith(d);
-if (dateSortie !== undefined && !valide(dateSortie)) refus(`--date « ${brut} » : attendu AAAA-MM-JJ, date existante.`);
+const dateSortie = !mDate ? undefined : mDate[2] === undefined ? mDate[1] : Number.isFinite(Date.parse(brut as string)) ? jourParis(brut as string) : 'invalide';
+// `toISOString` lève sur une date impossible : on éprouve le parse avant, comme dans episode.ts.
+const valide = (d: string) =>
+  /^\d{4}-\d{2}-\d{2}$/.test(d) && Number.isFinite(Date.parse(`${d}T00:00:00Z`)) && new Date(`${d}T00:00:00Z`).toISOString().startsWith(d);
+if (mDate && !valide(mDate[1])) refus(`--date « ${brut} » : attendu AAAA-MM-JJ, date existante.`);
 // Une date de sortie passée servirait à rajeunir artificiellement l'info : on ne l'accepte pas.
 if (dateSortie !== undefined && dateSortie < jourParis(new Date().toISOString()))
   refus(`--date « ${brut} » : dans le passé (aujourd'hui ${jourParis(new Date().toISOString())}).`);
 const age = fraicheur(dossier, episode, dateSortie);
 // Passée, la sortie est de l'histoire ; sinon (brouillon du jour, poste repoussé à demain) la règle s'applique.
-const passe = age.selon === 'postiz-envoi.json' && age.sortie < jourParis(new Date().toISOString());
+const passe = age.selon === 'postiz-envoi.json' && age.parti && age.sortie < jourParis(new Date().toISOString());
 const ages = `source du ${episode.source.date}, sortie le ${age.sortie} (${age.selon}) : ${age.jours} jour(s)`;
 if (!Number.isFinite(age.jours)) ko.push(`Date de source illisible (« ${episode.source.date} ») : corriger source.date dans scenes.json`);
 else if (age.jours < 0) ko.push(`Date de la source dans le futur (${ages}) : vérifier source.date dans scenes.json et source.md`);

@@ -50,7 +50,8 @@ l'ordre du classement.
 - `npm run veille -- --rejouer veille/<fichier>.json` reclasse les articles gelés du
   fichier et dit si le classement **et** la liste des candidats (donc le filtre de fraîcheur)
   sont identiques. Les passages d'avant le 09/11/2026 ne gardent pas la réserve : le rejeu
-  le signale et ne compare que le classement.
+  le signale et ne compare que le classement (code de sortie 2 : rejeu partiel, pas un succès).
+  Un fichier `.md` n'est pas rejouable : passer le `.json` du même passage.
 - Un flux qui ne répond pas est listé dans « Flux en échec » ; le classement se fait
   avec les autres.
 - Régler : changer un poids ou un flux dans `brand/veille.json` (le bilan du lundi

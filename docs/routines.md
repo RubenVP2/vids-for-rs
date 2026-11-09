@@ -53,7 +53,7 @@ versionnée dans `scripts/routines/hermes/`) et répond sans mention dans #matou
 | Sur Discord | Commande | Effet |
 | --- | --- | --- |
 | « urgent <lien> [réseaux] » | `matou.sh urgent <lien> [réseaux]` | `lancer.sh urgent` en tâche de fond : l'épisode sur ce lien (skill `episode-urgent`), sans veille ni Postiz, livré sur #matou avec « réponds ok #NNN » |
-| « ok #NNN [réseaux] » | `matou.sh ok NNN` → `commande.sh ok NNN` | urgent : `check` d'abord (refus si « Info trop vieille »), puis brouillons et programmation d'un coup, 5 à 15 min après (`--rang urgent --publier`) ; autre épisode : ses brouillons → programmés |
+| « ok #NNN [réseaux] » | `matou.sh ok NNN` → `commande.sh ok NNN` | urgent : `check` d'abord (refus si la ligne `OK  Info fraîche` manque : info périmée, source future, date illisible ou contrôle planté), puis brouillons et programmation d'un coup, 5 à 15 min après (`--rang urgent --publier`) ; autre épisode : ses brouillons → programmés |
 | « veto #NNN [réseaux] » | `commande.sh veto NNN` | les posts pas encore partis → brouillons |
 | « état » | `commande.sh etat` | ce qui part aujourd'hui et demain, et les urgents qui attendent |
 | « stats » | `commande.sh stats` | `npm run bilan`, sans rien écrire |

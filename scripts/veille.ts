@@ -349,7 +349,9 @@ if (rejouer) {
   if (!cands || candidatures === undefined) console.log('Candidats non rejouables : ce passage ne garde pas la réserve. Rejeu partiel.');
   else if (candidatures) console.log(`Candidats identiques (${cands.length}) : le filtre de fraîcheur rejoue à l'identique.`);
   else console.log(`Candidats différents : ${cands.map((c) => c.id).join(', ') || 'aucun'} au lieu de ${avant.candidats.map((c) => c.id).join(', ') || 'aucun'}.`);
-  process.exit(classement && candidatures !== false ? 0 : 1);
+  // Rejeu partiel (réserve absente) : le filtre n'a pas été éprouvé, on ne le fait pas passer pour un succès.
+  if (candidatures === undefined) process.exit(classement ? 2 : 1);
+  process.exit(classement && candidatures ? 0 : 1);
 }
 
 const rang = option('--rang') ?? 'principal';
