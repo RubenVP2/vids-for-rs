@@ -2,6 +2,7 @@
 // et ceux des comptes. Sert au skill bilan (tâche planifiée du lundi).
 // Usage : npm run bilan [-- --jours 30]
 //         npm run bilan -- --attente   épisodes dont les posts sont encore en brouillon (n'écrit rien)
+//         npm run bilan -- --local [--age-min 24]   croise les stats.json déjà relevés, sans Postiz (scripts/lib/stats.ts)
 // Écrit episodes/NNN-slug/stats.json (chiffres bruts, versionnés) et affiche trois tableaux Markdown
 // (épisodes, gabarits de texte, comptes).
 // Accès : CLI officielle `postiz` authentifiée par OAuth2 (postiz auth:login), sans clé API.
@@ -10,6 +11,7 @@ import path from 'node:path';
 import {EPISODES} from './lib/episode';
 import {lireDeclares} from './lib/gabarits';
 import {cli, enListe} from './lib/postiz-cli';
+import {analyser, commentairesNets, sourcesPostees} from './lib/stats';
 
 type Serie = {label: string; average?: boolean; data: {total: number | string; date: string}[]};
 type Poste = {reseau: string; postId: string; integration: string; date?: string};
@@ -42,6 +44,11 @@ const enLigne = (stats: Record<string, number>) =>
   Object.entries(stats)
     .map(([k, v]) => `${k} ${v}`)
     .join(' · ') || '—';
+
+if (args.includes('--local')) {
+  analyser(Number(args[args.indexOf('--age-min') + 1]) || 0);
+  process.exit(0);
+}
 
 const dossiers = fs
   .readdirSync(EPISODES)
@@ -106,6 +113,7 @@ for (const {d, envoi} of envois) {
   const fichierPub = path.join(EPISODES, d, 'publication.md');
   const declares = fs.existsSync(fichierPub) ? lireDeclares(fs.readFileSync(fichierPub, 'utf8')) : {};
   const postes = [];
+  const sources = sourcesPostees(path.join(EPISODES, d));
   for (const p of envoi.postes as Poste[]) {
     const post = parId.get(p.postId);
     const etat = post?.state ?? 'introuvable (supprimé ?)';
@@ -114,7 +122,10 @@ for (const {d, envoi} of envois) {
     const stats = Array.isArray(brut) ? resumer(brut) : {};
     const reseau = p.reseau === 'threads-relance' ? 'relance' : p.reseau;
     const gabarit = declares[reseau]?.id ?? null;
-    if (gabarit && Object.keys(stats).length) parGabarit.push({reseau, gabarit, stats});
+    // Les gabarits se comparent sur les commentaires du public : notre commentaire de sources retiré.
+    const cle = 'Comments' in stats ? 'Comments' : 'Replies';
+    const nets = cle in stats ? {...stats, [cle]: commentairesNets(p.reseau, stats, sources.has(p.integration))} : stats;
+    if (gabarit && Object.keys(stats).length) parGabarit.push({reseau, gabarit, stats: nets});
     postes.push({...p, etat, url: post?.releaseURL ?? null, manquant, gabarit, stats});
     const note = manquant ? 'publication non reliée : posts:missing puis posts:connect (skill postiz)' : enLigne(stats);
     console.log(`| ${d} | ${serie} | ${envoi.rang ?? 'principal'} | ${p.reseau} | ${creneau(p.date ?? envoi.date)} | ${etat}${post?.releaseURL ? ` ([lien](${post.releaseURL}))` : ''} | ${note} |`);
@@ -124,7 +135,7 @@ for (const {d, envoi} of envois) {
 }
 
 // Gabarits de texte (docs/publication.md) : moyenne de chaque chiffre, réseau par réseau.
-console.log('\n## Gabarits de texte (moyennes par post)\n');
+console.log('\n## Gabarits de texte (moyennes par post, commentaire de sources retiré)\n');
 console.log('| Réseau | Gabarit | Posts | Chiffres |\n| --- | --- | --- | --- |');
 const groupes = new Map<string, typeof parGabarit>();
 for (const x of parGabarit) groupes.set(`${x.reseau} ${x.gabarit}`, [...(groupes.get(`${x.reseau} ${x.gabarit}`) ?? []), x]);
