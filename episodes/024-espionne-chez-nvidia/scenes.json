@@ -1,0 +1,63 @@
+{
+  "numero": 24,
+  "slug": "espionne-chez-nvidia",
+  "serie": "flash",
+  "source": {
+    "nom": "TechCrunch",
+    "url": "https://techcrunch.com/2026/11/07/chinese-exec-was-recruited-to-spy-on-nvidia-ceo-according-to-us-intelligence-memo/",
+    "date": "2026-11-07",
+    "type": "article"
+  },
+  "statut": "rumeur",
+  "verdict": "buzz",
+  "miniature": "Le patron de Nvidia ==espionné== ?",
+  "musique": true,
+  "gabarit": {
+    "ouverture": "question",
+    "corps": "comparaison",
+    "raison": "pas d'application logicielle ni de chiffre dans l'article sur l'espionnage"
+  },
+  "scenes": [
+    {
+      "type": "hook",
+      "texte": "La Chine a-t-elle tenté d'espionner le patron de {NVIDIA|Nvidia} ?",
+      "titre": "Le patron de Nvidia ==espionné== ?",
+      "icone": "cadenas",
+      "matou": "surpris"
+    },
+    {
+      "type": "comparaison",
+      "texte": "Selon TechCrunch, une rumeur affirme que le renseignement chinois a recruté une dirigeante pour approcher Jensen Huang.",
+      "avant": {
+        "titre": "Officiel",
+        "texte": "Une simple dirigeante"
+      },
+      "apres": {
+        "titre": "Le mémo",
+        "texte": "Une ==espionne recrutée==",
+        "quand": "approcher"
+      },
+      "matou": "sceptique"
+    },
+    {
+      "type": "point",
+      "texte": "En fait, {NVIDIA|Nvidia} assure qu'aucun secret n'est partagé, mais les journalistes découvrent une société écran en Chine.",
+      "titre": "Des secrets volés ?",
+      "corps": "Une ==société écran== suspecte",
+      "quand": "société",
+      "icone": "loupe",
+      "matou": "enFait"
+    },
+    {
+      "type": "verdict",
+      "texte": "Hype-mètre : pur buzz. Pour moi, tant que cette rumeur n'est pas prouvée, cela ressemble surtout à un coup de pression géopolitique.",
+      "raison": "Gros mémo, mais ==zéro preuve==",
+      "matou": "verdict"
+    },
+    {
+      "type": "fin",
+      "texte": "Pas sûr donc qu'on ait vraiment ==espionné== le patron.",
+      "matou": "sceptique"
+    }
+  ]
+}

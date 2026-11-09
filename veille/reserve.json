@@ -1,5 +1,12 @@
 [
   {
+    "titre": "Nvidia is investigating Jensen Huang’s relationship with a Chinese spy",
+    "url": "https://www.theverge.com/ai-artificial-intelligence/1029562/nvidia-investigating-jensen-huang-relationship-chinese-spy",
+    "date": "2026-11-08T15:27:42.000Z",
+    "score": 52,
+    "ajoute": "2026-11-09T04:13:46.281Z"
+  },
+  {
     "titre": "StateBench: Testing how language models track state changes over long documents",
     "url": "https://huggingface.co/blog/allenai/statebench",
     "date": "2026-11-03T17:15:21.000Z",
