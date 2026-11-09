@@ -1,10 +1,10 @@
 // Contrôle qualité APRÈS le rendu : la vidéo est-elle publiable ?
-// Usage : npm run check -- <épisode>
+// Usage : npm run check -- <épisode> [--date AAAA-MM-JJ]   (--date : jour de sortie prévu, comme npm run postiz)
 import {createHash} from 'node:crypto';
 import {execFileSync, spawnSync} from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-import {budgetDe, dossierEpisode, lireEpisode, lireTimings, nomEpisode} from './lib/episode';
+import {budgetDe, dossierEpisode, FRAICHEUR_MAX, fraicheur, jourParis, lireEpisode, lireTimings, nomEpisode} from './lib/episode';
 import {controler, numeroDe, reglages as gabarits} from './lib/gabarits';
 import {alerteTimbre, avertissements as avertVoix, defauts as defautsVoix, resume as resumeVoix} from './lib/qualite-voix';
 import {lireReglagesVoix} from './lib/reglages-voix';
@@ -12,11 +12,48 @@ import {lireReglagesVoix} from './lib/reglages-voix';
 const dossier = dossierEpisode(process.argv[2]);
 const nom = nomEpisode(dossier);
 const episode = lireEpisode(dossier);
-const timings = lireTimings(dossier);
 const ok: string[] = [];
 const ko: string[] = [];
 const verifier = (cond: boolean, bien: string, mal: string) => (cond ? ok : ko).push(cond ? bien : mal);
 
+// Fraîcheur : la vidéo affiche la date de la source (« article du 7 nov. ») ; trop vieille, l'info
+// ne passe plus pour l'actu du jour, même bien attribuée (#024 : source du 07/11, sortie le 09/11).
+const iDate = process.argv.indexOf('--date');
+const brut = iDate > 0 ? process.argv[iDate + 1] : undefined;
+if (iDate > 0 && (brut === undefined || brut.startsWith('--'))) throw new Error('--date attend une date (AAAA-MM-JJ, heure tolérée).');
+const dateSortie = brut?.slice(0, 10);
+const valide = (d: string) => /^\d{4}-\d{2}-\d{2}$/.test(d) && new Date(`${d}T00:00:00Z`).toISOString().startsWith(d);
+if (dateSortie !== undefined && !valide(dateSortie)) throw new Error(`--date « ${brut} » : attendu AAAA-MM-JJ, date existante.`);
+// Une date de sortie passée servirait à rajeunir artificiellement l'info : on ne l'accepte pas.
+if (dateSortie !== undefined && dateSortie < jourParis(new Date().toISOString()))
+  throw new Error(`--date « ${brut} » : dans le passé (aujourd'hui ${jourParis(new Date().toISOString())}).`);
+const age = fraicheur(dossier, episode, dateSortie);
+const passe = age.selon === 'postiz-envoi.json' && jourParis(new Date().toISOString()) > age.sortie;
+const ages = `source du ${episode.source.date}, sortie le ${age.sortie} (${age.selon}) : ${age.jours} jour(s)`;
+if (!Number.isFinite(age.jours)) ko.push(`Date de source illisible (« ${episode.source.date} ») : corriger source.date dans scenes.json`);
+else if (age.jours < 0) ko.push(`Date de la source dans le futur (${ages}) : vérifier source.date dans scenes.json et source.md`);
+else if (passe)
+  ok.push(`Info du ${episode.source.date}, déjà envoyée le ${age.sortie} (${age.jours} jour(s)) : rien à bloquer`);
+else
+  verifier(
+    age.jours <= FRAICHEUR_MAX,
+    `Info fraîche (${ages}, max ${FRAICHEUR_MAX})`,
+    `Info trop vieille pour l'actu du jour (${ages}, max ${FRAICHEUR_MAX}) : prendre un sujet plus récent, ou ne publier qu'après relecture humaine`,
+  );
+
+const timings = (() => {
+  try {
+    return lireTimings(dossier);
+  } catch {
+    return undefined;
+  }
+})();
+// Un épisode ancien n'a pas toutes les mesures : on le dit et on s'arrête, plutôt que de planter
+// sur un ZodError qui cacherait le reste du rapport (et le KO de fraîcheur).
+if (!timings) {
+  ko.push(`timings.json illisible ou incomplet (format antérieur) : relancer npm run voice -- ${nom}`);
+  fin();
+}
 const mp4 = path.join(dossier, 'rendu', `${nom}.mp4`);
 const png = path.join(dossier, 'rendu', `${nom}-miniature.png`);
 verifier(fs.existsSync(mp4), 'Vidéo rendue', `Vidéo absente (${path.relative(dossier, mp4)}) : lancer npm run render`);
@@ -135,7 +172,11 @@ if (!fs.existsSync(pub)) {
   }
 }
 
-ok.forEach((m) => console.log(`OK  ${m}`));
-ko.forEach((m) => console.log(`KO  ${m}`));
-console.log(ko.length ? `\n${ko.length} point(s) à corriger avant publication.` : '\nPrêt pour la relecture humaine.');
-process.exit(ko.length ? 1 : 0);
+fin();
+
+function fin(): never {
+  ok.forEach((m) => console.log(`OK  ${m}`));
+  ko.forEach((m) => console.log(`KO  ${m}`));
+  console.log(ko.length ? `\n${ko.length} point(s) à corriger avant publication.` : '\nPrêt pour la relecture humaine.');
+  process.exit(ko.length ? 1 : 0);
+}

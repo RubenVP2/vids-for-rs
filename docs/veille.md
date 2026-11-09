@@ -33,7 +33,9 @@ lancer.sh episode-du-jour <rang>
 
 **Seuil : 35.** Au-dessus : l'actu du jour. En dessous, la réserve dans l'ordre des
 scores : sujets du jour entre 25 et 35, puis les bons sujets des 7 derniers jours non
-choisis (`veille/reserve.json`, rempli et purgé par le script). Plus rien : le premier de
+choisis (`veille/reserve.json`, rempli et purgé par le script). Passé `FRAICHEUR_MAX` (2 jours),
+un sujet n'est plus candidat : il ne partirait pas (`check.ts` le refuserait), donc il ne
+reste que la trace, pas le choix. Plus rien : le premier de
 `docs/sujets.md` (liste à la main), sinon pas d'épisode.
 
 ## Le veto de l'agent

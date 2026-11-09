@@ -58,7 +58,9 @@ Détail : `docs/routines.md`.
 
 ## Règles éditoriales (non négociables)
 
-- Toujours citer la source (à l'écran et dans la description).
+- Toujours citer la source (à l'écran et dans la description). La date affichée est celle
+  de la source, attribuée (« article du 7 nov. ») ; l'info a **au plus 2 jours** le jour
+  où la vidéo sort (`npm run validate` et `npm run check` refusent au-delà).
 - Ne jamais inventer un fait, un chiffre ou une citation absente de la source.
 - Distinguer clairement : annoncé / disponible / rumeur.
 - Résumer et commenter, ne pas recopier l'article mot à mot.

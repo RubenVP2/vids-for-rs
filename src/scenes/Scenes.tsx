@@ -1,7 +1,7 @@
 import React from 'react';
 import {interpolate, spring, useCurrentFrame, useVideoConfig} from 'remotion';
 import {Carte} from '../components/Carte';
-import {dateCourte} from '../components/EnTete';
+import {dateSource} from '../components/EnTete';
 import {Fenetre} from '../components/Fenetre';
 import {HypeMetre} from '../components/HypeMetre';
 import {Icone} from '../components/Icones';
@@ -242,7 +242,7 @@ export const SceneHook: React.FC<SceneProps<'hook'>> = ({scene, episode, mots, d
                 letterSpacing: 1.5,
               }}
             >
-              {episode.source.nom.toUpperCase()} · {dateCourte(episode.source.date)}
+              {episode.source.nom.toUpperCase()} · {dateSource(episode.source)}
             </div>
           </div>
         </Carte>
@@ -256,7 +256,7 @@ export const SceneSource: React.FC<SceneProps<'source'>> = ({scene, episode}) =>
     <Entree de="droite">
       <Carte largeur={LARGEUR - 20} hauteur={520} rotation={1.5}>
         <div style={{...texteStyle(30), opacity: 0.7, letterSpacing: 2}}>
-          {episode.source.nom.toUpperCase()} · {dateCourte(episode.source.date)}
+          {episode.source.nom.toUpperCase()} · {dateSource(episode.source)}
         </div>
         <div style={{...titreStyle(64), marginTop: 18, flex: 1}}>
           <TexteMarque texte={scene.titreArticle} debut={10} />

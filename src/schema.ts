@@ -8,6 +8,9 @@ import {ICONES} from './components/Icones';
 //
 // Dans `texte` et dans les textes affichés, ==mot== surligne « mot » au fluo jaune.
 
+/** Vrai si la date AAAA-MM-JJ existe au calendrier (`2026-02-30` est refusé, Node la replierait au 2 mars). */
+const existe = (d: string) => new Date(`${d}T00:00:00Z`).toISOString().startsWith(d);
+
 const etat = z.enum(ETATS);
 const icone = z.enum(ICONES);
 
@@ -124,8 +127,8 @@ export const episodeSchema = z
       /** Qui publie : « OpenAI », « Google DeepMind », « The Verge »… */
       nom: z.string().min(1).max(30),
       url: z.string().url(),
-      /** Date de publication, AAAA-MM-JJ. */
-      date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+      /** Date de publication, AAAA-MM-JJ, qui doit exister au calendrier (2026-02-30 est refusé). */
+      date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).refine(existe, {message: 'date inexistante au calendrier'}),
       type: z.enum(['blog', 'article', 'papier', 'communique', 'video', 'post']),
     }),
     statut: z.enum(['annonce', 'disponible', 'rumeur']),

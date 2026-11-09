@@ -3,7 +3,7 @@ import {AbsoluteFill} from 'remotion';
 import {z} from 'zod';
 import {DefsBouillonne} from './components/Bouillonne';
 import {Carte} from './components/Carte';
-import {dateCourte, numeroEpisode} from './components/EnTete';
+import {dateSource, numeroEpisode} from './components/EnTete';
 import {Fenetre} from './components/Fenetre';
 import {FondCahier} from './components/FondCahier';
 import {HypeMetre} from './components/HypeMetre';
@@ -176,7 +176,7 @@ export const DiapoCarrousel: React.FC<DiapoProps> = ({episode, index}) => {
         <div style={{...texte(32), opacity: 0.85, lineHeight: 1.15}}>
           Source : {episode.source.nom}
           <br />
-          <span style={{fontSize: 26, opacity: 0.8}}>{dateCourte(episode.source.date)} · lien en commentaire</span>
+          <span style={{fontSize: 26, opacity: 0.8}}>{dateSource(episode.source)} · lien en commentaire</span>
         </div>
         {derniere ? null : <div style={{...titre(56), marginLeft: 'auto', transform: 'rotate(-3deg)'}}>Glisse →</div>}
       </div>

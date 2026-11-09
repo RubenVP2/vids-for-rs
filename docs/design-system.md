@@ -28,7 +28,7 @@ image, et ça tranche avec les comptes IA sombres et néon.
 
 | Zone | Y (px) | Contenu |
 | --- | --- | --- |
-| En-tête | 220–300 | `MATOU #NNN` surligné, « Hype-mètre ? » jusqu'au verdict, source + date ; absent pendant le hook et la fin |
+| En-tête | 220–300 | `MATOU #NNN` surligné, « Hype-mètre ? » jusqu'au verdict, source + « article du 7 nov. 2026 » (la date de la source, jamais seule : elle se lirait comme celle de la vidéo) ; absent pendant le hook et la fin |
 | Contenu | 370–1000 | la scène (carte, chiffre, liste, Hype-mètre…) ; le hook avec `visuel` remonte à 240 |
 | Sous-titres | 1010–1170 | une ligne, mot prononcé au fluo |
 | Matou | ~1150–1500 | posé sur la limite basse, se déplace selon la scène |

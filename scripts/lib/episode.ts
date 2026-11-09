@@ -40,6 +40,43 @@ export const budgetDe = (episode: Episode) =>
       ? {nom: 'série flash', viser: [65, 88], max: 110, voix: 36, video: 40}
       : {nom: 'série decrypte', viser: [90, 115], max: 140, voix: 46, video: 50};
 
+/**
+ * Âge maximal de l'info, en jours calendaires (heure de Paris), entre la date de la source et
+ * le jour où la vidéo sort. Au-delà, elle ne passe plus pour l'actu du jour (docs/decisions.md, 09/11).
+ */
+export const FRAICHEUR_MAX = 2;
+export const jourParis = (t: string) => new Intl.DateTimeFormat('en-CA', {timeZone: 'Europe/Paris'}).format(new Date(t));
+
+/**
+ * Âge de l'info le jour où la vidéo sort : celui de postiz-envoi.json (déjà envoyée), sinon `date`
+ * (AAAA-MM-JJ, comme `npm run postiz -- --date`), sinon aujourd'hui : sans --date, la vidéo part le
+ * jour même, jamais le lendemain.
+ */
+/** Date d'envoi du journal Postiz, ou rien si le fichier manque ou ne se lit pas (rattrapage manuel). */
+const journalLisible = (fichier: string) => {
+  if (!fs.existsSync(fichier)) return undefined;
+  try {
+    const d = (JSON.parse(fs.readFileSync(fichier, 'utf8')) as {date?: string}).date;
+    // Une date illisible vaut absence de journal : mieux vaut un calcul explicite (« aujourd'hui »)
+    // qu'un NaN ou une valeur aberrante qui laisserait passer un épisode périmé.
+    return d && /^\d{4}-\d{2}-\d{2}/.test(d) ? d : undefined;
+  } catch {
+    return undefined;
+  }
+};
+
+export const fraicheur = (dossier: string, episode: Episode, date?: string) => {
+  const journal = path.join(dossier, 'postiz-envoi.json');
+  const envoi = journalLisible(journal);
+  const [sortie, selon] = envoi
+    ? [jourParis(envoi), 'postiz-envoi.json']
+    : date
+      ? [date.slice(0, 10), '--date']
+      : [jourParis(new Date().toISOString()), "aujourd'hui"];
+  const jours = Math.round((Date.parse(sortie) - Date.parse(episode.source.date)) / 86_400_000);
+  return {jours, sortie, selon};
+};
+
 export const lireTimings = (dossier: string): Timings =>
   timingsSchema.parse(JSON.parse(fs.readFileSync(path.join(dossier, 'timings.json'), 'utf8')));
 
