@@ -1,0 +1,83 @@
+{
+  "numero": 25,
+  "slug": "amazon-allege-les-ia",
+  "serie": "decrypte",
+  "source": {
+    "nom": "Amazon",
+    "url": "https://huggingface.co/blog/amazon/higher-order-pruning-experts",
+    "date": "2026-11-09",
+    "type": "blog"
+  },
+  "statut": "disponible",
+  "verdict": "prometteur",
+  "miniature": "Alléger une ==IA de 50 %== ?",
+  "musique": true,
+  "gabarit": {
+    "ouverture": "chiffre",
+    "corps": "fenetre"
+  },
+  "scenes": [
+    {
+      "type": "hook",
+      "texte": "Amazon réussit à supprimer la moitié d'un modèle d'{IA|I A} sans l'abîmer.",
+      "titre": "Alléger une ==IA de 50 %== ?",
+      "icone": "eclair",
+      "visuel": {
+        "type": "chiffre",
+        "valeur": "-50 %"
+      },
+      "matou": "surpris"
+    },
+    {
+      "type": "fenetre",
+      "texte": "Sur le blog d'Amazon, les chercheurs publient {HOPE|Hope}, un outil pour alléger ces modèles géants.",
+      "app": "HOPE (Amazon)",
+      "messages": [
+        {
+          "de": "toi",
+          "texte": "Allège ce grand modèle de 50 %"
+        },
+        {
+          "de": "app",
+          "texte": "Binômes préservés : score intact à -50 %",
+          "quand": "alléger"
+        }
+      ],
+      "matou": "parle"
+    },
+    {
+      "type": "point",
+      "texte": "En fait, dans ces grands modèles, les neurones spécialisés travaillent toujours en équipe. Si tu en supprimes un tout seul, tu casses son binôme.",
+      "titre": "Des experts ==en binôme==",
+      "corps": "Les couper en solo ==détruit le réseau==",
+      "quand": "casses",
+      "icone": "cerveau",
+      "matou": "enFait"
+    },
+    {
+      "type": "comparaison",
+      "texte": "La méthode d'Amazon calcule les synergies pour préserver les binômes soudés : à cinquante pour cent d'élagage, les performances restent intactes.",
+      "avant": {
+        "titre": "Avant",
+        "texte": "Binômes brisés : -13 %"
+      },
+      "apres": {
+        "titre": "HOPE",
+        "texte": "==50 % coupés==, score intact",
+        "quand": "cinquante"
+      },
+      "matou": "content"
+    },
+    {
+      "type": "verdict",
+      "texte": "Hype-mètre : prometteur. Pour moi, c'est exactement ce genre de maths intelligentes qui permettra de faire tourner de vrais géants sur nos machines.",
+      "raison": "Moins de mémoire, ==capacités préservées==",
+      "matou": "verdict"
+    },
+    {
+      "type": "fin",
+      "texte": "Finalement, couper la moitié d'une {IA|I A} ne l'abîme pas.",
+      "matou": "sceptique"
+    }
+  ]
+}
