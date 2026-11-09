@@ -7,9 +7,10 @@ import {EPISODES, RACINE} from './episode';
 
 /**
  * Le commentaire de sources (2e élément du post, `--commentaire` de npm run postiz) est compté
- * par Postiz comme un commentaire du public sur ces réseaux : relevé du 09/11/2026, 18 posts
- * Instagram sur 19, 20 Threads sur 21 et 6 LinkedIn sur 7 qui le portent affichent exactement 1.
- * Sur YouTube, il ne l'est pas (1 sur 17). On le retire pour mesurer les vrais commentaires.
+ * par Postiz comme un commentaire du public sur ces réseaux : chaque post qui le porte affiche
+ * exactement 1, alors qu'il n'en a pas (relevé du 09/11/2026 : 21 commentaires Instagram sur 23,
+ * 23 Threads sur 24, 8 LinkedIn sur 9). Sur YouTube, il ne l'est pas (0 sur 19). On le retire
+ * pour mesurer les vrais commentaires.
  */
 export const COMPTE_SOURCE = new Set(['instagram', 'threads', 'linkedin']);
 
@@ -19,12 +20,41 @@ type Poste = {reseau: string; integration: string; date?: string; etat: string; 
 type Stats = {maj: string; date: string; rang: string; postes: Poste[]};
 type Groupe = {posts: {integration: {id: string}; value: unknown[]}[]};
 
-/** Les intégrations Postiz dont le post portait un commentaire de sources (postiz.json : 2 valeurs ou plus). */
-export const sourcesPostees = (dossier: string) => {
-  const brut = lire<Groupe[] | Groupe>(path.join(dossier, 'postiz.json'));
-  const groupes = brut ? (Array.isArray(brut) ? brut : [brut]) : [];
-  return new Set(groupes.flatMap((g) => g.posts.filter((p) => p.value.length >= 2).map((p) => p.integration.id)));
+/**
+ * Les intégrations dont le post portait un commentaire de sources.
+ * `postiz-envoi.json` fait foi (il survit au rattrapage et liste les réseaux réellement envoyés) ;
+ * `postiz.json` n'est qu'un complément, car `postiz.ts` le réécrit à chaque envoi (aperçu, rattrapage).
+ * Les épisodes antérieurs au drapeau `commentaire` sont déduits de `publication.md` : si la section
+ * « Commentaire à épingler » existe et qu'aucun des deux journaux ne couvre ce réseau, on considère
+ * que le commentaire a été posté (postiz.ts l'inclut partout sauf TikTok quand `--commentaire` est passé).
+ */
+export const sourcesPostees = (dossier: string, prevu: boolean) => {
+  const ids = new Set<string>();
+  const couverts = new Set<string>();
+  try {
+    const envoi = lire<{commentaire?: boolean; postes?: {reseau: string; integration?: string}[]}>(path.join(dossier, 'postiz-envoi.json'));
+    if (envoi?.postes?.length && envoi.commentaire !== false) {
+      for (const p of envoi.postes) {
+        couverts.add(p.reseau);
+        if (COMPTE_SOURCE.has(p.reseau) && p.integration) ids.add(p.integration);
+      }
+    }
+  } catch {
+    /* journal illisible : on retombe sur postiz.json */
+  }
+  try {
+    const brut = lire<Groupe[] | Groupe>(path.join(dossier, 'postiz.json'));
+    const groupes = brut ? (Array.isArray(brut) ? brut : [brut]) : [];
+    for (const g of groupes.flatMap((x) => x.posts)) if (g.value.length >= 2) ids.add(g.integration.id);
+  } catch {
+    /* postiz.json absent ou de forme inattendue : les ids connus suffisent */
+  }
+  return {ids, couverts, prevu};
 };
+
+/** Le post portait-il un commentaire de sources ? */
+export const avecSource = (sources: ReturnType<typeof sourcesPostees>, integration: string, reseau: string) =>
+  sources.ids.has(integration) || (sources.prevu && COMPTE_SOURCE.has(reseau) && !sources.couverts.has(reseau));
 
 /** Commentaires (ou réponses Threads) laissés par le public : le commentaire de sources retiré. */
 export const commentairesNets = (reseau: string, stats: Record<string, number>, avecSource: boolean) => {
@@ -68,7 +98,7 @@ const lignes = (ageMin: number) => {
     const timings = lire<{duree?: number; qualite?: {motsParMinute?: number}}>(path.join(dossier, 'timings.json'));
     const fichierPub = path.join(dossier, 'publication.md');
     const pub = fs.existsSync(fichierPub) ? fs.readFileSync(fichierPub, 'utf8') : '';
-    const sources = sourcesPostees(dossier);
+    const sources = sourcesPostees(dossier, /Commentaire à épingler/.test(pub));
     const jourEp = jourDe(stats.date);
     for (const p of stats.postes) {
       if (p.etat !== 'PUBLISHED' || !Object.keys(p.stats).length) continue;
@@ -82,7 +112,7 @@ const lignes = (ageMin: number) => {
         reseau: p.reseau, heure: heureDe(quand), jour: jourDe(quand), semaine: weekEnd(jourDe(quand)) ? 'week-end' : 'semaine',
         gabarit: p.gabarit ?? '—', longueur: bloc?.replace(/^\s*(#[\p{L}\d_]+\s*)+$/gmu, '').trim().length,
         vues: p.stats.Views, likes: p.stats.Likes ?? 0, commentairesBruts: p.stats.Comments ?? p.stats.Replies ?? 0,
-        commentaires: commentairesNets(p.reseau, p.stats, sources.has(p.integration)), ageH: Math.round(ageH),
+        commentaires: commentairesNets(p.reseau, p.stats, avecSource(sources, p.integration, p.reseau)), ageH: Math.round(ageH),
       });
     }
   }

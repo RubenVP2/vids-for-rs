@@ -11,7 +11,7 @@ import path from 'node:path';
 import {EPISODES} from './lib/episode';
 import {lireDeclares} from './lib/gabarits';
 import {cli, enListe} from './lib/postiz-cli';
-import {analyser, commentairesNets, sourcesPostees} from './lib/stats';
+import {analyser, avecSource, commentairesNets, sourcesPostees} from './lib/stats';
 
 type Serie = {label: string; average?: boolean; data: {total: number | string; date: string}[]};
 type Poste = {reseau: string; postId: string; integration: string; date?: string};
@@ -113,7 +113,7 @@ for (const {d, envoi} of envois) {
   const fichierPub = path.join(EPISODES, d, 'publication.md');
   const declares = fs.existsSync(fichierPub) ? lireDeclares(fs.readFileSync(fichierPub, 'utf8')) : {};
   const postes = [];
-  const sources = sourcesPostees(path.join(EPISODES, d));
+  const sources = sourcesPostees(path.join(EPISODES, d), fs.existsSync(fichierPub) && /Commentaire à épingler/.test(fs.readFileSync(fichierPub, 'utf8')));
   for (const p of envoi.postes as Poste[]) {
     const post = parId.get(p.postId);
     const etat = post?.state ?? 'introuvable (supprimé ?)';
@@ -124,7 +124,7 @@ for (const {d, envoi} of envois) {
     const gabarit = declares[reseau]?.id ?? null;
     // Les gabarits se comparent sur les commentaires du public : notre commentaire de sources retiré.
     const cle = 'Comments' in stats ? 'Comments' : 'Replies';
-    const nets = cle in stats ? {...stats, [cle]: commentairesNets(p.reseau, stats, sources.has(p.integration))} : stats;
+    const nets = cle in stats ? {...stats, [cle]: commentairesNets(p.reseau, stats, avecSource(sources, p.integration, p.reseau))} : stats;
     if (gabarit && Object.keys(stats).length) parGabarit.push({reseau, gabarit, stats: nets});
     postes.push({...p, etat, url: post?.releaseURL ?? null, manquant, gabarit, stats});
     const note = manquant ? 'publication non reliée : posts:missing puis posts:connect (skill postiz)' : enLigne(stats);

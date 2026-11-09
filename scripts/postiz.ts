@@ -46,7 +46,7 @@ type Publication = Partial<Record<Texte, string>> & {titre: string; commentaire?
 type Statut = 'brouillon' | 'programmé';
 // reseau « threads-relance » : le 2e post Threads (texte seul) du même épisode.
 type Poste = {reseau: string; postId: string; integration: string; date?: string; statut?: Statut};
-type Journal = {envoye: string; date: string; rang?: Rang; statut: Statut; video: string; miniature?: string; carrousel?: string[]; postes: Poste[]};
+type Journal = {envoye: string; date: string; rang?: Rang; statut: Statut; commentaire?: boolean; video: string; miniature?: string; carrousel?: string[]; postes: Poste[]};
 /** Un post à créer : un réseau, son texte, ses médias, sa date. */
 type Envoi = {reseau: Reseau; relance?: boolean; date: string; texte: string; carrousel: boolean};
 
@@ -445,7 +445,7 @@ const premiere = charges[0].date;
 const envoi: Journal =
   choix && precedent
     ? {...precedent, statut: 'brouillon', postes: [...precedent.postes.filter((p) => !retenu(p.reseau)), ...nouveaux]}
-    : {envoye: new Date().toISOString(), date: premiere, rang, statut: 'brouillon', video: video.path, miniature: miniature?.path, carrousel: images.map((m) => m.path), postes: nouveaux};
+    : {envoye: new Date().toISOString(), date: premiere, rang, statut: 'brouillon', commentaire, video: video.path, miniature: miniature?.path, carrousel: images.map((m) => m.path), postes: nouveaux};
 fs.writeFileSync(journal, JSON.stringify(envoi, null, 2) + '\n');
 nouveaux.forEach((p) => console.log(`Brouillon : ${p.reseau} (${p.postId}), ${lisible(p.date!)}`));
 // --publier : le journal est écrit avant, pour qu'un échec en route ne laisse pas de brouillon orphelin.
