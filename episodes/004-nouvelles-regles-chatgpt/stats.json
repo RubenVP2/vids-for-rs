@@ -1,5 +1,5 @@
 {
-  "maj": "2026-11-02T09:39:06.914Z",
+  "maj": "2026-11-09T09:38:36.522Z",
   "jours": 30,
   "date": "2026-10-31T08:00:00.000Z",
   "rang": "principal",
@@ -15,8 +15,8 @@
       "manquant": false,
       "gabarit": null,
       "stats": {
-        "Views": 168,
-        "Reach": 158,
+        "Views": 169,
+        "Reach": 159,
         "Saves": 0,
         "Likes": 0,
         "Comments": 1,
@@ -30,11 +30,11 @@
       "date": "2026-10-30T18:00:00.000Z",
       "statut": "programmé",
       "etat": "PUBLISHED",
-      "url": "https://www.tiktok.com/@matou_ai",
+      "url": "https://www.tiktok.com/@matou_ai/video/7702523246444334369",
       "manquant": false,
       "gabarit": null,
       "stats": {
-        "Views": 262,
+        "Views": 264,
         "Likes": 6,
         "Comments": 0,
         "Shares": 0
@@ -81,7 +81,7 @@
       "integration": "cmvsb2y1q03efpg1c3j45vgui",
       "date": "2026-10-31T18:30:00.000Z",
       "statut": "brouillon",
-      "etat": "DRAFT",
+      "etat": "introuvable (supprimé ?)",
       "url": null,
       "manquant": false,
       "gabarit": null,

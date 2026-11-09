@@ -1,0 +1,97 @@
+{
+  "maj": "2026-11-09T09:40:37.561Z",
+  "jours": 30,
+  "date": "2026-11-08T17:30:00.000Z",
+  "rang": "second",
+  "postes": [
+    {
+      "reseau": "instagram",
+      "postId": "cmw7w0teu0qjgk707gf531n3e",
+      "integration": "cmvsaogt206kfor1cddnosuhf",
+      "date": "2026-11-08T17:30:00.000Z",
+      "statut": "programmé",
+      "etat": "PUBLISHED",
+      "url": "https://www.instagram.com/reel/DffTD09kUdP/",
+      "manquant": false,
+      "gabarit": "question",
+      "stats": {
+        "Views": 114,
+        "Reach": 103,
+        "Saves": 0,
+        "Likes": 1,
+        "Comments": 1,
+        "Shares": 0
+      }
+    },
+    {
+      "reseau": "tiktok",
+      "postId": "cmw7w0u3u0qjik70788inu47b",
+      "integration": "cmvsakeo602wupg1crmgz7g9n",
+      "date": "2026-11-08T18:00:00.000Z",
+      "statut": "programmé",
+      "etat": "PUBLISHED",
+      "url": "https://www.tiktok.com/@matou_ai/video/7705862139310837025",
+      "manquant": false,
+      "gabarit": "camp",
+      "stats": {
+        "Views": 243,
+        "Likes": 0,
+        "Comments": 0,
+        "Shares": 0
+      }
+    },
+    {
+      "reseau": "threads",
+      "postId": "cmw7w0uw10qjjk707mi5qubv8",
+      "integration": "cmvsb2y1q03efpg1c3j45vgui",
+      "date": "2026-11-08T18:30:00.000Z",
+      "statut": "programmé",
+      "etat": "PUBLISHED",
+      "url": "https://www.threads.com/@matou_ai/post/DffZ4F8JJcA",
+      "manquant": false,
+      "gabarit": "avis",
+      "stats": {
+        "Views": 5,
+        "Likes": 0,
+        "Replies": 1,
+        "Reposts": 0,
+        "Quotes": 0
+      }
+    },
+    {
+      "reseau": "youtube",
+      "postId": "cmw7w0vl30qjlk707j4lxl8v0",
+      "integration": "cmvsb3xwh07l1or1cvp01pod9",
+      "date": "2026-11-08T19:00:00.000Z",
+      "statut": "programmé",
+      "etat": "PUBLISHED",
+      "url": "https://www.youtube.com/watch?v=nDZfRcveTpQ",
+      "manquant": false,
+      "gabarit": "nom-fait",
+      "stats": {
+        "Views": 752,
+        "Likes": 2,
+        "Comments": 0,
+        "Favorites": 0
+      }
+    },
+    {
+      "reseau": "threads-relance",
+      "postId": "cmw7w0wa60qjnk707g3hy314z",
+      "integration": "cmvsb2y1q03efpg1c3j45vgui",
+      "date": "2026-11-08T20:30:00.000Z",
+      "statut": "programmé",
+      "etat": "PUBLISHED",
+      "url": "https://www.threads.com/@matou_ai/post/DffnkAwD-ay",
+      "manquant": false,
+      "gabarit": "dilemme",
+      "stats": {
+        "Views": 7,
+        "Likes": 0,
+        "Replies": 0,
+        "Reposts": 0,
+        "Quotes": 0
+      }
+    }
+  ]
+}

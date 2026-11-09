@@ -1,5 +1,5 @@
 {
-  "maj": "2026-11-02T09:38:55.234Z",
+  "maj": "2026-11-09T09:38:25.993Z",
   "jours": 30,
   "date": "2026-10-28T18:05:00.000Z",
   "rang": "principal",
@@ -13,7 +13,7 @@
       "manquant": false,
       "gabarit": null,
       "stats": {
-        "Views": 256,
+        "Views": 260,
         "Likes": 2,
         "Comments": 0,
         "Shares": 0
@@ -28,10 +28,10 @@
       "manquant": false,
       "gabarit": null,
       "stats": {
-        "Views": 115,
-        "Reach": 107,
+        "Views": 117,
+        "Reach": 108,
         "Saves": 1,
-        "Likes": 1,
+        "Likes": 2,
         "Comments": 1,
         "Shares": 1
       }

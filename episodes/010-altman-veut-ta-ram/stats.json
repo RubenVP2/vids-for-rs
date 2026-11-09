@@ -1,5 +1,5 @@
 {
-  "maj": "2026-11-02T09:39:50.532Z",
+  "maj": "2026-11-09T09:39:13.266Z",
   "jours": 30,
   "date": "2026-11-02T07:30:00.000Z",
   "rang": "principal",
@@ -30,7 +30,7 @@
       "manquant": false,
       "gabarit": "question-d-abord",
       "stats": {
-        "Views": 4,
+        "Views": 5,
         "Likes": 0,
         "Replies": 1,
         "Reposts": 0,
@@ -43,11 +43,18 @@
       "integration": "cmvsaogt206kfor1cddnosuhf",
       "date": "2026-11-02T11:00:00.000Z",
       "statut": "programmé",
-      "etat": "QUEUE",
-      "url": null,
+      "etat": "PUBLISHED",
+      "url": "https://www.instagram.com/reel/DfPJvnhEwg6/",
       "manquant": false,
       "gabarit": "toi",
-      "stats": {}
+      "stats": {
+        "Views": 138,
+        "Reach": 122,
+        "Saves": 0,
+        "Likes": 2,
+        "Comments": 1,
+        "Shares": 0
+      }
     },
     {
       "reseau": "tiktok",
@@ -55,11 +62,16 @@
       "integration": "cmvsakeo602wupg1crmgz7g9n",
       "date": "2026-11-02T11:30:00.000Z",
       "statut": "programmé",
-      "etat": "QUEUE",
-      "url": null,
+      "etat": "PUBLISHED",
+      "url": "https://www.tiktok.com/@matou_ai",
       "manquant": false,
       "gabarit": "note",
-      "stats": {}
+      "stats": {
+        "Views": 238,
+        "Likes": 5,
+        "Comments": 0,
+        "Shares": 0
+      }
     },
     {
       "reseau": "youtube",
@@ -67,11 +79,16 @@
       "integration": "cmvsb3xwh07l1or1cvp01pod9",
       "date": "2026-11-02T12:00:00.000Z",
       "statut": "programmé",
-      "etat": "QUEUE",
-      "url": null,
+      "etat": "PUBLISHED",
+      "url": "https://www.youtube.com/watch?v=tiCz-Vz0vlc",
       "manquant": false,
       "gabarit": "chiffre",
-      "stats": {}
+      "stats": {
+        "Views": 45,
+        "Likes": 1,
+        "Comments": 0,
+        "Favorites": 0
+      }
     },
     {
       "reseau": "threads-relance",
@@ -79,11 +96,17 @@
       "integration": "cmvsb2y1q03efpg1c3j45vgui",
       "date": "2026-11-02T14:30:00.000Z",
       "statut": "programmé",
-      "etat": "QUEUE",
-      "url": null,
+      "etat": "PUBLISHED",
+      "url": "https://www.threads.com/@matou_ai/post/DfPhmTgFuez",
       "manquant": false,
       "gabarit": "horizon",
-      "stats": {}
+      "stats": {
+        "Views": 23,
+        "Likes": 0,
+        "Replies": 0,
+        "Reposts": 0,
+        "Quotes": 0
+      }
     }
   ]
 }

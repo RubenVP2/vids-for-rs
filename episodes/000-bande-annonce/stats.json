@@ -1,5 +1,5 @@
 {
-  "maj": "2026-11-02T09:38:42.299Z",
+  "maj": "2026-11-09T09:38:15.620Z",
   "jours": 30,
   "date": "2026-10-28T17:00:00.000Z",
   "rang": "principal",
@@ -13,7 +13,7 @@
       "manquant": false,
       "gabarit": null,
       "stats": {
-        "Views": 261,
+        "Views": 262,
         "Likes": 2,
         "Comments": 0,
         "Shares": 0
@@ -28,8 +28,8 @@
       "manquant": false,
       "gabarit": null,
       "stats": {
-        "Views": 25,
-        "Reach": 21,
+        "Views": 27,
+        "Reach": 22,
         "Saves": 0,
         "Likes": 1,
         "Comments": 0,
@@ -45,7 +45,7 @@
       "manquant": false,
       "gabarit": null,
       "stats": {
-        "Views": 238,
+        "Views": 243,
         "Likes": 5,
         "Comments": 0,
         "Favorites": 0
