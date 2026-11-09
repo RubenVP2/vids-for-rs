@@ -141,6 +141,12 @@ export const episodeSchema = z
      * (plusieurs faits clés, une démo pas à pas). Absent : le budget de la série.
      */
     long: z.string().min(10).optional(),
+    /**
+     * Série intemporelle « Matou t'explique » : l'id du sujet (brand/intemporels.json, npm run intemporel).
+     * L'épisode explique une notion au lieu d'une actu : la règle des 2 jours ne s'applique pas,
+     * la source reste citée et datée.
+     */
+    intemporel: z.string().regex(/^[a-z0-9-]+$/).optional(),
     /** Gabarit de montage (brand/montage.json, npm run gabarits) ; un autre que prévu : sa raison. */
     gabarit: z.object({ouverture: z.string(), corps: z.string(), raison: z.string().optional()}).optional(),
     scenes: z.array(sceneSchema).min(4).max(10),

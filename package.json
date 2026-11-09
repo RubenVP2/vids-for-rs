@@ -16,6 +16,7 @@
     "postiz": "tsx scripts/postiz.ts",
     "bilan": "tsx scripts/bilan.ts",
     "veille": "tsx scripts/veille.ts",
+    "intemporel": "tsx scripts/intemporel.ts",
     "gabarits": "tsx scripts/gabarits.ts",
     "voices:compare": "tsx scripts/compare-voices.ts"
   },

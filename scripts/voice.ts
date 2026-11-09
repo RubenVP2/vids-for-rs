@@ -25,6 +25,7 @@ import {
   type QualiteVoix,
 } from './lib/qualite-voix';
 import {lireReglagesVoix} from './lib/reglages-voix';
+import {rythmeDe} from './lib/rythme';
 import tokens from '../brand/tokens.json';
 
 const args = process.argv.slice(2);
@@ -40,7 +41,12 @@ const PRISES_MAX = 3;
 /** Tentatives sur le modèle principal avant de passer à une voix de secours (API capricieuse). */
 const ESSAIS_API = 3;
 const episode = lireEpisode(dossier);
-const reglages = lireReglagesVoix();
+// Rythme de l'épisode (brand/voix.json → testDebit) : la consigne et la plage de débit du rythme
+// « posé » remplacent celles du fichier ; la voix (modèle, timbre) ne change jamais.
+const rythme = rythmeDe(episode.numero);
+const base = lireReglagesVoix();
+const reglages = rythme.instructions ? {...base, instructions: rythme.instructions} : base;
+if (rythme.id === 'posé') console.log(`Rythme posé (test de débit) : cible ${rythme.debit.motsParMinuteCible} mots/min.`);
 /** Une phrase par scène : sert à rapporter le nombre de pauses. */
 const phrases = episode.scenes.length;
 
@@ -135,7 +141,7 @@ if (recaler) {
   const debutApresCoupes = projeterTemps(motsCorriges[0]?.debut ?? 0, coupes);
   const finApresCoupes = projeterTemps(motsCorriges.at(-1)?.fin ?? ancien.duree, coupes);
   const qSansBlancs = mesurer(mp3, motsCorriges.length, debutApresCoupes, finApresCoupes, phrases);
-  const {facteur, ...qFinale} = calerDebit(mp3, qSansBlancs, motsCorriges.length, debutApresCoupes, finApresCoupes);
+  const {facteur, ...qFinale} = calerDebit(mp3, qSansBlancs, motsCorriges.length, debutApresCoupes, finApresCoupes, rythme.debit);
   const dureeFinale = dureeAudio(mp3);
   const enveloppe = calculerEnveloppe(mp3);
   const motsProjetes = motsCorriges.map((m, i) => ({
@@ -234,8 +240,8 @@ if (!fs.existsSync(mp3) || force) {
       }
       // Le débit se recale AVANT de juger : la mesure qui décide doit porter sur l'audio final.
       let final = q;
-      if (avertissements(q).length) {
-        const {facteur: _, ...recale} = calerDebit(candidat, q, nombreMots);
+      if (avertissements(q, rythme.debit).length) {
+        const {facteur: _, ...recale} = calerDebit(candidat, q, nombreMots, 0, 0, rythme.debit);
         final = recale;
       }
       const defautsPrise = defauts(final);
@@ -245,7 +251,7 @@ if (!fs.existsSync(mp3) || force) {
         break; // une prise conforme : inutile d'en produire d'autres
       }
       // Aucune prise conforme pour l'instant : on garde la plus vivante.
-      if (!moindre || score(q) > score(moindre.q)) {
+      if (!moindre || score(q, rythme.debit) > score(moindre.q, rythme.debit)) {
         if (moindre) fs.rmSync(moindre.fichier, {force: true});
         moindre = {fichier: candidat, q: final};
       } else {
@@ -271,7 +277,7 @@ if (!fs.existsSync(mp3) || force) {
     fs.writeFileSync(provenance, JSON.stringify({modele: reglages.modele, voix: reglages.voix, sha256: empreinte(mp3)}, null, 1) + '\n');
     voix = {modele: reglages.modele, voix: reglages.voix};
     fs.rmSync(path.join(dossier, 'voix.secours.mp3'), {force: true}); // un secours périmé ne doit pas rester
-    const av = avertissements(qualite);
+    const av = avertissements(qualite, rythme.debit);
     if (av.length) console.warn(`  ${av.join(' ; ')} : texte dense, à raccourcir plutôt qu’à refaire.`);
   } finally {
     nettoyer();

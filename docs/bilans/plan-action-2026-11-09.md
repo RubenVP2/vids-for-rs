@@ -88,7 +88,13 @@ le signal du public.
   lecture le 23/11).
 - L'univers visuel, Matou, le Hype-mètre, les règles éditoriales.
 
-## 5. Décisions attendues
+## 5. Décisions
+
+**Validées et codées le 09/11/2026** (`docs/decisions.md`) : A2 (veille « quotidien »), A3
+(fin de la relance Threads), B1 (série intemporelle, second des mardi, jeudi et samedi) et B3
+(rythme posé sur un épisode sur deux, #026 à #039). Restent ouvertes : A5 et C1 à C5.
+
+Liste d'origine :
 
 1. A2 (veille « quotidien ») : je le code ? Recommandé : **oui**.
 2. A3 (fin de la relance Threads) : recommandé **oui**.

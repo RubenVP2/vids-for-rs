@@ -5,9 +5,10 @@ import {execFileSync, spawnSync} from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import {budgetDe, dossierEpisode, FRAICHEUR_MAX, fraicheur, jourParis, lireEpisode, lireTimings, nomEpisode} from './lib/episode';
-import {controler, numeroDe, reglages as gabarits} from './lib/gabarits';
+import {controler, numeroDe, reglages as gabarits, RELANCE} from './lib/gabarits';
 import {alerteTimbre, avertissements as avertVoix, defauts as defautsVoix, resume as resumeVoix} from './lib/qualite-voix';
 import {lireReglagesVoix} from './lib/reglages-voix';
+import {rythmeDe} from './lib/rythme';
 
 const dossier = dossierEpisode(process.argv[2]);
 const nom = nomEpisode(dossier);
@@ -45,6 +46,8 @@ const passe = age.selon === 'postiz-envoi.json' && age.parti && age.sortie < jou
 const ages = `source du ${episode.source.date}, sortie le ${age.sortie} (${age.selon}) : ${age.jours} jour(s)`;
 if (!Number.isFinite(age.jours)) ko.push(`Date de source illisible (« ${episode.source.date} ») : corriger source.date dans scenes.json`);
 else if (age.jours < 0) ko.push(`Date de la source dans le futur (${ages}) : vérifier source.date dans scenes.json et source.md`);
+else if (episode.intemporel)
+  ok.push(`Série intemporelle (${episode.intemporel}) : source du ${episode.source.date}, pas de limite de fraîcheur`);
 else if (passe)
   ok.push(`Info du ${episode.source.date}, déjà envoyée le ${age.sortie} (${age.jours} jour(s)) : rien à bloquer`);
 else
@@ -117,7 +120,7 @@ if (timings.qualite) {
     `Voix rythmée (${resumeVoix(timings.qualite)})`,
     `Voix à refaire : ${defauts.join(' ; ')} — relancer npm run voice -- ${nom} --force`,
   );
-  const avDebit = avertVoix(timings.qualite);
+  const avDebit = avertVoix(timings.qualite, rythmeDe(episode.numero).debit);
   if (avDebit.length) console.log(`Voix hors plage (${avDebit.join(' ; ')}) : lancer npm run voice -- ${nom} --recaler (ou raccourcir le texte).`);
   if (reglagesVoix.profil) {
     const alerte = alerteTimbre(timings.qualite, reglagesVoix.profil);
@@ -150,8 +153,9 @@ if (!fs.existsSync(pub)) {
     ['YouTube', 2, 4, 5000, true],
     ['LinkedIn', 0, 3, 3000, false], // lien en commentaire : LinkedIn freine les posts avec lien
     ['Threads', 0, 1, 500, false], // un seul sujet (tag) par post sur Threads
-    ['Threads relance', 0, 1, 500, false],
   ];
+  // La relance Threads : exigée seulement si un créneau en programme une (brand/postiz.json).
+  if (RELANCE || section('Threads relance') !== undefined) regles.push(['Threads relance', 0, 1, 500, false]);
   for (const [titre, min, max, limite, url] of regles) {
     const bloc = section(titre);
     if (!bloc) {
@@ -169,7 +173,7 @@ if (!fs.existsSync(pub)) {
   // LinkedIn coupe après ~210 caractères (« … voir plus ») : l'accroche doit tenir avant.
   const accroche = (section('LinkedIn') ?? '').split(/\n\s*\n/)[0];
   verifier(accroche.length <= 210, 'LinkedIn : accroche avant « voir plus »', `LinkedIn : le 1er paragraphe fait ${accroche.length} caractères (max 210, avant « voir plus »)`);
-  verifier((section('Threads relance') ?? '').includes('?'), 'Threads relance : une question', 'Threads relance : doit poser une question (elle sert à faire répondre)');
+  if (section('Threads relance') !== undefined) verifier((section('Threads relance') ?? '').includes('?'), 'Threads relance : une question', 'Threads relance : doit poser une question (elle sert à faire répondre)');
   const carrousel = path.join(dossier, 'rendu', 'carrousel');
   const diapos = fs.existsSync(carrousel) ? fs.readdirSync(carrousel).filter((f) => f.endsWith('.png')).length : 0;
   verifier(diapos >= 2, `Carrousel LinkedIn : ${diapos} diapos`, 'Carrousel LinkedIn absent : lancer npm run carrousel');
@@ -179,7 +183,7 @@ if (!fs.existsSync(pub)) {
   // Gabarits et textes (docs/publication.md) : à partir de l'épisode brand/publication.json → depuis.
   const n = numeroDe(dossier);
   if (n >= gabarits.depuis) {
-    const r = controler(texte, n, section);
+    const r = controler(texte, n, section, !!episode.intemporel);
     ok.push(...r.ok);
     ko.push(...r.ko);
   }

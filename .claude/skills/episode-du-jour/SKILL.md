@@ -12,13 +12,13 @@ Deux épisodes par jour (`docs/reseaux.md`) :
 
 - **principal** (lancé vers 5 h) : le meilleur sujet de la nuit. Il passe partout, du matin
   au début de soirée : LinkedIn 8 h 30, Threads 9 h, Instagram 12 h, TikTok 12 h 30,
-  relance Threads 15 h 30, YouTube 18 h.
+  YouTube 18 h.
 - **second** (lancé vers 14 h) : le meilleur sujet pas encore traité, annonces de la
   matinée et du début d'après-midi comprises. Il passe partout sauf LinkedIn, le soir :
-  Instagram 18 h 30, TikTok 19 h, Threads 19 h 30, YouTube 20 h, relance Threads 21 h 30.
+  Instagram 18 h 30, TikTok 19 h, Threads 19 h 30, YouTube 20 h.
 
 Chaque épisode est un seul sujet, décliné par réseau : écrire toutes les sections de
-`publication.md` (Instagram et relance comprises).
+`publication.md` (Instagram comprise ; plus de relance Threads depuis le 09/11/2026).
 
 La consigne du lanceur dit lequel. Sans précision (session à la main) : principal.
 
@@ -57,6 +57,24 @@ Plus de candidat : premier sujet de `docs/sujets.md` (retiré de la liste), sino
 
 Un sujet que le `documentaliste` juge mal sourcé (source non identifiable, rumeur sans
 média reconnu) : veto, puis le suivant, sans demander.
+
+### Épisode intemporel (série « Matou t'explique »)
+
+Certains jours (`brand/intemporels.json` : le second des mardi, jeudi et samedi), l'épisode
+explique une notion au lieu d'une actu. La consigne du lanceur le dit ; à la main :
+`npm run intemporel -- --rang <rang>` (dernière ligne « INTEMPOREL: <id> <question> », ou
+« INTEMPOREL: non » : épisode d'actu normal).
+
+1. Le `documentaliste` cherche la source décrite par le script (page officielle, organisme
+   public ou média reconnu) et écrit `source.md`. C'est le seul cas où l'on cherche une
+   source sur le web : pour une question donnée, jamais pour trouver un sujet.
+2. Source solide : skill `episode` comme d'habitude, avec `"intemporel": "<id>"` dans
+   `scenes.json` (skills `ecriture-matou` et `publication`, sections « Épisode intemporel »).
+3. Pas de source solide : `npm run intemporel -- --suivant --apres <id>` donne le sujet
+   suivant (une seule fois) ; sinon revenir au CHOIX de la veille, épisode d'actu normal.
+
+Message final, point 2 : « série intemporelle, sujet <id> » et la source retenue, à la
+place du score de veille.
 
 ## 2. Produire
 

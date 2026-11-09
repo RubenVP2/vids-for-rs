@@ -5,6 +5,19 @@
   "format": "pcm",
   "frequencePcm": 24000,
   "instructions": "Voix masculine française, jeune, vive et complice, rythme dynamique et entraînant (environ 205 mots par minute, sans temps mort), articulation nette, intonation variée qui monte et descend (jamais plate ni récitée), petit sourire dans la voix, humour pince-sans-rire. Enchaîne les phrases avec fluidité, pauses courtes.",
+  "$testDebit": "Test du 10 au 16/11/2026 (docs/decisions.md, 09/11) : du n° « de » au n° « a », un épisode sur deux passe au rythme « posé » (scripts/lib/rythme.ts : consigne, plage de débit et budgets de mots ci-dessous ; vidéos de ~30 s au lieu de ~20–27 s). Les autres gardent le rythme courant. npm run gabarits -- NNN dit le rythme d'un épisode ; npm run bilan -- --local les compare. Après « a », tout revient au rythme courant : retirer ce bloc, ou en faire la règle, selon le bilan.",
+  "testDebit": {
+    "de": 26,
+    "a": 39,
+    "pose": {
+      "instructions": "Voix masculine française, jeune, vive et complice, rythme posé et clair (environ 180 mots par minute), articulation nette, intonation variée qui monte et descend (jamais plate ni récitée), petit sourire dans la voix, humour pince-sans-rire. Marque une courte pause entre les phrases.",
+      "debit": {"motsParMinuteMin": 168, "motsParMinuteCible": 180, "motsParMinute": 195},
+      "budgets": {
+        "flash": {"viser": [80, 100], "max": 112, "voix": 40, "video": 44},
+        "decrypte": {"viser": [95, 120], "max": 135, "voix": 48, "video": 52}
+      }
+    }
+  },
   "$profil": "Hauteur médiane de Puck mesurée sur les épisodes 000-009 (118-147 Hz). Sert d'ALERTE, pas de refus : deux voix d'homme peuvent partager la même plage, seule l'identité du modèle fait foi.",
   "profil": {"medianeHz": 125, "tolerance": 0.15},
   "transcription": "openai/whisper-large-v3",

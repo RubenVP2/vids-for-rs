@@ -22,8 +22,8 @@ Les heures suivent les créneaux des réseaux (`docs/reseaux.md`). Un épisode p
 environ (jusqu'à 1 h 40 avec les replis de modèle) :
 
 - le **principal** part à 5 h 13, il est prêt vers 6 h : LinkedIn (8 h 30) et Threads
-  (9 h), au moins 2 h plus tard (le délai du veto), puis midi (Instagram, TikTok), la
-  relance Threads à 15 h 30 et le Short YouTube à 18 h ;
+  (9 h), au moins 2 h plus tard (le délai du veto), puis midi (Instagram, TikTok)
+  et le Short YouTube à 18 h ;
 - le **second** part à 14 h 13, avec l'actu de l'après-midi : prêt vers 15 h (16 h 53 au
   pire), pour les créneaux du soir (18 h 30 et après).
 

@@ -77,7 +77,7 @@ BLOQUANT dans `scenes.json` (texte trop long, mot coupé…), puis refaire rendu
 ## 6. Publication
 
 Suivre le skill **`publication`** pour écrire `publication.md` (TikTok, Instagram,
-YouTube, LinkedIn, Threads et sa relance : un texte taillé pour chaque réseau). Puis
+YouTube, LinkedIn, Threads : un texte taillé pour chaque réseau). Puis
 `npm run check -- NNN`.
 
 **Fait quand** `npm run check` affiche « Prêt pour la relecture humaine. »

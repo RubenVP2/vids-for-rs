@@ -35,7 +35,7 @@ C'est le seul choix laissé à l'agent, comme le veto de la veille.
 | YouTube | le titre | `nom-fait` (le nom connu, puis le fait), `pourquoi` (« Pourquoi … ? »), `chiffre` |
 | LinkedIn | la question de fin | `metier` (le travail du lecteur), `pour-contre`, `horizon` (une prédiction datée) |
 | Threads | l'ouverture | `avis` (« Mon avis : »), `pari` (« Je parie que »), `question-d-abord` |
-| Threads relance | la question | `dilemme` (« Tu préfères … ou … ? »), `vecu`, `horizon` |
+| Threads relance (arrêtée le 09/11/2026) | la question | `dilemme` (« Tu préfères … ou … ? »), `vecu`, `horizon` |
 
 Pourquoi ces familles : une question fermée (« Tu penses que… ? ») se répond d'un pouce
 ou pas du tout ; un choix, un chiffre ou un récit demande d'écrire. Sur Instagram, la

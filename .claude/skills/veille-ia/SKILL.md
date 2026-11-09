@@ -7,7 +7,9 @@ description: Trouve et classe les annonces IA du moment pour choisir le sujet du
 
 La veille est **déterministe** : un script collecte une liste fixe de flux, regroupe les
 articles qui parlent de la même annonce et note chaque sujet par règles fixes
-(`docs/veille.md`, poids dans `brand/veille.json`). Tu ne cherches pas l'actu toi-même
+(`docs/veille.md`, poids dans `brand/veille.json` : depuis le 09/11/2026, un sujet du
+quotidien, un nom que tout le monde connaît et les médias français pèsent plus qu'un
+billet de blog officiel). Tu ne cherches pas l'actu toi-même
 (pas de recherche web pour trouver un sujet) et tu ne changes pas l'ordre du classement.
 
 ## Lancer

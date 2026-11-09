@@ -33,7 +33,10 @@ Détail : `docs/routines.md`.
 - **Audience** : grand public + pros hors tech. Aucun jargon non expliqué.
 - **Format** : 1080×1920. Série `flash` ~30 s (une annonce), `decrypte` ≤ 45 s (un
   article de blog). Un sujet qui le demande passe en **format long** (≤ 60 s), avec sa
-  raison : on ne tasse pas pour tenir 30 s. Une seule idée par vidéo.
+  raison : on ne tasse pas pour tenir 30 s. Une seule idée par vidéo. Série
+  **intemporelle** « Matou t'explique » (une question que les gens cherchent, pas une
+  actu) : le second des mardi, jeudi et samedi (`brand/intemporels.json`,
+  `npm run intemporel` ; test jusqu'au 23/11/2026).
 - **Ton** : pédagogie d'abord, humour pince-sans-rire (inspiration Fireship).
 - **Matou** : chat blanc à lunettes dessiné par l'utilisateur, c'est **lui qui parle**
   (voix masculine), et il a **un avis** (le verdict est sa position). Rituels : « En
@@ -52,15 +55,16 @@ Détail : `docs/routines.md`.
   sauf LinkedIn.
 - **Un post par réseau, pas un copier-coller** (`docs/reseaux.md`). Principal : LinkedIn
   en carrousel (en semaine, 8 h 30, un par jour ouvré), Threads (vidéo, 9 h), Instagram
-  (12 h), TikTok (12 h 30), relance texte Threads (15 h 30), YouTube (18 h). Second :
-  Instagram 18 h 30, TikTok 19 h, Threads 19 h 30, YouTube 20 h, relance Threads 21 h 30.
+  (12 h), TikTok (12 h 30), YouTube (18 h). Second : Instagram 18 h 30, TikTok 19 h,
+  Threads 19 h 30, YouTube 20 h. Plus de relance texte sur Threads (09/11/2026).
   Créneaux : `brand/postiz.json`.
 
 ## Règles éditoriales (non négociables)
 
 - Toujours citer la source (à l'écran et dans la description). La date affichée est celle
   de la source, attribuée (« article du 7 nov. ») ; l'info a **au plus 2 jours** le jour
-  où la vidéo sort (`npm run validate` et `npm run check` refusent au-delà).
+  où la vidéo sort (`npm run validate` et `npm run check` refusent au-delà) ; la série
+  intemporelle n'a pas cette limite, sa source reste citée et datée.
 - Ne jamais inventer un fait, un chiffre ou une citation absente de la source.
 - Distinguer clairement : annoncé / disponible / rumeur.
 - Résumer et commenter, ne pas recopier l'article mot à mot.
@@ -82,7 +86,8 @@ Détail : `docs/routines.md`.
   `verificateur-faits` (script contre source), `spectateur` (test grand public),
   `controleur-visuel` (images rendues).
 - Ce qui marche chez Matou (chiffres) : `docs/apprentissages.md`. Choix du sujet :
-  `docs/veille.md` (`npm run veille`, classements dans `veille/`) ; dernier repli à la
+  `docs/veille.md` (`npm run veille`, classements dans `veille/` ; le score favorise le
+  quotidien, les noms connus et les médias français) ; dernier repli à la
   main : `docs/sujets.md`. Textes des posts : `docs/publication.md` (gabarits,
   `npm run gabarits`). Bilans hebdomadaires : `docs/bilans/`.
 - Postiz : CLI officielle `postiz` (dépendance du projet), authentifiée par OAuth

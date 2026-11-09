@@ -39,10 +39,17 @@ l'a notée : un format long qui fait moins de vues 3 semaines de suite, le dire.
 Puis la stratégie par réseau (`docs/reseaux.md`) : le rang (colonne « Rang » : principal
 du matin et de midi contre second du soir, depuis le 31/10 ; avant, l'inverse), le créneau de chaque post (colonne « Créneau »), le
 format (LinkedIn : carrousel ou vidéo), le texte propre au réseau (`publication.md`), et
-sur Threads la relance (`threads-relance`) contre le post vidéo. Un créneau qui fait
+sur Threads la relance (`threads-relance`, arrêtée le 09/11/2026 : comparer les vues du
+compte avant et après). Un créneau qui fait
 moins bien 3 semaines de suite : proposer une autre heure. Les vues d'un épisode qui
 baissent depuis l'arrivée de l'autre : le dire (le rythme de 2 par jour est un pari).
 Compter aussi les vetos et les brouillons retenus par les garde-fous de la semaine.
+
+Les tests en cours (`docs/decisions.md`, 09/11/2026), dans `npm run bilan -- --local` :
+« Rythme de voix × créneau » (posé ~30 s contre rapide ~20–27 s, #026 à #039 ; avec la
+durée regardée du compte YouTube, `postiz analytics:platform`), « Format × rang » (série
+intemporelle contre actu), et le nouveau score de veille (colonnes « Quotidien » et « Nom
+connu » de `veille/*.md`) contre les vues YouTube à créneau égal.
 
 Les textes (`docs/publication.md`) : la table « Gabarits de texte » de `npm run bilan`
 donne, réseau par réseau, la moyenne des chiffres de chaque gabarit. Le chiffre qui

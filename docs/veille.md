@@ -24,14 +24,21 @@ lancer.sh episode-du-jour <rang>
 
 | Signal | Points (défaut) | Pourquoi |
 | --- | --- | --- |
-| Source officielle (blog d'un labo) dans le groupe | 20 | Fait vérifiable, statut clair |
-| Chaque média distinct qui en parle (Google Actualités FR compte chaque éditeur) | 8, plafond 48 | La reprise multi-médias est le meilleur indice d'une actu grand public |
+| Source officielle (blog d'un labo) dans le groupe | 10 (20 jusqu'au 09/11/2026) | Fait vérifiable, statut clair ; mais un billet officiel seul ne fait pas une actu grand public |
+| Chaque média distinct qui en parle (Google Actualités FR compte chaque éditeur) | 8, ou 16 pour un média français (`fr` dans la liste des flux), plafond 48 | La reprise multi-médias est le meilleur indice d'une actu grand public ; les médias français sont ceux que lit le public de Matou |
+| Sujet du quotidien : un mot de `motsQuotidien` dans un titre (école, emploi, arnaque, santé, prix, interdit…) | 15 | Constat confirmé (`docs/apprentissages.md`) : ce qui touche le quotidien bat la performance technique |
+| Nom que tout le monde connaît : un mot de `nomsConnus` (ChatGPT, Google, WhatsApp, iPhone…) | 10 | Constat confirmé : un nom connu attire plus qu'un nom de modèle ou de labo |
 | Fraîcheur du premier article | < 12 h : 15, < 24 h : 10 | Une actu de moins de 24 h fait plus de vues (hypothèse) |
 | Hacker News (meilleur score d'une histoire liée) | 0,04 par point, plafond 20 | L'emballement des développeurs précède souvent le grand public |
 | Reddit (r/ChatGPT, r/OpenAI, r/artificial, r/LocalLLaMA, top du jour) | 4 par post lié, plafond 12 | Ce dont les utilisateurs parlent |
 | Google Trends France : une recherche en hausse correspond au sujet | 20 | Ce que les Français cherchent maintenant |
 
-**Seuil : 35.** Au-dessus : l'actu du jour. En dessous, la réserve dans l'ordre des
+Les trois bonus grand public (média français, quotidien, nom connu) ne vont qu'à un sujet
+dont un titre parle vraiment d'IA (un mot de `motsIA` ou un produit de `produitsIA`) :
+sans cela, « iPhone à prix cassé chez Amazon » gagnerait 25 points.
+
+**Seuil : 35.** Un billet officiel frais seul vaut désormais 25 : il attend en réserve, et
+ne devient le sujet que s'il touche le quotidien ou porte un nom connu. Au-dessus : l'actu du jour. En dessous, la réserve dans l'ordre des
 scores : sujets du jour entre 25 et 35, puis les bons sujets des 7 derniers jours non
 choisis (`veille/reserve.json`, rempli et purgé par le script). Passé `FRAICHEUR_MAX` (2 jours),
 un sujet n'est plus candidat : il ne partirait pas (`check.ts` le refuserait), donc il ne
@@ -54,10 +61,15 @@ l'ordre du classement.
   Un fichier `.md` n'est pas rejouable : passer le `.json` du même passage.
 - Un flux qui ne répond pas est listé dans « Flux en échec » ; le classement se fait
   avec les autres.
+- Après un changement de poids, le rejeu affiche l'ancien choix et le nouveau haut du
+  classement : c'est la façon d'essayer un réglage sur les jours passés.
 - Régler : changer un poids ou un flux dans `brand/veille.json` (le bilan du lundi
   propose les changements à partir des vues, l'utilisateur décide).
 
 ## Limites connues
+
+- Les mots du quotidien sont une liste : « prix » ou « loi » attrapent aussi des sujets
+  sans intérêt (une promo, un texte technique). Le veto de l'agent reste le filet.
 
 - Le regroupement se fait sur les mots des titres : un article français qui ne reprend
   aucun nom du titre anglais (« les ados » pour « teens ») compte comme un autre sujet.

@@ -5,8 +5,9 @@
   "seuilReserve": 25,
   "reserveJours": 7,
   "points": {
-    "officiel": 20,
+    "officiel": 10,
     "parMedia": 8,
+    "parMediaFr": 16,
     "mediasMax": 48,
     "moins12h": 15,
     "moins24h": 10,
@@ -14,8 +15,23 @@
     "hnMax": 20,
     "parReddit": 4,
     "redditMax": 12,
-    "trends": 20
+    "trends": 20,
+    "quotidien": 15,
+    "nomConnu": 10
   },
+  "$grandPublic": "Depuis le 09/11/2026 (docs/decisions.md) : ce que les chiffres de Matou confirment (docs/apprentissages.md). « quotidien » : un mot de motsQuotidien dans un titre du sujet (ce qui touche la vie du spectateur). « nomConnu » : un nom de nomsConnus (ce que le grand public reconnaît, pas un nom de modèle ou de labo). « parMediaFr » : un média français (flux marqué fr) compte double. Mots sans accents, en minuscules, au singulier et au pluriel s'il diffère.",
+  "motsQuotidien": [
+    "ecole", "ecoles", "eleve", "eleves", "etudiant", "etudiants", "prof", "profs", "professeur", "professeurs", "enseignant", "enseignants", "college", "collegien", "collegienne", "lycee", "lyceen", "lyceens", "bac", "devoirs", "universite", "enfant", "enfants", "ado", "ados", "parents", "famille",
+    "emploi", "emplois", "travail", "metier", "metiers", "salaire", "salaires", "salarie", "salaries", "licenciement", "licenciements", "chomage", "recrutement", "embauche", "cv",
+    "arnaque", "arnaques", "escroquerie", "fraude", "piratage", "pirate", "deepfake", "deepfakes", "vie", "privee", "donnees", "espionnage", "surveillance", "camera", "cameras",
+    "sante", "medecin", "medecins", "hopital", "medicament", "medicaments", "cancer", "diagnostic", "suicide", "psy",
+    "telephone", "smartphone", "gratuit", "gratuite", "gratuitement", "prix", "abonnement", "facture", "payant", "interdit", "interdite", "interdiction", "bloque", "amende", "proces", "plainte", "justice", "loi",
+    "voiture", "ville", "transport", "bouchons", "logement", "banque", "impots", "electricite", "courses", "voyage", "vacances",
+    "school", "schools", "student", "students", "teacher", "teachers", "kids", "children", "teens", "job", "jobs", "layoffs", "salary", "scam", "scams", "privacy", "health", "doctor", "doctors", "free", "price", "ban", "banned", "lawsuit", "sued", "phone"
+  ],
+  "$produitsIA": "Un sujet ne reçoit les bonus grand public (quotidien, nomConnu, parMediaFr) que si un de ses titres parle vraiment d'IA : un mot de motsIA ou un de ces produits. Sans ça, « iPhone à prix cassé chez Amazon » gagnerait 25 points.",
+  "produitsIA": ["chatgpt", "gpt", "sora", "codex", "openai", "gemini", "deepmind", "claude", "anthropic", "mistral", "lechat", "llama", "copilot", "siri", "grok", "xai", "deepseek", "qwen", "alexa", "perplexity", "midjourney", "suno", "cursor", "huggingface"],
+  "nomsConnus": ["chatgpt", "google", "gmail", "youtube", "maps", "android", "apple", "iphone", "siri", "whatsapp", "instagram", "facebook", "messenger", "tiktok", "snapchat", "amazon", "alexa", "netflix", "spotify", "windows", "word", "excel", "samsung", "tesla"],
   "flux": [
     {"nom": "OpenAI", "type": "officiel", "url": "https://raw.githubusercontent.com/Olshansk/rss-feeds/main/feeds/feed_openai_main.xml"},
     {"nom": "xAI", "type": "officiel", "url": "https://raw.githubusercontent.com/Olshansk/rss-feeds/main/feeds/feed_xainews.xml"},
@@ -33,12 +49,12 @@
     {"nom": "TechCrunch", "type": "media", "url": "https://techcrunch.com/category/artificial-intelligence/feed/"},
     {"nom": "The Verge", "type": "media", "url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml"},
     {"nom": "Ars Technica", "type": "media", "url": "https://feeds.arstechnica.com/arstechnica/technology-lab", "filtre": true},
-    {"nom": "Numerama", "type": "media", "url": "https://www.numerama.com/feed/", "filtre": true},
-    {"nom": "Frandroid", "type": "media", "url": "https://www.frandroid.com/feed", "filtre": true},
-    {"nom": "Le Monde Pixels", "type": "media", "url": "https://www.lemonde.fr/pixels/rss_full.xml", "filtre": true},
-    {"nom": "01net", "type": "media", "url": "https://www.01net.com/actualites/feed/", "filtre": true},
-    {"nom": "Blog du Modérateur", "type": "media", "url": "https://www.blogdumoderateur.com/feed/", "filtre": true},
-    {"nom": "Google Actualités FR", "type": "agregateur", "url": "https://news.google.com/rss/search?q=intelligence+artificielle+when:2d&hl=fr&gl=FR&ceid=FR:fr"}
+    {"nom": "Numerama", "type": "media", "fr": true, "url": "https://www.numerama.com/feed/", "filtre": true},
+    {"nom": "Frandroid", "type": "media", "fr": true, "url": "https://www.frandroid.com/feed", "filtre": true},
+    {"nom": "Le Monde Pixels", "type": "media", "fr": true, "url": "https://www.lemonde.fr/pixels/rss_full.xml", "filtre": true},
+    {"nom": "01net", "type": "media", "fr": true, "url": "https://www.01net.com/actualites/feed/", "filtre": true},
+    {"nom": "Blog du Modérateur", "type": "media", "fr": true, "url": "https://www.blogdumoderateur.com/feed/", "filtre": true},
+    {"nom": "Google Actualités FR", "type": "agregateur", "fr": true, "url": "https://news.google.com/rss/search?q=intelligence+artificielle+when:2d&hl=fr&gl=FR&ceid=FR:fr"}
   ],
   "hn": "https://hn.algolia.com/api/v1/search?tags=story&hitsPerPage=100&numericFilters=created_at_i>{depuis},points>50",
   "reddit": [
