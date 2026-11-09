@@ -48,11 +48,11 @@ Détail : `docs/routines.md`.
 - **Rythme (production)** : **2 épisodes par jour**, au minimum 1. **Un épisode = un
   sujet, le même sur tous ses réseaux**, chaque post au format du réseau, **le jour même**
   (jamais reporté au lendemain). Le **principal** (produit vers 5 h) publie le matin et à
-  midi ; le **second** (produit vers 14 h, jamais la même actu) publie le soir, partout
+  midi (YouTube à 18 h) ; le **second** (produit vers 14 h, jamais la même actu) publie le soir, partout
   sauf LinkedIn.
 - **Un post par réseau, pas un copier-coller** (`docs/reseaux.md`). Principal : LinkedIn
   en carrousel (en semaine, 8 h 30, un par jour ouvré), Threads (vidéo, 9 h), Instagram
-  (12 h), TikTok (12 h 30), YouTube (13 h), relance texte Threads (15 h 30). Second :
+  (12 h), TikTok (12 h 30), relance texte Threads (15 h 30), YouTube (18 h). Second :
   Instagram 18 h 30, TikTok 19 h, Threads 19 h 30, YouTube 20 h, relance Threads 21 h 30.
   Créneaux : `brand/postiz.json`.
 

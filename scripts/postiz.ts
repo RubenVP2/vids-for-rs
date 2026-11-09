@@ -45,8 +45,8 @@ type Media = {id: string; path: string};
 type Publication = Partial<Record<Texte, string>> & {titre: string; commentaire?: string};
 type Statut = 'brouillon' | 'programmé';
 // reseau « threads-relance » : le 2e post Threads (texte seul) du même épisode.
-type Poste = {reseau: string; postId: string; integration: string; date?: string; statut?: Statut};
-type Journal = {envoye: string; date: string; rang?: Rang; statut: Statut; video: string; miniature?: string; carrousel?: string[]; postes: Poste[]};
+type Poste = {reseau: string; postId: string; integration: string; date?: string; statut: Statut; commentaire?: boolean};
+type Journal = {envoye: string; date: string; rang?: Rang; statut: Statut; commentaire?: boolean; video: string; miniature?: string; carrousel?: string[]; postes: Poste[]};
 /** Un post à créer : un réseau, son texte, ses médias, sa date. */
 type Envoi = {reseau: Reseau; relance?: boolean; date: string; texte: string; carrousel: boolean};
 
@@ -436,7 +436,14 @@ for (const charge of charges) {
     const integration = p.integration ?? p.integrationId ?? '';
     const r = RESEAUX.find((x) => canaux[x]?.id === integration);
     const relance = envois.some((e) => e.relance && e.date === charge.date && e.reseau === r);
-    nouveaux.push({reseau: r ? `${r}${relance ? '-relance' : ''}` : integration, postId: p.postId ?? p.id ?? '', integration, date: charge.date, statut: 'brouillon'});
+    nouveaux.push({
+      reseau: r ? `${r}${relance ? '-relance' : ''}` : integration,
+      postId: p.postId ?? p.id ?? '',
+      integration,
+      date: charge.date,
+      statut: 'brouillon',
+      commentaire: commentaire && !!pub.commentaire && r !== 'tiktok' && !relance,
+    });
   }
 }
 
@@ -445,7 +452,7 @@ const premiere = charges[0].date;
 const envoi: Journal =
   choix && precedent
     ? {...precedent, statut: 'brouillon', postes: [...precedent.postes.filter((p) => !retenu(p.reseau)), ...nouveaux]}
-    : {envoye: new Date().toISOString(), date: premiere, rang, statut: 'brouillon', video: video.path, miniature: miniature?.path, carrousel: images.map((m) => m.path), postes: nouveaux};
+    : {envoye: new Date().toISOString(), date: premiere, rang, statut: 'brouillon', commentaire: commentaire && !!pub.commentaire, video: video.path, miniature: miniature?.path, carrousel: images.map((m) => m.path), postes: nouveaux};
 fs.writeFileSync(journal, JSON.stringify(envoi, null, 2) + '\n');
 nouveaux.forEach((p) => console.log(`Brouillon : ${p.reseau} (${p.postId}), ${lisible(p.date!)}`));
 // --publier : le journal est écrit avant, pour qu'un échec en route ne laisse pas de brouillon orphelin.

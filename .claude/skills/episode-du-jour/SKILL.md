@@ -10,9 +10,9 @@ ci-dessous, jamais en posant une question.
 
 Deux épisodes par jour (`docs/reseaux.md`) :
 
-- **principal** (lancé vers 5 h) : le meilleur sujet de la nuit. Il passe partout, le
-  matin et à midi : LinkedIn 8 h 30, Threads 9 h, Instagram 12 h, TikTok 12 h 30,
-  YouTube 13 h, relance Threads 15 h 30.
+- **principal** (lancé vers 5 h) : le meilleur sujet de la nuit. Il passe partout, du matin
+  au début de soirée : LinkedIn 8 h 30, Threads 9 h, Instagram 12 h, TikTok 12 h 30,
+  relance Threads 15 h 30, YouTube 18 h.
 - **second** (lancé vers 14 h) : le meilleur sujet pas encore traité, annonces de la
   matinée et du début d'après-midi comprises. Il passe partout sauf LinkedIn, le soir :
   Instagram 18 h 30, TikTok 19 h, Threads 19 h 30, YouTube 20 h, relance Threads 21 h 30.

@@ -12,7 +12,7 @@ chiffres de Matou (`docs/apprentissages.md`).
 | --- | --- | --- | --- | --- | --- |
 | TikTok | vidéo | taux de vidéo regardée jusqu'au bout, revisionnages, partages, commentaires | 12 h 30 | 19 h 00 | 2 par jour |
 | Instagram | Reel (vidéo) | temps de visionnage, **envois en message privé**, puis likes et enregistrements | 12 h 00 | 18 h 30 | 2 par jour |
-| YouTube | Short (vidéo) | satisfaction et durée de session ; les Shorts vivent des semaines par la recherche | 13 h 00 | 20 h 00 | 2 par jour |
+| YouTube | Short (vidéo) | satisfaction et durée de session ; les Shorts vivent des semaines par la recherche | 18 h 00 (13 h 00 jusqu'au 09/11/2026) | 20 h 00 | 2 par jour |
 | LinkedIn (page) | **carrousel** (document à feuilleter) | temps passé sur le post, commentaires ; les liens freinent la portée | 8 h 30, en semaine | — | 1 par jour ouvré, au plus |
 | Threads | vidéo + texte de conversation, puis une **relance texte** | réponses, vite et en fil | 9 h 00, puis 15 h 30 | 19 h 30, puis 21 h 30 | 4 par jour |
 
@@ -20,9 +20,11 @@ Volume par jour (production, depuis le 30/10/2026) : **2 épisodes**, chacun pub
 la fenêtre qui suit sa production (décision du 30/10/2026) :
 
 - Le **principal** (produit vers 5 h, le meilleur sujet de la nuit) : LinkedIn les jours
-  ouvrés et Threads le matin, puis Instagram, TikTok et YouTube à midi, relance Threads
-  à 15 h 30. Le matin ne vaut que pour LinkedIn et Threads ; pour la vidéo courte, le
-  midi est la 2e fenêtre la plus citée.
+  ouvrés et Threads le matin, puis Instagram et TikTok à midi, relance Threads à 15 h 30,
+  YouTube à 18 h. Le matin ne vaut que pour LinkedIn et Threads ; pour la vidéo courte, le
+  midi est la 2e fenêtre la plus citée. YouTube passe à 18 h le 09/11/2026 : à 13 h, le
+  Short du principal fait une médiane de 122 vues contre 464 pour celui de 20 h, et le
+  plus tardif des deux gagne 7 jours sur 8 (`docs/bilans/analyse-metriques-2026-11-09.md`).
 - Le **second** (produit vers 14 h, jamais la même actu que le principal) : Instagram,
   TikTok, Threads et YouTube le soir, la 1re fenêtre de la vidéo courte, relance Threads
   à 21 h 30. Il attrape les annonces américaines de l'après-midi (heure de Paris) : l'actu

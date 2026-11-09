@@ -60,7 +60,7 @@ aux réponses de tous ; LinkedIn en carrousel (`post_as_images_carousel`).
   `brand/postiz.json` → `creneaux`), selon le **rang** de l'épisode :
   - principal (défaut, épisode du matin) : LinkedIn 8 h 30 en semaine (carrousel de
     `rendu/carrousel/`), Threads 9 h (vidéo) puis 15 h 30 (relance, texte seul),
-    Instagram 12 h, TikTok 12 h 30, YouTube 13 h ;
+    Instagram 12 h, TikTok 12 h 30, YouTube 18 h ;
   - second (`--rang second`, épisode du soir) : Instagram 18 h 30, TikTok 19 h, Threads
     19 h 30 puis 21 h 30 (relance), YouTube 20 h ; pas de LinkedIn (« réservé à
     l'épisode principal », c'est voulu : un seul post par jour ouvré).
