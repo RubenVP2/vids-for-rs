@@ -4,7 +4,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import {texteParle} from '../src/schema';
-import {budgetDe, dossierEpisode, lireEpisode} from './lib/episode';
+import {budgetDe, dossierEpisode, FRAICHEUR_MAX, fraicheur, jourParis, lireEpisode} from './lib/episode';
 import {normaliser} from './lib/alignement';
 import {controlerMontage, montage} from './lib/montage';
 
@@ -19,6 +19,17 @@ try {
   console.error(`ERREUR ${(e as Error).message}`);
   process.exit(1);
 }
+
+// Fraîcheur (même règle que npm run check) : le dire AVANT la voix et le rendu, pour changer de sujet.
+const age = fraicheur(dossier, episode);
+// Sortie passée = la vidéo est de l'histoire. Sinon (brouillon du jour, poste repoussé) la règle s'applique.
+const passe = age.selon === 'postiz-envoi.json' && age.parti && age.sortie < jourParis(new Date().toISOString());
+if (passe) {
+  // déjà publiée : la date est de l'histoire, la fraîcheur n'est plus un critère
+} else if (!Number.isFinite(age.jours)) erreurs.push(`Date de la source illisible (${episode.source.date}) : attendu AAAA-MM-JJ, date existante.`);
+else if (age.jours > FRAICHEUR_MAX)
+  erreurs.push(`Info trop vieille : source du ${episode.source.date}, sortie le ${age.sortie} (${age.jours} jours, max ${FRAICHEUR_MAX}). Prendre un sujet plus récent.`);
+else if (age.jours < 0) erreurs.push(`Date de la source (${episode.source.date}) dans le futur : vérifier source.md.`);
 
 const compter = (t: string) => texteParle(t).split(/\s+/).filter((w) => normaliser(w)).length;
 const mots = episode.scenes.reduce((n, s) => n + compter(s.texte), 0);

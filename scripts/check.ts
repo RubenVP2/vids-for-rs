@@ -1,10 +1,10 @@
 // Contrôle qualité APRÈS le rendu : la vidéo est-elle publiable ?
-// Usage : npm run check -- <épisode>
+// Usage : npm run check -- <épisode> [--date AAAA-MM-JJ]   (--date : jour de sortie prévu, comme npm run postiz)
 import {createHash} from 'node:crypto';
 import {execFileSync, spawnSync} from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-import {budgetDe, dossierEpisode, lireEpisode, lireTimings, nomEpisode} from './lib/episode';
+import {budgetDe, dossierEpisode, FRAICHEUR_MAX, fraicheur, jourParis, lireEpisode, lireTimings, nomEpisode} from './lib/episode';
 import {controler, numeroDe, reglages as gabarits} from './lib/gabarits';
 import {alerteTimbre, avertissements as avertVoix, defauts as defautsVoix, resume as resumeVoix} from './lib/qualite-voix';
 import {lireReglagesVoix} from './lib/reglages-voix';
@@ -12,11 +12,61 @@ import {lireReglagesVoix} from './lib/reglages-voix';
 const dossier = dossierEpisode(process.argv[2]);
 const nom = nomEpisode(dossier);
 const episode = lireEpisode(dossier);
-const timings = lireTimings(dossier);
 const ok: string[] = [];
 const ko: string[] = [];
 const verifier = (cond: boolean, bien: string, mal: string) => (cond ? ok : ko).push(cond ? bien : mal);
 
+// Fraîcheur : la vidéo affiche la date de la source (« article du 7 nov. ») ; trop vieille, l'info
+// ne passe plus pour l'actu du jour, même bien attribuée (#024 : source du 07/11, sortie le 09/11).
+const iDate = process.argv.indexOf('--date');
+const brut = iDate > 0 ? process.argv[iDate + 1] : undefined;
+const refus = (m: string): never => {
+  console.error(`ERREUR ${m}`);
+  process.exit(1);
+};
+if (iDate > 0 && (brut === undefined || brut.startsWith('--'))) refus('--date attend une date (AAAA-MM-JJ, heure tolérée).');
+// Format strict : une heure hors bornes (« T25:99 ») ou un fuseau (« +01:00 ») sont refusés plutôt
+// que relus de travers. Avec une heure, le jour est celui de Paris, pas celui du texte (#024).
+// Avec une heure, le fuseau doit être dit (`Z`) : sans lui, Node lirait l'heure locale de la machine.
+const FORMAT = /^(\d{4}-\d{2}-\d{2})(?:T([01]\d|2[0-3]):([0-5]\d)(?::([0-5]\d)(?:\.\d+)?)?Z)?$/;
+const mDate = brut === undefined ? null : FORMAT.exec(brut);
+if (brut !== undefined && !mDate) refus(`--date « ${brut} » : attendu AAAA-MM-JJ ou AAAA-MM-JJTHH:MM:SSZ.`);
+const dateSortie = !mDate ? undefined : mDate[2] === undefined ? mDate[1] : Number.isFinite(Date.parse(brut as string)) ? jourParis(brut as string) : 'invalide';
+// `toISOString` lève sur une date impossible : on éprouve le parse avant, comme dans episode.ts.
+const valide = (d: string) =>
+  /^\d{4}-\d{2}-\d{2}$/.test(d) && Number.isFinite(Date.parse(`${d}T00:00:00Z`)) && new Date(`${d}T00:00:00Z`).toISOString().startsWith(d);
+if (mDate && !valide(mDate[1])) refus(`--date « ${brut} » : attendu AAAA-MM-JJ, date existante.`);
+// Une date de sortie passée servirait à rajeunir artificiellement l'info : on ne l'accepte pas.
+if (dateSortie !== undefined && dateSortie < jourParis(new Date().toISOString()))
+  refus(`--date « ${brut} » : dans le passé (aujourd'hui ${jourParis(new Date().toISOString())}).`);
+const age = fraicheur(dossier, episode, dateSortie);
+// Passée, la sortie est de l'histoire ; sinon (brouillon du jour, poste repoussé à demain) la règle s'applique.
+const passe = age.selon === 'postiz-envoi.json' && age.parti && age.sortie < jourParis(new Date().toISOString());
+const ages = `source du ${episode.source.date}, sortie le ${age.sortie} (${age.selon}) : ${age.jours} jour(s)`;
+if (!Number.isFinite(age.jours)) ko.push(`Date de source illisible (« ${episode.source.date} ») : corriger source.date dans scenes.json`);
+else if (age.jours < 0) ko.push(`Date de la source dans le futur (${ages}) : vérifier source.date dans scenes.json et source.md`);
+else if (passe)
+  ok.push(`Info du ${episode.source.date}, déjà envoyée le ${age.sortie} (${age.jours} jour(s)) : rien à bloquer`);
+else
+  verifier(
+    age.jours <= FRAICHEUR_MAX,
+    `Info fraîche (${ages}, max ${FRAICHEUR_MAX})`,
+    `Info trop vieille pour l'actu du jour (${ages}, max ${FRAICHEUR_MAX}) : prendre un sujet plus récent, ou ne publier qu'après relecture humaine`,
+  );
+
+const timings = (() => {
+  try {
+    return lireTimings(dossier);
+  } catch {
+    return undefined;
+  }
+})();
+// Un épisode ancien n'a pas toutes les mesures : on le dit et on s'arrête, plutôt que de planter
+// sur un ZodError qui cacherait le reste du rapport (et le KO de fraîcheur).
+if (!timings) {
+  ko.push(`timings.json illisible ou incomplet (format antérieur) : relancer npm run voice -- ${nom}`);
+  fin();
+}
 const mp4 = path.join(dossier, 'rendu', `${nom}.mp4`);
 const png = path.join(dossier, 'rendu', `${nom}-miniature.png`);
 verifier(fs.existsSync(mp4), 'Vidéo rendue', `Vidéo absente (${path.relative(dossier, mp4)}) : lancer npm run render`);
@@ -135,7 +185,11 @@ if (!fs.existsSync(pub)) {
   }
 }
 
-ok.forEach((m) => console.log(`OK  ${m}`));
-ko.forEach((m) => console.log(`KO  ${m}`));
-console.log(ko.length ? `\n${ko.length} point(s) à corriger avant publication.` : '\nPrêt pour la relecture humaine.');
-process.exit(ko.length ? 1 : 0);
+fin();
+
+function fin(): never {
+  ok.forEach((m) => console.log(`OK  ${m}`));
+  ko.forEach((m) => console.log(`KO  ${m}`));
+  console.log(ko.length ? `\n${ko.length} point(s) à corriger avant publication.` : '\nPrêt pour la relecture humaine.');
+  process.exit(ko.length ? 1 : 0);
+}

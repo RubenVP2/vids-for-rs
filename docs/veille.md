@@ -33,7 +33,9 @@ lancer.sh episode-du-jour <rang>
 
 **Seuil : 35.** Au-dessus : l'actu du jour. En dessous, la réserve dans l'ordre des
 scores : sujets du jour entre 25 et 35, puis les bons sujets des 7 derniers jours non
-choisis (`veille/reserve.json`, rempli et purgé par le script). Plus rien : le premier de
+choisis (`veille/reserve.json`, rempli et purgé par le script). Passé `FRAICHEUR_MAX` (2 jours),
+un sujet n'est plus candidat : il ne partirait pas (`check.ts` le refuserait), donc il ne
+reste que la trace, pas le choix. Plus rien : le premier de
 `docs/sujets.md` (liste à la main), sinon pas d'épisode.
 
 ## Le veto de l'agent
@@ -46,7 +48,10 @@ l'ordre du classement.
 ## Contrôler, régler
 
 - `npm run veille -- --rejouer veille/<fichier>.json` reclasse les articles gelés du
-  fichier et dit si le classement est identique.
+  fichier et dit si le classement **et** la liste des candidats (donc le filtre de fraîcheur)
+  sont identiques. Les passages d'avant le 09/11/2026 ne gardent pas la réserve : le rejeu
+  le signale et ne compare que le classement (code de sortie 2 : rejeu partiel, pas un succès).
+  Un fichier `.md` n'est pas rejouable : passer le `.json` du même passage.
 - Un flux qui ne répond pas est listé dans « Flux en échec » ; le classement se fait
   avec les autres.
 - Régler : changer un poids ou un flux dans `brand/veille.json` (le bilan du lundi

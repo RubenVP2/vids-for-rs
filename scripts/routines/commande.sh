@@ -75,6 +75,21 @@ elif [ -f "${dossier}urgent.json" ] && [ ! -f "${dossier}postiz-envoi.json" ]; t
   # La vidéo n'est pas versionnée : elle est restée dans le clone des routines.
   [ -d "$DEPOT/${dossier}rendu" ] || { echo "Vidéo de #$numero absente du Pi ($DEPOT/${dossier}rendu)."; exit 1; }
   ln -s "$DEPOT/${dossier}rendu" "${dossier}rendu"
+  # Un urgent publié sans contrôle serait le seul chemin qui échappe au garde-fou de fraîcheur.
+  # Preuve positive seulement : la fraîcheur doit être constatée OK. Un check qui plante, une date
+  # illisible ou une source dans le futur ne laissent pas publier non plus.
+  controle="$(npm run -s check -- "$numero" 2>&1)" || true
+  if ! grep -qE '^OK  Info fraîche' <<<"$controle"; then
+    rm -f "${dossier}rendu"
+    raison="$(grep -m1 -E '^KO  .*(Info|Date)' <<<"$controle" | sed 's/^KO  //')"
+    if [ -n "$raison" ]; then
+      echo "Refusé : $raison"
+    else
+      echo "Refusé : contrôle de fraîcheur impossible, npm run check n'a pas répondu"
+      tail -3 <<<"$controle"
+    fi
+    exit 1
+  fi
   [ -n "$reseaux" ] || reseaux="$(node -e 'const u = require(process.argv[1]); process.stdout.write((u.reseaux ?? []).join(","))' "$PWD/${dossier}urgent.json")"
   sortie="$(npm run -s postiz -- "$numero" --rang urgent --commentaire --envoyer --publier ${reseaux:+--reseaux "$reseaux"} 2>&1)"; code=$?
   rm -f "${dossier}rendu"

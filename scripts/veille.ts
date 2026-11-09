@@ -7,7 +7,7 @@
 // La dernière ligne est toujours « CHOIX: <id> <url> » ou « CHOIX: aucun ».
 import fs from 'node:fs';
 import path from 'node:path';
-import {EPISODES, RACINE} from './lib/episode';
+import {EPISODES, FRAICHEUR_MAX, RACINE} from './lib/episode';
 
 type Flux = {nom: string; type: 'officiel' | 'media' | 'agregateur'; url: string; filtre?: boolean};
 type Config = {
@@ -27,6 +27,9 @@ type Candidat = {id: string; titre: string; url: string; score: number; origine:
 type Passage = {
   genere: string; rang: string; maintenant: string; erreurs: string[]; articles: Article[]; tendances: string[];
   sujets: Sujet[]; candidats: Candidat[]; ecartes: {id: string; raison: string}[]; choix: string | null;
+  /** Réserve au moment du passage : sans elle, le rejeu ne peut pas reconstituer les candidats (
+   *  les passages antérieurs au 09/11/2026 ne l'ont pas). */
+  reserve?: Reserve;
 };
 type Reserve = {titre: string; url: string; date: string; score: number; ajoute: string}[];
 
@@ -38,6 +41,9 @@ const HEURE = 3_600_000;
 const args = process.argv.slice(2);
 const option = (nom: string) => (args.includes(nom) ? args[args.indexOf(nom) + 1] : undefined);
 const jourParis = (t: number) => new Intl.DateTimeFormat('en-CA', {timeZone: 'Europe/Paris'}).format(new Date(t));
+/** Âge en jours d'un article (date de publication ISO), jours de Paris. */
+const ageJours = (iso: string, maintenant: number) =>
+  Math.round((Date.parse(jourParis(maintenant)) - Date.parse(jourParis(Date.parse(iso)))) / 86_400_000);
 
 // --- Texte : décodage, mots, entreprises ---------------------------------------------------------
 
@@ -252,14 +258,19 @@ const classer = (articles: Article[], tendances: string[], rang: string, mainten
 const lireReserve = (): Reserve => (fs.existsSync(RESERVE) ? JSON.parse(fs.readFileSync(RESERVE, 'utf8')) : []);
 
 /** Ordre fixe : l'actu au-dessus du seuil, puis la réserve (meilleur score d'abord) : les bons
- *  sujets des 7 derniers jours, dont ceux du jour qui passent seulement le seuil de réserve. */
-const candidats = (sujets: Sujet[], reserve: Reserve): Candidat[] => {
+ *  sujets des jours passés encore dans la fenêtre de fraîcheur, dont ceux du jour qui ne passent
+ *  que le seuil de réserve. */
+const candidats = (sujets: Sujet[], reserve: Reserve, maintenant: number): Candidat[] => {
   const enCandidat = (s: Sujet, origine: Candidat['origine']) => ({id: s.id, titre: s.titre, url: s.url, score: s.score, origine});
+  // Une info de plus de FRAICHEUR_MAX jours ne peut plus être proposée : check.ts la refuserait à
+  // l'envoi (la vidéo affiche la date de la source). Mieux vaut zéro candidat qu'un sujet périmé.
+  // Repère = l'heure de la veille, pas l'horloge : un rejeu doit donner le même classement.
+  const frais = (d: string) => ageJours(d, maintenant) <= FRAICHEUR_MAX;
   const actu = sujets.filter((s) => !s.exclu && s.score >= CONFIG.seuil).map((s) => enCandidat(s, 'actu'));
-  const faibles = sujets.filter((s) => !s.exclu && s.score < CONFIG.seuil && s.score >= CONFIG.seuilReserve).map((s) => enCandidat(s, 'reserve'));
+  const faibles = sujets.filter((s) => !s.exclu && s.score < CONFIG.seuil && s.score >= CONFIG.seuilReserve && frais(s.date)).map((s) => enCandidat(s, 'reserve'));
   const pris = new Set(sujets.map((s) => urlPropre(s.url)));
   const traites = new Set(dejaTraites().map((t) => t.url));
-  const res = reserve.filter((r) => !pris.has(urlPropre(r.url)) && !traites.has(urlPropre(r.url)))
+  const res = reserve.filter((r) => frais(r.date) && !pris.has(urlPropre(r.url)) && !traites.has(urlPropre(r.url)))
     .map((r, i) => ({id: `R${String(i + 1).padStart(2, '0')}`, titre: r.titre, url: r.url, score: r.score, origine: 'reserve' as const}));
   const repli = [...faibles, ...res].sort((a, b) => b.score - a.score || a.url.localeCompare(b.url));
   return [...actu, ...repli];
@@ -323,11 +334,27 @@ const ecrire = (p: Passage, fichier: string) => {
 
 const rejouer = option('--rejouer');
 if (rejouer) {
+  if (!rejouer.endsWith('.json')) {
+    console.error(`--rejouer attend le .json d'un passage (${rejouer} : la version .md est pour la lecture).`);
+    process.exit(1);
+  }
   const avant: Passage = JSON.parse(fs.readFileSync(rejouer, 'utf8'));
-  const sujets = classer(avant.articles, avant.tendances, avant.rang, Date.parse(avant.maintenant));
-  const memes = JSON.stringify(sujets.map((s) => [s.id, s.url, s.score])) === JSON.stringify(avant.sujets.map((s) => [s.id, s.url, s.score]));
-  console.log(memes ? 'Classement identique : la veille est reproductible.' : 'Classement différent (poids, épisodes ou code modifiés depuis).');
-  process.exit(memes ? 0 : 1);
+  const instant = Date.parse(avant.maintenant);
+  const sujets = classer(avant.articles, avant.tendances, avant.rang, instant);
+  // Le filtre de fraîcheur fait partie du passage : on le rejoue aussi, sinon il n'est jamais éprouvé.
+  // Sans réserve enregistrée (passages d'avant le 09/11/2026), la comparer à celle d'aujourd'hui
+  // ne prouverait rien : on le dit au lieu de crier à la différence.
+  const cands = avant.reserve ? candidats(sujets, avant.reserve, instant) : undefined;
+  const pareil = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b);
+  const classement = pareil(sujets.map((s) => [s.id, s.url, s.score]), avant.sujets.map((s) => [s.id, s.url, s.score]));
+  const candidatures = cands ? pareil(cands.map((c) => c.id), avant.candidats.map((c) => c.id)) : undefined;
+  console.log(classement ? 'Classement identique.' : 'Classement différent (poids, épisodes ou code modifiés depuis).');
+  if (!cands || candidatures === undefined) console.log('Candidats non rejouables : ce passage ne garde pas la réserve. Rejeu partiel.');
+  else if (candidatures) console.log(`Candidats identiques (${cands.length}) : le filtre de fraîcheur rejoue à l'identique.`);
+  else console.log(`Candidats différents : ${cands.map((c) => c.id).join(', ') || 'aucun'} au lieu de ${avant.candidats.map((c) => c.id).join(', ') || 'aucun'}.`);
+  // Rejeu partiel (réserve absente) : le filtre n'a pas été éprouvé, on ne le fait pas passer pour un succès.
+  if (candidatures === undefined) process.exit(classement ? 2 : 1);
+  process.exit(classement && candidatures ? 0 : 1);
 }
 
 const rang = option('--rang') ?? 'principal';
@@ -349,9 +376,10 @@ if (ecarter) {
   const {articles, erreurs, tendances} = await collecter(maintenant);
   const presse = articles.filter((a) => a.type !== 'hn' && a.type !== 'reddit').length;
   const sujets = classer(articles, tendances, rang, maintenant);
-  const p: Passage = {genere: new Date().toISOString(), rang, maintenant: new Date(maintenant).toISOString(), erreurs, articles, tendances, sujets, candidats: [], ecartes: [], choix: null};
+  const reserve = lireReserve();
+  const p: Passage = {genere: new Date().toISOString(), rang, maintenant: new Date(maintenant).toISOString(), erreurs, articles, tendances, sujets, candidats: [], ecartes: [], choix: null, reserve};
   if (presse === 0) erreurs.push('aucun article de presse : collecte impossible, seule la réserve est proposée');
-  p.candidats = candidats(sujets, lireReserve());
+  p.candidats = candidats(sujets, reserve, maintenant);
   p.choix = choisir(p);
   ecrire(p, path.join(DOSSIER, `${jourParis(maintenant)}-${rang}.json`));
   majReserve(p, maintenant);

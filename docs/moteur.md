@@ -27,11 +27,11 @@ Playwright s'il est installé (`/opt/pw-browsers`), sinon le Chromium du systèm
 
 | Commande | Fait |
 | --- | --- |
-| `npm run validate -- NNN` | schéma, longueur, rituels, chiffres absents de la source |
+| `npm run validate -- NNN` | schéma, longueur, rituels, chiffres absents de la source, fraîcheur de l'info |
 | `npm run voice -- NNN [--force]` | voix + minutage des mots + enveloppe de la bouche |
 | `npm run render -- NNN [--brouillon]` | MP4 1080×1920 normalisé −14 LUFS + miniature PNG |
 | `npm run stills -- NNN` | une image de contrôle par scène, interface des réseaux par-dessus |
-| `npm run check -- NNN` | contrôle final : durée, format, volume, voix, publication |
+| `npm run check -- NNN [--date AAAA-MM-JJ]` | contrôle final : fraîcheur, durée, format, volume, voix, publication |
 | `npm run postiz -- NNN [--envoyer \| --programmer]` | aperçu (`postiz.json`, charge utile de `postiz posts:create --json`), puis brouillons et programmation par la CLI (skill `programmation`) |
 | `npm run postiz -- --canaux` | comptes connectés à Postiz et règles de chaque réseau |
 | `npm run bilan [-- --jours 30]` | chiffres Postiz de chaque épisode envoyé (écrit `stats.json`) et des comptes |
@@ -100,6 +100,20 @@ même fichier, avec un modèle qui clone une voix à partir d'un extrait
 - `Episode.tsx` : chaque scène commence 4 images avant son premier mot et dure jusqu'à
   la scène suivante. La durée totale = voix + 1,4 s. Matou, les sous-titres et l'en-tête
   vivent au-dessus des scènes.
+- Date affichée (en-tête, étiquette du hook, pied du carrousel) : toujours celle de la
+  **source**, rattachée à elle par `dateSource` (`EnTete.tsx`) : « article du 7 nov. 2026 »,
+  jamais une date seule. La vidéo ne montre pas sa date de sortie : le réseau l'affiche, et
+  elle n'est connue qu'à l'envoi. **Fraîcheur** : la source a au plus `FRAICHEUR_MAX` = 2 jours
+  calendaires (heure de Paris) le jour où la vidéo sort (`scripts/lib/episode.ts`) ; au-delà,
+  `validate` et `check` refusent — mais seulement tant que la sortie est devant : dès que la date
+  d'envoi du journal est passée, la vidéo est de l'histoire et n'est plus bloquée (sinon un épisode
+  déjà publié serait refusé à chaque relecture). Jour de sortie :
+  `postiz-envoi.json` s'il existe, sinon `--date` (`check`), sinon aujourd'hui (Postiz publie
+  le jour même). Ce jour est la **dernière** date programmée du journal (postes compris), pas
+  sa ligne `date` : un brouillon du 9 repoussé au 12 vaut le 12. Un journal resté en
+  Seul un journal `programmé` compte : un `brouillon`, un statut inconnu ou une date illisible (mois 13, 30 février) ne prouvent aucun départ, et le garde-fou s'applique alors comme si le journal n'existait pas.
+  La branche urgente de `commande.sh` (« ok #NNN ») lance `check` avant de publier et refuse
+  sur « Info trop vieille » : c'est le seul chemin qui n'écrit pas de brouillon d'abord.
 - `schema.ts` : schéma Zod de `scenes.json` et `timings.json`, vérifié par `validate`,
   par Remotion Studio et au rendu.
 - Ajouter un type de scène : l'ajouter au schéma, écrire son composant dans

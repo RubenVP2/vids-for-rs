@@ -4,9 +4,10 @@ import type {Episode} from '../schema';
 import {AXES_TEXTE, C, POLICE_TEXTE, POLICE_TITRE, tokens} from '../theme';
 
 const MOIS = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'];
+/** « 7 nov. 2026 » ; ne devine rien : une date ISO datée-heure est ramenée au jour, une date illisible le dit. */
 export const dateCourte = (iso: string) => {
-  const [a, m, j] = iso.split('-').map(Number);
-  return `${j} ${MOIS[m - 1]} ${a}`;
+  const [, a, m, j] = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso) ?? [];
+  return MOIS[Number(m) - 1] ? `${Number(j)} ${MOIS[Number(m) - 1]} ${Number(a)}` : 'date non vérifiée';
 };
 export const numeroEpisode = (n: number) => `#${String(n).padStart(3, '0')}`;
 const TYPES: Record<Episode['source']['type'], string> = {
@@ -17,6 +18,14 @@ const TYPES: Record<Episode['source']['type'], string> = {
   video: 'vidéo',
   post: 'post',
 };
+/**
+ * « article du 7 nov. 2026 » : la date est rattachée à la source, pas à la vidéo. Seule,
+ * « 7 nov. » se lisait comme la date du jour sur une vidéo publiée le 9 (#024).
+ */
+export const dateSource = (source: Episode['source']) =>
+  /^\d{4}-\d{2}-\d{2}/.test(source.date)
+    ? `${TYPES[source.type]} du ${dateCourte(source.date)}`
+    : `${TYPES[source.type]}, date non vérifiée`;
 
 // En-tête : numéro d'épisode, Hype-mètre à venir, et la source (règle : toujours citer).
 // Il descend après le hook (`apparition`) et remonte pour la fin (`fin`) : la 1re et la
@@ -93,13 +102,14 @@ export const EnTete: React.FC<{episode: Episode; apparition?: number; verdict?: 
           opacity: 0.85,
           textAlign: 'right',
           lineHeight: 1.1,
-          whiteSpace: 'nowrap',
+          maxWidth: 760,
+          flexShrink: 1,
         }}
       >
         Source : {episode.source.nom}
         <br />
         <span style={{fontSize: 26, opacity: 0.8}}>
-          {TYPES[episode.source.type]} · {dateCourte(episode.source.date)}
+          {dateSource(episode.source)}
         </span>
       </div>
     </div>
