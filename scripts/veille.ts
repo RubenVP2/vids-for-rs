@@ -334,7 +334,10 @@ const ecrire = (p: Passage, fichier: string) => {
 
 const rejouer = option('--rejouer');
 if (rejouer) {
-  if (!rejouer.endsWith('.json')) throw new Error(`--rejouer attend le .json d'un passage (${rejouer} : la version .md est pour la lecture).`);
+  if (!rejouer.endsWith('.json')) {
+    console.error(`--rejouer attend le .json d'un passage (${rejouer} : la version .md est pour la lecture).`);
+    process.exit(1);
+  }
   const avant: Passage = JSON.parse(fs.readFileSync(rejouer, 'utf8'));
   const instant = Date.parse(avant.maintenant);
   const sujets = classer(avant.articles, avant.tendances, avant.rang, instant);

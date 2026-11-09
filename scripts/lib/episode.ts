@@ -77,13 +77,22 @@ const sortiePrevue = (fichier: string): Sortie | undefined => {
   try {
     const e = JSON.parse(fs.readFileSync(fichier, 'utf8')) as Envoi;
     const auj = jourParis(new Date().toISOString());
-    const postes = (e.postes ?? []).filter((p) => dateLisible(p.date)).map((p) => ({jour: jourParis(p.date as string), parti: p.statut === 'programmé'}));
+    // Un poste mal daté hérite de la date du journal ; un poste sans date ni statut (vieux journaux)
+    // hérite du statut du journal. Un poste daté mais sans statut est tenu pour en attente.
+    const postes = (e.postes ?? []).map((p) => {
+      const statut = p.statut ?? (p.date ? undefined : e.statut);
+      const date = p.date ?? e.date;
+      return {jour: dateLisible(date) ? jourParis(date) : auj, parti: statut === 'programmé'};
+    });
     const attente = postes.filter((p) => !p.parti).map((p) => p.jour);
     if (attente.length) return {sortie: [...attente, auj].sort().at(-1) as string, parti: false};
-    const partis = postes.filter((p) => p.parti).map((p) => p.jour);
-    if (partis.length) return {sortie: partis.sort().at(-1) as string, parti: true};
-    // Journal muet sur ses postes : seule sa propre ligne compte, et seulement si elle dit « programmé ».
-    if (e.statut === 'programmé' && dateLisible(e.date)) return {sortie: jourParis(e.date), parti: true};
+    if (postes.length) return {sortie: postes.map((p) => p.jour).sort().at(-1) as string, parti: true};
+    // Journal muet sur ses postes : sa propre ligne compte. « programmé » et passé = parti ; sinon on
+    // retient sa date (au moins aujourd'hui), comme un brouillon qui attend son tour.
+    if (dateLisible(e.date)) {
+      const jour = jourParis(e.date);
+      return e.statut === 'programmé' ? {sortie: jour, parti: true} : {sortie: [jour, auj].sort().at(-1) as string, parti: false};
+    }
     return undefined;
   } catch {
     return undefined;
