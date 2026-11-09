@@ -1,5 +1,5 @@
 {
-  "maj": "2026-11-09T09:40:37.561Z",
+  "maj": "2026-11-09T20:15:16.755Z",
   "jours": 30,
   "date": "2026-11-08T17:30:00.000Z",
   "rang": "second",
@@ -16,7 +16,7 @@
       "gabarit": "question",
       "stats": {
         "Views": 114,
-        "Reach": 103,
+        "Reach": 104,
         "Saves": 0,
         "Likes": 1,
         "Comments": 1,
@@ -34,7 +34,7 @@
       "manquant": false,
       "gabarit": "camp",
       "stats": {
-        "Views": 243,
+        "Views": 245,
         "Likes": 0,
         "Comments": 0,
         "Shares": 0
@@ -69,7 +69,7 @@
       "manquant": false,
       "gabarit": "nom-fait",
       "stats": {
-        "Views": 752,
+        "Views": 744,
         "Likes": 2,
         "Comments": 0,
         "Favorites": 0

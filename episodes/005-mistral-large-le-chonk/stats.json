@@ -1,5 +1,5 @@
 {
-  "maj": "2026-11-09T09:38:41.916Z",
+  "maj": "2026-11-09T20:14:29.750Z",
   "jours": 30,
   "date": "2026-10-30T11:00:00.000Z",
   "rang": "second",
@@ -33,7 +33,7 @@
       "manquant": false,
       "gabarit": null,
       "stats": {
-        "Views": 273,
+        "Views": 274,
         "Likes": 6,
         "Comments": 1,
         "Shares": 0

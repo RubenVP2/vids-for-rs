@@ -1,5 +1,5 @@
 {
-  "maj": "2026-11-09T09:40:40.127Z",
+  "maj": "2026-11-09T20:15:20.142Z",
   "jours": 30,
   "date": "2026-11-09T07:30:00.000Z",
   "rang": "principal",
@@ -30,7 +30,7 @@
       "manquant": false,
       "gabarit": "avis",
       "stats": {
-        "Views": 0,
+        "Views": 6,
         "Likes": 0,
         "Replies": 1,
         "Reposts": 0,
@@ -43,11 +43,18 @@
       "integration": "cmvsaogt206kfor1cddnosuhf",
       "date": "2026-11-09T11:00:00.000Z",
       "statut": "programmé",
-      "etat": "QUEUE",
-      "url": null,
+      "etat": "PUBLISHED",
+      "url": "https://www.instagram.com/reel/DfhLTxMGbMM/",
       "manquant": false,
       "gabarit": "question",
-      "stats": {}
+      "stats": {
+        "Views": 156,
+        "Reach": 128,
+        "Saves": 0,
+        "Likes": 0,
+        "Comments": 1,
+        "Shares": 0
+      }
     },
     {
       "reseau": "tiktok",
@@ -55,11 +62,16 @@
       "integration": "cmvsakeo602wupg1crmgz7g9n",
       "date": "2026-11-09T11:30:00.000Z",
       "statut": "programmé",
-      "etat": "QUEUE",
-      "url": null,
+      "etat": "PUBLISHED",
+      "url": "https://www.tiktok.com/@matou_ai",
       "manquant": false,
       "gabarit": "camp",
-      "stats": {}
+      "stats": {
+        "Views": 265,
+        "Likes": 0,
+        "Comments": 0,
+        "Shares": 0
+      }
     },
     {
       "reseau": "youtube",
@@ -67,11 +79,16 @@
       "integration": "cmvsb3xwh07l1or1cvp01pod9",
       "date": "2026-11-09T12:00:00.000Z",
       "statut": "programmé",
-      "etat": "QUEUE",
-      "url": null,
+      "etat": "PUBLISHED",
+      "url": "https://www.youtube.com/watch?v=VPPduBUd-lQ",
       "manquant": false,
       "gabarit": "nom-fait",
-      "stats": {}
+      "stats": {
+        "Views": 53,
+        "Likes": 2,
+        "Comments": 0,
+        "Favorites": 0
+      }
     },
     {
       "reseau": "threads-relance",
@@ -79,11 +96,17 @@
       "integration": "cmvsb2y1q03efpg1c3j45vgui",
       "date": "2026-11-09T14:30:00.000Z",
       "statut": "programmé",
-      "etat": "QUEUE",
-      "url": null,
+      "etat": "PUBLISHED",
+      "url": "https://www.threads.com/@matou_ai/post/DfhjNJDkfsN",
       "manquant": false,
       "gabarit": "dilemme",
-      "stats": {}
+      "stats": {
+        "Views": 2,
+        "Likes": 0,
+        "Replies": 0,
+        "Reposts": 0,
+        "Quotes": 0
+      }
     }
   ]
 }

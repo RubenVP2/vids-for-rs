@@ -1,0 +1,96 @@
+{
+  "maj": "2026-11-09T20:15:22.377Z",
+  "jours": 30,
+  "date": "2026-11-09T17:30:00.000Z",
+  "rang": "second",
+  "postes": [
+    {
+      "reseau": "instagram",
+      "postId": "cmw9bqnhd053qp607st4vsee9",
+      "integration": "cmvsaogt206kfor1cddnosuhf",
+      "date": "2026-11-09T17:30:00.000Z",
+      "statut": "programmé",
+      "commentaire": true,
+      "etat": "PUBLISHED",
+      "url": "https://www.instagram.com/reel/Dfh3x2IDYM1/",
+      "manquant": false,
+      "gabarit": "chiffre",
+      "stats": {
+        "Views": 81,
+        "Reach": 71,
+        "Saves": 0,
+        "Likes": 0,
+        "Comments": 1,
+        "Shares": 0
+      }
+    },
+    {
+      "reseau": "tiktok",
+      "postId": "cmw9bqo6r0534nv07ma317s5j",
+      "integration": "cmvsakeo602wupg1crmgz7g9n",
+      "date": "2026-11-09T18:00:00.000Z",
+      "statut": "programmé",
+      "commentaire": false,
+      "etat": "PUBLISHED",
+      "url": "https://www.tiktok.com/@matou_ai",
+      "manquant": false,
+      "gabarit": "note",
+      "stats": {
+        "Views": 118,
+        "Likes": 1,
+        "Comments": 0,
+        "Shares": 0
+      }
+    },
+    {
+      "reseau": "threads",
+      "postId": "cmw9bqow10541p607o5gzn2l5",
+      "integration": "cmvsb2y1q03efpg1c3j45vgui",
+      "date": "2026-11-09T18:30:00.000Z",
+      "statut": "programmé",
+      "commentaire": true,
+      "etat": "PUBLISHED",
+      "url": "https://www.threads.com/@matou_ai/post/Dfh-okRA7Gy",
+      "manquant": false,
+      "gabarit": "pari",
+      "stats": {
+        "Views": 21,
+        "Likes": 0,
+        "Replies": 1,
+        "Reposts": 0,
+        "Quotes": 0
+      }
+    },
+    {
+      "reseau": "youtube",
+      "postId": "cmw9bqplv0539nv07dh8oi5xf",
+      "integration": "cmvsb3xwh07l1or1cvp01pod9",
+      "date": "2026-11-09T19:00:00.000Z",
+      "statut": "programmé",
+      "commentaire": true,
+      "etat": "PUBLISHED",
+      "url": "https://www.youtube.com/watch?v=OnKKDMQ-z9E",
+      "manquant": false,
+      "gabarit": "pourquoi",
+      "stats": {
+        "Views": 0,
+        "Likes": 0,
+        "Comments": 0,
+        "Favorites": 0
+      }
+    },
+    {
+      "reseau": "threads-relance",
+      "postId": "cmw9bqqar053fnv07rficxrav",
+      "integration": "cmvsb2y1q03efpg1c3j45vgui",
+      "date": "2026-11-09T20:30:00.000Z",
+      "statut": "programmé",
+      "commentaire": false,
+      "etat": "QUEUE",
+      "url": null,
+      "manquant": false,
+      "gabarit": "vecu",
+      "stats": {}
+    }
+  ]
+}
