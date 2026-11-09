@@ -38,9 +38,9 @@ n'est estimé : tout sort des fichiers, par les commandes indiquées.
    sur 8** (test du signe : p = 0,035 unilatéral, 0,07 bilatéral).
 3. **Instagram ne dépend pas de l'heure** : 131 vues à 12 h, 127 à 18 h 30 (médianes, 10 et
    9 posts). TikTok non plus : 254 et 254.
-4. **21 des 23 « commentaires » Instagram, 23 des 24 réponses Threads et 8 des 9
+4. **21 des 23 « commentaires » Instagram, 22 des 24 réponses Threads et 8 des 9
    commentaires LinkedIn sont le nôtre** (le commentaire de sources). Commentaires du public,
-   tous réseaux : **16 sur 117 posts**.
+   tous réseaux : **17 sur 117 posts**.
 ### Correction après revue (09/11/2026)
 
 La première version de cette analyse déduisait la présence du commentaire de sources de
@@ -48,8 +48,9 @@ La première version de cette analyse déduisait la présence du commentaire de 
 (aperçu, rattrapage), trois épisodes n'y figuraient plus et un commentaire du public y passait
 pour le nôtre. Le calcul s'appuie désormais sur `postiz-envoi.json` (qui survit au rattrapage),
 complété par `postiz.json`, et `postiz.ts` y écrit un drapeau `commentaire` pour les envois
-futurs. Résultat : **16 commentaires du public**, et les trois réseaux concernés passent à
-21 sur 23 (Instagram), 23 sur 24 (Threads), 8 sur 9 (LinkedIn).
+futurs. Résultat : **17 commentaires du public**, et les trois réseaux concernés passent à
+21 sur 23 (Instagram), 22 sur 24 (Threads), 8 sur 9 (LinkedIn). Le drapeau est posé par poste :
+un envoi sans `--commentaire` n'est plus compté comme s'il en avait un.
 
 5. **Le score de veille ne prédit pas les vues** : ρ = 0,15 sur YouTube (14 posts), −0,07 sur
    Instagram (15). #016 (score 47) : 24 vues YouTube ; #021 et #023 (score 35, le seuil) :

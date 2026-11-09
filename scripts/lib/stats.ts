@@ -7,9 +7,9 @@ import {EPISODES, RACINE} from './episode';
 
 /**
  * Le commentaire de sources (2e élément du post, `--commentaire` de npm run postiz) est compté
- * par Postiz comme un commentaire du public sur ces réseaux : chaque post qui le porte affiche
- * exactement 1, alors qu'il n'en a pas (relevé du 09/11/2026 : 21 commentaires Instagram sur 23,
- * 23 Threads sur 24, 8 LinkedIn sur 9). Sur YouTube, il ne l'est pas (0 sur 19). On le retire
+ * par Postiz comme un commentaire du public sur ces réseaux : chaque post qui le porte en affiche
+ * au moins un, alors qu'il n'en a pas (relevé du 09/11/2026 : 21 commentaires Instagram sur 23,
+ * 22 Threads sur 24, 8 LinkedIn sur 9). Sur YouTube, il ne l'est pas (0 sur 19). On le retire
  * pour mesurer les vrais commentaires.
  */
 export const COMPTE_SOURCE = new Set(['instagram', 'threads', 'linkedin']);
@@ -22,21 +22,20 @@ type Groupe = {posts: {integration: {id: string}; value: unknown[]}[]};
 
 /**
  * Les intégrations dont le post portait un commentaire de sources.
- * `postiz-envoi.json` fait foi (il survit au rattrapage et liste les réseaux réellement envoyés) ;
- * `postiz.json` n'est qu'un complément, car `postiz.ts` le réécrit à chaque envoi (aperçu, rattrapage).
- * Les épisodes antérieurs au drapeau `commentaire` sont déduits de `publication.md` : si la section
- * « Commentaire à épingler » existe et qu'aucun des deux journaux ne couvre ce réseau, on considère
- * que le commentaire a été posté (postiz.ts l'inclut partout sauf TikTok quand `--commentaire` est passé).
+ * `postiz-envoi.json` fait foi : il survit au rattrapage et porte `commentaire` par poste (les envois
+ * antérieurs au drapeau sont déduits de `publication.md` via `prevu`). `postiz.json` n'est qu'un
+ * complément, car `postiz.ts` le réécrit à chaque envoi (aperçu, rattrapage).
  */
 export const sourcesPostees = (dossier: string, prevu: boolean) => {
   const ids = new Set<string>();
   const couverts = new Set<string>();
   try {
-    const envoi = lire<{commentaire?: boolean; postes?: {reseau: string; integration?: string}[]}>(path.join(dossier, 'postiz-envoi.json'));
-    if (envoi?.postes?.length && envoi.commentaire !== false) {
+    const envoi = lire<{commentaire?: boolean; postes?: {reseau: string; integration?: string; commentaire?: boolean}[]}>(path.join(dossier, 'postiz-envoi.json'));
+    if (envoi?.postes?.length) {
+      const defaut = envoi.commentaire ?? prevu;
       for (const p of envoi.postes) {
         couverts.add(p.reseau);
-        if (COMPTE_SOURCE.has(p.reseau) && p.integration) ids.add(p.integration);
+        if (COMPTE_SOURCE.has(p.reseau) && (p.commentaire ?? defaut) && p.integration) ids.add(p.integration);
       }
     }
   } catch {
