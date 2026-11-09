@@ -75,6 +75,13 @@ elif [ -f "${dossier}urgent.json" ] && [ ! -f "${dossier}postiz-envoi.json" ]; t
   # La vidéo n'est pas versionnée : elle est restée dans le clone des routines.
   [ -d "$DEPOT/${dossier}rendu" ] || { echo "Vidéo de #$numero absente du Pi ($DEPOT/${dossier}rendu)."; exit 1; }
   ln -s "$DEPOT/${dossier}rendu" "${dossier}rendu"
+  # Un urgent publié sans contrôle serait le seul chemin qui échappe au garde-fou de fraîcheur.
+  controle="$(npm run -s check -- "$numero" 2>&1)" || true
+  if grep -q "Info trop vieille" <<<"$controle"; then
+    rm -f "${dossier}rendu"
+    echo "Refusé : $(grep -m1 "Info trop vieille" <<<"$controle" | sed 's/^KO  //')"
+    exit 1
+  fi
   [ -n "$reseaux" ] || reseaux="$(node -e 'const u = require(process.argv[1]); process.stdout.write((u.reseaux ?? []).join(","))' "$PWD/${dossier}urgent.json")"
   sortie="$(npm run -s postiz -- "$numero" --rang urgent --commentaire --envoyer --publier ${reseaux:+--reseaux "$reseaux"} 2>&1)"; code=$?
   rm -f "${dossier}rendu"

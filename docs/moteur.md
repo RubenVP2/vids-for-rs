@@ -109,7 +109,11 @@ même fichier, avec un modèle qui clone une voix à partir d'un extrait
   d'envoi du journal est passée, la vidéo est de l'histoire et n'est plus bloquée (sinon un épisode
   déjà publié serait refusé à chaque relecture). Jour de sortie :
   `postiz-envoi.json` s'il existe, sinon `--date` (`check`), sinon aujourd'hui (Postiz publie
-  le jour même).
+  le jour même). Ce jour est la **dernière** date programmée du journal (postes compris), pas
+  sa ligne `date` : un brouillon du 9 repoussé au 12 vaut le 12. Un journal resté en
+  `brouillon` ne compte pas — rien n'est parti — et les dates illisibles (mois 13) non plus.
+  La branche urgente de `commande.sh` (« ok #NNN ») lance `check` avant de publier et refuse
+  sur « Info trop vieille » : c'est le seul chemin qui n'écrit pas de brouillon d'abord.
 - `schema.ts` : schéma Zod de `scenes.json` et `timings.json`, vérifié par `validate`,
   par Remotion Studio et au rendu.
 - Ajouter un type de scène : l'ajouter au schéma, écrire son composant dans

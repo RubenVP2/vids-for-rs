@@ -53,13 +53,26 @@ export const jourParis = (t: string) => new Intl.DateTimeFormat('en-CA', {timeZo
  * jour même, jamais le lendemain.
  */
 /** Date d'envoi du journal Postiz, ou rien si le fichier manque ou ne se lit pas (rattrapage manuel). */
-const journalLisible = (fichier: string) => {
+type Envoi = {date?: string; statut?: string; postes?: {date?: string}[]};
+/** Date AAAA-MM-JJ (heure tolérée) qui existe vraiment : « 2026-13-45 » passerait le regex. */
+const dateLisible = (d: unknown): d is string =>
+  typeof d === 'string' && /^\d{4}-\d{2}-\d{2}/.test(d) && Number.isFinite(Date.parse(d));
+/**
+ * Jour de sortie réel d'un envoi : la plus tardive des dates programmées, journal compris.
+ * Un brouillon du jour J repoussé à J+1 porte encore J dans `date` (#024) : c'est J+1 qui compte.
+ * Un journal resté en `brouillon` ne vaut rien non plus : rien n'est parti, la fraîcheur s'applique.
+ * Absent, illisible ou mal daté, le journal ne vaut rien : le calcul retombe sur « aujourd'hui ».
+ */
+const journalLisible = (fichier: string): string | undefined => {
   if (!fs.existsSync(fichier)) return undefined;
   try {
-    const d = (JSON.parse(fs.readFileSync(fichier, 'utf8')) as {date?: string}).date;
-    // Une date illisible vaut absence de journal : mieux vaut un calcul explicite (« aujourd'hui »)
-    // qu'un NaN ou une valeur aberrante qui laisserait passer un épisode périmé.
-    return d && /^\d{4}-\d{2}-\d{2}/.test(d) ? d : undefined;
+    const e = JSON.parse(fs.readFileSync(fichier, 'utf8')) as Envoi;
+    // Un brouillon n'est jamais parti : sa date ne prouve rien, même vieille de trois jours.
+    if (e.statut === 'brouillon') return undefined;
+    const jours = [...(e.postes ?? []).map((p) => p.date), e.date]
+      .filter(dateLisible)
+      .map((d) => jourParis(d));
+    return jours.length ? jours.sort().at(-1) : undefined;
   } catch {
     return undefined;
   }
@@ -69,7 +82,7 @@ export const fraicheur = (dossier: string, episode: Episode, date?: string) => {
   const journal = path.join(dossier, 'postiz-envoi.json');
   const envoi = journalLisible(journal);
   const [sortie, selon] = envoi
-    ? [jourParis(envoi), 'postiz-envoi.json']
+    ? [envoi, 'postiz-envoi.json']
     : date
       ? [date.slice(0, 10), '--date']
       : [jourParis(new Date().toISOString()), "aujourd'hui"];

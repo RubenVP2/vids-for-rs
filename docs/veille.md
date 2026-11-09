@@ -48,7 +48,9 @@ l'ordre du classement.
 ## Contrôler, régler
 
 - `npm run veille -- --rejouer veille/<fichier>.json` reclasse les articles gelés du
-  fichier et dit si le classement est identique.
+  fichier et dit si le classement **et** la liste des candidats (donc le filtre de fraîcheur)
+  sont identiques. Les passages d'avant le 09/11/2026 ne gardent pas la réserve : le rejeu
+  le signale et ne compare que le classement.
 - Un flux qui ne répond pas est listé dans « Flux en échec » ; le classement se fait
   avec les autres.
 - Régler : changer un poids ou un flux dans `brand/veille.json` (le bilan du lundi

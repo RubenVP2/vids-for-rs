@@ -20,15 +20,22 @@ const verifier = (cond: boolean, bien: string, mal: string) => (cond ? ok : ko).
 // ne passe plus pour l'actu du jour, même bien attribuée (#024 : source du 07/11, sortie le 09/11).
 const iDate = process.argv.indexOf('--date');
 const brut = iDate > 0 ? process.argv[iDate + 1] : undefined;
-if (iDate > 0 && (brut === undefined || brut.startsWith('--'))) throw new Error('--date attend une date (AAAA-MM-JJ, heure tolérée).');
+const refus = (m: string): never => {
+  console.error(`ERREUR ${m}`);
+  process.exit(1);
+};
+if (iDate > 0 && (brut === undefined || brut.startsWith('--'))) refus('--date attend une date (AAAA-MM-JJ, heure tolérée).');
+if (brut !== undefined && !/^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}(:\d{2}(\.\d+)?)?Z?)?$/.test(brut))
+  refus(`--date « ${brut} » : attendu AAAA-MM-JJ ou AAAA-MM-JJTHH:MM:SSZ.`);
 const dateSortie = brut?.slice(0, 10);
 const valide = (d: string) => /^\d{4}-\d{2}-\d{2}$/.test(d) && new Date(`${d}T00:00:00Z`).toISOString().startsWith(d);
-if (dateSortie !== undefined && !valide(dateSortie)) throw new Error(`--date « ${brut} » : attendu AAAA-MM-JJ, date existante.`);
+if (dateSortie !== undefined && !valide(dateSortie)) refus(`--date « ${brut} » : attendu AAAA-MM-JJ, date existante.`);
 // Une date de sortie passée servirait à rajeunir artificiellement l'info : on ne l'accepte pas.
 if (dateSortie !== undefined && dateSortie < jourParis(new Date().toISOString()))
-  throw new Error(`--date « ${brut} » : dans le passé (aujourd'hui ${jourParis(new Date().toISOString())}).`);
+  refus(`--date « ${brut} » : dans le passé (aujourd'hui ${jourParis(new Date().toISOString())}).`);
 const age = fraicheur(dossier, episode, dateSortie);
-const passe = age.selon === 'postiz-envoi.json' && jourParis(new Date().toISOString()) > age.sortie;
+// Passée, la sortie est de l'histoire ; sinon (brouillon du jour, poste repoussé à demain) la règle s'applique.
+const passe = age.selon === 'postiz-envoi.json' && age.sortie < jourParis(new Date().toISOString());
 const ages = `source du ${episode.source.date}, sortie le ${age.sortie} (${age.selon}) : ${age.jours} jour(s)`;
 if (!Number.isFinite(age.jours)) ko.push(`Date de source illisible (« ${episode.source.date} ») : corriger source.date dans scenes.json`);
 else if (age.jours < 0) ko.push(`Date de la source dans le futur (${ages}) : vérifier source.date dans scenes.json et source.md`);

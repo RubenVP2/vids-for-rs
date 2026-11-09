@@ -22,7 +22,8 @@ try {
 
 // Fraîcheur (même règle que npm run check) : le dire AVANT la voix et le rendu, pour changer de sujet.
 const age = fraicheur(dossier, episode);
-const passe = age.selon === 'postiz-envoi.json' && jourParis(new Date().toISOString()) > age.sortie;
+// Sortie passée = la vidéo est de l'histoire. Sinon (brouillon du jour, poste repoussé) la règle s'applique.
+const passe = age.selon === 'postiz-envoi.json' && age.sortie < jourParis(new Date().toISOString());
 if (passe) {
   // déjà publiée : la date est de l'histoire, la fraîcheur n'est plus un critère
 } else if (!Number.isFinite(age.jours)) erreurs.push(`Date de la source illisible (${episode.source.date}) : attendu AAAA-MM-JJ, date existante.`);
