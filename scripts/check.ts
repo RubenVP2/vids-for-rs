@@ -25,9 +25,12 @@ const refus = (m: string): never => {
   process.exit(1);
 };
 if (iDate > 0 && (brut === undefined || brut.startsWith('--'))) refus('--date attend une date (AAAA-MM-JJ, heure tolérée).');
-if (brut !== undefined && !/^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}(:\d{2}(\.\d+)?)?Z?)?$/.test(brut))
-  refus(`--date « ${brut} » : attendu AAAA-MM-JJ ou AAAA-MM-JJTHH:MM:SSZ.`);
-const dateSortie = brut?.slice(0, 10);
+// Format strict : une heure hors bornes (« T25:99 ») ou un fuseau (« +01:00 ») sont refusés plutôt
+// que relus de travers. Avec une heure, le jour est celui de Paris, pas celui du texte (#024).
+const FORMAT = /^(\d{4}-\d{2}-\d{2})(?:T([01]\d|2[0-3]):([0-5]\d)(?::([0-5]\d)(?:\.\d+)?)?Z?)?$/;
+const mDate = brut === undefined ? null : FORMAT.exec(brut);
+if (brut !== undefined && !mDate) refus(`--date « ${brut} » : attendu AAAA-MM-JJ ou AAAA-MM-JJTHH:MM:SSZ.`);
+const dateSortie = mDate ? (mDate[2] === undefined ? mDate[1] : jourParis(new Date(brut as string).toISOString())) : undefined;
 const valide = (d: string) => /^\d{4}-\d{2}-\d{2}$/.test(d) && new Date(`${d}T00:00:00Z`).toISOString().startsWith(d);
 if (dateSortie !== undefined && !valide(dateSortie)) refus(`--date « ${brut} » : attendu AAAA-MM-JJ, date existante.`);
 // Une date de sortie passée servirait à rajeunir artificiellement l'info : on ne l'accepte pas.

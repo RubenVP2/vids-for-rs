@@ -53,10 +53,16 @@ export const jourParis = (t: string) => new Intl.DateTimeFormat('en-CA', {timeZo
  * jour même, jamais le lendemain.
  */
 /** Date d'envoi du journal Postiz, ou rien si le fichier manque ou ne se lit pas (rattrapage manuel). */
-type Envoi = {date?: string; statut?: string; postes?: {date?: string}[]};
-/** Date AAAA-MM-JJ (heure tolérée) qui existe vraiment : « 2026-13-45 » passerait le regex. */
-const dateLisible = (d: unknown): d is string =>
-  typeof d === 'string' && /^\d{4}-\d{2}-\d{2}/.test(d) && Number.isFinite(Date.parse(d));
+type Envoi = {date?: string; statut?: string; postes?: {date?: string; statut?: string}[]};
+/**
+ * Date AAAA-MM-JJ (heure tolérée) qui existe vraiment : « 2026-13-45 » passe le regex et
+ * « 2026-02-30 » est relu au 2 mars par Date.parse — l'aller-retour les refuse toutes les deux.
+ */
+const dateLisible = (d: unknown): d is string => {
+  if (typeof d !== 'string' || !/^\d{4}-\d{2}-\d{2}/.test(d)) return false;
+  const jour = d.slice(0, 10);
+  return new Date(`${jour}T00:00:00Z`).toISOString().startsWith(jour) && Number.isFinite(Date.parse(d));
+};
 /**
  * Jour de sortie réel d'un envoi : la plus tardive des dates programmées, journal compris.
  * Un brouillon du jour J repoussé à J+1 porte encore J dans `date` (#024) : c'est J+1 qui compte.
@@ -67,11 +73,12 @@ const journalLisible = (fichier: string): string | undefined => {
   if (!fs.existsSync(fichier)) return undefined;
   try {
     const e = JSON.parse(fs.readFileSync(fichier, 'utf8')) as Envoi;
-    // Un brouillon n'est jamais parti : sa date ne prouve rien, même vieille de trois jours.
-    if (e.statut === 'brouillon') return undefined;
-    const jours = [...(e.postes ?? []).map((p) => p.date), e.date]
-      .filter(dateLisible)
-      .map((d) => jourParis(d));
+    // Liste blanche : seul « programmé » prouve un départ. Un brouillon, un statut inconnu ou un
+    // journal muet ne blanchissent rien, même daté d'hier — sinon un fichier trafiqué ou d'un
+    // ancien format dispenserait du garde-fou.
+    const partis = (e.postes ?? []).filter((p) => p.statut === 'programmé').map((p) => p.date);
+    if (e.statut === 'programmé') partis.push(e.date);
+    const jours = partis.filter(dateLisible).map((d) => jourParis(d));
     return jours.length ? jours.sort().at(-1) : undefined;
   } catch {
     return undefined;
