@@ -1,17 +1,17 @@
 [
   {
-    "titre": "Nvidia will investigate CEO Jensen Huang’s relationship with possible Chinese spy",
-    "url": "https://techcrunch.com/2026/11/08/nvidia-says-its-investigating-ceo-jensen-huangs-relationship-with-possible-chinese-spy/",
-    "date": "2026-11-08T21:00:11.000Z",
-    "score": 68,
-    "ajoute": "2026-11-10T04:13:46.773Z"
-  },
-  {
     "titre": "Nvidia is investigating Jensen Huang’s relationship with a Chinese spy",
     "url": "https://www.theverge.com/ai-artificial-intelligence/1029562/nvidia-investigating-jensen-huang-relationship-chinese-spy",
     "date": "2026-11-08T15:27:42.000Z",
     "score": 52,
     "ajoute": "2026-11-09T04:13:46.281Z"
+  },
+  {
+    "titre": "Intelligence artificielle : comment l’affaire d’espionnage menace la gouvernance de Nvidia",
+    "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxQN054SW81N0dUZ1VETm44UUxpUkpmckh5WmdYckIzbHpJS0tGbG1QSnppZ2kwU0t5bkhSUWVoNll4eG5mZmdWd0ZRMGt6T1BxVTJ0UHVIUU5JSVBWN1B0OGowcVFZTmh6S2dqWDIzYms2bEJKS2FobzhBbEtOMk5sVF9OUWl1NGxiRklfTzZjN1BhQlhubWlkVEIyXzA3d2VHZ0Z3TEtGRmxMekVOVG5QUHk2cmNJZEJUTXNz?oc=5",
+    "date": "2026-11-10T06:30:00.000Z",
+    "score": 39,
+    "ajoute": "2026-11-10T13:13:46.313Z"
   },
   {
     "titre": "Meta releases Muse Ember, a new lightweight model for agent execution",
@@ -33,6 +33,20 @@
     "date": "2026-11-10T00:03:58.641Z",
     "score": 35,
     "ajoute": "2026-11-10T04:13:46.773Z"
+  },
+  {
+    "titre": "Google Cloud launches Gemini for healthcare.",
+    "url": "https://blog.google/innovation-and-ai/infrastructure-and-cloud/google-cloud/gemini-for-healthcare/",
+    "date": "2026-11-10T13:00:00.000Z",
+    "score": 35,
+    "ajoute": "2026-11-10T13:13:46.313Z"
+  },
+  {
+    "titre": "Introducing AlphaProof Code: a breakthrough in verifying complex software at depth",
+    "url": "https://deepmind.google/blog/introducing-alphaproof-code/",
+    "date": "2026-11-10T12:02:28.000Z",
+    "score": 35,
+    "ajoute": "2026-11-10T13:13:46.313Z"
   },
   {
     "titre": "StateBench: Testing how language models track state changes over long documents",
@@ -77,6 +91,13 @@
     "ajoute": "2026-11-10T04:13:46.773Z"
   },
   {
+    "titre": "Closing the AI guidance gap in education",
+    "url": "https://openai.com/index/closing-ai-guidance-gap-education",
+    "date": "2026-11-10T09:00:00.000Z",
+    "score": 35,
+    "ajoute": "2026-11-10T13:13:46.313Z"
+  },
+  {
     "titre": "Cult.fit builds operational muscle with Codex",
     "url": "https://openai.com/index/cultfit-builds-with-codex",
     "date": "2026-11-05T20:00:00.000Z",
@@ -84,11 +105,11 @@
     "ajoute": "2026-11-06T04:13:41.599Z"
   },
   {
-    "titre": "Heimstaden is changing residential real estate management with AI",
-    "url": "https://openai.com/index/heimstaden",
-    "date": "2026-11-03T08:00:00.000Z",
+    "titre": "Helping caregivers use AI in everyday life",
+    "url": "https://openai.com/index/helping-caregivers-use-ai-in-everyday-life",
+    "date": "2026-11-10T12:00:00.000Z",
     "score": 35,
-    "ajoute": "2026-11-03T13:13:21.117Z"
+    "ajoute": "2026-11-10T13:13:46.313Z"
   },
   {
     "titre": "Setting a new standard for responsible AI infrastructure",
@@ -110,13 +131,6 @@
     "date": "2026-11-05T08:00:00.000Z",
     "score": 34,
     "ajoute": "2026-11-06T04:13:41.599Z"
-  },
-  {
-    "titre": "Apple Watch’s AI features for rewinding and recapping conversations begin beta testing",
-    "url": "https://techcrunch.com/2026/11/02/apple-watchs-ai-features-for-rewinding-and-recapping-conversations-begin-beta-testing/",
-    "date": "2026-11-03T07:20:00.000Z",
-    "score": 34,
-    "ajoute": "2026-11-04T04:13:22.920Z"
   },
   {
     "titre": "« Critique » : OpenAI lance GPT-6 Cyber, son IA la plus dangereuse à ce jour",
@@ -168,18 +182,18 @@
     "ajoute": "2026-11-05T13:13:41.030Z"
   },
   {
-    "titre": "La Samsung Galaxy Watch Ultra 2 passe à moins de 500 € pour le Black Friday et fait oublier l’Apple Watch Ultra",
-    "url": "https://www.frandroid.com/bons-plans/3308007_la-samsung-galaxy-watch-ultra-2-passe-a-moins-de-500-e-pour-le-black-friday-et-fait-oublier-lapple-watch-ultra",
-    "date": "2026-11-03T11:16:00.000Z",
-    "score": 31,
-    "ajoute": "2026-11-03T13:13:21.117Z"
-  },
-  {
     "titre": "Amazon : voici le TOP 5 des meilleures offres pour le Black Friday",
     "url": "https://www.frandroid.com/bons-plans/3313729_amazon-voici-le-top-5-des-meilleures-offres-pour-le-black-friday",
     "date": "2026-11-06T11:41:16.000Z",
     "score": 31,
     "ajoute": "2026-11-06T13:13:41.259Z"
+  },
+  {
+    "titre": "Une commission préconise de mieux encadrer les assistants IA en France, de ChatGPT à Gemini ou Grok",
+    "url": "https://www.lemonde.fr/economie/article/2026/11/10/une-commission-preconise-de-mieux-encadrer-les-assistants-ia-de-chatgpt-a-gemini-ou-grok_6808789_3234.html",
+    "date": "2026-11-10T05:50:04.000Z",
+    "score": 31,
+    "ajoute": "2026-11-10T13:13:46.313Z"
   },
   {
     "titre": "Etats-Unis : Google accusé d’avoir laissé son assistant IA Gemini aider une collégienne à planifier un suicide",
@@ -215,13 +229,6 @@
     "date": "2026-11-06T18:10:10.000Z",
     "score": 31,
     "ajoute": "2026-11-07T04:13:51.419Z"
-  },
-  {
-    "titre": "Display Custom Policy in the Green Room before Google Meet Calls",
-    "url": "http://workspaceupdates.googleblog.com/2026/10/display-custom-policy-in-green-room-before-Google-Meet-Calls.html",
-    "date": "2026-11-03T10:15:09.792Z",
-    "score": 30,
-    "ajoute": "2026-11-04T04:13:22.920Z"
   },
   {
     "titre": "Educators can now add Guided Learning to assignments in Google Classroom to help students get extra support",
@@ -343,20 +350,6 @@
     "ajoute": "2026-11-05T04:13:22.913Z"
   },
   {
-    "titre": "Accelerating engineering for the physical world",
-    "url": "https://openai.com/index/accelerating-engineering-for-the-physical-world",
-    "date": "2026-11-03T12:00:00.000Z",
-    "score": 30,
-    "ajoute": "2026-11-04T04:13:22.920Z"
-  },
-  {
-    "titre": "How Cisco defends at machine speed with OpenAI",
-    "url": "https://openai.com/index/cisco-cyber",
-    "date": "2026-11-03T08:00:00.000Z",
-    "score": 30,
-    "ajoute": "2026-11-04T04:13:22.920Z"
-  },
-  {
     "titre": "CodeRabbit scales agentic software development and ships 20x more",
     "url": "https://openai.com/index/coderabbit-codex-daybreak",
     "date": "2026-11-09T08:00:00.000Z",
@@ -404,6 +397,13 @@
     "date": "2026-11-06T08:00:00.000Z",
     "score": 30,
     "ajoute": "2026-11-07T04:13:51.419Z"
+  },
+  {
+    "titre": "Sécurité de l’IA : l’Elysée fait signer un « appel de Paris » à huit pays ainsi qu’à Sam Altman, Dario Amodei et Arthur Mensch",
+    "url": "https://www.lemonde.fr/economie/article/2026/11/09/securite-de-l-ia-l-elysee-fait-signer-un-appel-de-paris-a-huit-pays-ainsi-qu-a-sam-altman-dario-amodei-et-arthur-mensch_6808706_3234.html",
+    "date": "2026-11-09T22:35:00.000Z",
+    "score": 30,
+    "ajoute": "2026-11-10T13:13:46.313Z"
   },
   {
     "titre": "Claude can now analyze your spending with its new Personal Finance tool",

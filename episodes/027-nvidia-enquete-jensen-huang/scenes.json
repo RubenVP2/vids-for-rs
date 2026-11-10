@@ -1,0 +1,71 @@
+{
+  "numero": 27,
+  "slug": "nvidia-enquete-jensen-huang",
+  "serie": "flash",
+  "source": {
+    "nom": "TechCrunch",
+    "url": "https://techcrunch.com/2026/11/08/nvidia-says-its-investigating-ceo-jensen-huangs-relationship-with-possible-chinese-spy/",
+    "date": "2026-11-08",
+    "type": "article"
+  },
+  "statut": "annonce",
+  "verdict": "buzz",
+  "miniature": "Le patron de Nvidia ==piégé== ?",
+  "musique": true,
+  "gabarit": {
+    "ouverture": "question",
+    "corps": "liste"
+  },
+  "scenes": [
+    {
+      "type": "hook",
+      "texte": "Le patron de {NVIDIA|Nvidia} s'est-il fait piéger par une espionne ?",
+      "titre": "Le patron de Nvidia ==piégé== ?",
+      "icone": "attention",
+      "matou": "surpris"
+    },
+    {
+      "type": "liste",
+      "texte": "Selon TechCrunch, Jensen Huang a avoué une liaison avec une ex-cadre soupçonnée d'espionnage. Le conseil lance une enquête avec des avocats externes, mais lui maintient sa confiance.",
+      "titre": "L'enquête de Nvidia",
+      "elements": [
+        {
+          "texte": "==Liaison avouée==",
+          "icone": "document",
+          "quand": "liaison"
+        },
+        {
+          "texte": "Des ==avocats==",
+          "icone": "loupe",
+          "quand": "avocats"
+        },
+        {
+          "texte": "Leur ==confiance==",
+          "icone": "coche",
+          "quand": "maintient"
+        }
+      ],
+      "matou": "parle"
+    },
+    {
+      "type": "point",
+      "texte": "En fait, le conseil affirme qu'aucun secret d'entreprise n'a été compromis, et Jensen Huang s'est publiquement excusé.",
+      "titre": "Secrets volés ?",
+      "corps": "==Aucun secret== compromis",
+      "quand": "secret",
+      "icone": "cadenas",
+      "matou": "enFait"
+    },
+    {
+      "type": "verdict",
+      "texte": "Hype-mètre : pur buzz. Pour moi, c'est du feuilleton privé, pas une faille technologique.",
+      "raison": "Une affaire privée, zéro faille technique",
+      "matou": "verdict"
+    },
+    {
+      "type": "fin",
+      "texte": "Même une espionne ne fera pas trembler {NVIDIA|Nvidia}.",
+      "matou": "sceptique"
+    }
+  ]
+}
