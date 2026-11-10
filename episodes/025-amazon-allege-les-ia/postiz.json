@@ -1,104 +1,60 @@
 [
   {
     "type": "draft",
-    "date": "2026-11-11T08:00:00.000Z",
+    "date": "2026-11-09T17:30:00.000Z",
     "shortLink": false,
     "tags": [],
     "posts": [
       {
         "integration": {
-          "id": "<id Threads>"
-        },
-        "value": [
-          {
-            "content": "Je parie que dans deux ans, plus personne ne fera tourner de modèles MoE bruts en production : tout le monde élaguera la moitié de leurs experts pour économiser la mémoire.\n\nAmazon vient de sortir l'outil HOPE : en supprimant les neurones par paires cohérentes plutôt qu'en solo, ils divisent la taille par deux tout en gardant 100 % des performances.\n\nStatut : disponible en open source.\nSource : Amazon\n\nQui me contredit sur l'avenir des modèles allégés ? #IA",
-            "image": [
-              {
-                "id": "<id de la vidéo>",
-                "path": "<chemin de 025-amazon-allege-les-ia.mp4>"
-              }
-            ]
-          }
-        ],
-        "settings": {
-          "__type": "threads"
-        }
-      }
-    ]
-  },
-  {
-    "type": "draft",
-    "date": "2026-11-11T11:00:00.000Z",
-    "shortLink": false,
-    "tags": [],
-    "posts": [
-      {
-        "integration": {
-          "id": "<id Instagram>"
+          "id": "cmvsaogt206kfor1cddnosuhf"
         },
         "value": [
           {
             "content": "50 % de neurones en moins sans rien perdre : Amazon allège enfin les gros modèles d'IA. 🧠\n\nDans les modèles Mixture-of-Experts, les composants travaillent toujours en équipe.\n\n→ Les outils classiques coupent un composant isolé et brisent son binôme (-13 % de score)\n→ L'outil HOPE d'Amazon calcule les synergies pour préserver les grappes soudées\n→ Résultat : la moitié des experts supprimés et des performances identiques\n\nEnvoie-la à quelqu'un qui veut faire tourner de l'IA sur son PC portable ! ☝️\n\n#IA #Amazon #optimisation #vulgarisation #matou",
             "image": [
               {
-                "id": "<id de la vidéo>",
-                "path": "<chemin de 025-amazon-allege-les-ia.mp4>"
+                "id": "136a8e96-78d8-4bd2-be62-6ac074da07c1",
+                "path": "https://uploads.postiz.com/KQJQKKYibe.mp4"
               }
             ]
+          },
+          {
+            "content": "Sources : Amazon (awslabs/HOPE) : https://huggingface.co/blog/amazon/higher-order-pruning-experts",
+            "image": []
           }
         ],
         "settings": {
-          "__type": "instagram",
+          "__type": "instagram-standalone",
           "post_type": "post",
           "is_trial_reel": false
         }
-      },
-      {
-        "integration": {
-          "id": "<id Facebook>"
-        },
-        "value": [
-          {
-            "content": "50 % de neurones en moins sans rien perdre : Amazon allège enfin les gros modèles d'IA. 🧠\n\nDans les modèles Mixture-of-Experts, les composants travaillent toujours en équipe.\n\n→ Les outils classiques coupent un composant isolé et brisent son binôme (-13 % de score)\n→ L'outil HOPE d'Amazon calcule les synergies pour préserver les grappes soudées\n→ Résultat : la moitié des experts supprimés et des performances identiques\n\nEnvoie-la à quelqu'un qui veut faire tourner de l'IA sur son PC portable ! ☝️\n\n#IA #Amazon #optimisation #vulgarisation #matou",
-            "image": [
-              {
-                "id": "<id de la vidéo>",
-                "path": "<chemin de 025-amazon-allege-les-ia.mp4>"
-              }
-            ]
-          }
-        ],
-        "settings": {
-          "__type": "facebook",
-          "post_type": "post",
-          "title": "Pourquoi Amazon coupe la moitié de ses IA ?"
-        }
       }
     ]
   },
   {
     "type": "draft",
-    "date": "2026-11-11T11:30:00.000Z",
+    "date": "2026-11-09T18:00:00.000Z",
     "shortLink": false,
     "tags": [],
     "posts": [
       {
         "integration": {
-          "id": "<id TikTok>"
+          "id": "cmvsakeo602wupg1crmgz7g9n"
         },
         "value": [
           {
             "content": "Amazon a trouvé comment couper 50 % d'une IA sans perdre en intelligence. Tu lui mets combien sur 10, à cette idée ? ☝️\n\n#IA #Amazon #tech #apprendresurtiktok #matou",
             "image": [
               {
-                "id": "<id de la vidéo>",
-                "path": "<chemin de 025-amazon-allege-les-ia.mp4>"
+                "id": "136a8e96-78d8-4bd2-be62-6ac074da07c1",
+                "path": "https://uploads.postiz.com/KQJQKKYibe.mp4"
               }
             ]
           }
         ],
         "settings": {
-          "__type": "tiktok",
+          "__type": "tiktok-business",
           "content_posting_method": "DIRECT_POST",
           "privacy_level": "PUBLIC_TO_EVERYONE",
           "duet": true,
@@ -109,68 +65,63 @@
           "brand_organic_toggle": false,
           "video_made_with_ai": true
         }
-      },
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-09T18:30:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
       {
         "integration": {
-          "id": "<id X>"
+          "id": "cmvsb2y1q03efpg1c3j45vgui"
         },
         "value": [
           {
-            "content": "Amazon publie HOPE : une méthode pour supprimer 50 % des experts d'un modèle d'IA sans casser ses performances. En préservant les binômes de neurones, les modèles deviennent deux fois plus légers en mémoire vive. #IA",
+            "content": "Je parie que dans deux ans, plus personne ne fera tourner de modèles MoE bruts en production : tout le monde élaguera la moitié de leurs experts pour économiser la mémoire.\n\nAmazon vient de sortir l'outil HOPE : en supprimant les neurones par paires cohérentes plutôt qu'en solo, ils divisent la taille par deux tout en gardant 100 % des performances.\n\nStatut : disponible en open source.\nSource : Amazon\n\nQui me contredit sur l'avenir des modèles allégés ? #IA",
             "image": [
               {
-                "id": "<id de la vidéo>",
-                "path": "<chemin de 025-amazon-allege-les-ia.mp4>"
+                "id": "136a8e96-78d8-4bd2-be62-6ac074da07c1",
+                "path": "https://uploads.postiz.com/KQJQKKYibe.mp4"
               }
             ]
-          }
-        ],
-        "settings": {
-          "__type": "x",
-          "who_can_reply_post": "everyone",
-          "made_with_ai": true
-        }
-      },
-      {
-        "integration": {
-          "id": "<id Bluesky>"
-        },
-        "value": [
+          },
           {
-            "content": "Amazon publie HOPE : une méthode pour supprimer 50 % des experts d'un modèle d'IA sans casser ses performances. En préservant les binômes de neurones, les modèles deviennent deux fois plus légers en mémoire vive. #IA",
-            "image": [
-              {
-                "id": "<id de la vidéo>",
-                "path": "<chemin de 025-amazon-allege-les-ia.mp4>"
-              }
-            ]
+            "content": "Sources : Amazon (awslabs/HOPE) : https://huggingface.co/blog/amazon/higher-order-pruning-experts",
+            "image": []
           }
         ],
         "settings": {
-          "__type": "bluesky"
+          "__type": "threads"
         }
       }
     ]
   },
   {
     "type": "draft",
-    "date": "2026-11-11T17:00:00.000Z",
+    "date": "2026-11-09T19:00:00.000Z",
     "shortLink": false,
     "tags": [],
     "posts": [
       {
         "integration": {
-          "id": "<id YouTube>"
+          "id": "cmvsb3xwh07l1or1cvp01pod9"
         },
         "value": [
           {
             "content": "Les chercheurs d'Amazon dévoilent HOPE pour supprimer 50 % des experts d'une IA sans casser ses résultats.\nEn préservant les synergies entre composants, les modèles deviennent deux fois plus légers en mémoire.\n\nSource : https://huggingface.co/blog/amazon/higher-order-pruning-experts\n\n#IA #Amazon #shorts #matou",
             "image": [
               {
-                "id": "<id de la vidéo>",
-                "path": "<chemin de 025-amazon-allege-les-ia.mp4>"
+                "id": "136a8e96-78d8-4bd2-be62-6ac074da07c1",
+                "path": "https://uploads.postiz.com/KQJQKKYibe.mp4"
               }
             ]
+          },
+          {
+            "content": "Sources : Amazon (awslabs/HOPE) : https://huggingface.co/blog/amazon/higher-order-pruning-experts",
+            "image": []
           }
         ],
         "settings": {
@@ -179,9 +130,31 @@
           "selfDeclaredMadeForKids": "no",
           "title": "Pourquoi Amazon coupe la moitié de ses IA ?",
           "thumbnail": {
-            "id": "<id de la miniature>",
-            "path": "<chemin de 025-amazon-allege-les-ia-miniature.png>"
+            "id": "40f57248-88d5-458a-b2e7-c0a2e97cd07d",
+            "path": "https://uploads.postiz.com/HjRlAXFpzB.png"
           }
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-09T20:30:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb2y1q03efpg1c3j45vgui"
+        },
+        "value": [
+          {
+            "content": "Qui s'est déjà retrouvé bloqué par un manque cruel de mémoire GPU en voulant faire tourner un grand modèle d'IA en local, et comment avez-vous contourné le problème ? #IA",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "threads"
         }
       }
     ]
