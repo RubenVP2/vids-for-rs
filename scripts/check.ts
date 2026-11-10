@@ -5,7 +5,7 @@ import {execFileSync, spawnSync} from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import {budgetDe, dossierEpisode, FRAICHEUR_MAX, fraicheur, jourParis, lireEpisode, lireTimings, nomEpisode} from './lib/episode';
-import {controler, numeroDe, reglages as gabarits, RELANCE} from './lib/gabarits';
+import {controler, LINKEDIN, numeroDe, reglages as gabarits, RELANCE} from './lib/gabarits';
 import {alerteTimbre, avertissements as avertVoix, defauts as defautsVoix, resume as resumeVoix} from './lib/qualite-voix';
 import {lireReglagesVoix} from './lib/reglages-voix';
 import {rythmeDe} from './lib/rythme';
@@ -151,9 +151,10 @@ if (!fs.existsSync(pub)) {
     ['TikTok', 3, 5, 2000, false],
     ['Instagram', 3, 5, 2200, false], // Instagram ne garde que 5 hashtags
     ['YouTube', 2, 4, 5000, true],
-    ['LinkedIn', 0, 3, 3000, false], // lien en commentaire : LinkedIn freine les posts avec lien
     ['Threads', 0, 1, 500, false], // un seul sujet (tag) par post sur Threads
   ];
+  // LinkedIn (post hebdo depuis le 10/11/2026) : la section n'est exigée que si un rang la programme.
+  if (LINKEDIN || section('LinkedIn') !== undefined) regles.push(['LinkedIn', 0, 3, 3000, false]); // lien en commentaire
   // La relance Threads : exigée seulement si un créneau en programme une (brand/postiz.json).
   if (RELANCE || section('Threads relance') !== undefined) regles.push(['Threads relance', 0, 1, 500, false]);
   for (const [titre, min, max, limite, url] of regles) {
@@ -172,11 +173,11 @@ if (!fs.existsSync(pub)) {
   }
   // LinkedIn coupe après ~210 caractères (« … voir plus ») : l'accroche doit tenir avant.
   const accroche = (section('LinkedIn') ?? '').split(/\n\s*\n/)[0];
-  verifier(accroche.length <= 210, 'LinkedIn : accroche avant « voir plus »', `LinkedIn : le 1er paragraphe fait ${accroche.length} caractères (max 210, avant « voir plus »)`);
+  if (section('LinkedIn') !== undefined) verifier(accroche.length <= 210, 'LinkedIn : accroche avant « voir plus »', `LinkedIn : le 1er paragraphe fait ${accroche.length} caractères (max 210, avant « voir plus »)`);
   if (section('Threads relance') !== undefined) verifier((section('Threads relance') ?? '').includes('?'), 'Threads relance : une question', 'Threads relance : doit poser une question (elle sert à faire répondre)');
   const carrousel = path.join(dossier, 'rendu', 'carrousel');
   const diapos = fs.existsSync(carrousel) ? fs.readdirSync(carrousel).filter((f) => f.endsWith('.png')).length : 0;
-  verifier(diapos >= 2, `Carrousel LinkedIn : ${diapos} diapos`, 'Carrousel LinkedIn absent : lancer npm run carrousel');
+  if (LINKEDIN) verifier(diapos >= 2, `Carrousel LinkedIn : ${diapos} diapos`, 'Carrousel LinkedIn absent : lancer npm run carrousel');
   // X et Bluesky (pas connectés aujourd'hui) : facultatif, 280 caractères (limite de X).
   const court = section('Court');
   if (court !== undefined) verifier(court.length <= 280, `Court (X, Bluesky) : ${court.length} caractères`, `Court (X, Bluesky) : ${court.length} caractères (max 280)`);

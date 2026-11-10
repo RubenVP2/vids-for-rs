@@ -1,6 +1,6 @@
 ---
 name: publication
-description: Écrit publication.md d'un épisode de Matou — un texte taillé pour chaque réseau (TikTok, Instagram Reels, YouTube Shorts, LinkedIn en carrousel, Threads), avec les hashtags. À utiliser après le rendu, ou pour réécrire une description ou des hashtags.
+description: Écrit publication.md d'un épisode de Matou — un texte taillé pour chaque réseau (TikTok, Instagram Reels, YouTube Shorts, Threads), avec les hashtags. À utiliser après le rendu, ou pour réécrire une description ou des hashtags.
 ---
 
 # Publication : un texte par réseau
@@ -8,7 +8,8 @@ description: Écrit publication.md d'un épisode de Matou — un texte taillé p
 Chaque réseau récompense autre chose (`docs/reseaux.md`) : on ne recopie pas le même
 texte partout. Écrire `episodes/NNN-slug/publication.md` avec exactement ces sections
 (`npm run check` et `npm run postiz` les lisent) : `## TikTok`, `## Instagram`,
-`## YouTube`, `## LinkedIn`, `## Threads`. Pas de `## Threads relance` : elle est arrêtée
+`## YouTube`, `## Threads`. Pas de `## LinkedIn` : LinkedIn a un post de fond par
+semaine depuis le 10/11/2026 (skill `linkedin`), plus un post par épisode. Pas de `## Threads relance` : elle est arrêtée
 depuis le 09/11/2026 (`npm run gabarits -- NNN` la redemande si elle revient dans
 `brand/postiz.json`). Facebook reprend le texte
 d'Instagram ; X et Bluesky, pas connectés, une section `## Court (X, Bluesky)` facultative.
@@ -53,7 +54,8 @@ Lire d'abord `docs/reseaux.md` et la section « Publier » de `docs/apprentissag
   prend 5 caractères). 2 lignes de description, puis
   `Source : <URL>`, puis 2 à 4 hashtags dont `#shorts`. Le titre sert aussi à Facebook
   et nomme le carrousel LinkedIn.
-- **LinkedIn** (carrousel, `npm run carrousel`) : écrit pour des pros hors tech.
+- **LinkedIn** (seulement si `npm run gabarits` la demande, ce qui n'est plus le cas depuis le
+  10/11/2026 ; carrousel, `npm run carrousel`) : écrit pour des pros hors tech.
   - 1er paragraphe = l'accroche, **210 caractères max** (au-delà, « … voir plus »).
   - Puis ce que ça change **pour le travail** (métier, entreprise, décisions), 2–3
     flèches « → », 600 à 1 300 caractères en tout.

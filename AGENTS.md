@@ -51,13 +51,16 @@ Détail : `docs/routines.md`.
 - **Rythme (production)** : **2 épisodes par jour**, au minimum 1. **Un épisode = un
   sujet, le même sur tous ses réseaux**, chaque post au format du réseau, **le jour même**
   (jamais reporté au lendemain). Le **principal** (produit vers 5 h) publie le matin et à
-  midi (YouTube à 18 h) ; le **second** (produit vers 14 h, jamais la même actu) publie le soir, partout
-  sauf LinkedIn.
-- **Un post par réseau, pas un copier-coller** (`docs/reseaux.md`). Principal : LinkedIn
-  en carrousel (en semaine, 8 h 30, un par jour ouvré), Threads (vidéo, 9 h), Instagram
+  midi (YouTube à 18 h) ; le **second** (produit vers 14 h, jamais la même actu) publie le soir.
+- **Un post par réseau, pas un copier-coller** (`docs/reseaux.md`). Principal : Threads (vidéo, 9 h), Instagram
   (12 h), TikTok (12 h 30), YouTube (18 h). Second : Instagram 18 h 30, TikTok 19 h,
   Threads 19 h 30, YouTube 20 h. Plus de relance texte sur Threads (09/11/2026).
   Créneaux : `brand/postiz.json`.
+- **LinkedIn : un post de fond par semaine**, pas l'actu (10/11/2026) : un carrousel
+  « retour d'expérience » si l'utilisateur a répondu à la question posée sur Discord le
+  lundi (avec le bilan), sinon « coulisses » tiré du dépôt (décisions, bilans, pannes).
+  Produit par la routine rappel du mardi au jeudi, publié mardi à jeudi 8 h 30 (skill
+  `linkedin`, `brand/linkedin.json`). L'utilisateur n'y est jamais nommé.
 
 ## Règles éditoriales (non négociables)
 
@@ -79,7 +82,8 @@ Détail : `docs/routines.md`.
 
 - Skills (`.claude/skills/`) : `episode` (la recette), `ecriture-matou` (voix et
   scènes), `publication` (un texte par réseau, hashtags), `veille-ia` (choisir un sujet),
-  `programmation` (brouillons Postiz, programmation, veto), `article` (version blog de
+  `programmation` (brouillons Postiz, programmation, veto), `linkedin` (le post LinkedIn
+  de la semaine), `article` (version blog de
   l'épisode), `episode-du-jour`, `episode-urgent` et `bilan` (les routines) et `postiz` (skill officiel de Postiz,
   copié tel quel).
 - Sous-agents (`.claude/agents/`) : `documentaliste` (article → `source.md`),

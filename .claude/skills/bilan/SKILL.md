@@ -38,12 +38,17 @@ l'a notée : un format long qui fait moins de vues 3 semaines de suite, le dire.
 
 Puis la stratégie par réseau (`docs/reseaux.md`) : le rang (colonne « Rang » : principal
 du matin et de midi contre second du soir, depuis le 31/10 ; avant, l'inverse), le créneau de chaque post (colonne « Créneau »), le
-format (LinkedIn : carrousel ou vidéo), le texte propre au réseau (`publication.md`), et
+le texte propre au réseau (`publication.md`), et
 sur Threads la relance (`threads-relance`, arrêtée le 09/11/2026 : comparer les vues du
 compte avant et après). Un créneau qui fait
 moins bien 3 semaines de suite : proposer une autre heure. Les vues d'un épisode qui
 baissent depuis l'arrivée de l'autre : le dire (le rythme de 2 par jour est un pari).
 Compter aussi les vetos et les brouillons retenus par les garde-fous de la semaine.
+
+LinkedIn (post de la semaine depuis le 10/11/2026, `linkedin/<semaine>/postiz-envoi.json`) :
+`npm run bilan` ne le relève pas encore ; lire ses chiffres dans Postiz (`postiz
+analytics:post <postId>`) et comparer « retour d'expérience » et « coulisses » au fil des
+semaines, avec les clics et abonnés de la page (`analytics:platform`).
 
 Les tests en cours (`docs/decisions.md`, 09/11/2026), dans `npm run bilan -- --local` :
 « Rythme de voix × créneau » (posé ~30 s contre rapide ~20–27 s, #026 à #039 ; avec la

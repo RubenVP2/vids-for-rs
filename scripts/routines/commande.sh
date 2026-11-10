@@ -8,21 +8,27 @@
 #         scripts/routines/commande.sh veto NNN [réseaux]     posts programmés pas encore partis → brouillons
 #         scripts/routines/commande.sh etat                   ce qui part aujourd'hui et demain, par épisode
 #         scripts/routines/commande.sh stats                  npm run bilan (chiffres Postiz), sans rien écrire
+#         scripts/routines/commande.sh reponse < texte        réponse à la question LinkedIn de la semaine (texte sur
+#                                                             l'entrée standard : les apostrophes passent sans risque)
+#         scripts/routines/commande.sh ok|veto linkedin       le post LinkedIn de la semaine → programmé / brouillon
 #   réseaux : tiktok,threads… (ok d'un urgent : défaut, ceux demandés avec l'urgent, sinon tous)
 set -uo pipefail
 
-action="${1:?Usage : commande.sh ok|veto NNN [réseaux] | etat | stats}"
+action="${1:?Usage : commande.sh ok|veto NNN|linkedin [réseaux] | etat | stats | reponse < texte}"
 numero="${2:-}" reseaux="${3:-}"
 DEPOT="${MATOU_DEPOT:-$HOME/matou/vids-for-rs}"
 export PATH="$HOME/.local/bin:$PATH"
 
+# « ok linkedin », « veto linkedin » : le post LinkedIn de la semaine, pas un épisode.
+[[ "$action" =~ ^(ok|veto)$ && "$numero" = linkedin ]] && { action="$action-linkedin"; numero=""; }
 case "$action" in
+  ok-linkedin | veto-linkedin | reponse) ;;
   ok | veto)
     [[ "$numero" =~ ^#?[0-9]{1,3}$ ]] || { echo "Numéro d'épisode attendu (ex. 008)."; exit 2; }
     numero="$(printf %03d $((10#${numero#\#})))"
     ;;
   etat | stats) ;;
-  *) echo "Commande inconnue « $action » (ok, veto, etat, stats)."; exit 2 ;;
+  *) echo "Commande inconnue « $action » (ok, veto, etat, stats, reponse)."; exit 2 ;;
 esac
 [[ -z "$reseaux" || "$reseaux" =~ ^[a-z]+(,[a-z]+)*$ ]] || { echo "Réseaux : liste séparée par des virgules (ex. tiktok,threads)."; exit 2; }
 
@@ -33,6 +39,21 @@ trap nettoyer EXIT
   { echo "Impossible de préparer main (git fetch dans $DEPOT)."; exit 1; }
 ln -s "$DEPOT/node_modules" "$arbre/node_modules"
 cd "$arbre" || exit 1
+
+# La réponse vit hors du dépôt (état des routines) : rien à committer, le post la versionnera.
+if [ "$action" = reponse ]; then
+  npm run -s linkedin -- --reponse
+  exit $?
+fi
+
+if [ "$action" = ok-linkedin ] || [ "$action" = veto-linkedin ]; then
+  sortie="$(npm run -s linkedin -- dernier $([ "$action" = ok-linkedin ] && echo --programmer || echo --annuler) 2>&1)"; code=$?
+  grep -E '^(Programmé|Repassé|Inchangé|Échec|Aucun envoi)' <<<"$sortie" | sed 's/ ([^)]*)//' || true
+  [ "$code" = 0 ] || tail -3 <<<"$sortie"
+  dossier="linkedin/"
+else
+  dossier=""
+fi
 
 if [ "$action" = etat ]; then
   node -e '
@@ -65,6 +86,7 @@ if [ "$action" = stats ]; then
   exit 0
 fi
 
+if [ -z "$dossier" ]; then
 dossier="$(ls -d episodes/"$numero"-*/ 2>/dev/null | head -1)"
 [ -n "$dossier" ] || { echo "Épisode #$numero introuvable sur main."; exit 1; }
 
@@ -98,12 +120,13 @@ else
 fi
 grep -E '^(Programmé|Repassé|Inchangé|Pas de post|Proche|Non connectés|Error|.*Envoi annulé|.*Déjà envoyé|  - )' <<<"$sortie" | sed 's/ ([^)]*)//' || true
 [ "$code" = 0 ] || { echo "Échec (npm run postiz, code $code) :"; tail -5 <<<"$sortie"; }
+fi
 
 # Le journal de l'épisode (postiz-envoi.json) part sur main, même après un échec partiel :
 # c'est lui qui dit à la prochaine commande ce qui est déjà dans Postiz.
 if [ -n "$(git status --porcelain -- "$dossier")" ]; then
   git add -- "$dossier" &&
-    git -c user.name="Matou (commande)" -c user.email="routines@matou.ai" commit -q -m "Commande $action : #$numero (Hermes, Pi)" || { echo "ATTENTION : commit impossible, journal non versionné."; exit 1; }
+    git -c user.name="Matou (commande)" -c user.email="routines@matou.ai" commit -q -m "Commande $action${numero:+ : #$numero} (Hermes, Pi)" || { echo "ATTENTION : commit impossible, journal non versionné."; exit 1; }
   for essai in 1 2 3; do
     { git fetch -q origin main && git rebase -q origin/main && git push -q origin HEAD:main; } >/dev/null 2>&1 && exit "$code"
     git rebase --abort >/dev/null 2>&1

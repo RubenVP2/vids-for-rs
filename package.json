@@ -17,6 +17,7 @@
     "bilan": "tsx scripts/bilan.ts",
     "veille": "tsx scripts/veille.ts",
     "intemporel": "tsx scripts/intemporel.ts",
+    "linkedin": "tsx scripts/linkedin.ts",
     "gabarits": "tsx scripts/gabarits.ts",
     "voices:compare": "tsx scripts/compare-voices.ts"
   },

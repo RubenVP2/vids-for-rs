@@ -4,6 +4,7 @@ import demoEpisode from '../episodes/000-bande-annonce/scenes.json';
 import demoTimings from '../episodes/000-bande-annonce/timings.json';
 import {DIAPO, DiapoCarrousel, diapoPropsSchema} from './Carrousel';
 import {SurcoucheReseaux} from './components/SurcoucheReseaux';
+import {DIAPO_LI, DiapoLinkedin, diapoLinkedinProps, type PostLinkedin} from './Coulisses';
 import {dureeEnImages, EpisodeVideo} from './Episode';
 import {Miniature} from './Miniature';
 import {Avatar, PlancheMarque, PlancheMatou} from './Planches';
@@ -23,6 +24,18 @@ const EpisodeAvecInterface: React.FC<EpisodeProps> = (p) => (
     <SurcoucheReseaux />
   </AbsoluteFill>
 );
+
+/** Studio seulement : le rendu passe le post de la semaine. */
+const POST_DEMO: PostLinkedin = {
+  semaine: '2026-S46',
+  mode: 'coulisses',
+  titre: 'Exemple',
+  matou: 'enFait',
+  diapos: [1, 2, 3].map((n) => ({titre: `Idée ${n}`, texte: 'Une phrase.'})),
+  lecon: {titre: 'La leçon', texte: 'Une phrase.'},
+  texte: 'x'.repeat(200),
+  sources: ['docs/decisions.md'],
+};
 
 export const Racine: React.FC = () => (
   <>
@@ -56,6 +69,14 @@ export const Racine: React.FC = () => (
       height={DIAPO.hauteur}
       schema={diapoPropsSchema}
       defaultProps={{episode: demo.episode, index: 0}}
+    />
+    <Still
+      id="DiapoLinkedin"
+      component={DiapoLinkedin}
+      width={DIAPO_LI.largeur}
+      height={DIAPO_LI.hauteur}
+      schema={diapoLinkedinProps}
+      defaultProps={{post: POST_DEMO, index: 0}}
     />
     <Still id="PlancheMarque" component={PlancheMarque} width={W} height={H} />
     <Still id="PlancheMatou" component={PlancheMatou} width={W} height={H} />

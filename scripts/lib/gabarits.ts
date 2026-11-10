@@ -13,7 +13,9 @@ export const reglages = JSON.parse(fs.readFileSync(path.join(RACINE, 'brand', 'p
 /** La relance Threads n'est écrite et contrôlée que si un créneau de brand/postiz.json en programme une. */
 const creneaux = (JSON.parse(fs.readFileSync(path.join(RACINE, 'brand', 'postiz.json'), 'utf8')) as {creneaux: Record<string, Record<string, {relance?: unknown}>>}).creneaux;
 export const RELANCE = Object.values(creneaux).some((rang) => Object.values(rang).some((c) => c.relance !== undefined));
-export const RESEAUX = Object.keys(reglages.reseaux).filter((r) => r !== 'relance' || RELANCE);
+/** LinkedIn : texte et carrousel par épisode seulement si un rang régulier le programme (post hebdo depuis le 10/11/2026). */
+export const LINKEDIN = ['principal', 'second'].some((r) => creneaux[r]?.linkedin);
+export const RESEAUX = Object.keys(reglages.reseaux).filter((r) => (r !== 'relance' || RELANCE) && (r !== 'linkedin' || LINKEDIN));
 const veille = JSON.parse(fs.readFileSync(path.join(RACINE, 'brand', 'veille.json'), 'utf8')) as {entites: Record<string, string>};
 const NOMS_CONNUS = [...new Set([...Object.keys(veille.entites), ...Object.values(veille.entites)])];
 

@@ -65,8 +65,8 @@ qu'aucun retour « décroche » du spectateur n'est resté sans réponse.
 
 ## 5. Rendu et contrôle visuel
 
-`npm run render -- NNN`, `npm run carrousel -- NNN` (les diapos 4:5 du carrousel
-LinkedIn, tirées des scènes), puis `npm run stills -- NNN` (une image par scène, avec
+`npm run render -- NNN` (le carrousel `npm run carrousel` ne sert plus : LinkedIn a son
+post de la semaine, skill `linkedin`), puis `npm run stills -- NNN` (une image par scène, avec
 l'interface des réseaux simulée par-dessus).
 
 Lancer le sous-agent **`controleur-visuel`** sur le dossier. Corriger chaque problème
@@ -77,7 +77,7 @@ BLOQUANT dans `scenes.json` (texte trop long, mot coupé…), puis refaire rendu
 ## 6. Publication
 
 Suivre le skill **`publication`** pour écrire `publication.md` (TikTok, Instagram,
-YouTube, LinkedIn, Threads : un texte taillé pour chaque réseau). Puis
+YouTube, Threads : un texte taillé pour chaque réseau). Puis
 `npm run check -- NNN`.
 
 **Fait quand** `npm run check` affiche « Prêt pour la relecture humaine. »

@@ -21,7 +21,7 @@ Hermes (cron)  →  ~/.hermes/scripts/matou-<routine>.sh   lance en tâche de fo
 Les heures suivent les créneaux des réseaux (`docs/reseaux.md`). Un épisode prend 45 min
 environ (jusqu'à 1 h 40 avec les replis de modèle) :
 
-- le **principal** part à 5 h 13, il est prêt vers 6 h : LinkedIn (8 h 30) et Threads
+- le **principal** part à 5 h 13, il est prêt vers 6 h : Threads
   (9 h), au moins 2 h plus tard (le délai du veto), puis midi (Instagram, TikTok)
   et le Short YouTube à 18 h ;
 - le **second** part à 14 h 13, avec l'actu de l'après-midi : prêt vers 15 h (16 h 53 au
@@ -57,6 +57,8 @@ versionnée dans `scripts/routines/hermes/`) et répond sans mention dans #matou
 | « veto #NNN [réseaux] » | `commande.sh veto NNN` | les posts pas encore partis → brouillons |
 | « état » | `commande.sh etat` | ce qui part aujourd'hui et demain, et les urgents qui attendent |
 | « stats » | `commande.sh stats` | `npm run bilan`, sans rien écrire |
+| « réponse : … » (à la question LinkedIn du lundi) | `matou.sh reponse` (texte sur l'entrée standard) → `npm run linkedin -- --reponse` | la réponse est gardée hors du dépôt (`~/.local/state/matou/linkedin/`) ; elle devient le carrousel de la semaine |
+| « ok linkedin » / « veto linkedin » | `commande.sh ok\|veto linkedin` | le post LinkedIn de la semaine → programmé / brouillon |
 
 - **Urgent** : ~45 min de production (le lanceur attend la fin d'une routine en cours et le
   dit sur Discord). Le « ok » remplace le délai de veto : les créneaux du rang `urgent`
@@ -69,6 +71,9 @@ versionnée dans `scripts/routines/hermes/`) et répond sans mention dans #matou
   des routines, qu'une routine peut remettre à zéro), reprend `node_modules` et, pour un
   urgent, la vidéo du clone des routines, puis committe et pousse le journal
   (`postiz-envoi.json`). Il n'attend pas le verrou des routines.
+- Le skill Hermes suit tout seul : chaque passage de `lancer.sh` recopie
+  `scripts/routines/hermes/SKILL.md` dans `~/.hermes/skills/social-media/matou/` s'il a
+  changé. `matou.sh` ne change pas souvent ; à la main, si besoin :
 - Installer ou mettre à jour le côté Hermes (après un changement dans
   `scripts/routines/hermes/`) :
   `cp scripts/routines/hermes/SKILL.md ~/.hermes/skills/social-media/matou/SKILL.md` et
@@ -78,8 +83,9 @@ versionnée dans `scripts/routines/hermes/`) et répond sans mention dans #matou
 | --- | --- | --- | --- |
 | `episode-du-jour principal` | Matou — épisode principal | tous les jours, 5 h 13 | agy, skill `episode-du-jour` |
 | `episode-du-jour second` | Matou — épisode second | tous les jours, 14 h 13 | agy, skill `episode-du-jour` |
-| `rappel` | Matou — rappel de relecture | tous les jours, 11 h 07 et 17 h 07 | aucun (`npm run bilan -- --attente`) |
-| `bilan` | Matou — bilan du lundi | lundi, 10 h 37 | agy, skill `bilan` |
+| `rappel` | Matou — rappel de relecture | tous les jours, 11 h 07 et 17 h 07 | aucun (`npm run bilan -- --attente`) ; du mardi 11 h au jeudi, enchaîne sur `linkedin` si le post de la semaine n'est pas fait |
+| `linkedin` | aucun cron à lui : le rappel l'enchaîne | du mardi 11 h 07 au jeudi | agy, skill `linkedin` ; consigne préparée par `npm run linkedin -- --preparer` |
+| `bilan` | Matou — bilan du lundi | lundi, 10 h 37 | agy, skill `bilan` ; avant lui, la question LinkedIn de la semaine part sur Discord (`npm run linkedin -- --question`) |
 | `urgent <lien> [réseaux]` | aucun cron : « urgent <lien> » sur Discord | à la demande | agy, skill `episode-urgent` |
 
 ## Pourquoi un clone dédié

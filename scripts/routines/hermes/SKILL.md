@@ -1,6 +1,6 @@
 ---
 name: matou
-description: Piloter Matou (@matou.ai, vidéos d'actu IA) depuis Discord — épisode urgent sur une grosse actu, feu vert (« ok #NNN »), veto, ce qui part aujourd'hui, chiffres. À utiliser quand Ruben parle de Matou, écrit dans #matou, donne un lien d'actu IA à mettre en vidéo, ou dit « urgent », « big news », « ok #NNN », « programme #NNN », « veto #NNN », « annule #NNN », « qu'est-ce qui part », « stats Matou ».
+description: Piloter Matou (@matou.ai, vidéos d'actu IA) depuis Discord — épisode urgent sur une grosse actu, feu vert (« ok #NNN »), veto, ce qui part aujourd'hui, chiffres, réponse à la question LinkedIn de la semaine. À utiliser quand Ruben parle de Matou, écrit dans #matou, donne un lien d'actu IA à mettre en vidéo, ou dit « urgent », « big news », « ok #NNN », « programme #NNN », « veto #NNN », « annule #NNN », « qu'est-ce qui part », « stats Matou ».
 version: 1.0.0
 author: Claude Code (vids-for-rs)
 metadata:
@@ -31,9 +31,21 @@ des scripts sur `main`) :
 | « veto #NNN [réseaux] », « annule #NNN », « stop #NNN » | `~/.hermes/scripts/matou.sh veto NNN [réseaux]` |
 | « qu'est-ce qui part aujourd'hui ? », « état Matou » | `~/.hermes/scripts/matou.sh etat` |
 | « stats Matou », « ça a marché ? » | `~/.hermes/scripts/matou.sh stats` (résume : vues par réseau, meilleur post) |
+| « réponse : … » (sa réponse à la question LinkedIn du lundi) | le texte **sur l'entrée standard**, jamais en argument : `~/.hermes/scripts/matou.sh reponse <<'FIN_REPONSE'` puis son texte tel quel, puis `FIN_REPONSE` |
+| « ok linkedin », « programme le post LinkedIn » | `~/.hermes/scripts/matou.sh ok linkedin` |
+| « veto linkedin », « annule le post LinkedIn » | `~/.hermes/scripts/matou.sh veto linkedin` |
 
 Réseaux : `tiktok`, `instagram`, `youtube`, `threads`, `linkedin` (les comptes connectés),
 séparés par des virgules, sans espace. « partout » ou rien : ne pas en passer.
+
+## La question LinkedIn du lundi
+
+Le bilan du lundi poste sur #matou « la question LinkedIn de la semaine ». Si Ruben y
+répond (message qui commence par « réponse : », ou qui répond clairement à cette question),
+enregistre-la avec `matou.sh reponse` (ci-dessus), son texte **mot pour mot** : ne le
+reformule pas, ne le complète pas. Relaie la ligne rendue. Il ne doit rien faire d'autre :
+le carrousel est produit et programmé seul (veto possible : « veto linkedin »). Ne lui
+relance pas la question s'il n'a pas répondu : sans réponse, un post « coulisses » part.
 
 ## Règles
 

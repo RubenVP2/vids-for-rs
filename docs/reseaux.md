@@ -13,15 +13,14 @@ chiffres de Matou (`docs/apprentissages.md`).
 | TikTok | vidéo | taux de vidéo regardée jusqu'au bout, revisionnages, partages, commentaires | 12 h 30 | 19 h 00 | 2 par jour |
 | Instagram | Reel (vidéo) | temps de visionnage, **envois en message privé**, puis likes et enregistrements | 12 h 00 | 18 h 30 | 2 par jour |
 | YouTube | Short (vidéo) | satisfaction et durée de session ; les Shorts vivent des semaines par la recherche | 18 h 00 (13 h 00 jusqu'au 09/11/2026) | 20 h 00 | 2 par jour |
-| LinkedIn (page) | **carrousel** (document à feuilleter) | temps passé sur le post, commentaires ; les liens freinent la portée | 8 h 30, en semaine | — | 1 par jour ouvré, au plus |
+| LinkedIn (page) | **carrousel** de fond (retour d'expérience ou coulisses), pas l'actu | temps passé sur le post, commentaires ; les liens freinent la portée | mardi à jeudi, 8 h 30 (post de la semaine) | — | 1 par semaine |
 | Threads | vidéo + texte de conversation (relance texte arrêtée le 09/11/2026) | réponses, vite et en fil | 9 h 00 | 19 h 30 | 2 par jour |
 
 Volume par jour (production, depuis le 30/10/2026) : **2 épisodes**, chacun publié dans
 la fenêtre qui suit sa production (décision du 30/10/2026) :
 
-- Le **principal** (produit vers 5 h, le meilleur sujet de la nuit) : LinkedIn les jours
-  ouvrés et Threads le matin, puis Instagram et TikTok à midi,
-  YouTube à 18 h. Le matin ne vaut que pour LinkedIn et Threads ; pour la vidéo courte, le
+- Le **principal** (produit vers 5 h, le meilleur sujet de la nuit) : Threads le matin,
+  puis Instagram et TikTok à midi, YouTube à 18 h. Le matin ne vaut que pour Threads ; pour la vidéo courte, le
   midi est la 2e fenêtre la plus citée. YouTube passe à 18 h le 09/11/2026 : à 13 h, le
   Short du principal fait une médiane de 122 vues contre 464 pour celui de 20 h, et le
   plus tardif des deux gagne 7 jours sur 8 (`docs/bilans/analyse-metriques-2026-11-09.md`).
@@ -35,12 +34,15 @@ la fenêtre qui suit sa production (décision du 30/10/2026) :
   partageraient le premier public test et, sur Instagram, LinkedIn et Threads, le 2e
   freine le 1er dans le fil. Entre réseaux différents, aucune contrainte.
 
-Pourquoi LinkedIn reste à 1 :
+Pourquoi LinkedIn est à part (1 post par semaine depuis le 10/11/2026) :
 
 - TikTok, Shorts et Threads jugent chaque post à part, et le volume y fait grandir un
   compte (la plupart des études citent 1 à 3 vidéos par jour pour croître).
-- LinkedIn met en concurrence les posts d'une même page : un 2e post le même jour freine
-  le premier. Instagram aussi, en partie : c'est le pari de l'utilisateur (30/10/2026).
+- LinkedIn montre surtout les personnes, et une page qui débute n'a presque pas de portée :
+  l'actu du jour, que tout le monde publie, n'y a pas pris. Ce qui y vit, c'est le vécu et
+  les chiffres réels, qu'on ne trouve nulle part ailleurs.
+- Instagram met aussi en concurrence les posts d'un même compte : c'est le pari de
+  l'utilisateur (30/10/2026).
 
 C'est un pari à mesurer : le bilan compare le midi au soir, et un épisode qui fait
 baisser les vues de l'autre (3 semaines de suite, Instagram surtout) fera revoir ce rythme.
@@ -68,16 +70,21 @@ baisser les vues de l'autre (3 semaines de suite, Instagram surtout) fera revoir
 - Soirée (19 h–21 h, pic vers 20 h).
 
 ### LinkedIn (page « Matou AI »)
+- **Un post de fond par semaine** (10/11/2026), plus l'actu des épisodes. Deux modes
+  (skill `linkedin`, `brand/linkedin.json`) :
+  - **retour d'expérience** : le lundi, avec le bilan, une question part sur Discord
+    (« Quel outil d'IA t'a fait gagner du temps cette semaine ? ») ; si l'utilisateur
+    répond (« réponse : … » à Hermes), sa réponse devient le carrousel, sans son nom ;
+  - **coulisses** (sans réponse) : une histoire vraie du dépôt, avec ses chiffres : un pari
+    et ce que les bilans en ont dit, une panne et son correctif.
 - Format : **carrousel** (images qui deviennent un document à feuilleter). Toutes les
-  études le placent devant la vidéo pour la portée. Les diapos sortent de `scenes.json`
-  (`npm run carrousel`), il n'y a rien à écrire en plus.
-- Texte : l'accroche tient dans les ~210 caractères avant « voir plus ». L'angle : ce que
-  ça change **pour le travail** (l'audience « pros hors tech »). Paragraphes courts, 2–3
-  flèches, une question à la fin. 3 hashtags au plus.
-- **Pas de lien dans le post** : la source va dans le 1er commentaire (`--commentaire`).
-- Les pages marchent en semaine, le matin (8 h–10 h, mardi–jeudi en tête). Pas le week-end.
-- Rythme : 1 par jour ouvré au plus. Comme partout, le post part le jour même (à 8 h 30,
-  sinon 11 h) ou pas du tout : une actu de la veille n'y a pas sa place.
+  études le placent devant la vidéo pour la portée. Diapos : `src/Coulisses.tsx`.
+- Texte : l'accroche tient dans les ~210 caractères avant « voir plus ». Paragraphes
+  courts, 2–3 flèches, une question ouverte à la fin. 3 hashtags au plus, **aucun lien**.
+- Les pages marchent en semaine, le matin (8 h–10 h, mardi–jeudi en tête) : le post part
+  le mardi, mercredi ou jeudi à 8 h 30, au moins 2 h après sa production (veto).
+- Ce que l'utilisateur fait : rien, ou répondre à la question du lundi. Veto : « veto
+  linkedin » à Hermes.
 
 ### Threads
 - C'est un réseau de **conversation** : les réponses dans la 1re heure pèsent le plus.

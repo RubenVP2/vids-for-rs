@@ -11,10 +11,10 @@ ci-dessous, jamais en posant une question.
 Deux épisodes par jour (`docs/reseaux.md`) :
 
 - **principal** (lancé vers 5 h) : le meilleur sujet de la nuit. Il passe partout, du matin
-  au début de soirée : LinkedIn 8 h 30, Threads 9 h, Instagram 12 h, TikTok 12 h 30,
+  au début de soirée : Threads 9 h, Instagram 12 h, TikTok 12 h 30,
   YouTube 18 h.
 - **second** (lancé vers 14 h) : le meilleur sujet pas encore traité, annonces de la
-  matinée et du début d'après-midi comprises. Il passe partout sauf LinkedIn, le soir :
+  matinée et du début d'après-midi comprises. Il passe partout, le soir :
   Instagram 18 h 30, TikTok 19 h, Threads 19 h 30, YouTube 20 h.
 
 Chaque épisode est un seul sujet, décliné par réseau : écrire toutes les sections de
@@ -95,8 +95,8 @@ Skill **`episode`**, étapes 0 à 7. Pendant la routine :
 Skill **`programmation`**, jusqu'à `--envoyer` compris, avec **`--rang principal`** ou
 **`--rang second`** (`npm run postiz -- NNN --rang second --commentaire --envoyer`).
 Sans `--date` : chaque réseau prend son premier créneau libre de ce rang, au moins 2 h
-plus tard (le temps du veto). « Pas de post : LinkedIn… » ou « réservé à l'épisode
-principal » est normal. Committer et pousser comme à l'étape 2.
+plus tard (le temps du veto). « Pas de post : LinkedIn : post de la semaine à part » est
+normal (LinkedIn a son post hebdomadaire, skill `linkedin`). Committer et pousser comme à l'étape 2.
 
 **Ne jamais lancer `--programmer`** toi-même : c'est le lanceur, après tes garde-fous.
 
