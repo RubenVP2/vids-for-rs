@@ -1,0 +1,83 @@
+{
+  "numero": 26,
+  "slug": "claude-fable-mythos",
+  "serie": "decrypte",
+  "source": {
+    "nom": "Anthropic",
+    "url": "https://www.anthropic.com/claude-fable-and-mythos-5-2",
+    "date": "2026-11-09",
+    "type": "blog"
+  },
+  "statut": "disponible",
+  "verdict": "prometteur",
+  "miniature": "==1 000 agents== pour un OS ?",
+  "musique": true,
+  "gabarit": {
+    "ouverture": "chiffre",
+    "corps": "fenetre"
+  },
+  "scenes": [
+    {
+      "type": "hook",
+      "texte": "Mille agents {IA|I A} ont créé un système d'exploitation en huit jours.",
+      "titre": "==1 000 agents== pour un OS ?",
+      "icone": "robot",
+      "visuel": {
+        "type": "chiffre",
+        "valeur": "1 000"
+      },
+      "matou": "surpris"
+    },
+    {
+      "type": "fenetre",
+      "texte": "Sur son blog, Anthropic lance Fable 5.2, son {IA|I A} la plus puissante pour coder.",
+      "app": "Claude (Anthropic)",
+      "messages": [
+        {
+          "de": "toi",
+          "texte": "Programme un système d'exploitation de zéro"
+        },
+        {
+          "de": "app",
+          "texte": "1 000 agents lancés : bureau et moteur prêts en 8 jours",
+          "quand": "puissante"
+        }
+      ],
+      "matou": "parle"
+    },
+    {
+      "type": "point",
+      "texte": "En fait, ce n'est pas un simple bout de code. Les agents ont travaillé huit jours pour programmer le moteur, le clavier et les fenêtres.",
+      "titre": "Système complet",
+      "corps": "Moteur et bureau ==programmés en 8 jours==",
+      "quand": "travaillé",
+      "icone": "cerveau",
+      "matou": "enFait"
+    },
+    {
+      "type": "comparaison",
+      "texte": "Et le résultat démarre vraiment sur un PC portable : le système intègre son propre écran de connexion et ses fichiers.",
+      "avant": {
+        "titre": "Avant",
+        "texte": "Du code dans un chat"
+      },
+      "apres": {
+        "titre": "Fable 5.2",
+        "texte": "Un système qui ==démarre sur PC==",
+        "quand": "démarre"
+      },
+      "matou": "content"
+    },
+    {
+      "type": "verdict",
+      "texte": "Hype-mètre : prometteur. Pour moi, même si cet OS reste un prototype expérimental, voir mille agents coordonnés annonce une vraie rupture.",
+      "raison": "Du simple assistant au ==développement autonome==",
+      "matou": "verdict"
+    },
+    {
+      "type": "fin",
+      "texte": "Finalement, il suffit de mille agents pour fabriquer un système d'exploitation.",
+      "matou": "sceptique"
+    }
+  ]
+}
