@@ -85,7 +85,7 @@ export const EnTete: React.FC<{episode: Episode; apparition?: number; verdict?: 
       </div>
       {teaser ? (
         <div style={{...pastille, background: C.blanc}}>
-          HYPE-MÈTRE{' '}
+          {episode.format === 'titre' ? 'VRAI OU FAUX' : 'HYPE-MÈTRE'}{' '}
           <span style={{display: 'inline-block', color: C.stylo.rouge, transform: `rotate(${Math.sin(frame / 5) * 14}deg)`}}>?</span>
         </div>
       ) : verdict === undefined ? (

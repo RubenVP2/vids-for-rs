@@ -7,6 +7,8 @@ import {MiseEnPage} from './components/MiseEnPage';
 import {SousTitres} from './components/SousTitres';
 import {Tampon} from './components/Tampon';
 import {chargerPolices} from './fonts';
+import {EpisodeMessages} from './formats/Messages';
+import {IMAGE_TAMPON} from './formats/Titre';
 import {Matou} from './mascot/Matou';
 import type {EtatMatou} from './mascot/MatouSvg';
 import {rang} from './rotation';
@@ -71,7 +73,11 @@ export const calculerDebuts = (props: EpisodeProps, fps: number) =>
 export const dureeEnImages = (props: EpisodeProps, fps: number) =>
   Math.ceil((props.timings.duree + QUEUE_SECONDES) * fps);
 
-export const EpisodeVideo: React.FC<EpisodeProps> = (props) => {
+/** Le format de l'épisode choisit la vidéo : le cahier (défaut), ou un format d'essai (docs/formats.md). */
+export const EpisodeVideo: React.FC<EpisodeProps> = (props) =>
+  props.episode.format === 'messages' ? <EpisodeMessages {...props} /> : <EpisodeCahier {...props} />;
+
+const EpisodeCahier: React.FC<EpisodeProps> = (props) => {
   const {episode, timings, audio} = props;
   const frame = useCurrentFrame();
   const {fps, durationInFrames} = useVideoConfig();
@@ -142,8 +148,8 @@ export const EpisodeVideo: React.FC<EpisodeProps> = (props) => {
                 </>
               ) : null}
               {sc.type === 'verdict' ? (
-                <Sequence from={18} layout="none">
-                  <Audio src={staticFile(SONS.verdict)} volume={tokens.audio.bruitagesVolume} />
+                <Sequence from={episode.format === 'titre' ? IMAGE_TAMPON : 18} layout="none">
+                  <Audio src={staticFile(episode.format === 'titre' ? SONS.tampon : SONS.verdict)} volume={tokens.audio.bruitagesVolume * (episode.format === 'titre' ? 1.4 : 1)} />
                 </Sequence>
               ) : null}
               {sc.type === 'fin' ? (

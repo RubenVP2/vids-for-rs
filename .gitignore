@@ -4,6 +4,9 @@ out/
 public/episodes/
 episodes/*/rendu/
 episodes/*/controle/
+prototypes/*/rendu/
+prototypes/*/controle/
+prototypes/*/voix.prise*.mp3
 # Prises intermédiaires de la voix (nettoyées par voice.ts, jamais versionnées)
 episodes/*/voix.prise*.mp3
 episodes/*/voix.tmp.mp3
