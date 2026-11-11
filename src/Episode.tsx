@@ -2,6 +2,7 @@ import React, {useMemo} from 'react';
 import {AbsoluteFill, Audio, Sequence, interpolate, spring, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
 import {DefsBouillonne} from './components/Bouillonne';
 import {EnTete} from './components/EnTete';
+import {FondBureau, HAUT_BUREAU} from './components/FondBureau';
 import {FondCahier} from './components/FondCahier';
 import {MiseEnPage} from './components/MiseEnPage';
 import {SousTitres} from './components/SousTitres';
@@ -11,6 +12,8 @@ import {EpisodeMessages} from './formats/Messages';
 import {IMAGE_TAMPON} from './formats/Titre';
 import {Matou} from './mascot/Matou';
 import type {EtatMatou} from './mascot/MatouSvg';
+import {Plouf} from './personnages/Plouf';
+import type {EtatPlouf} from './personnages/PloufSvg';
 import {rang} from './rotation';
 import {imageSignature, imagesPop, MATOU_PAR_DEFAUT, type MotScene, SceneVue, ZONE} from './scenes/Scenes';
 import type {EpisodeProps, Scene} from './schema';
@@ -54,6 +57,15 @@ const placements = (miroir: boolean): Record<Scene['type'], Placement> => {
   };
 };
 
+// Duo : Matou à droite, toujours à la même place ; Plouf dans son bocal à gauche. Sur le
+// bureau, tous deux sont posés sur le plateau.
+const PLOUF = {x: tokens.safeZone.left + 6, largeur: 330, y: (bureau: boolean) => (bureau ? HAUT_BUREAU + 30 : BAS) - (330 * 392) / 400};
+const placementsDuo = (bureau: boolean): Record<Scene['type'], Placement> => {
+  const largeur = 410;
+  const p = {largeur, x: 650 - largeur / 2, y: (bureau ? HAUT_BUREAU + 24 : BAS) - (largeur * 400) / 520};
+  return {hook: p, source: p, fenetre: p, point: p, chiffre: p, liste: p, comparaison: p, pourquoi: p, verdict: p, fin: p};
+};
+
 export const SONS = {
   transition: 'brand/sons/transition.wav',
   tampon: 'brand/sons/tampon.wav',
@@ -83,11 +95,22 @@ const EpisodeCahier: React.FC<EpisodeProps> = (props) => {
   const {fps, durationInFrames} = useVideoConfig();
   const debuts = useMemo(() => calculerDebuts(props, fps), [props, fps]);
 
-  const miroir = rang(episode.numero, 2) === 1;
-  const PLACEMENTS = useMemo(() => placements(miroir), [miroir]);
+  // Duo (prototype, docs/personnages.md) : Plouf à gauche, Matou à droite (donc mise en page en miroir).
+  const duo = episode.scenes.some((sc) => sc.plouf);
+  const bureau = episode.decor === 'bureau';
+  const miroir = duo || rang(episode.numero, 2) === 1;
+  const PLACEMENTS = useMemo(() => (duo ? placementsDuo(bureau) : placements(miroir)), [duo, bureau, miroir]);
   const iScene = Math.max(0, debuts.findLastIndex((d) => frame >= d));
   const scene = episode.scenes[iScene];
-  const etat: EtatMatou = scene.matou ?? MATOU_PAR_DEFAUT[scene.type];
+  // Pendant la réplique de Plouf, Matou écoute ; il prend son expression quand il parle.
+  const motsPlouf = timings.mots.filter((m) => m.scene === iScene && m.locuteur === 'plouf');
+  const ploufDebut = motsPlouf.length ? Math.round(motsPlouf[0].debut * fps) : -1;
+  const ploufFin = motsPlouf.length ? Math.round(motsPlouf[motsPlouf.length - 1].fin * fps) + 6 : -1;
+  const ploufParle = frame >= ploufDebut - 2 && frame < ploufFin;
+  const etat: EtatMatou = ploufParle ? 'neutre' : scene.matou ?? MATOU_PAR_DEFAUT[scene.type];
+  const etatPlouf: EtatPlouf = ploufParle ? (scene.plouf?.trim().endsWith('?') ? 'question' : 'parle') : scene.ploufEtat ?? 'neutre';
+  const changementMatou = ploufFin > 0 && frame >= ploufFin ? ploufFin : debuts[iScene];
+  const changementPlouf = ploufParle ? ploufDebut : ploufFin > 0 ? ploufFin : debuts[iScene];
   // Sans scène « source » (format actuel), le tampon de statut s'incruste sur la 2e scène.
   const incrustation = !episode.scenes.some((sc) => sc.type === 'source');
   const iVerdict = episode.scenes.findIndex((sc) => sc.type === 'verdict');
@@ -106,7 +129,7 @@ const EpisodeCahier: React.FC<EpisodeProps> = (props) => {
   return (
     <MiseEnPage.Provider value={{miroir}}>
       <AbsoluteFill>
-        <FondCahier />
+        {bureau ? <FondBureau /> : <FondCahier />}
         <DefsBouillonne />
         <EnTete
           episode={episode}
@@ -167,11 +190,16 @@ const EpisodeCahier: React.FC<EpisodeProps> = (props) => {
           <Matou
             etat={etat}
             enveloppe={timings.enveloppe}
-            changement={debuts[iScene]}
+            changement={changementMatou}
             verres={verres}
             largeur={pos.largeur}
           />
         </div>
+        {duo ? (
+          <div style={{position: 'absolute', left: PLOUF.x, top: PLOUF.y(bureau)}}>
+            <Plouf etat={etatPlouf} enveloppe={timings.enveloppePlouf} changement={changementPlouf} largeur={PLOUF.largeur} />
+          </div>
+        ) : null}
 
         <Audio src={staticFile(audio)} />
         {episode.musique ? (

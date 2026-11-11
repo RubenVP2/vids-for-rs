@@ -1,43 +1,69 @@
-# La bande de Matou (prototype, 11/11/2026)
+# Le duo Matou et Plouf (prototype, 11/11/2026)
 
-Quatre seconds rôles, dessinés comme Matou : feutre noir qui bouillonne, corps blanc, une
-seule couleur d'accent chacun (prise dans les fluos de `brand/tokens.json`). Matou reste
-la marque et celui qui explique ; les autres lui donnent la réplique. Rien n'est encore
-branché dans les épisodes : ce sont des dessins et des maquettes.
+Branche d'essai `prototype-duo-plouf`. Rien n'entre dans les routines tant que
+l'utilisateur ne l'a pas validé.
 
-| Planche | En situation |
-| --- | --- |
-| ![La bande](images/planche-bande.png) | ![Quatre scènes](images/bande-scenes.png) |
+![Les têtes de Plouf](images/planche-plouf.png)
 
-Composants : `src/personnages/Bande.tsx` (états `neutre`, `parle`, `surpris`,
-`signature`) ; planches : `src/personnages/Planches.tsx` (`npm run stills -- planches`).
+## L'idée : un duo de vulgarisation
 
-## Qui fait quoi
+Modèle : les duos des émissions de vulgarisation (*C'est pas sorcier*, France 3, 1993-2014).
+L'un va chercher la question du public, l'autre explique avec ses maquettes. L'émission
+a commencé à trois et a fini en duos (Jamy avec Fred, ou Jamy avec Sabine). Les maquettes
+étaient son identité : la formule 2011-2012 qui les a remplacées par de la 3D a été
+abandonnée. On reprend le **principe**, rien de l'émission (ni noms, ni décor, ni phrases).
 
-| Personnage | Il joue | Sa réplique type | Où il sert |
-| --- | --- | --- | --- |
-| **Coco**, le perroquet au mégaphone (crête rose, bec orange) | La hype : il répète le communiqué ou le titre racoleur | « Révolutionnaire ! » | Le hook des épisodes d'actu : il crie la promesse, Matou trie (« En fait… »). Clin d'œil au « perroquet stochastique » |
-| **Plouf**, le poisson rouge dans son bocal | Le spectateur : il pose la question qu'on n'ose pas poser, et l'oublie trois secondes après | « Euh… et ça sert à quoi ? » | La série « Matou t'explique » : Plouf demande, Matou répond. Sa mémoire courte sert à expliquer la « mémoire » d'une IA |
-| **Bip**, le vieil écran sur pattes (écran bleu) | L'IA elle-même : serviable, sûre d'elle, parfois fausse avec aplomb | « Bien sûr ! » | Les démonstrations et les limites (« Matou t'écrit ») : Bip répond, Matou vérifie |
-| **Cookie**, la souris d'ordinateur (oreilles roses, queue en câble) | Ce qui ramasse tes données : bannières, arnaques, conditions d'utilisation | « Je peux prendre un cookie ? » | Les sujets vie privée et arnaques. Un chat contre une souris : le duel se comprend sans un mot |
+| | Rôle | Chez nous |
+| --- | --- | --- |
+| **Matou** | celui qui explique | inchangé : « En fait… », l'avis, le Hype-mètre. Ses cartes sont ses maquettes |
+| **Plouf**, le poisson rouge | celui qui pose la question du spectateur | il apporte l'actu (« Il paraît que… C'est vrai ? »), relance (« Et pour moi, ça change quoi ? »), et oublie tout : « Attends… c'était quoi la question ? » relance la boucle de fin |
 
-## Pourquoi des seconds rôles
+Règles d'écriture proposées : Plouf dit **une à trois répliques courtes** (≤ 120
+caractères), toujours **avant** celle de Matou dans la scène ; il ne dit que ce que dit la
+source (il pose la question, il n'affirme rien) ; le verdict reste à Matou. Ses mots sont
+surlignés en orange dans les sous-titres, ceux de Matou en jaune.
 
-- **Un désaccord dès la 1re seconde.** 58,8 % des spectateurs YouTube balaient (capture du
-  10/11). Un hook à deux voix (Coco crie, Matou lève un sourcil) pose un conflit qu'on
-  veut voir tranché, là où un titre seul s'explique.
-- **Le spectateur a un visage.** Plouf dit « je n'ai pas compris » à sa place, sans qu'on
-  le prenne de haut.
-- **Des épisodes qui se reconnaissent.** Un personnage récurrent donne un rendez-vous
-  (« l'épisode où Coco s'emballe ») et des commentaires (« Coco a encore crié »).
-- **Matou reste Matou.** Le nom, le compte `@matou.ai`, l'avatar et 25 épisodes reposent
-  sur lui : le remplacer reviendrait à relancer la chaîne de zéro.
+## Comment ça marche dans le moteur
 
-## Pour les brancher (pas encore fait)
+- `scenes.json` : par scène, `plouf` (sa réplique) et `ploufEtat` (son expression pendant
+  que Matou parle : `neutre`, `surpris`, `compris`…). Une scène avec `plouf` met tout
+  l'épisode en duo : Plouf à gauche, Matou à droite.
+- `timings.json` : chaque mot a son `locuteur` ; `enveloppe` anime la bouche de Matou,
+  `enveloppePlouf` celle de Plouf.
+- Pendant la réplique de Plouf, Matou écoute (`neutre`) ; Plouf prend `question` si sa
+  réplique finit par « ? », sinon `parle`.
+- Composants : `src/personnages/PloufSvg.tsx` (dessin, 5 expressions) et `Plouf.tsx`
+  (animé : le bocal flotte, le poisson nage, bulles, clignements).
 
-1. Une 2e voix de synthèse par personnage (casting comme celui de Matou, `brand/voix.json`),
-   et un champ `locuteur` par réplique dans `scenes.json` ; la bouche de chacun suit sa voix.
-2. Une scène « duo » : le second rôle en haut, Matou en bas, une bulle chacun.
-3. Une règle d'écriture : un second rôle au plus par épisode, 1 ou 2 répliques, jamais le
-   dernier mot (le verdict reste à Matou). Coco ne dit que ce que dit la source (le titre
-   ou le communiqué cité) : il incarne la promesse, il n'en invente pas.
+## Décor alternatif : le bureau de Matou
+
+`"decor": "bureau"` remplace le cahier par un **lieu fixe** : un mur en liège où les cartes
+sont punaisées, et le bureau en bois où Matou et Plouf sont posés, sous la lumière d'une
+lampe (`src/components/FondBureau.tsx`). Les cartes, l'encre et le surligneur ne changent
+pas. L'idée vient du même modèle : un plateau qu'on reconnaît en une image, et où le
+bocal de Plouf a une place naturelle.
+
+## La voix d'essai (gratuite)
+
+`scripts/prototype/voix-libre.py` fait les deux voix avec **Piper** (synthèse libre, hors
+ligne) : Matou = `fr_FR-tom-medium`, Plouf = `fr_FR-siwis-medium` monté d'environ 2,5
+demi-tons. Le minutage des mots est estimé (chaque phrase est synthétisée seule, puis
+répartie au prorata des phonèmes). C'est pour juger le format, pas pour publier : la
+qualité est en dessous de la voix de Matou, et `npm run check` refuse cette voix.
+
+```bash
+pip install piper-tts   # puis télécharger les .onnx et .onnx.json depuis huggingface.co/rhasspy/piper-voices (fr/fr_FR)
+python3 scripts/prototype/voix-libre.py prototypes/903-duo-plouf --voix <dossier des .onnx>
+npm run render -- prototypes/903-duo-plouf
+```
+
+Épisodes d'essai : `prototypes/903-duo-plouf` (cahier) et `prototypes/904-duo-plouf-bureau`
+(bureau), sur les faits de #021 (feux rouges, blog NVIDIA du 2 nov. 2026).
+
+## Pour passer en production (pas encore fait)
+
+1. Une voix pour Plouf dans `brand/voix.json` (casting comme celui de Matou), et `npm run
+   voice` qui lit les deux voix (deux appels, puis le même alignement).
+2. `validate` : les règles ci-dessus (nombre et longueur des répliques, jamais le verdict).
+3. Le skill `ecriture-matou` : quand faire parler Plouf.
+4. Un test sur une semaine, comme le rythme posé : duo un épisode sur deux, comparé au solo.
