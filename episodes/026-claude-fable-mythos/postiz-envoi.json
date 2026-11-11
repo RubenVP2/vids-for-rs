@@ -1,0 +1,67 @@
+{
+  "envoye": "2026-11-10T05:06:25.987Z",
+  "date": "2026-11-10T07:30:00.000Z",
+  "rang": "principal",
+  "statut": "programmé",
+  "commentaire": true,
+  "video": "https://uploads.postiz.com/JE60pG2DFT.mp4",
+  "miniature": "https://uploads.postiz.com/g1DjPIDE8g.png",
+  "carrousel": [
+    "https://uploads.postiz.com/V6Sif5wNrD.png",
+    "https://uploads.postiz.com/lk7vrvrxBY.png",
+    "https://uploads.postiz.com/VbnSZtxmKR.png",
+    "https://uploads.postiz.com/v3aU4JGWZs.png",
+    "https://uploads.postiz.com/q5zpp0tKEJ.png",
+    "https://uploads.postiz.com/u6tggezdRL.png"
+  ],
+  "postes": [
+    {
+      "reseau": "linkedin",
+      "postId": "cmwa89dqd1159p607isk3pujg",
+      "integration": "cmvshkn720a0spg1ci9rzdm7y",
+      "date": "2026-11-10T07:30:00.000Z",
+      "statut": "programmé",
+      "commentaire": true
+    },
+    {
+      "reseau": "threads",
+      "postId": "cmwa89efd106jnv07amd74kpp",
+      "integration": "cmvsb2y1q03efpg1c3j45vgui",
+      "date": "2026-11-10T08:00:00.000Z",
+      "statut": "programmé",
+      "commentaire": true
+    },
+    {
+      "reseau": "instagram",
+      "postId": "cmwa89f47115bp607z3y4n7ue",
+      "integration": "cmvsaogt206kfor1cddnosuhf",
+      "date": "2026-11-10T11:00:00.000Z",
+      "statut": "programmé",
+      "commentaire": true
+    },
+    {
+      "reseau": "tiktok",
+      "postId": "cmwa89fsz106lnv07yyjqji6r",
+      "integration": "cmvsakeo602wupg1crmgz7g9n",
+      "date": "2026-11-10T11:30:00.000Z",
+      "statut": "programmé",
+      "commentaire": false
+    },
+    {
+      "reseau": "threads-relance",
+      "postId": "cmwa89gk1106mnv073qf06dvz",
+      "integration": "cmvsb2y1q03efpg1c3j45vgui",
+      "date": "2026-11-10T14:30:00.000Z",
+      "statut": "programmé",
+      "commentaire": false
+    },
+    {
+      "reseau": "youtube",
+      "postId": "cmwa89h9c106nnv0786fmvffi",
+      "integration": "cmvsb3xwh07l1or1cvp01pod9",
+      "date": "2026-11-10T17:00:00.000Z",
+      "statut": "programmé",
+      "commentaire": true
+    }
+  ]
+}

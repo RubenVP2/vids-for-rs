@@ -1,0 +1,215 @@
+[
+  {
+    "type": "draft",
+    "date": "2026-11-10T07:30:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvshkn720a0spg1ci9rzdm7y"
+        },
+        "value": [
+          {
+            "content": "Pour ou contre confier des projets logiciels entiers à des équipes d'agents autonomes ? Anthropic vient de prouver que 1 000 agents coordonnés peuvent concevoir un système d'exploitation complet en 8 jours.\n\nPour tester son nouveau modèle Claude Fable 5.2, un ingénieur d'Anthropic est parti d'un dossier vide. Sans intervention humaine continue, les agents ont travaillé sans relâche pour concevoir l'architecture, programmer le noyau, les pilotes de périphériques, l'interface graphique et le gestionnaire de fichiers.\n\nCe que cela annonce pour le monde professionnel et les équipes tech :\n\n→ Dépassement du simple assistant : on quitte l'ère de l'autocomplétion pour entrer dans celle d'équipes d'agents capables de mener des projets complexes de bout en bout.\n→ Réduction drastique des cycles de R&D : des chantiers techniques de plusieurs mois d'ingénierie peuvent être prototypés en quelques jours.\n→ Nouveaux enjeux d'architecture : le rôle des développeurs bascule de l'écriture ligne à ligne vers la spécification, la supervision et l'audit de sécurité des sous-systèmes générés.\n\nDans ton entreprise, serais-tu pour ou contre laisser une équipe d'agents IA prototyper vos futurs outils internes en totale autonomie ?\n\nLe détail en images ⤵️\n\n#IA #Tech #Management",
+            "image": [
+              {
+                "id": "63ed8045-a8a6-4a64-91a6-fedb341c9865",
+                "path": "https://uploads.postiz.com/V6Sif5wNrD.png"
+              },
+              {
+                "id": "abf2f6d0-fb0d-4e72-8494-24d2fda4d938",
+                "path": "https://uploads.postiz.com/lk7vrvrxBY.png"
+              },
+              {
+                "id": "9fec6387-a171-41cf-a6ac-988cd4eee435",
+                "path": "https://uploads.postiz.com/VbnSZtxmKR.png"
+              },
+              {
+                "id": "4467b125-d6b0-45f9-ad1e-f73e8f6063db",
+                "path": "https://uploads.postiz.com/v3aU4JGWZs.png"
+              },
+              {
+                "id": "a01c91de-47bc-44de-959e-774ee96253ce",
+                "path": "https://uploads.postiz.com/q5zpp0tKEJ.png"
+              },
+              {
+                "id": "a94eab32-9bfb-497d-9e25-342d91741d33",
+                "path": "https://uploads.postiz.com/u6tggezdRL.png"
+              }
+            ]
+          },
+          {
+            "content": "Sources : Anthropic : https://www.anthropic.com/claude-fable-and-mythos-5-2",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "linkedin-page",
+          "post_as_images_carousel": true,
+          "carousel_name": "Pourquoi Claude a créé un système d'exploitation ?"
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-10T08:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb2y1q03efpg1c3j45vgui"
+        },
+        "value": [
+          {
+            "content": "Je parie que dans deux ans, plus aucun logiciel d'envergure ne sera codé sans une équipe d'agents autonomes pour en rédiger l'architecture.\n\nAnthropic vient de démontrer la puissance de Claude Fable 5.2 : 1 000 agents ont créé un système d'exploitation complet en 8 jours, fonctionnel sur PC portable.\n\nStatut : modèle disponible aujourd'hui.\nSource : Anthropic\n\nQui me contredit sur l'arrivée des équipes d'agents ? #IA",
+            "image": [
+              {
+                "id": "d2db162a-1fab-4072-a2af-a9d7746896c4",
+                "path": "https://uploads.postiz.com/JE60pG2DFT.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Sources : Anthropic : https://www.anthropic.com/claude-fable-and-mythos-5-2",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "threads"
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-10T11:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsaogt206kfor1cddnosuhf"
+        },
+        "value": [
+          {
+            "content": "1 000 agents d'IA pour programmer un système d'exploitation complet en 8 jours : le nouveau record d'Anthropic. 🤖\n\nPour éprouver son modèle Claude Fable 5.2, Anthropic lui a confié un dossier vide.\n\n→ Plus de 1 000 agents coordonnés jour et nuit pendant 8 jours\n→ Un moteur complet, des pilotes, un bureau et des fenêtres\n→ Un système qui démarre pour de vrai sur un ordinateur portable\n\nEnvoie-la à quelqu'un qui attend impatiemment que l'IA code à sa place ! ☝️\n\n#IA #Anthropic #Claude #vulgarisation #matou",
+            "image": [
+              {
+                "id": "d2db162a-1fab-4072-a2af-a9d7746896c4",
+                "path": "https://uploads.postiz.com/JE60pG2DFT.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Sources : Anthropic : https://www.anthropic.com/claude-fable-and-mythos-5-2",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "instagram-standalone",
+          "post_type": "post",
+          "is_trial_reel": false
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-10T11:30:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsakeo602wupg1crmgz7g9n"
+        },
+        "value": [
+          {
+            "content": "Anthropic a fait créer un système d'exploitation complet à 1 000 agents Claude en 8 jours. Tu lui mets combien sur 10, à cette prouesse ? ☝️\n\n#IA #Anthropic #Claude #apprendresurtiktok #matou",
+            "image": [
+              {
+                "id": "d2db162a-1fab-4072-a2af-a9d7746896c4",
+                "path": "https://uploads.postiz.com/JE60pG2DFT.mp4"
+              }
+            ]
+          }
+        ],
+        "settings": {
+          "__type": "tiktok-business",
+          "content_posting_method": "DIRECT_POST",
+          "privacy_level": "PUBLIC_TO_EVERYONE",
+          "duet": true,
+          "stitch": true,
+          "comment": true,
+          "autoAddMusic": "no",
+          "brand_content_toggle": false,
+          "brand_organic_toggle": false,
+          "video_made_with_ai": true
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-10T14:30:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb2y1q03efpg1c3j45vgui"
+        },
+        "value": [
+          {
+            "content": "Qui s'est déjà retrouvé débordé par un projet de code titanesque en rêvant d'une équipe de dix développeurs sous la main pour le plier en une semaine ? Racontez vos pires galères de livraison ! #IA",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "threads"
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-10T17:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb3xwh07l1or1cvp01pod9"
+        },
+        "value": [
+          {
+            "content": "Anthropic dévoile son modèle Claude Fable 5.2, capable de coordonner 1 000 agents pour bâtir un OS bootable de zéro.\nUne démonstration impressionnante qui montre l'accélération fulgurante du code autonome.\n\nSource : https://www.anthropic.com/claude-fable-and-mythos-5-2\n\n#IA #Claude #shorts #matou",
+            "image": [
+              {
+                "id": "d2db162a-1fab-4072-a2af-a9d7746896c4",
+                "path": "https://uploads.postiz.com/JE60pG2DFT.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Sources : Anthropic : https://www.anthropic.com/claude-fable-and-mythos-5-2",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "youtube",
+          "type": "public",
+          "selfDeclaredMadeForKids": "no",
+          "title": "Pourquoi Claude a créé un système d'exploitation ?",
+          "thumbnail": {
+            "id": "3ead12d1-c2d2-4c06-8550-d53cdd225d8b",
+            "path": "https://uploads.postiz.com/g1DjPIDE8g.png"
+          }
+        }
+      }
+    ]
+  }
+]

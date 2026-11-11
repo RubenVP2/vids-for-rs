@@ -205,7 +205,7 @@ if (!fs.existsSync(mp3) || force) {
   };
   // Aucune prise intermédiaire ne doit rester dans l'épisode (elle partirait dans git).
   const nettoyer = () => {
-    for (const f of fs.readdirSync(path.dirname(mp3)).filter((x) => /\.(prise\d+|tmp|debit|silences)\.mp3$/.test(x))) {
+    for (const f of fs.readdirSync(path.dirname(mp3)).filter((x) => /\.(prise\d+|tmp|debit|silences|secours)\.mp3$/.test(x))) {
       fs.rmSync(path.join(path.dirname(mp3), f), {force: true});
     }
   };
@@ -258,6 +258,42 @@ if (!fs.existsSync(mp3) || force) {
         fs.rmSync(candidat, {force: true});
       }
     }
+    if (!conforme && !moindre && reglages.secours?.length) {
+      for (const secours of reglages.secours) {
+        console.warn(`Modèle principal ${reglages.modele} indisponible. Essai voix de secours : ${secours.modele} / ${secours.voix}…`);
+        const candidat = mp3.replace(/\.mp3$/, '.secours.mp3');
+        try {
+          await synthetiser(texte, secours, candidat);
+          normaliserVolume(candidat);
+          raccourcirSilences(candidat);
+          const q = mesurer(candidat, nombreMots, 0, 0, phrases);
+          let final = q;
+          if (avertissements(q).length) {
+            const {facteur: _, ...recale} = calerDebit(candidat, q, nombreMots);
+            final = recale;
+          }
+          const defautsPrise = defauts(final);
+          console.log(`  secours ${resume(final)}${defautsPrise.length ? ` — ${defautsPrise.join(' ; ')}` : ' — OK'}`);
+          if (!defautsPrise.length) {
+            conforme = {fichier: candidat, q: final};
+            voix = {modele: secours.modele, voix: secours.voix, secours: true};
+            console.warn(`Voix de secours conforme retenue (${secours.modele} / ${secours.voix}).`);
+            break;
+          } else if (!moindre || score(final) > score(moindre.q)) {
+            if (moindre) fs.rmSync(moindre.fichier, {force: true});
+            moindre = {fichier: candidat, q: final};
+            voix = {modele: secours.modele, voix: secours.voix, secours: true};
+          }
+        } catch (e) {
+          console.warn(`  échec voix de secours ${secours.modele} : ${(e as Error).message.slice(0, 200)}`);
+          fs.rmSync(candidat, {force: true});
+        }
+      }
+      if (!conforme && moindre && voix?.secours) {
+        conforme = moindre;
+        moindre = undefined;
+      }
+    }
     if (!conforme && moindre) {
       // Aucune prise conforme : on ne touche pas à voix.mp3, on met la meilleure à part.
       fs.rmSync(path.join(dossier, 'voix.refaire.mp3'), {force: true});
@@ -274,8 +310,9 @@ if (!fs.existsSync(mp3) || force) {
     fs.renameSync(conforme.fichier, mp3);
     qualite = conforme.q;
     // Provenance liée au CONTENU du fichier : un mp3 déplacé à la main ne passera pas `check`.
-    fs.writeFileSync(provenance, JSON.stringify({modele: reglages.modele, voix: reglages.voix, sha256: empreinte(mp3)}, null, 1) + '\n');
-    voix = {modele: reglages.modele, voix: reglages.voix};
+    const infoVoix = voix ?? {modele: reglages.modele, voix: reglages.voix};
+    fs.writeFileSync(provenance, JSON.stringify({...infoVoix, sha256: empreinte(mp3)}, null, 1) + '\n');
+    voix = infoVoix;
     fs.rmSync(path.join(dossier, 'voix.secours.mp3'), {force: true}); // un secours périmé ne doit pas rester
     const av = avertissements(qualite, rythme.debit);
     if (av.length) console.warn(`  ${av.join(' ; ')} : texte dense, à raccourcir plutôt qu’à refaire.`);
@@ -285,7 +322,7 @@ if (!fs.existsSync(mp3) || force) {
 } else {
   console.log('voix.mp3 existe déjà (--force pour la refaire, --recaler pour resserrer les silences et le débit).');
   // Provenance : le fichier doit être celui qu'on a écrit (même empreinte).
-  let meta: {modele?: string; voix?: string; sha256?: string} | undefined;
+  let meta: {modele?: string; voix?: string; secours?: boolean; sha256?: string} | undefined;
   try {
     meta = JSON.parse(fs.readFileSync(provenance, 'utf8'));
   } catch {
@@ -295,7 +332,7 @@ if (!fs.existsSync(mp3) || force) {
     if (meta.sha256 !== empreinte(mp3)) {
       throw new Error('voix.mp3 ne correspond pas à sa provenance (voix.meta.json) : fichier modifié à la main ? Relancer avec --force.');
     }
-    voix = {modele: meta.modele ?? reglages.modele, voix: meta.voix ?? reglages.voix};
+    voix = {modele: meta.modele ?? reglages.modele, voix: meta.voix ?? reglages.voix, secours: meta.secours};
   } else {
     console.warn('Provenance absente (épisode antérieur au 02/11) : identité de la voix non vérifiable.');
     const ancienne = ((): undefined | {modele: string; voix: string} => {

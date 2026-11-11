@@ -1,0 +1,71 @@
+{
+  "numero": 28,
+  "slug": "gemini-4-carbon-disponible",
+  "serie": "flash",
+  "source": {
+    "nom": "Google",
+    "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-carbon-now-available/",
+    "date": "2026-11-10",
+    "type": "blog"
+  },
+  "statut": "disponible",
+  "verdict": "prometteur",
+  "miniature": "L'IA la plus puissante enfin pour toi ?",
+  "musique": true,
+  "gabarit": {
+    "ouverture": "question",
+    "corps": "liste"
+  },
+  "scenes": [
+    {
+      "type": "hook",
+      "texte": "Peux-tu enfin tester l'IA la plus puissante de Google ?",
+      "titre": "Enfin l'IA la plus puissante ?",
+      "icone": "eclair",
+      "matou": "surpris"
+    },
+    {
+      "type": "liste",
+      "texte": "Google déploie {Gemini 4 Carbon|Gémini quatre Carbone}. Il fait travailler plusieurs IA en équipe, répare des failles tout seul, et coûte deux fois moins cher.",
+      "titre": "Ce qu'apporte Carbon",
+      "elements": [
+        {
+          "texte": "Des IA en ==équipe==",
+          "icone": "robot",
+          "quand": "équipe"
+        },
+        {
+          "texte": "==Répare les failles==",
+          "icone": "cadenas",
+          "quand": "répare"
+        },
+        {
+          "texte": "==Deux fois== moins cher",
+          "icone": "eclair",
+          "quand": "moins"
+        }
+      ],
+      "matou": "parle"
+    },
+    {
+      "type": "point",
+      "texte": "En fait, pour l'avoir dans ton appli Gemini, il faut payer l'abonnement Ultra. Sinon, c'est réservé aux entreprises et aux développeurs.",
+      "titre": "L'accès grand public",
+      "corps": "Réservé aux ==abonnés Ultra==",
+      "icone": "euro",
+      "quand": "Ultra",
+      "matou": "enFait"
+    },
+    {
+      "type": "verdict",
+      "texte": "Hype-mètre : prometteur. Pour moi, faire bosser des IA en équipe est bluffant, mais la facture grimpe trop vite.",
+      "raison": "Des IA en équipe, mais facture salée",
+      "matou": "verdict"
+    },
+    {
+      "type": "fin",
+      "texte": "Pour tester l'IA la plus puissante, prépare la carte bleue.",
+      "matou": "sceptique"
+    }
+  ]
+}

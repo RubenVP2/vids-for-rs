@@ -64,6 +64,7 @@ const texte = (taille: number): React.CSSProperties => ({
 });
 const titre = (taille: number): React.CSSProperties => ({fontFamily: POLICE_TITRE, fontSize: taille, lineHeight: 1.08, color: C.encre});
 const M: React.FC<{t: string}> = ({t}) => <TexteMarque texte={t} debut={-100} />;
+const tailleTexteCarte = (t: string) => (t.length > 130 ? 38 : t.length > 80 ? 42 : 46);
 
 export const DiapoLinkedin: React.FC<z.infer<typeof diapoLinkedinProps>> = ({post, index}) => {
   const total = nombreDiapos(post);
@@ -103,22 +104,22 @@ export const DiapoLinkedin: React.FC<z.infer<typeof diapoLinkedinProps>> = ({pos
             <div style={{...titre(86), textAlign: 'center', transform: 'rotate(-1.5deg)'}}>
               <M t={contenu.titre} />
             </div>
-            <Carte largeur={880} hauteur={contenu.texte.length > 140 ? 400 : 330} style={{marginTop: 50}}>
-              <div style={{...texte(contenu.texte.length > 140 ? 44 : 50), margin: 'auto 0'}}>
+            <Carte largeur={880} hauteur={contenu.texte.length > 120 ? 370 : 330} style={{marginTop: 36}}>
+              <div style={{...texte(tailleTexteCarte(contenu.texte)), margin: 'auto 0'}}>
                 <M t={contenu.texte} />
               </div>
             </Carte>
           </>
         ) : !derniere ? (
           <>
-            <div style={{...titre(56), background: C.encre, color: C.blanc, padding: '4px 22px', transform: 'rotate(-2deg)', marginBottom: 40}}>
+            <div style={{...titre(56), background: C.encre, color: C.blanc, padding: '4px 22px', transform: 'rotate(-2deg)', marginBottom: 30}}>
               CE QU'ON EN RETIENT
             </div>
             <div style={{...titre(96), textAlign: 'center', transform: 'rotate(-1.5deg)'}}>
               <M t={post.lecon.titre} />
             </div>
-            <Carte largeur={880} hauteur={360} fond={C.surligneur} rotation={1.5} style={{marginTop: 50}}>
-              <div style={{...texte(50), margin: 'auto 0'}}>
+            <Carte largeur={880} hauteur={post.lecon.texte.length > 120 ? 390 : 350} fond={C.surligneur} rotation={1.5} style={{marginTop: 40}}>
+              <div style={{...texte(tailleTexteCarte(post.lecon.texte)), margin: 'auto 0'}}>
                 <M t={post.lecon.texte} />
               </div>
             </Carte>

@@ -1,0 +1,23 @@
+{
+  "envoye": "2026-11-11T16:17:42.581Z",
+  "date": "2026-11-12T07:30:00.000Z",
+  "statut": "programmé",
+  "images": [
+    "https://uploads.postiz.com/tjHrhn4XSu.png",
+    "https://uploads.postiz.com/krnkX4tqvX.png",
+    "https://uploads.postiz.com/Gnw9wQS5U3.png",
+    "https://uploads.postiz.com/8pNulRe69E.png",
+    "https://uploads.postiz.com/tAFBmtNmaQ.png",
+    "https://uploads.postiz.com/rC8AIpimlQ.png",
+    "https://uploads.postiz.com/OTwHZOD61X.png"
+  ],
+  "postes": [
+    {
+      "reseau": "linkedin",
+      "postId": "cmwcboljy0f01r007xwexi5wr",
+      "integration": "cmvshkn720a0spg1ci9rzdm7y",
+      "date": "2026-11-12T07:30:00.000Z",
+      "statut": "programmé"
+    }
+  ]
+}
