@@ -2,6 +2,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import {episodeSchema, timingsSchema, type Episode, type Timings} from '../../src/schema';
+import {reglagesDuo} from './duo';
 import {rythmeDe} from './rythme';
 
 export const RACINE = path.resolve(import.meta.dirname, '..', '..');
@@ -36,6 +37,20 @@ export const lireEpisode = (dossier: string): Episode => {
  * débit (brand/voix.json → testDebit), un épisode sur deux est « posé » : ~180 mots/min, ~30 s.
  */
 export const budgetDe = (episode: Episode) => {
+  const base = budgetSolo(episode);
+  // Duo (brand/duo.json) : les répliques de Plouf comptent dans les mots, avec une marge.
+  const d = reglagesDuo?.budget;
+  if (!d || !episode.scenes.some((s) => s.plouf)) return base;
+  return {
+    nom: `${base.nom}, en duo`,
+    viser: [base.viser[0] + d.viser[0], base.viser[1] + d.viser[1]] as [number, number],
+    max: base.max + d.max,
+    voix: base.voix + d.voix,
+    video: base.video + d.video,
+  };
+};
+
+const budgetSolo = (episode: Episode): {nom: string; viser: [number, number]; max: number; voix: number; video: number} => {
   if (episode.long) return {nom: 'format long', viser: [120, 165], max: 190, voix: 62, video: 66};
   const pose = rythmeDe(episode.numero).budgets?.[episode.serie];
   if (pose) return {nom: `série ${episode.serie}, rythme posé`, ...pose};

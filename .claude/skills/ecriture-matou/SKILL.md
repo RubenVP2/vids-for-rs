@@ -76,6 +76,40 @@ s'applique plus). Ce qui change à l'écriture :
 - Rien d'inventé : tout vient de `source.md` (page officielle, organisme public ou média
   reconnu), dont la date est celle de la page.
 
+## Duo avec Plouf (test du 12/11/2026, `brand/duo.json`)
+
+Un jour sur deux, l'épisode est un **duo** : `npm run gabarits -- NNN` le dit (« Duo : OUI »),
+`npm run validate` le vérifie. Plouf, le poisson rouge dans son bocal, est **le spectateur** :
+il apporte la question, relance, oublie. **Matou explique** et garde l'avis et le verdict
+(le modèle : les duos de vulgarisation, l'un demande, l'autre explique ; `docs/personnages.md`).
+
+- Dans `scenes.json` : `"decor": "bureau"`, et dans 2 ou 3 scènes un champ **`plouf`** (sa
+  réplique, dite **avant** le `texte` de Matou dans la même scène, 16 mots max, 32 en tout)
+  et, si utile, **`ploufEtat`** (son air pendant que Matou parle : `neutre`, `surpris`,
+  `compris`). Quand sa réplique finit par « ? », Plouf prend tout seul son air de question.
+- **Hook** : Plouf ouvre avec la question du spectateur, en une phrase vive (« Matou ! Il paraît
+  que ton médecin va être remplacé par une IA. C'est vrai ? ») ; Matou répond en une phrase
+  courte qui tranche ou intrigue (« En partie. Et ça a déjà commencé. »). Le titre du hook
+  reste à l'écran comme d'habitude.
+- **Relance** (une seule, au milieu) : la question naïve que le public se pose à ce
+  moment-là (« Et ça marche vraiment ? », « Et pour moi, ça change quoi ? », « C'est payant ? »).
+- **Fin** (au choix) : Plouf a déjà oublié (« Attends… c'était quoi la question, déjà ? ») et
+  Matou y répond en reprenant le hook : la boucle se fait toute seule. Sinon, Matou finit seul.
+- Plouf **ne dit rien de factuel** que la source ne dit pas, ne donne **pas d'avis**, ne parle
+  **jamais dans la scène verdict**. Il tutoie Matou, parle comme un enfant curieux, sans
+  jargon. Pas de blague à ses dépens sur l'intelligence : il pose les vraies questions.
+- Budget : ses mots comptent avec ceux de Matou ; le duo ajoute ~10 à 16 mots au budget de la
+  série et ~7 s à la durée maximale (`npm run validate` donne les chiffres). Matou reste
+  plus court qu'en solo : Plouf porte la question, Matou n'a plus à la poser.
+
+Exemple (hook, puis relance) :
+
+```json
+{"type": "hook", "plouf": "Matou ! Il paraît qu'une IA va régler les feux rouges de ma ville. C'est vrai ?",
+ "texte": "En partie, oui. Et ça a déjà commencé.", "titre": "Une ==IA== règle ta ville ?", "matou": "enFait", "ploufEtat": "surpris"},
+{"type": "chiffre", "plouf": "Et ça marche ?", "texte": "En fait, en Malaisie, …", "valeur": "-26 %", "legende": "…", "matou": "enFait"}
+```
+
 ## Gabarit de montage (d'abord)
 
 `npm run gabarits -- NNN` donne l'**ouverture** (ce que montre le hook) et le **corps** (la

@@ -7,6 +7,7 @@ import {texteParle} from '../src/schema';
 import {budgetDe, dossierEpisode, FRAICHEUR_MAX, fraicheur, jourParis, lireEpisode} from './lib/episode';
 import {normaliser} from './lib/alignement';
 import {controlerMontage, montage} from './lib/montage';
+import {estDuo, reglagesDuo} from './lib/duo';
 import {rythmeDe} from './lib/rythme';
 
 const dossier = dossierEpisode(process.argv[2]);
@@ -33,7 +34,7 @@ else if (age.jours > FRAICHEUR_MAX)
 else if (age.jours < 0) erreurs.push(`Date de la source (${episode.source.date}) dans le futur : vérifier source.md.`);
 
 const compter = (t: string) => texteParle(t).split(/\s+/).filter((w) => normaliser(w)).length;
-const mots = episode.scenes.reduce((n, s) => n + compter(s.texte), 0);
+const mots = episode.scenes.reduce((n, s) => n + compter(s.texte) + (s.plouf ? compter(s.plouf) : 0), 0);
 // Le débit de la voix est recalé dans la plage du rythme de l'épisode (scripts/lib/rythme.ts) :
 // ~3,3 à 3,8 mots/s au rythme courant, ~2,8 à 3,25 au rythme posé du test.
 const rythme = rythmeDe(episode.numero);
@@ -43,6 +44,29 @@ const budget = budgetDe(episode);
 if (mots < budget.viser[0]) alertes.push(`Script court : ${mots} mots (viser ${budget.viser[0]}–${budget.viser[1]} en ${budget.nom}).`);
 if (mots > budget.max) erreurs.push(`Script trop long : ${mots} mots (max ${budget.max} en ${budget.nom}, viser ${budget.viser[0]}–${budget.viser[1]}${episode.long ? '' : ' ; un sujet qui le demande peut passer en format long : champ « long » avec sa raison'}).`);
 else if (mots > budget.viser[1]) alertes.push(`Script long : ${mots} mots, la voix peut dépasser la cible Nerveuse (viser ${budget.viser[0]}–${budget.viser[1]}).`);
+
+// Duo Matou et Plouf (brand/duo.json, skill ecriture-matou) : Plouf demande et relance, Matou explique.
+const repliques = episode.scenes.map((s, i) => ({i, type: s.type, texte: s.plouf})).filter((r) => r.texte);
+const duo = repliques.length > 0;
+if (reglagesDuo && estDuo(episode.numero) && !duo && !episode.format)
+  erreurs.push(`Épisode en duo (brand/duo.json : un jour sur deux, #${reglagesDuo.de} à #${reglagesDuo.a}) : ${reglagesDuo.repliques.min} à ${reglagesDuo.repliques.max} répliques de Plouf (champ « plouf » des scènes) et "decor": "${reglagesDuo.decor}". Skill ecriture-matou, section « Duo avec Plouf ».`);
+if (duo && reglagesDuo && !estDuo(episode.numero))
+  alertes.push(`Plouf parle dans un épisode SOLO du test (brand/duo.json) : ça fausse la comparaison duo / solo. Retirer ses répliques, sauf raison.`);
+if (duo && reglagesDuo) {
+  const r = reglagesDuo.repliques;
+  if (repliques.length < r.min || repliques.length > r.max) erreurs.push(`Plouf : ${repliques.length} réplique(s), attendu ${r.min} à ${r.max}.`);
+  const total = repliques.reduce((n, x) => n + compter(x.texte!), 0);
+  if (total > r.motsTotal) erreurs.push(`Plouf : ${total} mots en tout (max ${r.motsTotal}) : il pose la question, Matou explique.`);
+  for (const x of repliques) {
+    const n = compter(x.texte!);
+    if (n > r.motsParReplique) erreurs.push(`Plouf, scène ${x.i + 1} : ${n} mots (max ${r.motsParReplique}).`);
+    if (x.type === 'verdict') erreurs.push('Plouf ne parle pas dans la scène verdict : le Hype-mètre est l’avis de Matou.');
+  }
+  if (!episode.scenes[0].plouf) alertes.push('Duo : le hook gagne à s’ouvrir sur la question de Plouf (« Matou ! Il paraît que… C’est vrai ? »).');
+  if (episode.decor !== reglagesDuo.decor) erreurs.push(`Duo : "decor": "${reglagesDuo.decor}" attendu dans scenes.json.`);
+  const ploufTout = repliques.map((x) => texteParle(x.texte!)).join(' ');
+  if (/\b(je pense|à mon avis|selon moi)\b/i.test(ploufTout)) alertes.push('Plouf donne un avis : il demande, c’est Matou qui juge.');
+}
 
 // Format de montage actuel (docs/viralite.md) : gabarit en rotation, pas de scène source,
 // fin en boucle. Les épisodes d'avant `depuis` gardent l'ancien format.

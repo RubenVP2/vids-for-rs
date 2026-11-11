@@ -1,7 +1,7 @@
 # Le duo Matou et Plouf (prototype, 11/11/2026)
 
-Branche d'essai `prototype-duo-plouf`. Rien n'entre dans les routines tant que
-l'utilisateur ne l'a pas validé.
+**En test dans les routines depuis le 12/11/2026** (#030 à #043, un jour sur deux :
+`brand/duo.json`, `docs/decisions.md`). Les prototypes 903 et 904 restent pour mémoire.
 
 ![Les têtes de Plouf](images/planche-plouf.png)
 

@@ -26,6 +26,7 @@ import {
 } from './lib/qualite-voix';
 import {lireReglagesVoix} from './lib/reglages-voix';
 import {rythmeDe} from './lib/rythme';
+import {assemblerDuo, type MetaPlouf} from './lib/voix-duo';
 import tokens from '../brand/tokens.json';
 
 const args = process.argv.slice(2);
@@ -68,7 +69,10 @@ episode.scenes.forEach((s, iScene) => {
 const texte = episode.scenes.map((s) => texteParle(s.texte).trim()).join(' ');
 const nombreMots = motsScript.length;
 
-const mp3 = path.join(dossier, 'voix.mp3');
+// Duo (brand/duo.json) : la prise de Matou est voix-matou.mp3 ; voix.mp3 sera le mélange avec Plouf
+// (scripts/lib/voix-duo.ts). Tout le reste (prises, mesures, provenance) porte sur la prise de Matou.
+const duo = episode.scenes.some((s) => s.plouf);
+const mp3 = path.join(dossier, duo ? 'voix-matou.mp3' : 'voix.mp3');
 /** Provenance de la voix : écrite avant Whisper, pour survivre à un échec de transcription. */
 const provenance = path.join(dossier, 'voix.meta.json');
 let qualite: QualiteVoix | undefined;
@@ -122,6 +126,7 @@ const affinerDebutsScenes = <T extends {debut: number; fin: number; scene: numbe
 
 // Mode --recaler : resserre les silences internes (> 260 ms → 220 ms, tout en gardant 350 ms entre scènes)
 // et recale le débit (~204 mots/min) sur un voix.mp3 + timings.json existants.
+if (recaler && duo) throw new Error('--recaler ne sait pas recaler un duo : relancer npm run voice -- NNN --force (ou raccourcir le texte).');
 if (recaler) {
   if (!fs.existsSync(mp3) || !fs.existsSync(path.join(dossier, 'timings.json'))) {
     throw new Error('--recaler nécessite voix.mp3 et timings.json existants.');
@@ -322,17 +327,18 @@ if (!fs.existsSync(mp3) || force) {
 } else {
   console.log('voix.mp3 existe déjà (--force pour la refaire, --recaler pour resserrer les silences et le débit).');
   // Provenance : le fichier doit être celui qu'on a écrit (même empreinte).
-  let meta: {modele?: string; voix?: string; secours?: boolean; sha256?: string} | undefined;
+  let meta: {modele?: string; voix?: string; secours?: boolean; sha256?: string; sha256Matou?: string} | undefined;
   try {
     meta = JSON.parse(fs.readFileSync(provenance, 'utf8'));
   } catch {
     meta = undefined;
   }
-  if (meta?.sha256) {
-    if (meta.sha256 !== empreinte(mp3)) {
+  const attendue = duo ? (meta?.sha256Matou ?? meta?.sha256) : meta?.sha256;
+  if (attendue) {
+    if (attendue !== empreinte(mp3)) {
       throw new Error('voix.mp3 ne correspond pas à sa provenance (voix.meta.json) : fichier modifié à la main ? Relancer avec --force.');
     }
-    voix = {modele: meta.modele ?? reglages.modele, voix: meta.voix ?? reglages.voix, secours: meta.secours};
+    voix = {modele: meta?.modele ?? reglages.modele, voix: meta?.voix ?? reglages.voix, secours: meta?.secours};
   } else {
     console.warn('Provenance absente (épisode antérieur au 02/11) : identité de la voix non vérifiable.');
     const ancienne = ((): undefined | {modele: string; voix: string} => {
@@ -374,7 +380,7 @@ const scenes = episode.scenes.map((_, i) => {
   const ms = mots.filter((m) => m.scene === i);
   return {debut: ms[0]?.debut ?? 0, fin: ms[ms.length - 1]?.fin ?? 0};
 });
-const timings: Timings = {
+let timings: Timings = {
   audio: 'voix.mp3',
   duree: Math.round(duree * 1000) / 1000,
   voix: voix ?? {modele: reglages.modele, voix: reglages.voix},
@@ -384,8 +390,25 @@ const timings: Timings = {
   scenes,
   enveloppe,
 };
+if (duo) {
+  if (!base.plouf) throw new Error('Duo : la voix de Plouf manque dans brand/voix.json (« plouf »).');
+  const meta = JSON.parse(fs.readFileSync(provenance, 'utf8')) as {sha256?: string; sha256Matou?: string; plouf?: MetaPlouf};
+  const r = await assemblerDuo({
+    dossier,
+    episode,
+    priseMatou: mp3,
+    motsMatou: mots,
+    reglagesPlouf: {...base.plouf, transcription: base.transcription},
+    anciennePlouf: meta.plouf,
+    force,
+  });
+  timings = {...timings, duree: r.duree, mots: r.mots, scenes: r.scenes, enveloppe: r.enveloppe, enveloppePlouf: r.enveloppePlouf};
+  // Provenance : sha256 = le mélange (vérifié par check), sha256Matou = la prise de Matou (reprise par voice).
+  fs.writeFileSync(provenance, JSON.stringify({...meta, sha256: r.sha256, sha256Matou: empreinte(mp3), plouf: r.plouf}, null, 1) + '\n');
+  console.log(`Duo : voix.mp3 = Matou + Plouf, ${r.duree.toFixed(1)} s.`);
+}
 fs.writeFileSync(path.join(dossier, 'timings.json'), JSON.stringify(timings, null, 1));
-scenes.forEach((s, i) =>
+timings.scenes.forEach((s, i) =>
   console.log(`  scène ${i + 1} (${episode.scenes[i].type}) : ${s.debut.toFixed(2)} → ${s.fin.toFixed(2)} s`),
 );
 console.log(`OK : ${path.relative(RACINE, path.join(dossier, 'timings.json'))}`);

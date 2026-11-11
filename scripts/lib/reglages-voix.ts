@@ -16,6 +16,10 @@ const schema = z.object({
   transcription: z.string().min(1),
   /** Plage de hauteur attendue : sert d'ALERTE, jamais de refus (voir check.ts). */
   profil: z.object({medianeHz: z.number().positive(), tolerance: z.number().positive().max(0.5)}).optional(),
+  /** Voix de Plouf (duo, brand/duo.json) : même modèle que Matou, une autre voix et sa consigne de jeu. */
+  plouf: z
+    .object({modele: z.string().min(1), voix: z.string().min(1), format: z.enum(['mp3', 'pcm']), frequencePcm: z.number().optional(), instructions: z.string().optional()})
+    .optional(),
   secours: z
     .array(z.object({modele: z.string().min(1), voix: z.string().min(1), format: z.enum(['mp3', 'pcm']), frequencePcm: z.number().optional()}))
     .default([]),

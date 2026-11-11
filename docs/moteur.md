@@ -91,6 +91,15 @@ episodes/NNN-slug/
    noté dans `timings.json` (≥ 85 % attendu), avec les mesures de la prise (`qualite`).
 7. Volume RMS par image → `enveloppe` : la bouche de Matou s'ouvre en paliers.
 
+**Duo** (`brand/duo.json`) : si des scènes ont un champ `plouf`, la prise de Matou devient
+`voix-matou.mp3` (mêmes prises, mesures et provenance), Plouf est enregistré d'un seul tenant
+(`voix-plouf.mp3`, voix `brand/voix.json` → `plouf`, reprise sans nouvel appel si son texte
+n'a pas changé), transcrit et aligné ; `scripts/lib/voix-duo.ts` coupe les deux prises dans
+les silences et les intercale (dans chaque scène : Plouf, puis Matou) dans `voix.mp3`. Les mots
+de `timings.json` portent leur `locuteur`, `enveloppePlouf` anime la bouche de Plouf.
+`voix.meta.json` : `sha256` (le mélange, vérifié par `check`), `sha256Matou`, `plouf`.
+`--recaler` ne s'applique pas à un duo (`--force`).
+
 Changer de voix = modifier `brand/voix.json`. Passer à la voix de l'utilisateur (V2) :
 même fichier, avec un modèle qui clone une voix à partir d'un extrait
 (`input_references`, voir la doc TTS d'OpenRouter), sans toucher au reste.

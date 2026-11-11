@@ -43,6 +43,10 @@ Détail : `docs/routines.md`.
   fait… » pour expliquer, Hype-mètre à la fin (pur buzz / prometteur / game changer),
   annoncé par l'en-tête. **Fin en boucle** : la dernière phrase renvoie au hook, l'écran
   reprend le hook, signature sonore « Ma-tou ! » ; ni « abonne-toi » ni formule d'adieu.
+- **Duo avec Plouf** (test du 12/11/2026, #030 à #043) : un jour sur deux, Plouf, le poisson
+  rouge, pose la question du spectateur et relance ; Matou explique et garde le verdict.
+  Décor « bureau ». `npm run gabarits -- NNN` dit si l'épisode est en duo ; règles :
+  `brand/duo.json`, skill `ecriture-matou` (« Duo avec Plouf ») ; `docs/personnages.md`.
 - **Montage varié** : l'ouverture et la 2e scène suivent un gabarit en rotation
   (`brand/montage.json`, `npm run gabarits`), la mise en page passe en miroir un épisode
   sur deux. Raisons et sources : `docs/viralite.md`.
