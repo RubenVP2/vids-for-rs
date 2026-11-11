@@ -50,9 +50,31 @@ Mais on ne tasse pas un sujet riche : s'il a au moins 3 faits indispensables ou 
 pas à pas, passer en **format long** avec sa raison dans `scenes.json` :
 `"long": "trois changements distincts, chacun utile au quotidien"`.
 
+**Rythme posé (test du 10 au 16/11/2026, `brand/voix.json` → `testDebit`)** : un épisode
+sur deux est lu à ~180 mots/min pour une vidéo de ~30 s. `npm run gabarits -- NNN` dit si
+c'est le cas et donne le budget : `flash` **80–100** mots (ERREUR > 112), `decrypte`
+**95–120** (ERREUR > 135). Les mots en plus servent l'explication (« En fait… », l'image
+du quotidien), jamais une 2e idée. `npm run validate` et `npm run voice` suivent seuls.
+
 Les mots comptés sont ceux **prononcés** : `{GPT-6.1|G P T six point un}` compte 6 mots.
 
 Hook : **12 mots max conseillés** (ERREUR > 16), il doit frapper en **moins de 2,5 secondes**. Une scène : 35 mots max (ERREUR > 40).
+
+## Épisode intemporel (série « Matou t'explique »)
+
+Quand la consigne ou `npm run intemporel` donne un sujet : mettre `"intemporel": "<id>"`
+dans `scenes.json` (la pastille de l'en-tête devient « EXPLIQUÉ », la règle des 2 jours ne
+s'applique plus). Ce qui change à l'écriture :
+
+- Le hook **est la question** que les gens tapent (ouverture `question`, ou `toi` ; avec
+  `"raison": "série intemporelle"` si le gabarit prévu était autre).
+- Pas de « vient d'annoncer » : `statut` vaut `disponible` si la chose existe pour tous,
+  et Matou dit d'où il tient l'explication (« D'après la page d'aide d'OpenAI… »).
+- Une image du quotidien porte l'explication ; un seul chiffre, s'il est dans la source.
+- Le Hype-mètre juge la notion (« un agent IA : prometteur, pas encore game changer »),
+  avec l'avis de Matou, comme d'habitude. Fin en boucle sur la question.
+- Rien d'inventé : tout vient de `source.md` (page officielle, organisme public ou média
+  reconnu), dont la date est celle de la page.
 
 ## Gabarit de montage (d'abord)
 

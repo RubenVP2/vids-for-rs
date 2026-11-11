@@ -10,7 +10,12 @@ type Formule = {id: string; partie: Partie; motif: string; consigne: string; exe
 type Reglages = {depuis: number; ouiNon: string; reseaux: Record<string, {section: string; formules: Formule[]}>};
 
 export const reglages = JSON.parse(fs.readFileSync(path.join(RACINE, 'brand', 'publication.json'), 'utf8')) as Reglages;
-export const RESEAUX = Object.keys(reglages.reseaux);
+/** La relance Threads n'est écrite et contrôlée que si un créneau de brand/postiz.json en programme une. */
+const creneaux = (JSON.parse(fs.readFileSync(path.join(RACINE, 'brand', 'postiz.json'), 'utf8')) as {creneaux: Record<string, Record<string, {relance?: unknown}>>}).creneaux;
+export const RELANCE = Object.values(creneaux).some((rang) => Object.values(rang).some((c) => c.relance !== undefined));
+/** LinkedIn : texte et carrousel par épisode seulement si un rang régulier le programme (post hebdo depuis le 10/11/2026). */
+export const LINKEDIN = ['principal', 'second'].some((r) => creneaux[r]?.linkedin);
+export const RESEAUX = Object.keys(reglages.reseaux).filter((r) => (r !== 'relance' || RELANCE) && (r !== 'linkedin' || LINKEDIN));
 const veille = JSON.parse(fs.readFileSync(path.join(RACINE, 'brand', 'veille.json'), 'utf8')) as {entites: Record<string, string>};
 const NOMS_CONNUS = [...new Set([...Object.keys(veille.entites), ...Object.values(veille.entites)])];
 
@@ -44,9 +49,11 @@ const nomConnu = (s: string) => NOMS_CONNUS.some((n) => new RegExp(`\\b${n}`, 'i
 
 /**
  * Contrôles des textes (gabarit déclaré, motif, question ouverte, nom connu…).
- * `section(titre)` rend le texte d'une section de publication.md.
+ * `section(titre)` rend le texte d'une section de publication.md. `intemporel` : la série
+ * « Matou t'explique » part d'une question (« C'est quoi un agent IA ? »), pas d'une marque : le
+ * nom connu n'est plus exigé, la question l'est (c'est elle que les gens tapent).
  */
-export const controler = (texte: string, n: number, section: (titre: string) => string | undefined) => {
+export const controler = (texte: string, n: number, section: (titre: string) => string | undefined, intemporel = false) => {
   const ok: string[] = [];
   const ko: string[] = [];
   const verifier = (cond: boolean, bien: string, mal: string) => (cond ? ok : ko).push(cond ? bien : mal);
@@ -77,7 +84,8 @@ export const controler = (texte: string, n: number, section: (titre: string) => 
   const tiktok = section('TikTok');
   if (tiktok !== undefined) {
     const l1 = premiereLigne(tiktok);
-    verifier(nomConnu(l1), 'TikTok : nom connu dans la 1re phrase', `TikTok : aucun nom connu (ChatGPT, Google…) dans ${cite(l1)} : c'est ce que les gens cherchent`);
+    if (intemporel) verifier(tiktok.includes('?'), 'TikTok : la question cherchée', 'TikTok : série intemporelle, écrire la question telle que les gens la tapent');
+    else verifier(nomConnu(l1), 'TikTok : nom connu dans la 1re phrase', `TikTok : aucun nom connu (ChatGPT, Google…) dans ${cite(l1)} : c'est ce que les gens cherchent`);
   }
   const instagram = section('Instagram');
   if (instagram !== undefined) {
@@ -91,7 +99,8 @@ export const controler = (texte: string, n: number, section: (titre: string) => 
     const debut = t.split(/\s+/).slice(0, 3).join(' ');
     verifier(t.length <= 60, `YouTube : titre de ${t.length} caractères`, `YouTube : titre de ${t.length} caractères (max 60)`);
     verifier(!/#\d/.test(t), 'YouTube : titre sans numéro', 'YouTube : retirer « #NNN » du titre (personne ne le cherche)');
-    verifier(nomConnu(debut), 'YouTube : nom connu en tête du titre', `YouTube : nom connu absent des 3 premiers mots ${cite(t)}`);
+    if (intemporel) verifier(/\?|comment|pourquoi|c'est quoi/iu.test(t.replace(/’/g, "'")), 'YouTube : titre en question cherchable', `YouTube : série intemporelle, le titre est la question que les gens tapent ${cite(t)}`);
+    else verifier(nomConnu(debut), 'YouTube : nom connu en tête du titre', `YouTube : nom connu absent des 3 premiers mots ${cite(t)}`);
   }
   return {ok, ko};
 };

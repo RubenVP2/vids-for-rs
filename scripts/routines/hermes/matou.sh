@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Matou : point d'entrée de Hermes pour les commandes données sur Discord (skill Hermes « matou »).
 #   matou.sh urgent <lien> [réseaux]       épisode urgent en tâche de fond (45 min), livré sur #matou
-#   matou.sh ok|veto NNN [réseaux] | etat | stats    scripts/routines/commande.sh
+#   matou.sh ok|veto NNN|linkedin [réseaux] | etat | stats    scripts/routines/commande.sh
+#   matou.sh reponse <<'FIN_REPONSE' … FIN_REPONSE   réponse à la question LinkedIn (entrée standard)
 # Les scripts sont lus sur origin/main (git show) : le clone des routines n'est remis à jour
 # qu'au passage d'une routine, et on n'y touche pas pendant qu'elle tourne.
 # Copie versionnée : ~/matou/vids-for-rs/scripts/routines/hermes/ (docs/routines.md).

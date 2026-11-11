@@ -192,7 +192,7 @@ const planifier = (pub: Publication, reseaux: Reseau[], carrousel: string[], ran
     const c = reglages.creneaux[rang][r];
     if (!texte) continue;
     if (!c) {
-      sautes.push(`${NOMS[r]} : réservé à l'épisode principal`);
+      sautes.push(r === 'linkedin' ? 'LinkedIn : post de la semaine à part (npm run linkedin), rien par épisode' : `${NOMS[r]} : pas de créneau pour le rang ${rang}`);
       continue;
     }
     const date = creneauPour(c, pris[r], impose);
@@ -357,7 +357,7 @@ const impose = valeurDe('--date');
 
 const alertes: string[] = [];
 if (!fs.existsSync(mp4)) alertes.push(`Vidéo absente : ${path.relative(RACINE, mp4)} (npm run render)`);
-if (pub.linkedin && carrousel.length < 2) alertes.push(`Carrousel LinkedIn absent : ${path.relative(RACINE, dossierCarrousel)} (npm run carrousel)`);
+if (pub.linkedin && reglages.creneaux[rang].linkedin && carrousel.length < 2) alertes.push(`Carrousel LinkedIn absent : ${path.relative(RACINE, dossierCarrousel)} (npm run carrousel)`);
 for (const r of RESEAUX) {
   const n = texteDe(pub, r)?.length ?? 0;
   if (n > INFOS[r].limite) alertes.push(`${NOMS[r]} : texte de ${n} caractères (max ${INFOS[r].limite})`);

@@ -1,11 +1,10 @@
 {
-  "$description": "Réglages d'envoi dans Postiz (npm run postiz). Deux épisodes par jour, chacun publié dans la fenêtre qui suit sa production : le « principal » (produit vers 5 h : LinkedIn et Threads le matin, Instagram et TikTok à midi, YouTube à 18 h) et le « second » (produit vers 14 h, avec l'actu de l'après-midi : vidéos le soir). Chaque rang a ses créneaux (heure de Paris, jours permis : 1 = lundi … 7 = dimanche) ; un réseau absent des créneaux d'un rang n'a pas de post pour cet épisode (LinkedIn : le principal seulement ; chaque épisode est un seul sujet, décliné sur les autres réseaux). Chaque post part le jour même : à son heure si le créneau est libre sur CE réseau (aucun post programmé à moins de 90 min) et au moins « delaiVeto » heures après l'envoi (le temps laissé à l'utilisateur pour son veto), sinon 2 h 30 plus tard ; sinon pas de post sur ce réseau. Une actu ne glisse jamais au lendemain. « relance » : un 2e post, texte seul, le même jour à cette heure. Le rang « urgent » (épisode sur une grosse actu, publié au feu vert de l'utilisateur sur Discord) n'a pas d'heure : « apres » donne les minutes entre l'envoi et le post (ni délai de veto, ni créneau libre exigé, ni passage au lendemain bloqué), et sa relance est en minutes après le post. Stratégie et sources : docs/reseaux.md. Réglages par réseau : .claude/skills/postiz/PROVIDER_SETTINGS.md et npm run postiz -- --canaux.",
+  "$description": "Réglages d'envoi dans Postiz (npm run postiz). Deux épisodes par jour, chacun publié dans la fenêtre qui suit sa production : le « principal » (produit vers 5 h : Threads le matin, Instagram et TikTok à midi, YouTube à 18 h) et le « second » (produit vers 14 h, avec l'actu de l'après-midi : vidéos le soir). Chaque rang a ses créneaux (heure de Paris, jours permis : 1 = lundi … 7 = dimanche) ; un réseau absent des créneaux d'un rang n'a pas de post pour cet épisode (LinkedIn : plus de post par épisode depuis le 10/11/2026, un post de fond par semaine : brand/linkedin.json, npm run linkedin , urgent compris). Chaque post part le jour même : à son heure si le créneau est libre sur CE réseau (aucun post programmé à moins de 90 min) et au moins « delaiVeto » heures après l'envoi (le temps laissé à l'utilisateur pour son veto), sinon 2 h 30 plus tard ; sinon pas de post sur ce réseau. Une actu ne glisse jamais au lendemain. « relance » (arrêtée le 09/11/2026 : 20 relances, médiane 9 vues, 1 réponse ; docs/decisions.md) : un 2e post Threads, texte seul, le même jour à cette heure ; la remettre sur un créneau Threads suffit à la rétablir, textes et contrôles compris. Le rang « urgent » (épisode sur une grosse actu, publié au feu vert de l'utilisateur sur Discord) n'a pas d'heure : « apres » donne les minutes entre l'envoi et le post (ni délai de veto, ni créneau libre exigé, ni passage au lendemain bloqué); une relance y serait en minutes après le post. Stratégie et sources : docs/reseaux.md. Réglages par réseau : .claude/skills/postiz/PROVIDER_SETTINGS.md et npm run postiz -- --canaux.",
   "fuseau": "Europe/Paris",
   "delaiVeto": 2,
   "creneaux": {
     "principal": {
-      "linkedin": {"heure": "08:30", "jours": [1, 2, 3, 4, 5]},
-      "threads": {"heure": "09:00", "relance": "15:30"},
+      "threads": {"heure": "09:00"},
       "instagram": {"heure": "12:00"},
       "facebook": {"heure": "12:00"},
       "tiktok": {"heure": "12:30"},
@@ -19,18 +18,17 @@
       "instagram": {"heure": "18:30"},
       "facebook": {"heure": "18:30"},
       "tiktok": {"heure": "19:00"},
-      "threads": {"heure": "19:30", "relance": "21:30"},
+      "threads": {"heure": "19:30"},
       "youtube": {"heure": "20:00"}
     },
     "urgent": {
-      "threads": {"apres": 5, "relance": 180},
+      "threads": {"apres": 5},
       "x": {"apres": 5},
       "bluesky": {"apres": 5},
       "tiktok": {"apres": 10},
       "instagram": {"apres": 10},
       "facebook": {"apres": 10},
-      "youtube": {"apres": 15},
-      "linkedin": {"apres": 15}
+      "youtube": {"apres": 15}
     }
   },
   "comptes": {},

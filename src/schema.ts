@@ -19,6 +19,8 @@ const base = {
   texte: z.string().min(1),
   /** Expression de Matou pendant la scène. */
   matou: etat.optional(),
+  /** Format « messages » : ce que le spectateur répond (bulle « toi », non prononcée) à la fin de la scène. */
+  reponse: z.string().min(1).max(40).optional(),
 };
 
 /** Un élément qui apparaît quand Matou prononce le mot `quand` (sinon, réparti dans le temps). */
@@ -141,6 +143,22 @@ export const episodeSchema = z
      * (plusieurs faits clés, une démo pas à pas). Absent : le budget de la série.
      */
     long: z.string().min(10).optional(),
+    /**
+     * Série intemporelle « Matou t'explique » : l'id du sujet (brand/intemporels.json, npm run intemporel).
+     * L'épisode explique une notion au lieu d'une actu : la règle des 2 jours ne s'applique pas,
+     * la source reste citée et datée.
+     */
+    intemporel: z.string().regex(/^[a-z0-9-]+$/).optional(),
+    /**
+     * Format d'essai (prototypes/, docs/formats.md) : `messages` = tout l'épisode est un fil de
+     * messages que Matou t'envoie ; `titre` = Matou juge un gros titre de presse (champ `titrePresse`).
+     * Absent : le format habituel, le cahier.
+     */
+    format: z.enum(['messages', 'titre']).optional(),
+    /** Format `titre` : le gros titre jugé (tel que publié, ou sa traduction fidèle), et le tampon de Matou. */
+    titrePresse: z
+      .object({media: z.string().min(1).max(30), titre: z.string().min(1).max(110), verdict: z.enum(['vrai', 'exagere', 'faux'])})
+      .optional(),
     /** Gabarit de montage (brand/montage.json, npm run gabarits) ; un autre que prévu : sa raison. */
     gabarit: z.object({ouverture: z.string(), corps: z.string(), raison: z.string().optional()}).optional(),
     scenes: z.array(sceneSchema).min(4).max(10),
@@ -149,6 +167,7 @@ export const episodeSchema = z
     const types = ep.scenes.map((s) => s.type);
     if (types[0] !== 'hook') ctx.addIssue({code: 'custom', message: 'La première scène doit être le hook.'});
     if (types[types.length - 1] !== 'fin') ctx.addIssue({code: 'custom', message: 'La dernière scène doit être « fin ».'});
+    if (ep.format === 'titre' && !ep.titrePresse) ctx.addIssue({code: 'custom', message: 'Format « titre » : le champ « titrePresse » manque.'});
     if (types[types.length - 2] !== 'verdict')
       ctx.addIssue({code: 'custom', message: 'L’avant-dernière scène doit être le verdict (Hype-mètre).'});
   });

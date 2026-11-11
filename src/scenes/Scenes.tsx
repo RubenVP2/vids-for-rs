@@ -10,6 +10,7 @@ import {Tampon} from '../components/Tampon';
 import {TexteMarque} from '../components/TexteMarque';
 import type {Episode, Scene} from '../schema';
 import {AXES_TEXTE, C, POLICE_TEXTE, POLICE_TITRE, tokens} from '../theme';
+import {SceneHookTitre, SceneVerdictTitre} from '../formats/Titre';
 
 // Chaque scène occupe la zone de contenu (sous l'en-tête, au-dessus des sous-titres).
 // Les temps sont en images, relatifs au début de la scène.
@@ -496,7 +497,11 @@ export const SceneFin: React.FC<SceneProps<'fin'>> = (props) => {
   const s = spring({frame: frame - signature, fps, config: {damping: 12, stiffness: 260, mass: 0.5}});
   return (
     <>
-      {hook.type === 'hook' ? <SceneHook {...props} scene={hook} /> : null}
+      {props.episode.format === 'titre' ? (
+        <SceneHookTitre episode={props.episode} tampon={-100} />
+      ) : hook.type === 'hook' ? (
+        <SceneHook {...props} scene={hook} />
+      ) : null}
       <div
         style={{
           position: 'absolute',
@@ -518,6 +523,11 @@ export const SceneFin: React.FC<SceneProps<'fin'>> = (props) => {
 };
 
 export const SceneVue: React.FC<SceneProps<Scene['type']>> = (props) => {
+  // Format « Matou contre le titre » : le hook et le verdict montrent la coupure de presse.
+  if (props.episode.format === 'titre') {
+    if (props.scene.type === 'hook') return <SceneHookTitre episode={props.episode} />;
+    if (props.scene.type === 'verdict') return <SceneVerdictTitre episode={props.episode} raison={props.scene.raison} />;
+  }
   switch (props.scene.type) {
     case 'hook':
       return <SceneHook {...(props as SceneProps<'hook'>)} />;

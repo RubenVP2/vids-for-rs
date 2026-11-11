@@ -1,6 +1,6 @@
 ---
 name: publication
-description: Écrit publication.md d'un épisode de Matou — un texte taillé pour chaque réseau (TikTok, Instagram Reels, YouTube Shorts, LinkedIn en carrousel, Threads et sa relance), avec les hashtags. À utiliser après le rendu, ou pour réécrire une description ou des hashtags.
+description: Écrit publication.md d'un épisode de Matou — un texte taillé pour chaque réseau (TikTok, Instagram Reels, YouTube Shorts, Threads), avec les hashtags. À utiliser après le rendu, ou pour réécrire une description ou des hashtags.
 ---
 
 # Publication : un texte par réseau
@@ -8,7 +8,10 @@ description: Écrit publication.md d'un épisode de Matou — un texte taillé p
 Chaque réseau récompense autre chose (`docs/reseaux.md`) : on ne recopie pas le même
 texte partout. Écrire `episodes/NNN-slug/publication.md` avec exactement ces sections
 (`npm run check` et `npm run postiz` les lisent) : `## TikTok`, `## Instagram`,
-`## YouTube`, `## LinkedIn`, `## Threads`, `## Threads relance`. Facebook reprend le texte
+`## YouTube`, `## Threads`. Pas de `## LinkedIn` : LinkedIn a un post de fond par
+semaine depuis le 10/11/2026 (skill `linkedin`), plus un post par épisode. Pas de `## Threads relance` : elle est arrêtée
+depuis le 09/11/2026 (`npm run gabarits -- NNN` la redemande si elle revient dans
+`brand/postiz.json`). Facebook reprend le texte
 d'Instagram ; X et Bluesky, pas connectés, une section `## Court (X, Bluesky)` facultative.
 
 ## Gabarits (d'abord)
@@ -51,7 +54,8 @@ Lire d'abord `docs/reseaux.md` et la section « Publier » de `docs/apprentissag
   prend 5 caractères). 2 lignes de description, puis
   `Source : <URL>`, puis 2 à 4 hashtags dont `#shorts`. Le titre sert aussi à Facebook
   et nomme le carrousel LinkedIn.
-- **LinkedIn** (carrousel, `npm run carrousel`) : écrit pour des pros hors tech.
+- **LinkedIn** (seulement si `npm run gabarits` la demande, ce qui n'est plus le cas depuis le
+  10/11/2026 ; carrousel, `npm run carrousel`) : écrit pour des pros hors tech.
   - 1er paragraphe = l'accroche, **210 caractères max** (au-delà, « … voir plus »).
   - Puis ce que ça change **pour le travail** (métier, entreprise, décisions), 2–3
     flèches « → », 600 à 1 300 caractères en tout.
@@ -62,10 +66,21 @@ Lire d'abord `docs/reseaux.md` et la section « Publier » de `docs/apprentissag
 - **Threads** (vidéo) : 500 caractères max, une **prise de position** selon le gabarit
   et **toujours une question**, pas la légende TikTok ni un résumé. L'idée en une phrase,
   le statut s'il le faut, `Source : <nom>`. Un seul hashtag (`#IA` ou le sujet), aucune URL.
-- **Threads relance** (texte seul, quelques heures après la vidéo, le même jour) : 500
-  caractères max. La **question** du gabarit, sur le même sujet, sous un autre angle que
+- **Threads relance** (arrêtée ; seulement si `npm run gabarits` la demande ; texte seul,
+  quelques heures après la vidéo, le même jour) : 500 caractères max. La **question** du gabarit, sur le même sujet, sous un autre angle que
   la vidéo. Elle doit se comprendre sans la vidéo. Pas de lien, au plus un hashtag.
 - **Court (X, Bluesky)**, facultatif : 280 caractères, un hashtag, sans URL.
+
+## Épisode intemporel (`"intemporel"` dans `scenes.json`)
+
+La série « Matou t'explique » répond à une question que les gens **tapent** : c'est elle
+qui fait le texte, pas un nom de marque.
+
+- **YouTube** : le titre est la question, mot pour mot comme on la cherche (« C'est quoi
+  un agent IA ? », « Pourquoi ChatGPT invente des réponses ? »). Déclarer le gabarit
+  `pourquoi` ou celui prévu, avec la raison « série intemporelle » s'il diffère.
+- **TikTok** : la question dans la 1re phrase, puis la question de fin du gabarit.
+- Partout : pas de « vient d'annoncer », pas de date ; la source reste citée.
 
 En tête du fichier : la ligne `Gabarits : …`, le chemin de la vidéo, de la miniature, l'URL de la source et la
 ligne `Commentaire à épingler (tous les réseaux) : Sources : …` (nom et URL de chaque

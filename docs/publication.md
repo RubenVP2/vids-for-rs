@@ -33,9 +33,9 @@ C'est le seul choix laissé à l'agent, comme le veto de la veille.
 | TikTok | la question de fin | `camp` (deux camps nommés), `note` (un chiffre à donner), `vecu` (une expérience à raconter), `un-mot` (un mot ou un emoji) |
 | Instagram | la 1re ligne | `question`, `chiffre` (le plus frappant de la source), `toi` (ce que ça change pour toi) |
 | YouTube | le titre | `nom-fait` (le nom connu, puis le fait), `pourquoi` (« Pourquoi … ? »), `chiffre` |
-| LinkedIn | la question de fin | `metier` (le travail du lecteur), `pour-contre`, `horizon` (une prédiction datée) |
+| LinkedIn (plus par épisode depuis le 10/11/2026) | la question de fin | `metier` (le travail du lecteur), `pour-contre`, `horizon` (une prédiction datée) |
 | Threads | l'ouverture | `avis` (« Mon avis : »), `pari` (« Je parie que »), `question-d-abord` |
-| Threads relance | la question | `dilemme` (« Tu préfères … ou … ? »), `vecu`, `horizon` |
+| Threads relance (arrêtée le 09/11/2026) | la question | `dilemme` (« Tu préfères … ou … ? »), `vecu`, `horizon` |
 
 Pourquoi ces familles : une question fermée (« Tu penses que… ? ») se répond d'un pouce
 ou pas du tout ; un choix, un chiffre ou un récit demande d'écrire. Sur Instagram, la
@@ -66,7 +66,7 @@ moins bien sur au moins 3 posts du même réseau ; l'utilisateur décide.
 - Le repérage des questions oui/non est une liste de tournures : « Tu aurais vu le
   piège ? » passe.
 - À 2 épisodes par jour, chaque gabarit revient tous les 1,5 à 2 jours : 3 posts par
-  gabarit en une semaine environ (plus les 48 h de recul du bilan). LinkedIn (le principal,
-  jours ouvrés) : 2 à 3 semaines.
+  gabarit en une semaine environ (plus les 48 h de recul du bilan). LinkedIn n'a plus de
+  post par épisode depuis le 10/11/2026 (post de la semaine, skill `linkedin`).
 - Un gabarit se compare à un autre sur des sujets différents : seul l'écart qui tient sur
   plusieurs semaines compte.

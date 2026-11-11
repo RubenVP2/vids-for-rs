@@ -21,7 +21,7 @@ ligne démentie est barrée, avec la date et les épisodes qui la démentent.
 
 | Statut | Constat | Preuve |
 | --- | --- | --- |
-| Confirmé (09/11/2026) | La nouvelle trame visuelle sans carton de source, les cartes dynamiques avec bruitages et le débit TTS soutenu (~205 mots/min) font bondir la rétention sur YouTube Shorts | Pourcentage moyen de visionnage passé de 24,7 % à 69,2 % (+180 %) et durée moyenne de 8,4 s à 22,6 s sur le compte YouTube (#012 à #023) |
+| Hypothèse (rétrogradé le 09/11/2026 au soir) | La nouvelle trame visuelle sans carton de source, les cartes dynamiques avec bruitages et le débit TTS soutenu (~205 mots/min) font bondir la rétention sur YouTube Shorts | La moyenne de semaine (8,4 s → 22,6 s) cachait la série par jour du compte : 35 s le 01/11, 21 s le 02, 42 s le 03, 23 s le 04, puis 15 s, 12 s et 12 s les 05, 06 et 07/11, soit depuis le débit accéléré du 05/11 (vidéos de ~20–27 s au lieu de ~30 s). Trois jours, chiffre de compte et non par vidéo : à relire dans YouTube Studio (`docs/bilans/plan-action-2026-11-09.md`) |
 | Hypothèse (rétrogradé le 09/11/2026) | L'ouverture de montage « toi » (bénéfice ou menace directe pour le spectateur) surperforme les ouvertures descriptives « fenêtre » ou « chiffre » | Les totaux tous réseaux mélangeaient les créneaux (YouTube fait l'écart). À créneau égal, sur YouTube, « toi » a la meilleure médiane : 13 h #014 859, #022 122 ; 20 h #017 561, #021 813. Mais 2 posts par case, il en faudrait ~14 pour voir un effet ×4 |
 | Hypothèse | Le hook se comprend sans le son, en moins de 2 s (gros titre à l'écran) | — (rétention à 2 s non fournie par Postiz, nécessite TikTok Studio) |
 | Hypothèse | Une question ou une promesse précise retient mieux qu'un constat | — |

@@ -33,7 +33,10 @@ Détail : `docs/routines.md`.
 - **Audience** : grand public + pros hors tech. Aucun jargon non expliqué.
 - **Format** : 1080×1920. Série `flash` ~30 s (une annonce), `decrypte` ≤ 45 s (un
   article de blog). Un sujet qui le demande passe en **format long** (≤ 60 s), avec sa
-  raison : on ne tasse pas pour tenir 30 s. Une seule idée par vidéo.
+  raison : on ne tasse pas pour tenir 30 s. Une seule idée par vidéo. Série
+  **intemporelle** « Matou t'explique » (une question que les gens cherchent, pas une
+  actu) : le second des mardi, jeudi et samedi (`brand/intemporels.json`,
+  `npm run intemporel` ; test jusqu'au 23/11/2026).
 - **Ton** : pédagogie d'abord, humour pince-sans-rire (inspiration Fireship).
 - **Matou** : chat blanc à lunettes dessiné par l'utilisateur, c'est **lui qui parle**
   (voix masculine), et il a **un avis** (le verdict est sa position). Rituels : « En
@@ -48,19 +51,23 @@ Détail : `docs/routines.md`.
 - **Rythme (production)** : **2 épisodes par jour**, au minimum 1. **Un épisode = un
   sujet, le même sur tous ses réseaux**, chaque post au format du réseau, **le jour même**
   (jamais reporté au lendemain). Le **principal** (produit vers 5 h) publie le matin et à
-  midi (YouTube à 18 h) ; le **second** (produit vers 14 h, jamais la même actu) publie le soir, partout
-  sauf LinkedIn.
-- **Un post par réseau, pas un copier-coller** (`docs/reseaux.md`). Principal : LinkedIn
-  en carrousel (en semaine, 8 h 30, un par jour ouvré), Threads (vidéo, 9 h), Instagram
-  (12 h), TikTok (12 h 30), relance texte Threads (15 h 30), YouTube (18 h). Second :
-  Instagram 18 h 30, TikTok 19 h, Threads 19 h 30, YouTube 20 h, relance Threads 21 h 30.
+  midi (YouTube à 18 h) ; le **second** (produit vers 14 h, jamais la même actu) publie le soir.
+- **Un post par réseau, pas un copier-coller** (`docs/reseaux.md`). Principal : Threads (vidéo, 9 h), Instagram
+  (12 h), TikTok (12 h 30), YouTube (18 h). Second : Instagram 18 h 30, TikTok 19 h,
+  Threads 19 h 30, YouTube 20 h. Plus de relance texte sur Threads (09/11/2026).
   Créneaux : `brand/postiz.json`.
+- **LinkedIn : un post de fond par semaine**, pas l'actu (10/11/2026) : un carrousel
+  « retour d'expérience » si l'utilisateur a répondu à la question posée sur Discord le
+  lundi (avec le bilan), sinon « coulisses » tiré du dépôt (décisions, bilans, pannes).
+  Produit par la routine rappel du mardi au jeudi, publié mardi à jeudi 8 h 30 (skill
+  `linkedin`, `brand/linkedin.json`). L'utilisateur n'y est jamais nommé.
 
 ## Règles éditoriales (non négociables)
 
 - Toujours citer la source (à l'écran et dans la description). La date affichée est celle
   de la source, attribuée (« article du 7 nov. ») ; l'info a **au plus 2 jours** le jour
-  où la vidéo sort (`npm run validate` et `npm run check` refusent au-delà).
+  où la vidéo sort (`npm run validate` et `npm run check` refusent au-delà) ; la série
+  intemporelle n'a pas cette limite, sa source reste citée et datée.
 - Ne jamais inventer un fait, un chiffre ou une citation absente de la source.
 - Distinguer clairement : annoncé / disponible / rumeur.
 - Résumer et commenter, ne pas recopier l'article mot à mot.
@@ -75,14 +82,16 @@ Détail : `docs/routines.md`.
 
 - Skills (`.claude/skills/`) : `episode` (la recette), `ecriture-matou` (voix et
   scènes), `publication` (un texte par réseau, hashtags), `veille-ia` (choisir un sujet),
-  `programmation` (brouillons Postiz, programmation, veto), `article` (version blog de
+  `programmation` (brouillons Postiz, programmation, veto), `linkedin` (le post LinkedIn
+  de la semaine), `article` (version blog de
   l'épisode), `episode-du-jour`, `episode-urgent` et `bilan` (les routines) et `postiz` (skill officiel de Postiz,
   copié tel quel).
 - Sous-agents (`.claude/agents/`) : `documentaliste` (article → `source.md`),
   `verificateur-faits` (script contre source), `spectateur` (test grand public),
   `controleur-visuel` (images rendues).
 - Ce qui marche chez Matou (chiffres) : `docs/apprentissages.md`. Choix du sujet :
-  `docs/veille.md` (`npm run veille`, classements dans `veille/`) ; dernier repli à la
+  `docs/veille.md` (`npm run veille`, classements dans `veille/` ; le score favorise le
+  quotidien, les noms connus et les médias français) ; dernier repli à la
   main : `docs/sujets.md`. Textes des posts : `docs/publication.md` (gabarits,
   `npm run gabarits`). Bilans hebdomadaires : `docs/bilans/`.
 - Postiz : CLI officielle `postiz` (dépendance du projet), authentifiée par OAuth

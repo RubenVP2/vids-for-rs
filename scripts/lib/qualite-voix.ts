@@ -13,6 +13,7 @@
 // (prendre le maximum global tombe souvent sur la double période, une octave trop bas).
 import {execFileSync, spawnSync} from 'node:child_process';
 import fs from 'node:fs';
+import {DEBIT_RAPIDE, type Debit} from './rythme';
 
 export type QualiteVoix = {
   secondes: number;
@@ -32,9 +33,7 @@ export type QualiteVoix = {
  *  - pauses : au moins 0,5 pause >= 150 ms par phrase (blancs internes > 260 ms ramenés à 220 ms,
  *    et respirations inter-scènes préservées à 350 ms pour laisser le temps de lire les cartes). */
 export const SEUILS = {
-  motsParMinuteMin: 198,
-  motsParMinuteCible: 204,
-  motsParMinute: 230,
+  ...DEBIT_RAPIDE,
   melodieDemiTons: 5.5,
   pausesParPhrase: 0.5,
 };
@@ -249,15 +248,15 @@ export const defauts = (q: QualiteVoix): string[] => {
 };
 
 /** Débit hors plage : signalé, jamais bloquant. */
-export const avertissements = (q: QualiteVoix): string[] => {
-  if (q.motsParMinute > SEUILS.motsParMinute) return [`débit ${q.motsParMinute} mots/min (viser ${SEUILS.motsParMinuteCible})`];
-  if (q.motsParMinute < SEUILS.motsParMinuteMin) return [`débit lent ${q.motsParMinute} mots/min (viser ${SEUILS.motsParMinuteCible})`];
+export const avertissements = (q: QualiteVoix, debit: Debit = SEUILS): string[] => {
+  if (q.motsParMinute > debit.motsParMinute) return [`débit ${q.motsParMinute} mots/min (viser ${debit.motsParMinuteCible})`];
+  if (q.motsParMinute < debit.motsParMinuteMin) return [`débit lent ${q.motsParMinute} mots/min (viser ${debit.motsParMinuteCible})`];
   return [];
 };
 
 /** Score entre deux prises sans défaut : intonation d'abord, puis proximité du débit cible. */
-export const score = (q: QualiteVoix): number =>
-  q.melodieDemiTons * 10 - Math.abs(q.motsParMinute - SEUILS.motsParMinuteCible) * 0.1 + Math.min(q.pauses, 20) * 0.3;
+export const score = (q: QualiteVoix, debit: Debit = SEUILS): number =>
+  q.melodieDemiTons * 10 - Math.abs(q.motsParMinute - debit.motsParMinuteCible) * 0.1 + Math.min(q.pauses, 20) * 0.3;
 
 /** Écart au profil de voix : ALERTE, jamais un refus. La hauteur seule ne prouve pas l'identité
  *  du locuteur (une autre voix d'homme tombe dans la même plage) ; c'est le modèle qui fait foi. */
@@ -269,7 +268,8 @@ export const alerteTimbre = (q: QualiteVoix, profil: {medianeHz: number; toleran
     : [];
 };
 
-/** Recale le débit dans la plage [motsParMinuteMin, motsParMinute] (cible 204 mots/min).
+/** Recale le débit dans la plage [motsParMinuteMin, motsParMinute] (cible 204 mots/min, ou celle
+ *  du rythme de l'épisode : `debit`, scripts/lib/rythme.ts).
  *  Accélère une prise trop lente (plafond 1,14×) et ralentit une prise précipitée (plancher 0,92×). */
 export const calerDebit = (
   mp3: string,
@@ -277,12 +277,13 @@ export const calerDebit = (
   mots: number,
   debut = 0,
   fin = 0,
+  debit: Debit = SEUILS,
 ): QualiteVoix & {facteur: number} => {
   let facteur = 1;
-  if (q.motsParMinute < SEUILS.motsParMinuteMin) {
-    facteur = Math.min(1.14, SEUILS.motsParMinuteCible / Math.max(1, q.motsParMinute));
-  } else if (q.motsParMinute > SEUILS.motsParMinute) {
-    facteur = Math.max(0.92, SEUILS.motsParMinute / q.motsParMinute);
+  if (q.motsParMinute < debit.motsParMinuteMin) {
+    facteur = Math.min(1.14, debit.motsParMinuteCible / Math.max(1, q.motsParMinute));
+  } else if (q.motsParMinute > debit.motsParMinute) {
+    facteur = Math.max(0.92, debit.motsParMinute / q.motsParMinute);
   }
   if (Math.abs(facteur - 1) < 0.015) return {...q, facteur: 1};
   const tmp = mp3.replace(/\.mp3$/, '.debit.mp3');

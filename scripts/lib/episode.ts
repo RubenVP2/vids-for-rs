@@ -2,6 +2,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import {episodeSchema, timingsSchema, type Episode, type Timings} from '../../src/schema';
+import {rythmeDe} from './rythme';
 
 export const RACINE = path.resolve(import.meta.dirname, '..', '..');
 export const EPISODES = path.join(RACINE, 'episodes');
@@ -31,14 +32,17 @@ export const lireEpisode = (dossier: string): Episode => {
 /**
  * Budget de durée d'un épisode : celui de sa série, ou le format long (jusqu'à ~60 s) quand
  * `long` en donne la raison. Au débit recalé (~205 mots/min = 3,4 mots/s), 65–88 mots donnent
- * ~19–26 s de voix en `flash` (vidéo ~20–27 s, cible de rétention maximale).
+ * ~19–26 s de voix en `flash` (vidéo ~20–27 s, cible de rétention maximale). Pendant le test de
+ * débit (brand/voix.json → testDebit), un épisode sur deux est « posé » : ~180 mots/min, ~30 s.
  */
-export const budgetDe = (episode: Episode) =>
-  episode.long
-    ? {nom: 'format long', viser: [120, 165], max: 190, voix: 62, video: 66}
-    : episode.serie === 'flash'
-      ? {nom: 'série flash', viser: [65, 88], max: 110, voix: 36, video: 40}
-      : {nom: 'série decrypte', viser: [90, 115], max: 140, voix: 46, video: 50};
+export const budgetDe = (episode: Episode) => {
+  if (episode.long) return {nom: 'format long', viser: [120, 165], max: 190, voix: 62, video: 66};
+  const pose = rythmeDe(episode.numero).budgets?.[episode.serie];
+  if (pose) return {nom: `série ${episode.serie}, rythme posé`, ...pose};
+  return episode.serie === 'flash'
+    ? {nom: 'série flash', viser: [65, 88], max: 110, voix: 36, video: 40}
+    : {nom: 'série decrypte', viser: [90, 115], max: 140, voix: 46, video: 50};
+};
 
 /**
  * Âge maximal de l'info, en jours calendaires (heure de Paris), entre la date de la source et

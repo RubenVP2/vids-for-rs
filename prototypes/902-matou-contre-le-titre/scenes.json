@@ -1,0 +1,64 @@
+{
+  "numero": 902,
+  "slug": "matou-contre-le-titre",
+  "serie": "flash",
+  "source": {
+    "nom": "Tom's Hardware",
+    "url": "https://www.tomshardware.com/tech-industry/data-centers/openai-ceo-says-its-quite-terrible-for-your-pc-to-have-ram-sam-altman-says-data-centers-offer-better-utilization",
+    "date": "2026-10-30",
+    "type": "article"
+  },
+  "statut": "disponible",
+  "verdict": "buzz",
+  "format": "titre",
+  "titrePresse": {
+    "media": "Tom's Hardware",
+    "titre": "Le patron d'OpenAI juge « franchement terrible » que ton PC ait de la RAM",
+    "verdict": "exagere"
+  },
+  "miniature": "Ta RAM, ==franchement terrible== ?",
+  "musique": true,
+  "scenes": [
+    {
+      "type": "hook",
+      "titre": "Ta RAM, ==franchement terrible== ?",
+      "texte": "Le patron d'{OpenAI|Open A I} trouverait terrible que ton PC ait de la mémoire. Vrai ou faux ?",
+      "matou": "sceptique"
+    },
+    {
+      "type": "point",
+      "titre": "Il l'a ==bien dit==",
+      "corps": "« Franchement terrible »",
+      "icone": "bulle",
+      "texte": "Selon Tom's Hardware, Sam Altman l'a bien dit en interview : c'est ==franchement terrible==.",
+      "matou": "parle"
+    },
+    {
+      "type": "chiffre",
+      "valeur": "5 %",
+      "legende": "du temps : l'usage de ta mémoire, selon lui",
+      "quand": "cinq",
+      "texte": "En fait, il parle de la pénurie mondiale : pour lui, ta mémoire ne sert que ==cinq pour cent== du temps.",
+      "matou": "enFait"
+    },
+    {
+      "type": "point",
+      "titre": "Un avis, ==pas une décision==",
+      "corps": "Aucune mesure annoncée",
+      "icone": "attention",
+      "texte": "Mais c'est un avis, pas une décision : l'article ne rapporte aucune mesure pour te ==retirer ta mémoire==.",
+      "matou": "reflechit"
+    },
+    {
+      "type": "verdict",
+      "raison": "Il défend ses serveurs, ==pas une loi==",
+      "texte": "Verdict : exagéré. Pour moi, Sam Altman défend surtout ses serveurs, et le titre en fait une menace.",
+      "matou": "verdict"
+    },
+    {
+      "type": "fin",
+      "texte": "Ta mémoire reste donc dans ton PC, et ce titre au rayon des frayeurs.",
+      "matou": "content"
+    }
+  ]
+}

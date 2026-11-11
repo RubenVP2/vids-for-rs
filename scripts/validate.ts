@@ -7,6 +7,7 @@ import {texteParle} from '../src/schema';
 import {budgetDe, dossierEpisode, FRAICHEUR_MAX, fraicheur, jourParis, lireEpisode} from './lib/episode';
 import {normaliser} from './lib/alignement';
 import {controlerMontage, montage} from './lib/montage';
+import {rythmeDe} from './lib/rythme';
 
 const dossier = dossierEpisode(process.argv[2]);
 const erreurs: string[] = [];
@@ -24,8 +25,8 @@ try {
 const age = fraicheur(dossier, episode);
 // Sortie passée = la vidéo est de l'histoire. Sinon (brouillon du jour, poste repoussé) la règle s'applique.
 const passe = age.selon === 'postiz-envoi.json' && age.parti && age.sortie < jourParis(new Date().toISOString());
-if (passe) {
-  // déjà publiée : la date est de l'histoire, la fraîcheur n'est plus un critère
+if (passe || episode.intemporel) {
+  // déjà publiée : la date est de l'histoire ; série intemporelle : une explication ne périme pas en 2 jours
 } else if (!Number.isFinite(age.jours)) erreurs.push(`Date de la source illisible (${episode.source.date}) : attendu AAAA-MM-JJ, date existante.`);
 else if (age.jours > FRAICHEUR_MAX)
   erreurs.push(`Info trop vieille : source du ${episode.source.date}, sortie le ${age.sortie} (${age.jours} jours, max ${FRAICHEUR_MAX}). Prendre un sujet plus récent.`);
@@ -33,8 +34,10 @@ else if (age.jours < 0) erreurs.push(`Date de la source (${episode.source.date})
 
 const compter = (t: string) => texteParle(t).split(/\s+/).filter((w) => normaliser(w)).length;
 const mots = episode.scenes.reduce((n, s) => n + compter(s.texte), 0);
-// Le débit de la voix est recalé dans [195, 225] mots/min (~3,25 à 3,75 mots/s, cible 205 mots/min).
-const [DEBIT_LENT, DEBIT_RAPIDE] = [3.2, 3.6];
+// Le débit de la voix est recalé dans la plage du rythme de l'épisode (scripts/lib/rythme.ts) :
+// ~3,3 à 3,8 mots/s au rythme courant, ~2,8 à 3,25 au rythme posé du test.
+const rythme = rythmeDe(episode.numero);
+const [DEBIT_LENT, DEBIT_RAPIDE] = [rythme.debit.motsParMinuteMin / 60, rythme.debit.motsParMinute / 60];
 const [rapide, lente] = [mots / DEBIT_RAPIDE + 1.25, mots / DEBIT_LENT + 1.25];
 const budget = budgetDe(episode);
 if (mots < budget.viser[0]) alertes.push(`Script court : ${mots} mots (viser ${budget.viser[0]}–${budget.viser[1]} en ${budget.nom}).`);
@@ -54,6 +57,21 @@ episode.scenes.forEach((s, i) => {
   if (n > 40) erreurs.push(`Scène ${i + 1} (${s.type}) : ${n} mots, trop pour une seule scène (max 40). Couper en deux.`);
   if (/==[^=]*$|^[^=]*==[^=]*$/.test(s.texte.replace(/==.+?==/g, ''))) erreurs.push(`Scène ${i + 1} : marqueur == non refermé.`);
 });
+
+// Série intemporelle : le sujet doit venir de la liste, et n'avoir été traité par aucun autre épisode.
+if (episode.intemporel) {
+  const liste = (JSON.parse(fs.readFileSync(path.join(dossier, '..', '..', 'brand', 'intemporels.json'), 'utf8')) as {sujets: {id: string}[]}).sujets;
+  if (!liste.some((s) => s.id === episode!.intemporel)) erreurs.push(`« intemporel » : sujet « ${episode.intemporel} » absent de brand/intemporels.json (npm run intemporel -- --liste).`);
+  const autre = fs.readdirSync(path.join(dossier, '..')).find((d) => {
+    if (d === path.basename(dossier)) return false;
+    try {
+      return JSON.parse(fs.readFileSync(path.join(dossier, '..', d, 'scenes.json'), 'utf8')).intemporel === episode!.intemporel;
+    } catch {
+      return false;
+    }
+  });
+  if (autre) erreurs.push(`« intemporel » : le sujet « ${episode.intemporel} » est déjà traité par ${autre}.`);
+}
 
 const tout = episode.scenes.map((s) => texteParle(s.texte)).join(' ');
 const fin = episode.scenes[episode.scenes.length - 1];

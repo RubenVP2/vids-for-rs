@@ -58,12 +58,12 @@ aux réponses de tous ; LinkedIn en carrousel (`post_as_images_carousel`).
 
 - Chaque réseau a son format, son texte et son **créneau** (`docs/reseaux.md`,
   `brand/postiz.json` → `creneaux`), selon le **rang** de l'épisode :
-  - principal (défaut, épisode du matin) : LinkedIn 8 h 30 en semaine (carrousel de
-    `rendu/carrousel/`), Threads 9 h (vidéo) puis 15 h 30 (relance, texte seul),
+  - principal (défaut, épisode du matin) : Threads 9 h (vidéo),
     Instagram 12 h, TikTok 12 h 30, YouTube 18 h ;
   - second (`--rang second`, épisode du soir) : Instagram 18 h 30, TikTok 19 h, Threads
-    19 h 30 puis 21 h 30 (relance), YouTube 20 h ; pas de LinkedIn (« réservé à
-    l'épisode principal », c'est voulu : un seul post par jour ouvré).
+    19 h 30, YouTube 20 h.
+  - LinkedIn : plus de post par épisode depuis le 10/11/2026 (« Pas de post : LinkedIn… »
+    est normal) ; un post de fond par semaine, skill `linkedin`.
 - Le script place chaque réseau **le jour même** : à son heure si le créneau est libre
   (aucun post programmé à moins de 90 min sur ce réseau ; un brouillon ne compte pas) et
   au moins `delaiVeto` (2 h) après maintenant, sinon 2 h 30 plus tard. Sinon → « Pas de
@@ -86,7 +86,8 @@ aux réponses de tous ; LinkedIn en carrousel (`post_as_images_carousel`).
 La même commande avec `--envoyer` : téléverse la vidéo, la miniature et le carrousel,
 crée un brouillon par réseau à son créneau, écrit `postiz-envoi.json` (`{envoye, date
 (la plus proche), rang, statut, video, miniature, carrousel, postes: [{reseau, postId,
-integration, date, statut}]}` ; la relance Threads a pour réseau `threads-relance`).
+integration, date, statut}]}` ; une relance Threads, arrêtée depuis le 09/11/2026, aurait
+pour réseau `threads-relance`).
 Committer `postiz.json` et `postiz-envoi.json`.
 
 Le script refuse de renvoyer un épisode qui a déjà un `postiz-envoi.json` : vérifier
@@ -105,7 +106,7 @@ Dire à l'utilisateur : les brouillons sont dans le calendrier Postiz, chacun à
 créneau, et le premier à relire (celui qui part le plus tôt).
 Ce qu'il doit regarder :
 
-- la vidéo et le texte de chaque réseau, la relance Threads ;
+- la vidéo et le texte de chaque réseau ;
 - le carrousel LinkedIn et la couverture ;
 - le commentaire de sources à épingler.
 

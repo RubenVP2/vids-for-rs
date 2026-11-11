@@ -9,16 +9,19 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {EPISODES, FRAICHEUR_MAX, RACINE} from './lib/episode';
 
-type Flux = {nom: string; type: 'officiel' | 'media' | 'agregateur'; url: string; filtre?: boolean};
+type Flux = {nom: string; type: 'officiel' | 'media' | 'agregateur'; url: string; filtre?: boolean; fr?: boolean};
 type Config = {
   fenetreHeures: number; seuil: number; seuilReserve: number; reserveJours: number;
   points: Record<string, number>; flux: Flux[]; hn: string; reddit: string[]; trends: string;
   entites: Record<string, string>; motsIA: string[]; motsHorsSujet: string[]; motsVides: string[];
+  /** Angle grand public (docs/veille.md) : mots du quotidien et noms que tout le monde connaît. */
+  motsQuotidien?: string[]; nomsConnus?: string[]; produitsIA?: string[];
 };
 /** Un article (ou un signal HN / Reddit) tel que collecté : c'est l'entrée gelée du classement.
  *  `via` : agrégateur d'où vient l'article (son lien est une redirection, à éviter en tête). */
-type Article = {source: string; type: Flux['type'] | 'hn' | 'reddit'; titre: string; url: string; date: string; points?: number; via?: string};
-type Detail = {officiel: number; medias: number; fraicheur: number; hn: number; reddit: number; trends: number};
+type Article = {source: string; type: Flux['type'] | 'hn' | 'reddit'; titre: string; url: string; date: string; points?: number; via?: string; fr?: boolean};
+/** `quotidien` et `nomConnu` : absents des passages d'avant le 09/11/2026. */
+type Detail = {officiel: number; medias: number; fraicheur: number; hn: number; reddit: number; trends: number; quotidien?: number; nomConnu?: number};
 type Sujet = {
   id: string; titre: string; url: string; date: string; entreprises: string[]; sources: string[];
   officiel: boolean; score: number; detail: Detail; exclu?: string; articles: Article[]; signaux: Article[];
@@ -68,6 +71,12 @@ const entreprisesDe = (m: Set<string>) => [...new Set([...m].filter((x) => x in 
 const parleIA = (titre: string) => {
   const b = motsBruts(titre);
   return CONFIG.motsIA.some((m) => b.has(m)) || [...b].some((m) => m in CONFIG.entites) || /intelligence artificielle|artificial intelligence/i.test(titre);
+};
+
+/** Le titre parle vraiment d'IA (un mot d'IA ou un produit d'IA), pas seulement d'une marque : condition des bonus grand public. */
+const vraimentIA = (titre: string) => {
+  const b = motsBruts(titre);
+  return CONFIG.motsIA.some((m) => b.has(m)) || (CONFIG.produitsIA ?? []).some((m) => b.has(m)) || /intelligence artificielle|artificial intelligence/i.test(titre);
 };
 
 /** Même annonce ? Au moins une entité en commun, deux mots précis (pas un simple nom d'entreprise),
@@ -127,8 +136,8 @@ const collecter = async (maintenant: number) => {
         if (f.filtre && !parleIA(e.titre)) continue;
         // Google Actualités : « Titre - Éditeur » ; chaque éditeur compte comme un média.
         const titre = f.type === 'agregateur' ? e.titre.replace(/\s+-\s+[^-]+$/, '') : e.titre;
-        if (f.type === 'agregateur') garder({source: e.editeur || f.nom, type: 'media', titre, url: e.url, date: e.date, via: f.nom});
-        else garder({source: f.nom, type: f.type, titre, url: e.url, date: e.date});
+        if (f.type === 'agregateur') garder({source: e.editeur || f.nom, type: 'media', titre, url: e.url, date: e.date, via: f.nom, fr: f.fr});
+        else garder({source: f.nom, type: f.type, titre, url: e.url, date: e.date, fr: f.fr});
       }
     } catch (err) {
       erreurs.push(`${f.nom} : ${(err as Error).message}`);
@@ -217,16 +226,23 @@ const classer = (articles: Article[], tendances: string[], rang: string, mainten
     const tous = new Set(g.mots.flatMap((m) => [...m]));
     const officiels = g.articles.filter((a) => a.type === 'officiel');
     const medias = new Set(g.articles.filter((a) => a.type === 'media').map((a) => a.source.toLowerCase()));
+    // Un média français compte double (parMediaFr) : c'est lui que le public de Matou lit.
+    const ia = g.articles.some((a) => vraimentIA(a.titre));
+    const mediasFr = new Set(g.articles.filter((a) => ia && a.type === 'media' && a.fr).map((a) => a.source.toLowerCase()));
+    // Angle grand public : mots entiers des titres (sans accents), pas les mots tronqués de `mots`.
+    const bruts = new Set(g.articles.flatMap((a) => [...motsBruts(a.titre)]));
     const tete = officiels[0] ?? g.articles.find((a) => !a.via) ?? g.articles[0];
     const age = (maintenant - Date.parse(g.articles[0].date)) / HEURE;
     const hnMax = Math.max(0, ...g.signaux.filter((s) => s.type === 'hn').map((s) => s.points ?? 0));
     const detail: Detail = {
       officiel: officiels.length ? P.officiel : 0,
-      medias: Math.min(P.mediasMax, medias.size * P.parMedia),
+      medias: Math.min(P.mediasMax, (medias.size - mediasFr.size) * P.parMedia + mediasFr.size * (P.parMediaFr ?? P.parMedia)),
       fraicheur: age < 12 ? P.moins12h : age < 24 ? P.moins24h : 0,
       hn: Math.min(P.hnMax, Math.round(hnMax * P.hnParPoint)),
       reddit: Math.min(P.redditMax, g.signaux.filter((s) => s.type === 'reddit').length * P.parReddit),
       trends: motsTendances.some((t) => [...t].every((m) => tous.has(m)) && [...t].some((m) => m in CONFIG.entites)) ? P.trends : 0,
+      quotidien: ia && (CONFIG.motsQuotidien ?? []).some((m) => bruts.has(m)) ? (P.quotidien ?? 0) : 0,
+      nomConnu: ia && (CONFIG.nomsConnus ?? []).some((m) => bruts.has(m)) ? (P.nomConnu ?? 0) : 0,
     };
     const entreprises = entreprisesDe(tous);
     let exclu: string | undefined;
@@ -301,11 +317,11 @@ const enMarkdown = (p: Passage) => {
     `${p.articles.length} articles collectés, ${p.sujets.length} sujets, seuil ${CONFIG.seuil}. Poids : brand/veille.json.`,
     p.erreurs.length ? `Flux en échec : ${p.erreurs.join(' ; ')}.` : 'Tous les flux ont répondu.', '',
     `**Choix : ${p.choix ?? 'aucun'}**${p.ecartes.length ? ` (écartés par l'agent : ${p.ecartes.map((e) => `${e.id} — ${e.raison}`).join(' ; ')})` : ''}`, '',
-    '| Id | Score | Off. | Médias | Fraîch. | HN | Reddit | Trends | Sujet | Sources | Exclu |',
-    '| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |',
+    '| Id | Score | Off. | Médias | Fraîch. | HN | Reddit | Trends | Quotidien | Nom connu | Sujet | Sources | Exclu |',
+    '| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |',
     ...p.sujets.slice(0, 25).map((s) => {
       const d = s.detail;
-      return `| ${s.id} | **${s.score}** | ${d.officiel} | ${d.medias} | ${d.fraicheur} | ${d.hn} | ${d.reddit} | ${d.trends} | [${s.titre.replace(/\|/g, '/')}](${s.url}) | ${s.sources.join(', ')} | ${s.exclu ?? ''} |`;
+      return `| ${s.id} | **${s.score}** | ${d.officiel} | ${d.medias} | ${d.fraicheur} | ${d.hn} | ${d.reddit} | ${d.trends} | ${d.quotidien ?? 0} | ${d.nomConnu ?? 0} | [${s.titre.replace(/\|/g, '/')}](${s.url}) | ${s.sources.join(', ')} | ${s.exclu ?? ''} |`;
     }),
   ];
   const res = p.candidats.filter((c) => c.origine === 'reserve');
@@ -349,6 +365,12 @@ if (rejouer) {
   const classement = pareil(sujets.map((s) => [s.id, s.url, s.score]), avant.sujets.map((s) => [s.id, s.url, s.score]));
   const candidatures = cands ? pareil(cands.map((c) => c.id), avant.candidats.map((c) => c.id)) : undefined;
   console.log(classement ? 'Classement identique.' : 'Classement différent (poids, épisodes ou code modifiés depuis).');
+  // Poids changés : le nouveau haut du classement, face à l'ancien choix, pour juger le réglage.
+  if (!classement) {
+    const ancien = avant.candidats.find((c) => c.id === avant.choix);
+    console.log(`Ancien choix : ${ancien ? `${ancien.score}  ${ancien.titre}` : 'aucun'}`);
+    for (const s of sujets.filter((s) => !s.exclu).slice(0, 5)) console.log(`  ${s.id}  ${String(s.score).padStart(3)}  ${s.titre}  [${s.sources.slice(0, 4).join(', ')}]`);
+  }
   if (!cands || candidatures === undefined) console.log('Candidats non rejouables : ce passage ne garde pas la réserve. Rejeu partiel.');
   else if (candidatures) console.log(`Candidats identiques (${cands.length}) : le filtre de fraîcheur rejoue à l'identique.`);
   else console.log(`Candidats différents : ${cands.map((c) => c.id).join(', ') || 'aucun'} au lieu de ${avant.candidats.map((c) => c.id).join(', ') || 'aucun'}.`);

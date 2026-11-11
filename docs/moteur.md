@@ -27,6 +27,8 @@ Playwright s'il est installé (`/opt/pw-browsers`), sinon le Chromium du systèm
 
 | Commande | Fait |
 | --- | --- |
+| `npm run intemporel -- --rang second` | série intemporelle : le sujet du jour s'il y en a un (`brand/intemporels.json`), `--liste`, `--suivant` |
+| `npm run gabarits -- NNN` | rythme de voix (posé ou courant, `brand/voix.json` → `testDebit`), gabarits de montage et de texte de l'épisode |
 | `npm run validate -- NNN` | schéma, longueur, rituels, chiffres absents de la source, fraîcheur de l'info |
 | `npm run voice -- NNN [--force]` | voix + minutage des mots + enveloppe de la bouche |
 | `npm run render -- NNN [--brouillon]` | MP4 1080×1920 normalisé −14 LUFS + miniature PNG |

@@ -1,0 +1,23 @@
+{
+  "$description": "LinkedIn de Matou (docs/decisions.md, 10/11/2026) : un post de fond par semaine, en carrousel, au lieu de l'actu du jour. Le lundi, la routine bilan pose la question de la semaine sur Discord ; une réponse (« réponse : … ») devient le post « retour d'expérience », sans réponse c'est un post « coulisses » tiré du dépôt (décisions, bilans, pannes). Production : la routine rappel, du mardi 11 h 07 au jeudi, tant que le post de la semaine n'est pas fait. Publication : le prochain jour de « jours » à « heure », au moins delaiVeto h après (brand/postiz.json). npm run linkedin ; skill linkedin.",
+  "jours": [2, 3, 4],
+  "heure": "08:30",
+  "productionDes": {"jour": 2, "heure": "11:00"},
+  "productionJusqua": 4,
+  "$interdits": "Mots qui ne doivent jamais apparaître dans un post (ni texte ni diapo) : l'utilisateur n'est jamais nommé, rien d'interne ne sort. npm run linkedin les refuse, comme les URL, adresses mail, @, chemins et identifiants longs.",
+  "interdits": ["Ruben", "Discord", "#matou", "Raspberry Pi de", "clé API", "token", "mot de passe"],
+  "questions": [
+    {"id": "outil-semaine", "question": "Quel outil d'IA t'a fait gagner du temps cette semaine, et sur quoi exactement ?"},
+    {"id": "deception", "question": "Quel outil d'IA t'a déçu récemment, et qu'est-ce que tu attendais de lui ?"},
+    {"id": "tache-confiee", "question": "Quelle tâche tu confies maintenant à une IA sans y penser, alors que tu la faisais à la main il y a un an ?"},
+    {"id": "jamais-ia", "question": "Qu'est-ce que tu refuses de confier à une IA, et pourquoi ?"},
+    {"id": "erreur-ia", "question": "Raconte une fois où une IA t'a donné une réponse fausse avec aplomb : qu'est-ce qui t'a mis la puce à l'oreille ?"},
+    {"id": "prompt-favori", "question": "Quelle consigne (prompt) tu réutilises le plus souvent, et pour quoi faire ?"},
+    {"id": "avant-apres", "question": "Sur Matou, qu'est-ce qui marchait mal au début et qu'une IA fait mieux maintenant ?"},
+    {"id": "cout", "question": "Combien te coûtent tes outils d'IA par mois, et lequel vaut vraiment son prix ?"},
+    {"id": "conseil-debutant", "question": "Quel conseil tu donnerais à quelqu'un qui veut automatiser un bout de son travail avec l'IA demain matin ?"},
+    {"id": "surprise", "question": "Qu'est-ce qu'une IA a réussi cette semaine qui t'a vraiment surpris ?"},
+    {"id": "agent-autonome", "question": "Qu'est-ce que tu laisses tourner seul, sans relire, et qu'est-ce que tu relis toujours ?"},
+    {"id": "outil-abandonne", "question": "Quel outil d'IA as-tu arrêté d'utiliser, et par quoi l'as-tu remplacé ?"}
+  ]
+}
