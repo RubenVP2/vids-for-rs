@@ -1,1 +1,140 @@
-[]
+[
+  {
+    "type": "draft",
+    "date": "2026-11-12T08:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb2y1q03efpg1c3j45vgui"
+        },
+        "value": [
+          {
+            "content": "Mon avis : protéger les ados qui trichent sur leur âge, oui. Mais une IA qui lit ta bio et tes commentaires pour décider de ton âge, il faut un vrai moyen de contester quand elle se trompe, et Meta ne l'a pas expliqué.\n\nMeta étend sa vérification d'âge par IA au monde entier, Threads compris.\nStatut : annoncé.\nSource : 01net\n\nQu'est-ce qu'une IA devinerait de ton âge en lisant ton profil ? #IA",
+            "image": [
+              {
+                "id": "bdfaa06b-6f33-45f0-8b86-3e322c7ba0a3",
+                "path": "https://uploads.postiz.com/leQpiiT8i0.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Source : 01net (https://www.01net.com/actualites/facebook-instagram-threads-meta-deploie-la-verification-dage-par-ia-dans-le-monde-entier.html). Annoncé : Instagram d'abord, Facebook et Threads ensuite.",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "threads"
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-12T11:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsaogt206kfor1cddnosuhf"
+        },
+        "value": [
+          {
+            "content": "Et si Instagram savait que tu as menti sur ton âge ? 🤓\n\nMeta annonce l'extension de sa vérification d'âge par IA au monde entier :\n→ L'IA lit ta bio, tes publications et tes commentaires, jusqu'à un anniversaire\n→ Entre 13 et 17 ans : passage en compte ado d'office\n→ Moins de 13 ans : compte désactivé\n\nEnvoie-la à un parent qui se demande ce que fait son ado sur Instagram ☝️\n\n#IA #Instagram #Meta #vulgarisation #matou",
+            "image": [
+              {
+                "id": "bdfaa06b-6f33-45f0-8b86-3e322c7ba0a3",
+                "path": "https://uploads.postiz.com/leQpiiT8i0.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Source : 01net (https://www.01net.com/actualites/facebook-instagram-threads-meta-deploie-la-verification-dage-par-ia-dans-le-monde-entier.html). Annoncé : Instagram d'abord, Facebook et Threads ensuite.",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "instagram-standalone",
+          "post_type": "post",
+          "is_trial_reel": false
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-12T11:30:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsakeo602wupg1crmgz7g9n"
+        },
+        "value": [
+          {
+            "content": "Instagram va estimer ton âge avec une IA, même si tu as menti à l'inscription. Résume ta réaction en un emoji 👇\n\n#IA #Instagram #Meta #apprendresurtiktok #matou",
+            "image": [
+              {
+                "id": "bdfaa06b-6f33-45f0-8b86-3e322c7ba0a3",
+                "path": "https://uploads.postiz.com/leQpiiT8i0.mp4"
+              }
+            ]
+          }
+        ],
+        "settings": {
+          "__type": "tiktok-business",
+          "content_posting_method": "DIRECT_POST",
+          "privacy_level": "PUBLIC_TO_EVERYONE",
+          "duet": true,
+          "stitch": true,
+          "comment": true,
+          "autoAddMusic": "no",
+          "brand_content_toggle": false,
+          "brand_organic_toggle": false,
+          "video_made_with_ai": true
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-12T17:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb3xwh07l1or1cvp01pod9"
+        },
+        "value": [
+          {
+            "content": "Meta étend au monde entier son IA qui estime l'âge à partir de ton profil : un ado passe en compte ado d'office, un moins de 13 ans est désactivé.\nAnnoncé : Instagram d'abord, Facebook et Threads ensuite.\n\nSource : https://www.01net.com/actualites/facebook-instagram-threads-meta-deploie-la-verification-dage-par-ia-dans-le-monde-entier.html\n\n#shorts #IA #Instagram #matou",
+            "image": [
+              {
+                "id": "bdfaa06b-6f33-45f0-8b86-3e322c7ba0a3",
+                "path": "https://uploads.postiz.com/leQpiiT8i0.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Source : 01net (https://www.01net.com/actualites/facebook-instagram-threads-meta-deploie-la-verification-dage-par-ia-dans-le-monde-entier.html). Annoncé : Instagram d'abord, Facebook et Threads ensuite.",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "youtube",
+          "type": "public",
+          "selfDeclaredMadeForKids": "no",
+          "title": "Instagram estime ton âge avec une IA",
+          "thumbnail": {
+            "id": "606ac2f5-d7e2-48be-80bb-af73e9b6e360",
+            "path": "https://uploads.postiz.com/Ts9BYRqrzp.png"
+          }
+        }
+      }
+    ]
+  }
+]

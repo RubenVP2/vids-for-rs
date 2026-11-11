@@ -2,7 +2,7 @@ Gabarits : tiktok=un-mot · instagram=question · youtube=nom-fait · threads=av
 Vidéo : episodes/030-meta-devine-ton-age/rendu/030-meta-devine-ton-age.mp4
 Miniature : episodes/030-meta-devine-ton-age/rendu/030-meta-devine-ton-age-miniature.png
 Source : https://www.01net.com/actualites/facebook-instagram-threads-meta-deploie-la-verification-dage-par-ia-dans-le-monde-entier.html
-Commentaire à épingler (tous les réseaux) : Sources : 01net (https://www.01net.com/actualites/facebook-instagram-threads-meta-deploie-la-verification-dage-par-ia-dans-le-monde-entier.html) et Al Jazeera (https://www.aljazeera.com/news/2026/11/9/meta-rolls-out-automated-age-checks-for-teens-globally). Annoncé : Instagram d'abord, Facebook et Threads ensuite.
+Commentaire à épingler (tous les réseaux) : Source : 01net (https://www.01net.com/actualites/facebook-instagram-threads-meta-deploie-la-verification-dage-par-ia-dans-le-monde-entier.html). Annoncé : Instagram d'abord, Facebook et Threads ensuite.
 
 ## TikTok
 
