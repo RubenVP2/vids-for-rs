@@ -1,6 +1,7 @@
 import {z} from 'zod';
 import {ETATS} from './mascot/MatouSvg';
 import {ICONES} from './components/Icones';
+import {ETATS_PLOUF} from './personnages/PloufSvg';
 
 // Le fichier de scènes (episodes/<dossier>/scenes.json) décrit tout l'épisode.
 // Chaque scène porte la phrase que Matou dit (`texte`) : le minutage de la vidéo
@@ -21,6 +22,10 @@ const base = {
   matou: etat.optional(),
   /** Format « messages » : ce que le spectateur répond (bulle « toi », non prononcée) à la fin de la scène. */
   reponse: z.string().min(1).max(40).optional(),
+  /** Duo (prototype, docs/personnages.md) : la réplique de Plouf, dite avant celle de Matou. */
+  plouf: z.string().min(1).max(120).optional(),
+  /** Expression de Plouf pendant que Matou parle (par défaut : neutre). */
+  ploufEtat: z.enum(ETATS_PLOUF).optional(),
 };
 
 /** Un élément qui apparaît quand Matou prononce le mot `quand` (sinon, réparti dans le temps). */
@@ -155,6 +160,8 @@ export const episodeSchema = z
      * Absent : le format habituel, le cahier.
      */
     format: z.enum(['messages', 'titre']).optional(),
+    /** Décor (prototype) : le cahier (défaut) ou « bureau », le mur en liège et le bureau de Matou. */
+    decor: z.enum(['cahier', 'bureau']).optional(),
     /** Format `titre` : le gros titre jugé (tel que publié, ou sa traduction fidèle), et le tampon de Matou. */
     titrePresse: z
       .object({media: z.string().min(1).max(30), titre: z.string().min(1).max(110), verdict: z.enum(['vrai', 'exagere', 'faux'])})
@@ -188,11 +195,15 @@ export const timingsSchema = z.object({
       fin: z.number(),
       scene: z.number().int(),
       surligne: z.boolean(),
+      /** Duo : qui dit ce mot (absent : Matou). */
+      locuteur: z.enum(['matou', 'plouf']).optional(),
     }),
   ),
   scenes: z.array(z.object({debut: z.number(), fin: z.number()})),
   /** Volume de la voix, une valeur 0–1 par image (30 i/s) : sert à animer la bouche. */
   enveloppe: z.array(z.number()),
+  /** Duo : volume de la voix de Plouf par image (la bouche de Plouf) ; `enveloppe` reste celle de Matou. */
+  enveloppePlouf: z.array(z.number()).optional(),
   /** Mesures de la prise retenue (débit, intonation, pauses) : `npm run check` refuse une voix plate. */
   qualite: z
     .object({

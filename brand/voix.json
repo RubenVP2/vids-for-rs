@@ -21,6 +21,14 @@
   "$profil": "Hauteur médiane de Puck mesurée sur les épisodes 000-009 (118-147 Hz). Sert d'ALERTE, pas de refus : deux voix d'homme peuvent partager la même plage, seule l'identité du modèle fait foi.",
   "profil": {"medianeHz": 125, "tolerance": 0.15},
   "transcription": "openai/whisper-large-v3",
+  "$plouf": "Voix de Plouf, le poisson rouge du duo (brand/duo.json, docs/personnages.md). Gemini n'a pas de voix d'enfant toute faite : Sadachbia, jouée en enfant par la consigne. Choisie par l'utilisateur au casting du 11/11/2026 (brand/voix/essais-plouf/gemini/, essai n° 5).",
+  "plouf": {
+    "modele": "google/gemini-3.8-flash-tts",
+    "voix": "Sadachbia",
+    "format": "pcm",
+    "frequencePcm": 24000,
+    "instructions": "Tu joues Plouf, un petit poisson rouge de dessin animé. Voix d'enfant d'environ huit ans, aiguë et légère, curieuse, un peu naïve et très enthousiaste. Français de France, accent neutre. Rythme vif, intonation très expressive qui monte sur les questions, jamais récitée ni robotique."
+  },
   "secours": [
     {"modele": "microsoft/mai-voice-2.1", "voix": "fr-FR-Marc:MAI-Voice-2.1", "format": "mp3"},
     {"modele": "elevenlabs/eleven-multilingual-v2", "voix": "brian", "format": "mp3"}

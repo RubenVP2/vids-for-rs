@@ -101,6 +101,22 @@ verifier(
   `Voix de secours (${timings.voix.modele} / ${timings.voix.voix}) : ce n'est pas Matou (${reglagesVoix.modele} / ${reglagesVoix.voix}) — voix.mp3 à refaire quand l'API répond`,
 );
 
+// Duo : la voix de Plouf doit être celle de brand/voix.json (sa voix fait partie du personnage).
+if (episode.scenes.some((s) => s.plouf)) {
+  let plouf: {modele?: string; voix?: string} | undefined;
+  try {
+    plouf = (JSON.parse(fs.readFileSync(path.join(dossier, 'voix.meta.json'), 'utf8')) as {plouf?: {modele?: string; voix?: string}}).plouf;
+  } catch {
+    plouf = undefined;
+  }
+  verifier(
+    !!plouf && plouf.modele === reglagesVoix.plouf?.modele && plouf.voix === reglagesVoix.plouf?.voix,
+    `Voix de Plouf (${plouf?.modele} / ${plouf?.voix})`,
+    `Voix de Plouf absente ou inattendue (${plouf?.modele ?? '—'} / ${plouf?.voix ?? '—'}, attendu ${reglagesVoix.plouf?.voix ?? 'brand/voix.json → plouf'}) : npm run voice -- ${nom} --force`,
+  );
+  verifier(!!timings.enveloppePlouf && timings.mots.some((m) => m.locuteur === 'plouf'), 'Répliques de Plouf minutées', 'timings.json sans les répliques de Plouf : relancer npm run voice')
+}
+
 // Provenance liée au CONTENU de voix.mp3 : un fichier remplacé à la main ne passe pas.
 try {
   const meta = JSON.parse(fs.readFileSync(path.join(dossier, 'voix.meta.json'), 'utf8')) as {sha256?: string};

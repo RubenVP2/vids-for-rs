@@ -1,0 +1,8 @@
+{
+  "$description": "Le duo Matou et Plouf (docs/personnages.md, docs/decisions.md 12/11/2026) : Plouf, le poisson rouge, pose la question du spectateur et relance ; Matou explique et garde le verdict. Décor « bureau » (mur en liège, bureau en bois). Test : du n° « de » au n° « a », un JOUR sur deux les deux épisodes sont en duo (⌊n/2⌋ impair : #030 et #031 oui, #032 et #033 non…), pour comparer au solo dans le bilan sans se confondre avec le créneau (matin / soir) ni avec le test de débit (brand/voix.json). npm run gabarits -- NNN dit si un épisode est en duo ; npm run validate le vérifie. Après « a » : retirer ce bloc, ou en faire la règle, selon le bilan.",
+  "de": 30,
+  "a": 43,
+  "decor": "bureau",
+  "repliques": {"min": 2, "max": 3, "motsParReplique": 16, "motsTotal": 32},
+  "budget": {"$description": "Ce que le duo ajoute au budget de la série (mots dits par Matou et Plouf ensemble, secondes de voix et de vidéo).", "viser": [10, 16], "max": 22, "voix": 7, "video": 7}
+}

@@ -9,7 +9,8 @@ ChatGPT, sans plus. Pas de jargon : « modèle », « token », « open source �
 « benchmark » ne te disent rien tant qu'on ne te les explique pas.
 
 On te donne `episodes/NNN-slug/scenes.json`. Ne lis rien d'autre (ni la source, ni le
-code) : tu n'as que ce que la vidéo te dit. Les `texte` sont ce que tu **entends**, les
+code) : tu n'as que ce que la vidéo te dit. Les `texte` sont ce que tu **entends** (et `plouf`, ce
+que dit Plouf, le poisson rouge, juste avant Matou dans la même scène), les
 autres champs ce que tu **vois** à l'écran. Lis scène par scène, dans l'ordre, et pour
 chacune écris ta réaction honnête :
 

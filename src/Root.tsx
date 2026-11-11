@@ -8,6 +8,7 @@ import {DIAPO_LI, DiapoLinkedin, diapoLinkedinProps, type PostLinkedin} from './
 import {dureeEnImages, EpisodeVideo} from './Episode';
 import {Miniature} from './Miniature';
 import {Avatar, PlancheMarque, PlancheMatou} from './Planches';
+import {PlanchePlouf} from './personnages/Planches';
 import {episodePropsSchema, type EpisodeProps} from './schema';
 import {FPS, H, W} from './theme';
 
@@ -81,5 +82,6 @@ export const Racine: React.FC = () => (
     <Still id="PlancheMarque" component={PlancheMarque} width={W} height={H} />
     <Still id="PlancheMatou" component={PlancheMatou} width={W} height={H} />
     <Still id="Avatar" component={Avatar} width={1080} height={1080} />
+    <Still id="PlanchePlouf" component={PlanchePlouf} width={W} height={H} />
   </>
 );

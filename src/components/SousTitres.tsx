@@ -21,7 +21,8 @@ export const paginer = (mots: Timings['mots']): Page[] => {
     const longueur = courante.map((x) => x.texte).join(' ').length;
     const pause = courante.length > 0 && m.debut - courante[courante.length - 1].fin > 0.45;
     const changementScene = courante.length > 0 && courante[0].scene !== m.scene;
-    if (courante.length && (longueur + 1 + m.texte.length > MAX_CARACTERES || pause || changementScene)) fermer();
+    const changementVoix = courante.length > 0 && (courante[0].locuteur ?? 'matou') !== (m.locuteur ?? 'matou');
+    if (courante.length && (longueur + 1 + m.texte.length > MAX_CARACTERES || pause || changementScene || changementVoix)) fermer();
     courante.push(m);
     if (/[.?!…:]$/.test(m.texte) && i < mots.length - 1) fermer();
   });
@@ -64,7 +65,7 @@ export const SousTitres: React.FC<{timings: Timings; top: number}> = ({timings, 
             <span
               style={{
                 color: m.surligne ? C.stylo.bleu : C.encre,
-                backgroundImage: actif ? `linear-gradient(${C.surligneur}, ${C.surligneur})` : undefined,
+                backgroundImage: actif ? `linear-gradient(${m.locuteur === 'plouf' ? C.fluo.orange : C.surligneur}, ${m.locuteur === 'plouf' ? C.fluo.orange : C.surligneur})` : undefined,
                 backgroundRepeat: 'no-repeat',
                 backgroundSize: '100% 58%',
                 backgroundPosition: '0 82%',

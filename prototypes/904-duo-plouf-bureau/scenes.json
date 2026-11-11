@@ -1,0 +1,77 @@
+{
+  "numero": 904,
+  "slug": "duo-plouf-bureau",
+  "serie": "flash",
+  "source": {
+    "nom": "NVIDIA",
+    "url": "https://blogs.nvidia.com/blog/cities-physical-agentic-ai-applications/",
+    "date": "2026-11-02",
+    "type": "blog"
+  },
+  "statut": "disponible",
+  "verdict": "prometteur",
+  "miniature": "Une ==IA== règle ta ville ?",
+  "musique": true,
+  "scenes": [
+    {
+      "type": "hook",
+      "plouf": "Matou ! Il paraît qu'une IA va régler les feux rouges de ma ville. C'est vrai ?",
+      "texte": "En partie, oui. Et ça a déjà commencé.",
+      "titre": "Une ==IA== règle ta ville ?",
+      "icone": "ampoule",
+      "matou": "enFait",
+      "ploufEtat": "surpris"
+    },
+    {
+      "type": "liste",
+      "texte": "Selon {NVIDIA|Nvidia}, des IA regardent les caméras de la ville pour repérer les bouchons et aider les secours.",
+      "titre": "L'IA dans la ville",
+      "elements": [
+        {
+          "texte": "Repérer les bouchons",
+          "icone": "attention",
+          "quand": "bouchons"
+        },
+        {
+          "texte": "Aider les secours",
+          "icone": "fusee",
+          "quand": "secours"
+        }
+      ],
+      "matou": "parle"
+    },
+    {
+      "type": "chiffre",
+      "plouf": "Et ça marche ?",
+      "texte": "En fait, en Malaisie, régler les feux comme ça raccourcit les trajets aux heures de pointe, jusqu'à ==vingt-six pour cent==.",
+      "valeur": "-26 %",
+      "legende": "de temps de trajet aux heures de pointe",
+      "quand": "vingt-six",
+      "matou": "enFait",
+      "ploufEtat": "surpris"
+    },
+    {
+      "type": "pourquoi",
+      "plouf": "Et pour moi, ça change quoi ?",
+      "texte": "Moins d'attente au feu. Mais là-bas, l'objectif, c'est plus de ==dix-sept mille caméras== d'ici 2027.",
+      "corps": "Moins d'attente, mais plus de 17 000 caméras d'ici 2027",
+      "matou": "sceptique",
+      "ploufEtat": "surpris"
+    },
+    {
+      "type": "verdict",
+      "texte": "Hype-mètre : prometteur. Moins de bouchons, c'est bien, mais je veux savoir qui regarde ces caméras.",
+      "raison": "Moins de bouchons, mais qui regarde ?",
+      "matou": "verdict",
+      "ploufEtat": "compris"
+    },
+    {
+      "type": "fin",
+      "plouf": "Attends… c'était quoi la question, déjà ?",
+      "texte": "Si une IA va régler les feux de ta ville. Oui, ça a commencé.",
+      "matou": "content",
+      "ploufEtat": "compris"
+    }
+  ],
+  "decor": "bureau"
+}

@@ -33,7 +33,11 @@ tu sais en une phrase quelle est **l'idée unique** de l'épisode.
 ## 2. Écrire le script et les scènes
 
 Suivre le skill **`ecriture-matou`** : il donne la voix de Matou, la structure, le
-budget de mots et le catalogue des scènes. Écrire `scenes.json`.
+budget de mots et le catalogue des scènes. Lancer d'abord `npm run gabarits -- NNN` : il dit
+le gabarit de montage, le rythme de voix et si l'épisode est **en duo avec Plouf** (un jour
+sur deux, `brand/duo.json` : répliques `plouf`, `"decor": "bureau"`, section « Duo avec
+Plouf » d'`ecriture-matou`). Écrire `scenes.json`. En duo, `npm run voice` enregistre aussi
+Plouf (rien d'autre à faire).
 
 **Fait quand** `npm run validate -- NNN` ne sort aucune ERREUR, et que chaque
 ATTENTION est soit corrigée, soit justifiée (ex. un chiffre reformulé : « deux fois » pour « 2× »).

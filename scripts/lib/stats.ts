@@ -4,6 +4,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import {EPISODES, RACINE} from './episode';
+import {nomFormule} from './duo';
 import {nomRythme} from './rythme';
 
 /**
@@ -68,7 +69,7 @@ const jourDe = (t: string) => new Intl.DateTimeFormat('en-CA', {timeZone: FUSEAU
 const weekEnd = (j: string) => [0, 6].includes(new Date(`${j}T12:00:00Z`).getUTCDay());
 
 type Ligne = {
-  ep: string; rang: string; serie: string; rythme: string; format: string; verdict: string; ouverture: string; duree?: number; motsParMinute?: number;
+  ep: string; rang: string; serie: string; rythme: string; formule: string; format: string; verdict: string; ouverture: string; duree?: number; motsParMinute?: number;
   score?: number; reseau: string; heure: string; jour: string; semaine: string; gabarit: string; longueur?: number;
   vues?: number; likes: number; commentaires: number; commentairesBruts: number; ageH: number;
 };
@@ -107,7 +108,7 @@ const lignes = (ageMin: number) => {
       if (ageH < ageMin) continue;
       const bloc = sectionDe(pub, SECTIONS[p.reseau] ?? '');
       tout.push({
-        ep: d.slice(0, 3), rang: stats.rang, serie: scenes.serie ?? '—', rythme: nomRythme(Number(d.slice(0, 3))), format: scenes.intemporel ? 'intemporel' : 'actu', verdict: scenes.verdict ?? '—', ouverture: scenes.gabarit?.ouverture ?? '—',
+        ep: d.slice(0, 3), rang: stats.rang, serie: scenes.serie ?? '—', rythme: nomRythme(Number(d.slice(0, 3))), formule: nomFormule(Number(d.slice(0, 3))), format: scenes.intemporel ? 'intemporel' : 'actu', verdict: scenes.verdict ?? '—', ouverture: scenes.gabarit?.ouverture ?? '—',
         duree: timings?.duree, motsParMinute: timings?.qualite?.motsParMinute, score: scoreVeille(jourEp, stats.rang),
         reseau: p.reseau, heure: heureDe(quand), jour: jourDe(quand), semaine: weekEnd(jourDe(quand)) ? 'week-end' : 'semaine',
         gabarit: p.gabarit ?? '—', longueur: bloc?.replace(/^\s*(#[\p{L}\d_]+\s*)+$/gmu, '').trim().length,
@@ -183,6 +184,8 @@ export const analyser = (ageMin = 0) => {
   croiser(l, 'Série', (x) => x.serie, ['youtube', 'instagram', 'tiktok']);
   // Tests du 09/11/2026 : rythme de voix posé contre rapide (à créneau égal), et série intemporelle contre actu.
   croiser(l.filter((x) => x.rythme !== '—'), 'Rythme de voix × créneau', (x) => `${x.rythme} @ ${x.heure}`, ['youtube', 'instagram', 'tiktok']);
+  // Test du 12/11/2026 (brand/duo.json) : duo Matou et Plouf, décor bureau, contre solo.
+  croiser(l.filter((x) => x.formule !== '—'), 'Formule (duo / solo) × créneau', (x) => `${x.formule} @ ${x.heure}`, ['youtube', 'instagram', 'tiktok']);
   croiser(l, 'Format × rang', (x) => `${x.format} (${x.rang})`, ['youtube', 'instagram', 'tiktok']);
   croiser(l, 'Semaine × créneau', (x) => `${x.semaine} @ ${x.heure}`, ['youtube', 'instagram']);
 
