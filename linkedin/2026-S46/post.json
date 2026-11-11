@@ -1,0 +1,37 @@
+{
+  "semaine": "2026-S46",
+  "mode": "coulisses",
+  "titre": "Nos ==100 %== de commentaires : c'était nous",
+  "matou": "sceptique",
+  "diapos": [
+    {
+      "titre": "L'illusion d'un ==lancement réussi==",
+      "texte": "Pendant deux semaines, nos bilans affichaient une réussite totale : 100 % de nos posts LinkedIn avaient des commentaires.",
+      "chiffre": "100 %"
+    },
+    {
+      "titre": "En fait, on se ==parlait tout seul==",
+      "texte": "En ouvrant les données, stupeur : sur 9 commentaires enregistrés, 8 venaient de notre propre script de publication.",
+      "chiffre": "8 sur 9"
+    },
+    {
+      "titre": "La réalité des ==vrais échanges==",
+      "texte": "Sur 117 publications analysées tous réseaux confondus, nous ne comptions en fait que 17 retours du public.",
+      "chiffre": "17"
+    },
+    {
+      "titre": "Mesurer les ==humains==, pas l'écho",
+      "texte": "Nous avons réécrit nos règles d'analyse : nos commentaires techniques sont désormais exclus des métriques.",
+      "icone": "coche"
+    }
+  ],
+  "lecon": {
+    "titre": "Traquer les métriques de ==vanité==",
+    "texte": "Un tableau de bord automatisé qui s'auto-congratule ne crée aucune valeur. Mieux vaut regarder la timidité du public en face qu'une illusion d'engagement."
+  },
+  "texte": "Pendant deux semaines, nos tableaux de bord affichaient un triomphe : 100 % de nos posts LinkedIn avaient un commentaire. On se croyait lancés. Puis on a ouvert les logs.\n\nLa douche froide en trois temps :\n\n→ Le robot se parlait à lui-même : à chaque publication, notre script ajoutait un commentaire pour citer les sources. La plateforme le comptait comme un retour d'audience.\n→ Le bilan réel : 8 des 9 commentaires LinkedIn étaient les nôtres.\n→ Tous réseaux confondus : sur 117 posts analysés, nous avions 17 vrais retours du public, pas des centaines.\n\nC'est le piège classique des métriques de vanité : quand on automatise la publication et la mesure, on finit par mesurer son propre écho.\n\nNous avons immédiatement réécrit nos règles d'analyse pour isoler strictement les réactions humaines. Les chiffres sont tout de suite plus modestes, mais ils disent la vérité.\n\nComment faites-vous le tri entre vos vrais signaux d'engagement et le bruit de vos outils ? Racontez-nous votre expérience en commentaire.\n\n#BuildInPublic #Data #Entrepreneuriat",
+  "sources": [
+    "docs/bilans/analyse-metriques-2026-11-09.md",
+    "docs/decisions.md"
+  ]
+}
