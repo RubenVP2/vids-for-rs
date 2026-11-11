@@ -1,0 +1,140 @@
+[
+  {
+    "type": "draft",
+    "date": "2026-11-11T17:30:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsaogt206kfor1cddnosuhf"
+        },
+        "value": [
+          {
+            "content": "Et si une IA faisait tout le travail pendant ta réunion ? 🤓\n\nAnthropic lance Claude Meetings sur Google Meet pour travailler en direct pendant les visioconférences :\n→ L'IA suit les échanges et crée les plannings en temps réel\n→ Elle génère et modifie les tableurs directement\n→ Tous les comptes rendus sont prêts dès la fin de l'appel\n\nEnvoie-la à quelqu'un qui passe ses journées en réunion ! ☝️\n\n#IA #Claude #Anthropic #vulgarisation #matou",
+            "image": [
+              {
+                "id": "704d3eb1-12d1-4308-8a39-94248e87ad6a",
+                "path": "https://uploads.postiz.com/U9e42GmTv4.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Sources : TechCrunch (https://techcrunch.com/2026/11/10/anthropic-launches-claude-meetings-to-turn-workplace-discussions-into-plans-and-tasks/). Claude Meetings est disponible en version bêta pour Google Meet.",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "instagram-standalone",
+          "post_type": "post",
+          "is_trial_reel": false
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-11T18:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsakeo602wupg1crmgz7g9n"
+        },
+        "value": [
+          {
+            "content": "Claude rejoint tes réunions Google Meet pour créer tes tâches en direct. Résume ta réaction en un emoji 👇\n\n#IA #Claude #GoogleMeet #apprendresurtiktok #matou",
+            "image": [
+              {
+                "id": "704d3eb1-12d1-4308-8a39-94248e87ad6a",
+                "path": "https://uploads.postiz.com/U9e42GmTv4.mp4"
+              }
+            ]
+          }
+        ],
+        "settings": {
+          "__type": "tiktok-business",
+          "content_posting_method": "DIRECT_POST",
+          "privacy_level": "PUBLIC_TO_EVERYONE",
+          "duet": true,
+          "stitch": true,
+          "comment": true,
+          "autoAddMusic": "no",
+          "brand_content_toggle": false,
+          "brand_organic_toggle": false,
+          "video_made_with_ai": true
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-11T18:30:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb2y1q03efpg1c3j45vgui"
+        },
+        "value": [
+          {
+            "content": "Mon avis : faire participer une IA en direct à nos réunions pour rédiger les plans et les tâches, c'est la fin de la corvée du compte rendu le vendredi soir. Mais si elle interprète mal un échange en direct, les erreurs vont vite arriver.\n\nAnthropic lance Claude Meetings en bêta sur Google Meet.\nStatut : disponible.\nSource : TechCrunch\n\nTu laisserais une IA assister à tes réunions d'équipe ? #IA",
+            "image": [
+              {
+                "id": "704d3eb1-12d1-4308-8a39-94248e87ad6a",
+                "path": "https://uploads.postiz.com/U9e42GmTv4.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Sources : TechCrunch (https://techcrunch.com/2026/11/10/anthropic-launches-claude-meetings-to-turn-workplace-discussions-into-plans-and-tasks/). Claude Meetings est disponible en version bêta pour Google Meet.",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "threads"
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-11T19:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb3xwh07l1or1cvp01pod9"
+        },
+        "value": [
+          {
+            "content": "Anthropic lance Claude Meetings : l'IA rejoint tes appels Google Meet pour générer plannings, tâches et tableurs en direct pendant que tu parles.\nDisponible en version bêta sur les forfaits professionnels.\n\nSource : https://techcrunch.com/2026/11/10/anthropic-launches-claude-meetings-to-turn-workplace-discussions-into-plans-and-tasks/\n\n#shorts #IA #Claude #matou",
+            "image": [
+              {
+                "id": "704d3eb1-12d1-4308-8a39-94248e87ad6a",
+                "path": "https://uploads.postiz.com/U9e42GmTv4.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Sources : TechCrunch (https://techcrunch.com/2026/11/10/anthropic-launches-claude-meetings-to-turn-workplace-discussions-into-plans-and-tasks/). Claude Meetings est disponible en version bêta pour Google Meet.",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "youtube",
+          "type": "public",
+          "selfDeclaredMadeForKids": "no",
+          "title": "Claude participe à tes réunions Google Meet",
+          "thumbnail": {
+            "id": "7080f7bb-6993-4bee-9af2-c69a9c2a1ed6",
+            "path": "https://uploads.postiz.com/hzbtCfO6w6.png"
+          }
+        }
+      }
+    ]
+  }
+]

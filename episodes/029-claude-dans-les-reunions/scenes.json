@@ -1,0 +1,62 @@
+{
+  "numero": 29,
+  "slug": "claude-dans-les-reunions",
+  "serie": "flash",
+  "source": {
+    "nom": "TechCrunch",
+    "url": "https://techcrunch.com/2026/11/10/anthropic-launches-claude-meetings-to-turn-workplace-discussions-into-plans-and-tasks/",
+    "date": "2026-11-10",
+    "type": "article"
+  },
+  "statut": "disponible",
+  "verdict": "prometteur",
+  "miniature": "Une IA dans tes réunions ?",
+  "musique": true,
+  "gabarit": {
+    "ouverture": "toi",
+    "corps": "comparaison"
+  },
+  "scenes": [
+    {
+      "type": "hook",
+      "texte": "Pendant ta prochaine réunion, une IA va bosser à ta place.",
+      "titre": "Une IA dans ==tes réunions== ?",
+      "icone": "robot",
+      "matou": "surpris"
+    },
+    {
+      "type": "comparaison",
+      "texte": "Selon TechCrunch, Anthropic lance {Claude Meetings|Claude Mitingz}. L'IA rejoint ton appel Google Meet et crée ton planning en direct.",
+      "avant": {
+        "titre": "Avant",
+        "texte": "Tout noter à la main"
+      },
+      "apres": {
+        "titre": "Avec Claude",
+        "texte": "Tâches et plannings ==en direct==",
+        "quand": "planning"
+      },
+      "matou": "parle"
+    },
+    {
+      "type": "point",
+      "texte": "En fait, elle écoute la discussion. Elle remplit les tableurs et prépare les tâches avant de raccrocher.",
+      "titre": "Pendant que tu parles",
+      "corps": "Tableaux et ==plans créés==",
+      "icone": "document",
+      "quand": "tableurs",
+      "matou": "enFait"
+    },
+    {
+      "type": "verdict",
+      "texte": "Hype-mètre : prometteur. Pour moi, fini le compte rendu du vendredi, mais attention aux erreurs en direct.",
+      "raison": "Fini les comptes rendus, mais attention aux erreurs",
+      "matou": "verdict"
+    },
+    {
+      "type": "fin",
+      "texte": "À ta prochaine réunion, surveille bien qui prend les notes.",
+      "matou": "sceptique"
+    }
+  ]
+}
