@@ -1,0 +1,66 @@
+{
+  "envoye": "2026-11-11T05:05:13.046Z",
+  "date": "2026-11-11T07:30:00.000Z",
+  "rang": "principal",
+  "statut": "brouillon",
+  "commentaire": true,
+  "video": "https://uploads.postiz.com/4OVqHAHnuq.mp4",
+  "miniature": "https://uploads.postiz.com/Tiomq3hffz.png",
+  "carrousel": [
+    "https://uploads.postiz.com/9bEiVo8guo.png",
+    "https://uploads.postiz.com/ibvAKmEwKF.png",
+    "https://uploads.postiz.com/0e2Q3OLRkz.png",
+    "https://uploads.postiz.com/o8wT1NilPk.png",
+    "https://uploads.postiz.com/TUxNAwqpnL.png"
+  ],
+  "postes": [
+    {
+      "reseau": "linkedin",
+      "postId": "cmwbnno5w00kkp0077zvfig20",
+      "integration": "cmvshkn720a0spg1ci9rzdm7y",
+      "date": "2026-11-11T07:30:00.000Z",
+      "statut": "brouillon",
+      "commentaire": true
+    },
+    {
+      "reseau": "threads",
+      "postId": "cmwbnnovc00kmp0075hs415ra",
+      "integration": "cmvsb2y1q03efpg1c3j45vgui",
+      "date": "2026-11-11T08:00:00.000Z",
+      "statut": "brouillon",
+      "commentaire": true
+    },
+    {
+      "reseau": "instagram",
+      "postId": "cmwbnnplj00kop0071vdpzr1p",
+      "integration": "cmvsaogt206kfor1cddnosuhf",
+      "date": "2026-11-11T11:00:00.000Z",
+      "statut": "brouillon",
+      "commentaire": true
+    },
+    {
+      "reseau": "tiktok",
+      "postId": "cmwbnnqb500kqp007ouxywvq8",
+      "integration": "cmvsakeo602wupg1crmgz7g9n",
+      "date": "2026-11-11T11:30:00.000Z",
+      "statut": "brouillon",
+      "commentaire": false
+    },
+    {
+      "reseau": "threads-relance",
+      "postId": "cmwbnnqzn00gznn0788mnraa5",
+      "integration": "cmvsb2y1q03efpg1c3j45vgui",
+      "date": "2026-11-11T14:30:00.000Z",
+      "statut": "brouillon",
+      "commentaire": false
+    },
+    {
+      "reseau": "youtube",
+      "postId": "cmwbnnroo00h0nn07sukf0z3s",
+      "integration": "cmvsb3xwh07l1or1cvp01pod9",
+      "date": "2026-11-11T17:00:00.000Z",
+      "statut": "brouillon",
+      "commentaire": true
+    }
+  ]
+}

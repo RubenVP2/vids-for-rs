@@ -1,0 +1,6 @@
+{
+ "modele": "microsoft/mai-voice-2.1",
+ "voix": "fr-FR-Marc:MAI-Voice-2.1",
+ "secours": true,
+ "sha256": "a15c6bb097439e6f536ecb904a24e3eb028470ddf263e0c2e0829ba9078244b4"
+}

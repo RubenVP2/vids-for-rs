@@ -28,6 +28,13 @@
     "ajoute": "2026-11-10T04:13:46.773Z"
   },
   {
+    "titre": "Schedule meetings in a single click from conversations in Google Chat",
+    "url": "http://workspaceupdates.googleblog.com/2026/11/schedule-meetings-in-single-click-from-conversations-in-Google-Chat.html",
+    "date": "2026-11-10T16:32:49.471Z",
+    "score": 35,
+    "ajoute": "2026-11-11T04:13:46.318Z"
+  },
+  {
     "titre": "Scale customized AI across your team with skills in Google Workspace and Workspace Studio",
     "url": "http://workspaceupdates.googleblog.com/2026/11/skills-in-workspace.html",
     "date": "2026-11-10T00:03:58.641Z",
@@ -42,6 +49,13 @@
     "ajoute": "2026-11-10T13:13:46.313Z"
   },
   {
+    "titre": "How AI Helps Recyclers Turn Mixed Waste Into Reusable Material",
+    "url": "https://blogs.nvidia.com/blog/ai-recycling-startups/",
+    "date": "2026-11-11T03:00:20.000Z",
+    "score": 35,
+    "ajoute": "2026-11-11T04:13:46.318Z"
+  },
+  {
     "titre": "Introducing AlphaProof Code: a breakthrough in verifying complex software at depth",
     "url": "https://deepmind.google/blog/introducing-alphaproof-code/",
     "date": "2026-11-10T12:02:28.000Z",
@@ -49,25 +63,11 @@
     "ajoute": "2026-11-10T13:13:46.313Z"
   },
   {
-    "titre": "StateBench: Testing how language models track state changes over long documents",
-    "url": "https://huggingface.co/blog/allenai/statebench",
-    "date": "2026-11-03T17:15:21.000Z",
-    "score": 35,
-    "ajoute": "2026-11-04T04:13:22.920Z"
-  },
-  {
     "titre": "Dharma Field Extractor: Any Document In, Structured Fields in JSON Out",
     "url": "https://huggingface.co/blog/Dharma-AI/dharma-field-extractor",
     "date": "2026-11-04T17:50:10.000Z",
     "score": 35,
     "ajoute": "2026-11-05T04:13:22.913Z"
-  },
-  {
-    "titre": "Palette: teaching a small model to build decks in your design language",
-    "url": "https://huggingface.co/blog/ibm-research/palette-deck-building",
-    "date": "2026-11-03T16:35:36.000Z",
-    "score": 35,
-    "ajoute": "2026-11-04T04:13:22.920Z"
   },
   {
     "titre": "New NVIDIA Cosmos 3 Open Models for Interactive World Simulation",
@@ -126,6 +126,13 @@
     "ajoute": "2026-11-06T04:13:41.599Z"
   },
   {
+    "titre": "Introducing Businesses in ChatGPT",
+    "url": "https://openai.com/index/introducing-businesses-chatgpt",
+    "date": "2026-11-10T10:00:00.000Z",
+    "score": 34,
+    "ajoute": "2026-11-11T04:13:46.318Z"
+  },
+  {
     "titre": "Merge builds product and business tools with OpenAI technology",
     "url": "https://openai.com/index/merge-builds-with-openai",
     "date": "2026-11-05T08:00:00.000Z",
@@ -182,6 +189,13 @@
     "ajoute": "2026-11-05T13:13:41.030Z"
   },
   {
+    "titre": "Amazon frappe fort pour le Black Friday avec ces 20 bonnes affaires à saisir",
+    "url": "https://www.frandroid.com/bons-plans/3313729_amazon-frappe-fort-pour-le-black-friday-avec-ces-14-bonnes-affaires-a-saisir",
+    "date": "2026-11-10T16:33:16.000Z",
+    "score": 31,
+    "ajoute": "2026-11-11T04:13:46.318Z"
+  },
+  {
     "titre": "Amazon : voici le TOP 5 des meilleures offres pour le Black Friday",
     "url": "https://www.frandroid.com/bons-plans/3313729_amazon-voici-le-top-5-des-meilleures-offres-pour-le-black-friday",
     "date": "2026-11-06T11:41:16.000Z",
@@ -217,13 +231,6 @@
     "ajoute": "2026-11-05T13:13:41.030Z"
   },
   {
-    "titre": "Black Friday : voici les meilleures offres chez Amazon, Fnac, Boulanger ce mardi 3 novembre",
-    "url": "https://www.numerama.com/tech/2363357-pre-black-friday-november-2026-meilleures-offres.html",
-    "date": "2026-11-03T16:41:03.000Z",
-    "score": 31,
-    "ajoute": "2026-11-04T04:13:22.920Z"
-  },
-  {
     "titre": "Meta’s Muse AI can create custom ‘spaces’ for the version of the app you need right now",
     "url": "https://www.theverge.com/tech/1028871/meta-muse-ai-spaces",
     "date": "2026-11-06T18:10:10.000Z",
@@ -238,11 +245,11 @@
     "ajoute": "2026-11-05T04:13:22.913Z"
   },
   {
-    "titre": "AI Is Changing How Semiconductor Fabs Work — and Engineers Are Moving Faster Because of It",
-    "url": "https://blogs.nvidia.com/blog/ai-semiconductor-fabs/",
-    "date": "2026-11-03T16:00:45.000Z",
+    "titre": "We’re bringing Adobe’s creative and productivity tools closer to your everyday Google apps.",
+    "url": "https://blog.google/company-news/inside-google/company-announcements/adobe-google-partnership-integration/",
+    "date": "2026-11-10T14:00:00.000Z",
     "score": 30,
-    "ajoute": "2026-11-04T04:13:22.920Z"
+    "ajoute": "2026-11-11T04:13:46.318Z"
   },
   {
     "titre": "‘Hogwarts Legacy’ Gets a Magical NVIDIA DLSS 5 Upgrade on GeForce NOW",
@@ -292,6 +299,13 @@
     "date": "2026-11-05T16:00:05.000Z",
     "score": 30,
     "ajoute": "2026-11-06T04:13:41.599Z"
+  },
+  {
+    "titre": "NVIDIA Expands Open Source Commitment With OpenShell Donation and New AI Infrastructure",
+    "url": "https://blogs.nvidia.com/blog/open-source-openshell-infrastructure/",
+    "date": "2026-11-10T16:00:03.000Z",
+    "score": 30,
+    "ajoute": "2026-11-11T04:13:46.318Z"
   },
   {
     "titre": "Practice Makes Precise: At CoRL, NVIDIA and Partners Reveal How Robots Rehearse Delicate Work in Simulation",
@@ -348,6 +362,13 @@
     "date": "2026-11-04T08:00:00.000Z",
     "score": 30,
     "ajoute": "2026-11-05T04:13:22.913Z"
+  },
+  {
+    "titre": "Work at the Frontier: AI’s effect on freelance work",
+    "url": "https://openai.com/index/ai-effect-on-freelance-work",
+    "date": "2026-11-10T07:00:00.000Z",
+    "score": 30,
+    "ajoute": "2026-11-11T04:13:46.318Z"
   },
   {
     "titre": "CodeRabbit scales agentic software development and ships 20x more",
@@ -425,6 +446,13 @@
     "date": "2026-11-05T15:17:43.000Z",
     "score": 26,
     "ajoute": "2026-11-06T04:13:41.599Z"
+  },
+  {
+    "titre": "Nvidia : le scandale d’espionnage « révèle la face cachée de la guerre froide technologique à laquelle se livrent les Etats-Unis et la Chine »",
+    "url": "https://www.lemonde.fr/economie/article/2026/11/10/le-scandale-d-espionnage-chez-nvidia-revele-la-face-cachee-de-la-guerre-froide-technologique-a-laquelle-se-livrent-les-etats-unis-et-la-chine_6808810_3234.html",
+    "date": "2026-11-10T10:00:09.000Z",
+    "score": 26,
+    "ajoute": "2026-11-11T04:13:46.318Z"
   },
   {
     "titre": "Black Friday 2026 : voici les seules offres qui méritent votre argent chez Amazon, Fnac, Boulanger",
