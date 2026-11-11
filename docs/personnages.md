@@ -43,6 +43,20 @@ lampe (`src/components/FondBureau.tsx`). Les cartes, l'encre et le surligneur ne
 pas. L'idée vient du même modèle : un plateau qu'on reconnaît en une image, et où le
 bocal de Plouf a une place naturelle.
 
+## Le casting de la voix de Plouf (11/11/2026)
+
+L'utilisateur a choisi le **décor bureau** (essai 904). Casting de la voix de Plouf :
+`brand/voix/essais-plouf/` (`casting-plouf.mp4` : les 9 candidates à la suite, le numéro à
+l'écran ; `comparatif.md` : hauteur et débit). Chaque essai fait dire deux répliques à Plouf
+autour de la **vraie voix de Matou** (Gemini « Puck », ~125 Hz) : on juge le duo, pas une voix
+seule. Script : `scripts/prototype/casting-plouf.py`.
+
+Voix gratuites seulement : le compte OpenRouter n'avait plus de crédit ce jour-là (les
+voix Gemini, ElevenLabs et Grok restent à essayer). Les voix d'edge-tts (Microsoft Edge) sont
+gratuites mais sans licence de production : un service non officiel, qui peut changer ou
+couper sans prévenir. Pour publier, il faudra soit la voix retenue chez un fournisseur
+officiel (Azure propose les mêmes voix), soit une voix OpenRouter.
+
 ## La voix d'essai (gratuite)
 
 `scripts/prototype/voix-libre.py` fait les deux voix avec **Piper** (synthèse libre, hors
