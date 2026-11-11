@@ -1,18 +1,22 @@
 #!/usr/bin/env python3
-"""Casting de la voix de Plouf, avec des voix GRATUITES (docs/personnages.md).
+"""Casting de la voix de Plouf (docs/personnages.md).
 
 Chaque candidate dit deux répliques de Plouf autour de la vraie voix de Matou
 (brand/voix/essais/gemini-puck.mp3) : on juge Plouf en duo, pas seul. Sorties dans
 brand/voix/essais-plouf/ : un MP3 par candidate, comparatif.md (durée, débit, hauteur),
 et casting-plouf.mp4 (toutes les candidates à la suite, numéro et nom à l'écran).
 
-  pip install edge-tts piper-tts
-  python3 scripts/prototype/casting-plouf.py --voix <dossier des .onnx de Piper>
-
-Voix : edge-tts (voix neuronales de Microsoft Edge, gratuites mais sans licence de
-production : un service non officiel qui peut changer ou disparaître) et Piper (libre,
-hors ligne). Les voix OpenRouter (Gemini, ElevenLabs…) ne sont pas dans ce casting :
-le compte n'avait plus de crédit le 11/11/2026.
+Deux séries :
+- `--serie gemini` (retenue le 11/11/2026 : les voix gratuites sonnaient trop robotiques) :
+  Gemini 3.8 Flash TTS par OpenRouter, le modèle de Matou. Gemini n'a pas de voix d'enfant
+  toute faite : chaque voix reçoit une consigne de jeu « enfant de huit ans », et deux
+  essais sont en plus montés d'environ 2 demi-tons. Clé : OPENROUTER_API_KEY ou
+  OPENROUTER_KEY. Coût : environ 0,02 $ par voix. Sorties dans essais-plouf/gemini/.
+    python3 scripts/prototype/casting-plouf.py --serie gemini
+- `--serie gratuit` : edge-tts (voix de Microsoft Edge, gratuites mais sans licence de
+  production) et Piper (libre, hors ligne).
+    pip install edge-tts piper-tts
+    python3 scripts/prototype/casting-plouf.py --serie gratuit --voix <dossier des .onnx de Piper>
 """
 import argparse
 import asyncio
@@ -23,14 +27,11 @@ import subprocess
 import tempfile
 from pathlib import Path
 
-import edge_tts
-import edge_tts.communicate
+import urllib.error
+import urllib.request
+
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
-
-# Derrière un proxy qui réécrit le TLS : SSL_CERT_FILE pointe vers son autorité.
-if os.environ.get("SSL_CERT_FILE"):
-    edge_tts.communicate._SSL_CTX = ssl.create_default_context(cafile=os.environ["SSL_CERT_FILE"])
 
 RACINE = Path(__file__).resolve().parents[2]
 SORTIE = RACINE / "brand/voix/essais-plouf"
@@ -39,8 +40,28 @@ AVANT = "Matou, l'actu de l'IA va trop vite. J'y comprends plus rien !"
 APRES = "Attends… c'était quoi la question, déjà ?"
 TAUX = 24000
 
+CONSIGNE_ENFANT = (
+    "Tu joues Plouf, un petit poisson rouge de dessin animé. Voix d'enfant d'environ huit ans, aiguë et légère, "
+    "curieuse, un peu naïve et très enthousiaste. Français de France, accent neutre. Rythme vif, intonation très "
+    "expressive qui monte sur les questions, jamais récitée ni robotique."
+)
+GEMINI = {"modele": "google/gemini-3.8-flash-tts", "instructions": CONSIGNE_ENFANT}
+
 # (id, nom affiché, moteur, réglages)
-CANDIDATES = [
+SERIE_GEMINI = [
+    ("leda", "Leda (jeune)", "openrouter", {**GEMINI, "voice": "Leda"}),
+    ("zephyr", "Zephyr (lumineuse)", "openrouter", {**GEMINI, "voice": "Zephyr"}),
+    ("laomedeia", "Laomedeia (enjouée)", "openrouter", {**GEMINI, "voice": "Laomedeia"}),
+    ("aoede", "Aoede (légère)", "openrouter", {**GEMINI, "voice": "Aoede"}),
+    ("autonoe", "Autonoe (claire)", "openrouter", {**GEMINI, "voice": "Autonoe"}),
+    ("despina", "Despina (douce)", "openrouter", {**GEMINI, "voice": "Despina"}),
+    ("sadachbia", "Sadachbia (vive)", "openrouter", {**GEMINI, "voice": "Sadachbia"}),
+    ("fenrir", "Fenrir (excité)", "openrouter", {**GEMINI, "voice": "Fenrir"}),
+    ("leda-montee", "Leda, montée de 2 tons", "openrouter", {**GEMINI, "voice": "Leda", "montee": 1.12}),
+    ("zephyr-montee", "Zephyr, montée de 2 tons", "openrouter", {**GEMINI, "voice": "Zephyr", "montee": 1.12}),
+]
+
+SERIE_GRATUITE = [
     ("eloise", "Éloïse (voix d'enfant)", "edge", {"voice": "fr-FR-EloiseNeural"}),
     ("eloise-vive", "Éloïse, plus vive", "edge", {"voice": "fr-FR-EloiseNeural", "rate": "+12%", "pitch": "+10Hz"}),
     ("denise-aigue", "Denise, plus aiguë", "edge", {"voice": "fr-FR-DeniseNeural", "rate": "+8%", "pitch": "+35Hz"}),
@@ -84,9 +105,35 @@ def rogner(x: np.ndarray, seuil=0.01):
     return x[max(0, fort[0] - 240): fort[-1] + 480] if len(fort) else x
 
 
+def openrouter(texte: str, r: dict) -> np.ndarray:
+    """Gemini TTS par OpenRouter : PCM 16 bits, 24 kHz."""
+    cle = os.environ.get("OPENROUTER_API_KEY") or os.environ.get("OPENROUTER_KEY")
+    if not cle:
+        raise SystemExit("Clé OpenRouter absente : OPENROUTER_API_KEY ou OPENROUTER_KEY.")
+    corps = {"model": r["modele"], "input": texte, "voice": r["voice"], "response_format": "pcm", "instructions": r["instructions"]}
+    requete = urllib.request.Request("https://openrouter.ai/api/v1/audio/speech", data=json.dumps(corps).encode(),
+                                     headers={"Authorization": f"Bearer {cle}", "Content-Type": "application/json"})
+    for essai in range(3):
+        try:
+            with urllib.request.urlopen(requete, timeout=120) as rep:
+                return np.frombuffer(rep.read(), dtype=np.int16).astype(np.float32) / 32768
+        except urllib.error.HTTPError as e:
+            message = e.read().decode()[:300]
+            if e.code in (401, 402, 403) or essai == 2:
+                raise SystemExit(f"OpenRouter {r['voice']} : HTTP {e.code} {message}")
+
+
 def dire(moteur: str, r: dict, texte: str, dossier_piper: Path) -> np.ndarray:
     with tempfile.TemporaryDirectory() as d:
+        if moteur == "openrouter":
+            return rogner(monter(openrouter(texte, r), r.get("montee", 1)))
         if moteur == "edge":
+            import edge_tts
+            import edge_tts.communicate
+
+            # Derrière un proxy qui réécrit le TLS : SSL_CERT_FILE pointe vers son autorité.
+            if os.environ.get("SSL_CERT_FILE"):
+                edge_tts.communicate._SSL_CTX = ssl.create_default_context(cafile=os.environ["SSL_CERT_FILE"])
             f = Path(d) / "x.mp3"
             for essai in range(3):  # le service répond parfois à vide : on réessaie
                 try:
@@ -151,20 +198,27 @@ def carte(numero: int, nom: str, fichier: Path):
 
 
 ap = argparse.ArgumentParser()
-ap.add_argument("--voix", required=True, help="dossier des modèles .onnx de Piper")
+ap.add_argument("--serie", choices=["gemini", "gratuit"], default="gemini")
+ap.add_argument("--voix", help="série gratuite : dossier des modèles .onnx de Piper")
 args = ap.parse_args()
+if args.serie == "gratuit" and not args.voix:
+    raise SystemExit("--voix <dossier Piper> est requis pour la série gratuite.")
+CANDIDATES = SERIE_GEMINI if args.serie == "gemini" else SERIE_GRATUITE
+if args.serie == "gemini":
+    SORTIE = SORTIE / "gemini"
 SORTIE.mkdir(parents=True, exist_ok=True)
 matou = rogner(lire(MATOU))
 blanc = np.zeros(int(0.35 * TAUX), dtype=np.float32)
 lignes, segments = [], []
 with tempfile.TemporaryDirectory() as tmp:
     for k, (ident, nom, moteur, r) in enumerate(CANDIDATES, 1):
-        a, b = dire(moteur, r, AVANT, Path(args.voix)), dire(moteur, r, APRES, Path(args.voix))
+        a, b = dire(moteur, r, AVANT, Path(args.voix or ".")), dire(moteur, r, APRES, Path(args.voix or "."))
         duo = np.concatenate([a, blanc, matou, blanc, b, blanc])
         ecrire(duo, SORTIE / f"{k:02d}-{ident}.mp3")
         seul = np.concatenate([a, b])
         mots = len((AVANT + " " + APRES).split())
-        lignes.append(f"| {k} | {nom} | {moteur} | `{json.dumps(r, ensure_ascii=False)}` | {hauteur(seul)} Hz | {round(mots / (len(seul) / TAUX) * 60)} |")
+        reglages = {c: v for c, v in r.items() if c != "instructions"}
+        lignes.append(f"| {k} | {nom} | {moteur} | `{json.dumps(reglages, ensure_ascii=False)}` | {hauteur(seul)} Hz | {round(mots / (len(seul) / TAUX) * 60)} |")
         print(lignes[-1])
         img = Path(tmp) / f"{k}.png"
         carte(k, nom, img)
@@ -179,9 +233,10 @@ with tempfile.TemporaryDirectory() as tmp:
                     str(SORTIE / "casting-plouf.mp4")], check=True)
 
 (SORTIE / "comparatif.md").write_text(
-    "# Casting de la voix de Plouf (voix gratuites)\n\n"
+    f"# Casting de la voix de Plouf (série {args.serie})\n\n"
     f"Chaque essai : Plouf (« {AVANT} »), la vraie voix de Matou (Gemini « Puck », 125 Hz environ), puis Plouf "
-    f"(« {APRES} »). Regénérer : `python3 scripts/prototype/casting-plouf.py --voix <dossier Piper>`.\n\n"
+    f"(« {APRES} »). Regénérer : `python3 scripts/prototype/casting-plouf.py --serie {args.serie}`."
+    + (f"\n\nConsigne de jeu : « {CONSIGNE_ENFANT} »" if args.serie == "gemini" else "") + "\n\n"
     "| N° | Candidate | Moteur | Réglages | Hauteur | Mots/min |\n| --- | --- | --- | --- | --- | --- |\n"
     + "\n".join(lignes) + "\n"
 )

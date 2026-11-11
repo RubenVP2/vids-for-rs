@@ -57,6 +57,12 @@ gratuites mais sans licence de production : un service non officiel, qui peut ch
 couper sans prévenir. Pour publier, il faudra soit la voix retenue chez un fournisseur
 officiel (Azure propose les mêmes voix), soit une voix OpenRouter.
 
+**Décision du 11/11** : les voix gratuites sonnent trop robotiques ; Plouf aura une voix
+d'enfant de **Gemini 3.8 Flash TTS** (le modèle de Matou). Gemini n'a pas de voix d'enfant
+toute faite : la série `--serie gemini` essaie 8 voix avec une consigne de jeu « enfant de
+huit ans », et deux d'entre elles montées de 2 demi-tons (sorties dans
+`brand/voix/essais-plouf/gemini/`). Elle attend le rechargement du crédit OpenRouter.
+
 ## La voix d'essai (gratuite)
 
 `scripts/prototype/voix-libre.py` fait les deux voix avec **Piper** (synthèse libre, hors
