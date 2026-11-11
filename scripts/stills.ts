@@ -18,6 +18,8 @@ if (arg === 'planches') {
     ['PlancheMarque', 'docs/images/planche-marque.png'],
     ['PlancheMatou', 'docs/images/planche-matou.png'],
     ['Avatar', 'brand/avatar.png'],
+    ['PlancheBande', 'docs/images/planche-bande.png'],
+    ['ScenesBande', 'docs/images/bande-scenes.png'],
   ]) {
     const composition = await selectComposition({serveUrl, id, browserExecutable, logLevel: 'error'});
     const sortie = path.join(RACINE, fichier);
