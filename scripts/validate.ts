@@ -3,7 +3,7 @@
 // Sortie : « ERREUR » bloque la suite ; « ATTENTION » est à relire, pas forcément à corriger.
 import fs from 'node:fs';
 import path from 'node:path';
-import {texteParle} from '../src/schema';
+import {texteAffiche, texteParle} from '../src/schema';
 import {budgetDe, dossierEpisode, FRAICHEUR_MAX, fraicheur, jourParis, lireEpisode} from './lib/episode';
 import {normaliser} from './lib/alignement';
 import {controlerMontage, montage} from './lib/montage';
@@ -108,11 +108,13 @@ if (actuel) {
   // Une phrase en suspens (« … ») sonne coupée au 1er visionnage : la boucle vient de l'image.
   if (/(…|\.\.\.|,)\s*$/.test(texteFin)) erreurs.push('La phrase de fin reste en suspens (« … ») : la vidéo semble coupée. Une phrase complète, qui reprend un mot du hook.');
   const motsDe = (t: string) => new Set(texteParle(t).split(/\s+/).map(normaliser).filter((w) => w.length >= 4));
-  const communs = [...motsDe(fin.texte)].filter((w) => motsDe(hook.texte).has(w));
+  // En duo, la question de Plouf fait partie du hook (et sa réplique de fin, de la fin).
+  const communs = [...motsDe(`${fin.plouf ?? ''} ${fin.texte}`)].filter((w) => motsDe(`${hook.plouf ?? ''} ${hook.texte}`).has(w));
   if (!communs.length) alertes.push('La fin ne reprend aucun mot du hook : la dernière phrase doit y renvoyer, pour que la vidéo reparte en boucle.');
   if (episode.scenes.some((s) => s.type === 'source'))
     erreurs.push('Plus de scène « source » : le tampon s’incruste sur la 2e scène, et Matou dit qui annonce en une demi-phrase.');
-  const debut = episode.scenes.slice(0, 3).map((s) => normaliser(texteParle(s.texte))).join(' ');
+  // La forme affichée compte aussi : « {01net|zéro un net} » cite bien 01net.
+  const debut = episode.scenes.slice(0, 3).map((s) => normaliser(texteParle(s.texte)) + normaliser(texteAffiche(s.texte))).join(' ');
   if (!debut.includes(normaliser(episode.source.nom.split(/\s+/)[0])))
     alertes.push(`« ${episode.source.nom} » n’est pas dit dans les 3 premières scènes : dire qui annonce (une demi-phrase suffit).`);
   // Garde-fou anti-décrochage à 8 s : la 2e scène ne doit ni répéter le hook ni s'ouvrir par « X l'annonce : ».

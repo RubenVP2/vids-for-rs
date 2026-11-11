@@ -1,0 +1,92 @@
+{
+  "numero": 30,
+  "slug": "meta-devine-ton-age",
+  "serie": "flash",
+  "source": {
+    "nom": "01net",
+    "url": "https://www.01net.com/actualites/facebook-instagram-threads-meta-deploie-la-verification-dage-par-ia-dans-le-monde-entier.html",
+    "date": "2026-11-10",
+    "type": "article"
+  },
+  "statut": "annonce",
+  "verdict": "prometteur",
+  "decor": "bureau",
+  "miniature": "Instagram devine ==ton âge==",
+  "musique": true,
+  "gabarit": {
+    "ouverture": "toi",
+    "corps": "comparaison"
+  },
+  "scenes": [
+    {
+      "type": "hook",
+      "plouf": "Matou ! Il paraît qu'Instagram va deviner mon âge. C'est vrai ?",
+      "texte": "Oui. Si tu mens sur ton âge, son IA peut le repérer.",
+      "titre": "Ton âge ==deviné== par l'IA",
+      "icone": "attention",
+      "matou": "parle",
+      "ploufEtat": "surpris"
+    },
+    {
+      "type": "comparaison",
+      "texte": "Selon {01net|zéro un net}, Meta l'étend au monde entier : ta date de naissance ne suffit plus, l'IA vérifie.",
+      "avant": {
+        "titre": "Avant",
+        "texte": "Ta date de naissance déclarée"
+      },
+      "apres": {
+        "titre": "Maintenant",
+        "texte": "L'IA vérifie avec ton profil",
+        "quand": "vérifie"
+      },
+      "matou": "parle"
+    },
+    {
+      "type": "liste",
+      "plouf": "Elle regarde quoi, exactement ?",
+      "texte": "En fait, elle fouille ta bio, tes publications, tes commentaires, jusqu'à un ==anniversaire==.",
+      "titre": "Ce que l'IA lit",
+      "elements": [
+        {
+          "texte": "Ta bio",
+          "icone": "bulle",
+          "quand": "bio"
+        },
+        {
+          "texte": "Tes publications",
+          "icone": "ampoule",
+          "quand": "publications"
+        },
+        {
+          "texte": "Un anniversaire",
+          "icone": "attention",
+          "quand": "anniversaire"
+        }
+      ],
+      "matou": "enFait"
+    },
+    {
+      "type": "point",
+      "texte": "Si elle te voit entre treize et dix-sept ans : ==compte ado== d'office. Moins de treize : désactivé.",
+      "titre": "==Compte ado== d'office",
+      "corps": "13 à 17 ans : compte ado. Moins de 13 ans : désactivé",
+      "icone": "attention",
+      "matou": "sceptique",
+      "ploufEtat": "surpris"
+    },
+    {
+      "type": "verdict",
+      "texte": "Hype-mètre : prometteur. Protéger les ados, oui. Mais moi, je veux savoir comment contester une erreur.",
+      "raison": "Utile, mais le recours reste flou",
+      "matou": "verdict",
+      "ploufEtat": "compris"
+    },
+    {
+      "type": "fin",
+      "plouf": "Attends… c'était quoi la question, déjà ?",
+      "texte": "Si Instagram va deviner ton âge. Oui, même si tu mens.",
+      "matou": "content",
+      "ploufEtat": "compris"
+    }
+  ]
+}
