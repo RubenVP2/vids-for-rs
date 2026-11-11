@@ -15,3 +15,4 @@ episodes/*/voix.debit.mp3
 episodes/*/voix.secours.mp3
 *.log
 .env
+brand/voix/essais-plouf/gemini/cache/

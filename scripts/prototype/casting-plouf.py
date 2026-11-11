@@ -11,7 +11,7 @@ Deux séries :
   Gemini 3.8 Flash TTS par OpenRouter, le modèle de Matou. Gemini n'a pas de voix d'enfant
   toute faite : chaque voix reçoit une consigne de jeu « enfant de huit ans », et deux
   essais sont en plus montés d'environ 2 demi-tons. Clé : OPENROUTER_API_KEY ou
-  OPENROUTER_KEY. Coût : environ 0,02 $ par voix. Sorties dans essais-plouf/gemini/.
+  OPENROUTER_KEY. 6 voix, 12 appels (les prises sont en cache : les variantes montées ne coûtent rien). Sorties dans essais-plouf/gemini/.
     python3 scripts/prototype/casting-plouf.py --serie gemini
 - `--serie gratuit` : edge-tts (voix de Microsoft Edge, gratuites mais sans licence de
   production) et Piper (libre, hors ligne).
@@ -22,6 +22,7 @@ import argparse
 import asyncio
 import json
 import os
+import re
 import ssl
 import subprocess
 import tempfile
@@ -53,8 +54,6 @@ SERIE_GEMINI = [
     ("zephyr", "Zephyr (lumineuse)", "openrouter", {**GEMINI, "voice": "Zephyr"}),
     ("laomedeia", "Laomedeia (enjouée)", "openrouter", {**GEMINI, "voice": "Laomedeia"}),
     ("aoede", "Aoede (légère)", "openrouter", {**GEMINI, "voice": "Aoede"}),
-    ("autonoe", "Autonoe (claire)", "openrouter", {**GEMINI, "voice": "Autonoe"}),
-    ("despina", "Despina (douce)", "openrouter", {**GEMINI, "voice": "Despina"}),
     ("sadachbia", "Sadachbia (vive)", "openrouter", {**GEMINI, "voice": "Sadachbia"}),
     ("fenrir", "Fenrir (excité)", "openrouter", {**GEMINI, "voice": "Fenrir"}),
     ("leda-montee", "Leda, montée de 2 tons", "openrouter", {**GEMINI, "voice": "Leda", "montee": 1.12}),
@@ -106,7 +105,11 @@ def rogner(x: np.ndarray, seuil=0.01):
 
 
 def openrouter(texte: str, r: dict) -> np.ndarray:
-    """Gemini TTS par OpenRouter : PCM 16 bits, 24 kHz."""
+    """Gemini TTS par OpenRouter : PCM 16 bits, 24 kHz. Chaque prise est gardée en cache
+    (essais-plouf/gemini/cache/) : une variante « montée » ou une relance ne repaie pas l'appel."""
+    cache = SORTIE / "cache" / (re.sub(r"[^a-z0-9]+", "-", f"{r['voice']}-{texte}".lower())[:80] + ".pcm")
+    if cache.exists():
+        return np.fromfile(cache, dtype=np.int16).astype(np.float32) / 32768
     cle = os.environ.get("OPENROUTER_API_KEY") or os.environ.get("OPENROUTER_KEY")
     if not cle:
         raise SystemExit("Clé OpenRouter absente : OPENROUTER_API_KEY ou OPENROUTER_KEY.")
@@ -116,7 +119,10 @@ def openrouter(texte: str, r: dict) -> np.ndarray:
     for essai in range(3):
         try:
             with urllib.request.urlopen(requete, timeout=120) as rep:
-                return np.frombuffer(rep.read(), dtype=np.int16).astype(np.float32) / 32768
+                octets = rep.read()
+            cache.parent.mkdir(parents=True, exist_ok=True)
+            cache.write_bytes(octets)
+            return np.frombuffer(octets, dtype=np.int16).astype(np.float32) / 32768
         except urllib.error.HTTPError as e:
             message = e.read().decode()[:300]
             if e.code in (401, 402, 403) or essai == 2:
