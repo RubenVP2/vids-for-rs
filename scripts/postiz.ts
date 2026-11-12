@@ -43,7 +43,8 @@ type Reglages = {
 type Canal = {id: string; name: string; identifier: string; disabled: boolean};
 type Media = {id: string; path: string};
 type Publication = Partial<Record<Texte, string>> & {titre: string; commentaire?: string};
-type Statut = 'brouillon' | 'programmé';
+/** « supprimé » : brouillons retirés de Postiz sans publication (le journal reste pour l'historique). */
+type Statut = 'brouillon' | 'programmé' | 'supprimé';
 // reseau « threads-relance » : le 2e post Threads (texte seul) du même épisode.
 type Poste = {reseau: string; postId: string; integration: string; date?: string; statut: Statut; commentaire?: boolean};
 type Journal = {envoye: string; date: string; rang?: Rang; statut: Statut; commentaire?: boolean; video: string; miniature?: string; carrousel?: string[]; postes: Poste[]};

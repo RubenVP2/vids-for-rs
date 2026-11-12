@@ -2,7 +2,7 @@
   "envoye": "2026-11-11T05:05:13.046Z",
   "date": "2026-11-11T07:30:00.000Z",
   "rang": "principal",
-  "statut": "brouillon",
+  "statut": "supprimé",
   "commentaire": true,
   "video": "https://uploads.postiz.com/4OVqHAHnuq.mp4",
   "miniature": "https://uploads.postiz.com/Tiomq3hffz.png",
@@ -19,7 +19,7 @@
       "postId": "cmwbnno5w00kkp0077zvfig20",
       "integration": "cmvshkn720a0spg1ci9rzdm7y",
       "date": "2026-11-11T07:30:00.000Z",
-      "statut": "brouillon",
+      "statut": "supprimé",
       "commentaire": true
     },
     {
@@ -27,7 +27,7 @@
       "postId": "cmwbnnovc00kmp0075hs415ra",
       "integration": "cmvsb2y1q03efpg1c3j45vgui",
       "date": "2026-11-11T08:00:00.000Z",
-      "statut": "brouillon",
+      "statut": "supprimé",
       "commentaire": true
     },
     {
@@ -35,7 +35,7 @@
       "postId": "cmwbnnplj00kop0071vdpzr1p",
       "integration": "cmvsaogt206kfor1cddnosuhf",
       "date": "2026-11-11T11:00:00.000Z",
-      "statut": "brouillon",
+      "statut": "supprimé",
       "commentaire": true
     },
     {
@@ -43,7 +43,7 @@
       "postId": "cmwbnnqb500kqp007ouxywvq8",
       "integration": "cmvsakeo602wupg1crmgz7g9n",
       "date": "2026-11-11T11:30:00.000Z",
-      "statut": "brouillon",
+      "statut": "supprimé",
       "commentaire": false
     },
     {
@@ -51,7 +51,7 @@
       "postId": "cmwbnnqzn00gznn0788mnraa5",
       "integration": "cmvsb2y1q03efpg1c3j45vgui",
       "date": "2026-11-11T14:30:00.000Z",
-      "statut": "brouillon",
+      "statut": "supprimé",
       "commentaire": false
     },
     {
@@ -59,8 +59,12 @@
       "postId": "cmwbnnroo00h0nn07sukf0z3s",
       "integration": "cmvsb3xwh07l1or1cvp01pod9",
       "date": "2026-11-11T17:00:00.000Z",
-      "statut": "brouillon",
+      "statut": "supprimé",
       "commentaire": true
     }
-  ]
+  ],
+  "supprime": {
+    "date": "2026-11-12",
+    "raison": "brouillons jamais publiés : voix de secours (crédit OpenRouter épuisé le 11/11), info périmée ; supprimés dans Postiz à la demande de l'utilisateur"
+  }
 }
