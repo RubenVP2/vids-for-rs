@@ -1,0 +1,94 @@
+{
+  "numero": 31,
+  "slug": "cest-quoi-un-agent-ia",
+  "serie": "flash",
+  "intemporel": "agent-ia",
+  "source": {
+    "nom": "Google Cloud",
+    "url": "https://cloud.google.com/discover/what-are-ai-agents",
+    "date": "2026-04-02",
+    "type": "article"
+  },
+  "statut": "disponible",
+  "verdict": "prometteur",
+  "decor": "bureau",
+  "miniature": "C'est quoi un ==agent IA== ?",
+  "musique": true,
+  "gabarit": {
+    "ouverture": "fenetre",
+    "corps": "liste"
+  },
+  "scenes": [
+    {
+      "type": "hook",
+      "plouf": "Matou ! Tout le monde parle d'agent IA. C'est quoi la différence avec un chatbot ?",
+      "texte": "Un chatbot te répond. Un agent agit à ta place.",
+      "titre": "C'est quoi un ==agent IA== ?",
+      "icone": "ampoule",
+      "visuel": {
+        "type": "fenetre",
+        "app": "Agent IA",
+        "messages": [
+          {
+            "de": "toi",
+            "texte": "Organise mon trajet à Lyon demain"
+          },
+          {
+            "de": "app",
+            "texte": "Train et agenda OK"
+          }
+        ]
+      },
+      "matou": "parle",
+      "ploufEtat": "surpris"
+    },
+    {
+      "type": "liste",
+      "texte": "D'après Google Cloud, un agent combine trois pouvoirs : il planifie, il manipule des outils et il décide en ==autonomie==.",
+      "titre": "Les 3 pouvoirs de l'agent",
+      "elements": [
+        {
+          "texte": "Planifier ses étapes",
+          "icone": "ampoule",
+          "quand": "planifie"
+        },
+        {
+          "texte": "Utiliser des outils",
+          "icone": "robot",
+          "quand": "outils"
+        },
+        {
+          "texte": "Décider seul",
+          "icone": "eclair",
+          "quand": "autonomie"
+        }
+      ],
+      "matou": "parle"
+    },
+    {
+      "type": "point",
+      "plouf": "Et pour moi, ça change quoi ?",
+      "texte": "En fait, au lieu de copier-coller dix réponses, tu donnes ton objectif et l'agent fait tout le ==boulot==.",
+      "titre": "Objectif ➔ ==Résultat==",
+      "corps": "Tu donnes l'objectif, l'agent gère tout",
+      "icone": "fusee",
+      "quand": "objectif",
+      "matou": "enFait",
+      "ploufEtat": "compris"
+    },
+    {
+      "type": "verdict",
+      "texte": "Hype-mètre : prometteur. Pour gérer l'agenda, c'est génial. Mais pour lui confier ma carte bancaire, j'attends encore.",
+      "raison": "Prometteur, mais confier ses accès fait hésiter",
+      "matou": "verdict",
+      "ploufEtat": "neutre"
+    },
+    {
+      "type": "fin",
+      "plouf": "Attends… c'était quoi la question, déjà ?",
+      "texte": "C'est quoi un agent IA. Un collègue qui clique pour toi.",
+      "matou": "content",
+      "ploufEtat": "compris"
+    }
+  ]
+}

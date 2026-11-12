@@ -1,0 +1,12 @@
+{
+ "modele": "google/gemini-3.8-flash-tts",
+ "voix": "Puck",
+ "sha256": "5354512faadeec4b361f51da76129f86b09de57011de3d0d3fe305c0e6d7b23c",
+ "sha256Matou": "c967d2210d75dd541991d158894457bbf3add23d615ed11e4a6c3f9d58a5028e",
+ "plouf": {
+  "modele": "google/gemini-3.8-flash-tts",
+  "voix": "Sadachbia",
+  "texte": "Matou ! Tout le monde parle d'agent IA. C'est quoi la différence avec un chatbot ? Et pour moi, ça change quoi ? Attends… c'était quoi la question, déjà ?",
+  "sha256": "204da3e3ad2fe4afe4ea0ece0233e086fdcf7722c3a994a50699ba2158d37747"
+ }
+}
