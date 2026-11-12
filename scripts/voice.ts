@@ -25,7 +25,9 @@ import {
   type QualiteVoix,
 } from './lib/qualite-voix';
 import {lireReglagesVoix} from './lib/reglages-voix';
+import {ROGNER_SILENCES} from './lib/qualite-voix';
 import {rythmeDe} from './lib/rythme';
+import {prolongerFins} from './lib/fins';
 import {assemblerDuo, type MetaPlouf} from './lib/voix-duo';
 import tokens from '../brand/tokens.json';
 
@@ -203,7 +205,7 @@ if (!fs.existsSync(mp3) || force) {
     const tmp = f.replace(/\.mp3$/, '.tmp.mp3');
     execFileSync('ffmpeg', [
       '-y', '-loglevel', 'error', '-i', f,
-      '-af', 'silenceremove=start_periods=1:start_threshold=-45dB,areverse,silenceremove=start_periods=1:start_threshold=-45dB,areverse,loudnorm=I=-16:TP=-1.5:LRA=11',
+      '-af', ROGNER_SILENCES,
       '-ar', '44100', '-b:a', '96k', tmp,
     ]);
     fs.renameSync(tmp, f);
@@ -375,7 +377,8 @@ const motsBruts = alignes.map((a, i) => ({
   scene: motsScript[i].scene,
   surligne: motsScript[i].surligne,
 }));
-const mots = affinerDebutsScenes(motsBruts, enveloppe);
+// La fin d'un mot est lue dans le son (scripts/lib/fins.ts) : Whisper la date souvent trop tôt.
+const mots = prolongerFins(mp3, affinerDebutsScenes(motsBruts, enveloppe));
 const scenes = episode.scenes.map((_, i) => {
   const ms = mots.filter((m) => m.scene === i);
   return {debut: ms[0]?.debut ?? 0, fin: ms[ms.length - 1]?.fin ?? 0};

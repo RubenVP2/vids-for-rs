@@ -1,12 +1,12 @@
 {
  "modele": "google/gemini-3.8-flash-tts",
  "voix": "Puck",
- "sha256": "a79b21d40249597e346460a433a286493103d9cbd7f959b5cb323a03f670f62c",
- "sha256Matou": "4517a53a3cec8ad391ce173ad65a3fddc605900e948ba3ae8c1aa439770a69de",
+ "sha256": "c271a9b1c6158836363336f6ab2c40cfa93741dd7a82ad0a0c5620303fbd2136",
+ "sha256Matou": "2afceae89ccb5871274a8ab50a32789221a662a61e0ba183785d611a3151f52e",
  "plouf": {
   "modele": "google/gemini-3.8-flash-tts",
   "voix": "Sadachbia",
   "texte": "Matou ! Il paraît qu'Instagram va deviner mon âge. C'est vrai ? Elle regarde quoi, exactement ? Attends… c'était quoi la question, déjà ?",
-  "sha256": "9cb88157ebcbd1930d2015898ad8507d8aa88538f411bb9e45a5094b9836ce6b"
+  "sha256": "70f7a6957b2a899775ee7837fc88b8f2822ff4dcfa61d6fd4d1daef247612eea"
  }
 }

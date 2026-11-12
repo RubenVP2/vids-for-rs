@@ -4,13 +4,13 @@
   "voix": "Puck",
   "format": "pcm",
   "frequencePcm": 24000,
-  "instructions": "Voix masculine française, jeune, vive et complice, rythme dynamique et entraînant (environ 205 mots par minute, sans temps mort), articulation nette, intonation variée qui monte et descend (jamais plate ni récitée), petit sourire dans la voix, humour pince-sans-rire. Enchaîne les phrases avec fluidité, pauses courtes.",
+  "instructions": "Voix masculine française, jeune, vive et complice, rythme dynamique et entraînant (environ 205 mots par minute), articulation nette, intonation variée qui monte et descend (jamais plate ni récitée), petit sourire dans la voix, humour pince-sans-rire. Enchaîne les phrases avec fluidité, mais termine chaque phrase en entier, jusqu'à la dernière syllabe, sans accélérer ni l'avaler, et marque un court temps à chaque point.",
   "$testDebit": "Test du 10 au 16/11/2026 (docs/decisions.md, 09/11) : du n° « de » au n° « a », un épisode sur deux passe au rythme « posé » (scripts/lib/rythme.ts : consigne, plage de débit et budgets de mots ci-dessous ; vidéos de ~30 s au lieu de ~20–27 s). Les autres gardent le rythme courant. npm run gabarits -- NNN dit le rythme d'un épisode ; npm run bilan -- --local les compare. Après « a », tout revient au rythme courant : retirer ce bloc, ou en faire la règle, selon le bilan.",
   "testDebit": {
     "de": 26,
     "a": 39,
     "pose": {
-      "instructions": "Voix masculine française, jeune, vive et complice, rythme posé et clair (environ 180 mots par minute), articulation nette, intonation variée qui monte et descend (jamais plate ni récitée), petit sourire dans la voix, humour pince-sans-rire. Marque une courte pause entre les phrases.",
+      "instructions": "Voix masculine française, jeune, vive et complice, rythme posé et clair (environ 180 mots par minute), articulation nette, intonation variée qui monte et descend (jamais plate ni récitée), petit sourire dans la voix, humour pince-sans-rire. Termine chaque phrase en entier, jusqu'à la dernière syllabe, sans l'avaler, et marque une courte pause entre les phrases.",
       "debit": {"motsParMinuteMin": 168, "motsParMinuteCible": 180, "motsParMinute": 195},
       "budgets": {
         "flash": {"viser": [80, 100], "max": 112, "voix": 40, "video": 44},
@@ -27,7 +27,7 @@
     "voix": "Sadachbia",
     "format": "pcm",
     "frequencePcm": 24000,
-    "instructions": "Tu joues Plouf, un petit poisson rouge de dessin animé. Voix d'enfant d'environ huit ans, aiguë et légère, curieuse, un peu naïve et très enthousiaste. Français de France, accent neutre. Rythme vif, intonation très expressive qui monte sur les questions, jamais récitée ni robotique."
+    "instructions": "Tu joues Plouf, un petit poisson rouge de dessin animé. Voix d'enfant d'environ huit ans, aiguë et légère, curieuse, un peu naïve et très enthousiaste. Français de France, accent neutre. Rythme vif, intonation très expressive qui monte sur les questions, jamais récitée ni robotique. Termine chaque phrase en entier, jusqu'à la dernière syllabe, sans l'avaler."
   },
   "secours": [
     {"modele": "microsoft/mai-voice-2.1", "voix": "fr-FR-Marc:MAI-Voice-2.1", "format": "mp3"},
