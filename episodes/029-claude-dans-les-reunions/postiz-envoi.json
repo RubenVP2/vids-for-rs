@@ -2,7 +2,7 @@
   "envoye": "2026-11-11T13:42:29.088Z",
   "date": "2026-11-11T17:30:00.000Z",
   "rang": "second",
-  "statut": "brouillon",
+  "statut": "supprimé",
   "commentaire": true,
   "video": "https://uploads.postiz.com/U9e42GmTv4.mp4",
   "miniature": "https://uploads.postiz.com/hzbtCfO6w6.png",
@@ -13,7 +13,7 @@
       "postId": "cmwc64x5209jzl507r7cagzr7",
       "integration": "cmvsaogt206kfor1cddnosuhf",
       "date": "2026-11-11T17:30:00.000Z",
-      "statut": "brouillon",
+      "statut": "supprimé",
       "commentaire": true
     },
     {
@@ -21,7 +21,7 @@
       "postId": "cmwc64xu209gsr007vp2um495",
       "integration": "cmvsakeo602wupg1crmgz7g9n",
       "date": "2026-11-11T18:00:00.000Z",
-      "statut": "brouillon",
+      "statut": "supprimé",
       "commentaire": false
     },
     {
@@ -29,7 +29,7 @@
       "postId": "cmwc64yke09k1l507vumz91yz",
       "integration": "cmvsb2y1q03efpg1c3j45vgui",
       "date": "2026-11-11T18:30:00.000Z",
-      "statut": "brouillon",
+      "statut": "supprimé",
       "commentaire": true
     },
     {
@@ -37,8 +37,12 @@
       "postId": "cmwc64z9209gtr0074air53ag",
       "integration": "cmvsb3xwh07l1or1cvp01pod9",
       "date": "2026-11-11T19:00:00.000Z",
-      "statut": "brouillon",
+      "statut": "supprimé",
       "commentaire": true
     }
-  ]
+  ],
+  "supprime": {
+    "date": "2026-11-12",
+    "raison": "brouillons jamais publiés : voix de secours (crédit OpenRouter épuisé le 11/11), info périmée ; supprimés dans Postiz à la demande de l'utilisateur"
+  }
 }

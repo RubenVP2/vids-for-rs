@@ -54,7 +54,10 @@ const dossiers = fs
   .readdirSync(EPISODES)
   .filter((d) => fs.existsSync(path.join(EPISODES, d, 'postiz-envoi.json')))
   .sort();
-const envois = dossiers.map((d) => ({d, envoi: JSON.parse(fs.readFileSync(path.join(EPISODES, d, 'postiz-envoi.json'), 'utf8'))}));
+// Un envoi « supprimé » (brouillons retirés de Postiz sans être publiés, ex. #028 et #029) n'a rien à mesurer.
+const envois = dossiers
+  .map((d) => ({d, envoi: JSON.parse(fs.readFileSync(path.join(EPISODES, d, 'postiz-envoi.json'), 'utf8'))}))
+  .filter((e) => e.envoi.statut !== 'supprimé');
 const plusAncien = Math.min(Date.now(), ...envois.map((e) => new Date(e.envoi.date).getTime()));
 const [debut, fin] = [plusAncien - 2 * 86_400_000, Date.now() + 15 * 86_400_000].map((t) => new Date(t).toISOString());
 const posts = enListe<Post>(cli('posts:list', '--startDate', debut, '--endDate', fin));
