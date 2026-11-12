@@ -12,14 +12,16 @@ import path from 'node:path';
 import tokens from '../../brand/tokens.json';
 import {texteAffiche, texteParle, type Episode, type Timings} from '../../src/schema';
 import {aligner, normaliser} from './alignement';
+import {creuxEntre, niveaux, prolongerFins} from './fins';
 import {dureeAudio, synthetiser, transcrire, type ReglagesVoix} from './openrouter';
+import {ROGNER_SILENCES} from './qualite-voix';
 
 const TAUX = 44100;
 /** Silence entre la réplique de Plouf et la réponse de Matou (en plus du demi-silence de la prise de Matou). */
 const RELANCE = 0.12;
-/** Marges autour d'une réplique de Plouf, coupée dans sa prise. */
+/** Marges autour d'une réplique de Plouf, coupée dans sa prise (après la VRAIE fin du son, fins.ts). */
 const AVANT_PLOUF = 0.06;
-const APRES_PLOUF = 0.14;
+const APRES_PLOUF = 0.1;
 const SEUIL_ALIGNEMENT = 0.75;
 
 export type MotScript = {texte: string; scene: number; surligne: boolean};
@@ -48,7 +50,7 @@ const normaliserVolume = (f: string) => {
   const tmp = f.replace(/\.mp3$/, '.tmp.mp3');
   execFileSync('ffmpeg', [
     '-y', '-loglevel', 'error', '-i', f,
-    '-af', 'silenceremove=start_periods=1:start_threshold=-45dB,areverse,silenceremove=start_periods=1:start_threshold=-45dB,areverse,loudnorm=I=-16:TP=-1.5:LRA=11',
+    '-af', ROGNER_SILENCES,
     '-ar', '44100', '-b:a', '96k', tmp,
   ]);
   fs.renameSync(tmp, f);
@@ -92,7 +94,9 @@ const prisePlouf = async (dossier: string, episode: Episode, r: Reglages, ancien
     if (taux >= SEUIL_ALIGNEMENT || prise === 2) {
       if (taux < SEUIL_ALIGNEMENT) throw new Error(`Voix de Plouf mal lue (alignement ${Math.round(taux * 100)} %) après 2 prises : relancer npm run voice -- ${path.basename(dossier)} --force.`);
       const meta: MetaPlouf = {modele: r.modele, voix: r.voix, texte, sha256: empreinte(fichier)};
-      return {fichier, meta, mots: alignes.map((a, i) => ({...motsScript[i], debut: a.debut, fin: a.fin}))};
+      // Whisper date la fin des mots trop tôt : la réplique serait coupée avant sa dernière syllabe.
+      const mots = prolongerFins(fichier, alignes.map((a, i) => ({...motsScript[i], debut: a.debut, fin: a.fin})));
+      return {fichier, meta, mots};
     }
   }
   throw new Error('inatteignable');
@@ -118,12 +122,14 @@ export const assemblerDuo = async (opts: {
   const dureeM = m.length / TAUX;
   const n = episode.scenes.length;
 
-  // Prise de Matou : coupée au milieu du silence entre deux scènes (elle se recolle à l'identique).
+  // Prise de Matou : coupée au plus calme du silence entre deux scènes, après la vraie fin du
+  // dernier mot (elle se recolle à l'identique).
+  const vMatou = niveaux(priseMatou);
   const bornes = [0];
   for (let i = 1; i < n; i++) {
     const avant = motsMatou.filter((w) => w.scene === i - 1).at(-1);
     const apres = motsMatou.find((w) => w.scene === i);
-    bornes.push(avant && apres ? (avant.fin + apres.debut) / 2 : bornes[i - 1]);
+    bornes.push(avant && apres ? creuxEntre(vMatou, avant.fin, Math.max(avant.fin, apres.debut - 0.03)) : bornes[i - 1]);
   }
   bornes.push(dureeM);
 
@@ -143,8 +149,11 @@ export const assemblerDuo = async (opts: {
     const motsP = plouf.mots.filter((w) => w.scene === i);
     if (motsP.length) {
       if (i > 0) ajouter(silence(0.05), null);
-      const a = Math.max(0, motsP[0].debut - AVANT_PLOUF);
-      const b = Math.min(p.length / TAUX, motsP.at(-1)!.fin + APRES_PLOUF);
+      // Sans mordre sur la réplique voisine de la même prise.
+      const precedente = plouf.mots.filter((w) => w.scene < i).at(-1);
+      const suivante = plouf.mots.find((w) => w.scene > i);
+      const a = Math.max(precedente ? precedente.fin + 0.02 : 0, motsP[0].debut - AVANT_PLOUF);
+      const b = Math.min(p.length / TAUX, suivante ? suivante.debut - 0.02 : Infinity, motsP.at(-1)!.fin + APRES_PLOUF);
       const depart = t;
       ajouter(tranche(p, a, b), 'plouf');
       for (const w of motsP) mots.push({texte: w.texte, debut: arrondi(depart + w.debut - a), fin: arrondi(depart + w.fin - a), scene: i, surligne: w.surligne, locuteur: 'plouf'});

@@ -66,7 +66,10 @@ episodes/NNN-slug/
 1. Toutes les phrases des scènes sont lues **d'un seul tenant** (prosodie naturelle)
    par la voix de `brand/voix.json` (Gemini TTS « Puck » ; secours MAI « Marc » puis
    ElevenLabs « Brian » si la première échoue).
-2. Silences de début et fin coupés, volume normalisé.
+2. Silences de début et fin coupés (`ROGNER_SILENCES` : seuil -55 dB, **0,25 s de traîne gardée**
+   à la fin), volume normalisé. Jusqu'au 12/11/2026, la coupe à -45 dB sans traîne emportait la
+   retombée de la dernière syllabe : chaque prise finissait sèchement, comme coupée. Les silences
+   internes sont raccourcis en gardant 60 % de la pause après la phrase, 40 % avant la suivante.
 3. **Chaque prise est mesurée** (`scripts/lib/qualite-voix.ts`) : hauteur par corrélation
    croisée normalisée, lissée (médiane glissante, sauts de plus de 7 demi-tons rejetés) ;
    intonation = écart **p20–p80** en demi-tons ; pauses ≥ 250 ms rapportées aux phrases ;
@@ -89,6 +92,9 @@ episodes/NNN-slug/
    mots entendus (`scripts/lib/alignement.ts`, alignement de séquences). Le script garde
    son orthographe ; les mots non retrouvés sont interpolés. Le taux d'alignement est
    noté dans `timings.json` (≥ 85 % attendu), avec les mesures de la prise (`qualite`).
+   Whisper date la fin des mots trop tôt (50 à 300 ms sur une fin de phrase) : la fin de chaque
+   mot est relue dans le son (`scripts/lib/fins.ts`, jusqu'au début du mot suivant). Le
+   « Ma-tou ! » final, les coupes du duo et les sous-titres s'y calent.
 7. Volume RMS par image → `enveloppe` : la bouche de Matou s'ouvre en paliers.
 
 **Duo** (`brand/duo.json`) : si des scènes ont un champ `plouf`, la prise de Matou devient

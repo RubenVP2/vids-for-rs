@@ -482,7 +482,11 @@ export const SceneFenetre: React.FC<SceneProps<'fenetre'>> = ({scene, mots, dure
 };
 
 /** Image (relative à la scène de fin) où part le « Ma-tou ! » : 3 images (0,1 s) après le dernier mot. */
-export const imageSignature = (mots: MotScene[]) => (mots.at(-1)?.fin ?? 0) + 3;
+/**
+ * Le « Ma-tou ! » sonne juste après la dernière syllabe. La fin du dernier mot est lue dans le son
+ * depuis le 12/11/2026 (scripts/lib/fins.ts) ; les 4 images de marge couvrent les anciens minutages.
+ */
+export const imageSignature = (mots: MotScene[]) => (mots.at(-1)?.fin ?? 0) + 4;
 
 /**
  * La fin reprend l'image du hook pendant la phrase de boucle : quand la vidéo repart, le

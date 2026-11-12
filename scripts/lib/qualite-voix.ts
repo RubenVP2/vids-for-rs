@@ -135,6 +135,15 @@ export type CoupeSilence = {debut: number; fin: number};
  * de lire chaque carte avant la transition suivante.
  * Opère en PCM avec un fondu enchaîné de 8 ms.
  */
+/**
+ * Filtre ffmpeg qui rogne le silence au début et à la fin d'une prise, puis normalise à -16 LUFS.
+ * Seuil bas (-55 dB) et traîne gardée (0,25 s à la fin, 0,05 s au début) : à -45 dB sans traîne
+ * (jusqu'au 12/11/2026), la retombée de la dernière syllabe partait avec le silence et chaque
+ * prise finissait sèchement, comme coupée (0,38 s retirées sur une prise de 4,2 s).
+ */
+export const ROGNER_SILENCES =
+  'silenceremove=start_periods=1:start_threshold=-55dB:start_silence=0.05,areverse,silenceremove=start_periods=1:start_threshold=-55dB:start_silence=0.25,areverse,loudnorm=I=-16:TP=-1.5:LRA=11';
+
 export const raccourcirSilences = (mp3: string, maxPause = 0.22, frontieres: number[] = [], pauseScene = 0.35): CoupeSilence[] => {
   const det = spawnSync('ffmpeg', ['-hide_banner', '-nostats', '-i', mp3, '-af', 'silencedetect=noise=-38dB:d=0.25', '-f', 'null', '-'], {
     encoding: 'utf8',
@@ -148,9 +157,10 @@ export const raccourcirSilences = (mp3: string, maxPause = 0.22, frontieres: num
       f = fins[i];
     const estFrontiere = frontieres.some((fr) => fr >= d - 0.28 && fr <= f + 0.28);
     const cible = estFrontiere ? pauseScene : maxPause;
-    const garde = cible / 2;
+    // La traîne d'une fin de phrase (souffle, consonne finale douce) passe sous -38 dB avant
+    // d'être finie : on en garde plus (60 % de la pause) que de l'attaque du mot suivant (40 %).
     if (d > 0.05 && f - d > cible + 0.04) {
-      coupes.push({debut: d + garde, fin: f - garde});
+      coupes.push({debut: d + cible * 0.6, fin: f - cible * 0.4});
     }
   }
   if (!coupes.length) return [];
