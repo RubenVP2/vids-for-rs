@@ -1,0 +1,85 @@
+{
+  "numero": 32,
+  "slug": "google-gemini-4-hydrogen",
+  "serie": "flash",
+  "source": {
+    "nom": "Google",
+    "url": "https://blog.google/products-and-platforms/products/search/gemini-4-hydrogen-search-upgrade/",
+    "date": "2026-11-12",
+    "type": "blog"
+  },
+  "statut": "disponible",
+  "verdict": "prometteur",
+  "miniature": "Google Search passe sous ==Gemini 4==",
+  "musique": true,
+  "gabarit": {
+    "ouverture": "fenetre",
+    "corps": "liste"
+  },
+  "scenes": [
+    {
+      "type": "hook",
+      "texte": "Tes recherches Google ne donneront plus de simples liens bleus.",
+      "titre": "Google change de ==moteur==",
+      "icone": "loupe",
+      "matou": "surpris",
+      "visuel": {
+        "type": "fenetre",
+        "app": "Google",
+        "messages": [
+          {
+            "de": "toi",
+            "texte": "Compare trois téléphones dans un tableau"
+          },
+          {
+            "de": "app",
+            "texte": "Tableau comparatif avec Gemini 4"
+          }
+        ]
+      }
+    },
+    {
+      "type": "liste",
+      "texte": "Google déploie son nouveau {Gemini 4 Hydrogen|Gémini quatre Aydrogène} pour tout le monde. Il comprend tes questions complexes, génère directement des tableaux, et cherche sur plusieurs sujets en même temps.",
+      "titre": "Ce qui change",
+      "elements": [
+        {
+          "texte": "==Questions complexes==",
+          "icone": "ampoule",
+          "quand": "questions"
+        },
+        {
+          "texte": "==Tableaux== comparatifs",
+          "icone": "graphique",
+          "quand": "tableaux"
+        },
+        {
+          "texte": "Plusieurs ==sujets==",
+          "icone": "loupe",
+          "quand": "sujets"
+        }
+      ],
+      "matou": "parle"
+    },
+    {
+      "type": "point",
+      "texte": "En fait, pour chaque question tordue, l'IA découpe ta demande en sous-recherches en parallèle, pour dénicher des pages web introuvables autrement.",
+      "titre": "La technique cachée",
+      "corps": "Des ==sous-recherches== en parallèle",
+      "icone": "robot",
+      "quand": "parallèle",
+      "matou": "enFait"
+    },
+    {
+      "type": "verdict",
+      "texte": "Hype-mètre : prometteur. J'adore l'idée d'avoir un tableau sans ouvrir plusieurs onglets, mais Google ne donne aucun chiffre sur le temps de réponse.",
+      "raison": "Plus pratique, mais zéro chiffre de vitesse",
+      "matou": "verdict"
+    },
+    {
+      "type": "fin",
+      "texte": "Reste à voir si tu regretteras tes vieux liens bleus.",
+      "matou": "sceptique"
+    }
+  ]
+}

@@ -7,6 +7,13 @@
     "ajoute": "2026-11-12T13:18:43.718Z"
   },
   {
+    "titre": "Insultes, brimades… Anthropic interdit désormais à ses utilisateurs de maltraiter son intelligence artificielle Claude",
+    "url": "https://news.google.com/rss/articles/CBMi-wFBVV95cUxQdm9wOUQ3X0tTMV9VSmNuRzBsdmJMRGFBLUFQTUNpNUFxd2p4alp5NzVUSkdndkhRUVZkSUVRNlUweW1VNnZQS25hOWRmdlRoMXRIZ01vOEh2VWV6Y2pueTRoTUZWenFPdUZtVUwybmtGN0VDUVE4OU8tZGo2eUtpZnhxOFdZdmxLQ3R6SU1SSDVHNGtlSUJFMXNqUVktMjdMdnQ2UE9VQnFuUjhYelNrcVVRRVdVaFFFYkZMajN3cFc0dTZlTVZTX3RkUkRiOUR6eWJ1NWIwWFNUd0JyZ1Jib0lFMkhzcC0yR2tjN3pNTE5Rd0F0dU9iYjJGMA?oc=5",
+    "date": "2026-11-12T10:32:40.000Z",
+    "score": 57,
+    "ajoute": "2026-11-13T04:13:19.176Z"
+  },
+  {
     "titre": "Google lance Gemini sur Apple CarPlay",
     "url": "https://www.01net.com/actualites/google-lance-gemini-sur-apple-carplay.html",
     "date": "2026-11-12T07:04:50.000Z",
@@ -33,6 +40,13 @@
     "date": "2026-11-11T13:02:41.000Z",
     "score": 43,
     "ajoute": "2026-11-12T13:18:43.718Z"
+  },
+  {
+    "titre": "Puces Nvidia : les entreprises chinoises d’IA anticipent de nouvelles restrictions américaines",
+    "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxPQ1hka3o3UFVLQzVWc3BXb1ZCMU5qbmlybHpyVDgySUFnVXc4NXh2SHRBY3lxd3AyYUhTS2JqLV9sNnFHelZtN1dIM1QzbDNfTWlfS1NobHlDb1FITlFfTnk0NmNHemdsejJfcGdYaDV1dktXYy10akhueVQzd1NxVjRsNVE4dGQwa1B4YXRfVFpDQ3Y0V0M5ZDlKcUU?oc=5",
+    "date": "2026-11-12T10:32:37.000Z",
+    "score": 42,
+    "ajoute": "2026-11-13T04:13:19.176Z"
   },
   {
     "titre": "Gemini Decisions API: Fast, calibrated multimodal decisions",
@@ -98,20 +112,6 @@
     "ajoute": "2026-11-10T13:13:46.313Z"
   },
   {
-    "titre": "New NVIDIA Cosmos 3 Open Models for Interactive World Simulation",
-    "url": "https://huggingface.co/blog/nvidia/cosmos-interactive-world-simulation",
-    "date": "2026-11-05T19:35:16.000Z",
-    "score": 35,
-    "ajoute": "2026-11-06T04:13:41.599Z"
-  },
-  {
-    "titre": "Australian universities are creating AI-native graduates",
-    "url": "https://openai.com/index/australian-universities-ai-native-graduates",
-    "date": "2026-11-05T17:00:00.000Z",
-    "score": 35,
-    "ajoute": "2026-11-06T04:13:41.599Z"
-  },
-  {
     "titre": "ChatGPT Enterprise now available in AWS Marketplace",
     "url": "https://openai.com/index/chatgpt-enterprise-aws-marketplace",
     "date": "2026-11-09T19:00:00.000Z",
@@ -133,25 +133,11 @@
     "ajoute": "2026-11-10T13:13:46.313Z"
   },
   {
-    "titre": "Cult.fit builds operational muscle with Codex",
-    "url": "https://openai.com/index/cultfit-builds-with-codex",
-    "date": "2026-11-05T20:00:00.000Z",
-    "score": 35,
-    "ajoute": "2026-11-06T04:13:41.599Z"
-  },
-  {
     "titre": "Helping caregivers use AI in everyday life",
     "url": "https://openai.com/index/helping-caregivers-use-ai-in-everyday-life",
     "date": "2026-11-10T12:00:00.000Z",
     "score": 35,
     "ajoute": "2026-11-10T13:13:46.313Z"
-  },
-  {
-    "titre": "OpenAI is stepping back from NDAs for data center projects",
-    "url": "https://www.theverge.com/ai-artificial-intelligence/1028454/openai-data-center-nda",
-    "date": "2026-11-05T18:01:16.000Z",
-    "score": 35,
-    "ajoute": "2026-11-06T04:13:41.599Z"
   },
   {
     "titre": "Introducing Businesses in ChatGPT",
@@ -224,13 +210,6 @@
     "ajoute": "2026-11-10T13:13:46.313Z"
   },
   {
-    "titre": "Etats-Unis : Google accusé d’avoir laissé son assistant IA Gemini aider une collégienne à planifier un suicide",
-    "url": "https://www.lemonde.fr/pixels/article/2026/11/06/etats-unis-google-accuse-d-avoir-laisse-son-assistant-ia-gemini-aider-une-collegienne-a-planifier-son-suicide_6807413_4408996.html",
-    "date": "2026-11-06T00:36:12.000Z",
-    "score": 31,
-    "ajoute": "2026-11-06T04:13:41.599Z"
-  },
-  {
     "titre": "L’Australie va renforcer sa régulation de l’IA après un piratage de plateformes gouvernementales par un modèle d’OpenAI",
     "url": "https://www.lemonde.fr/pixels/article/2026/11/10/l-australie-va-renforcer-sa-regulation-de-l-ia-apres-un-piratage-de-plateformes-gouvernementales-par-un-modele-d-openai_6808770_4408996.html",
     "date": "2026-11-10T01:29:27.000Z",
@@ -250,13 +229,6 @@
     "date": "2026-11-10T14:00:00.000Z",
     "score": 30,
     "ajoute": "2026-11-11T04:13:46.318Z"
-  },
-  {
-    "titre": "‘Hogwarts Legacy’ Gets a Magical NVIDIA DLSS 5 Upgrade on GeForce NOW",
-    "url": "https://blogs.nvidia.com/blog/geforce-now-thursday-hogwarts-legacy-dlss-5/",
-    "date": "2026-11-05T14:00:34.000Z",
-    "score": 30,
-    "ajoute": "2026-11-06T04:13:41.599Z"
   },
   {
     "titre": "Korea’s AI Ecosystem Advances and Secures Agentic AI With NVIDIA",
@@ -280,25 +252,11 @@
     "ajoute": "2026-11-10T04:13:46.773Z"
   },
   {
-    "titre": "More Performance From Every Byte: How Full-Stack Codesign Solves AI’s Memory Challenge",
-    "url": "https://blogs.nvidia.com/blog/memory-full-stack-codesign/",
-    "date": "2026-11-05T16:00:00.000Z",
-    "score": 30,
-    "ajoute": "2026-11-06T04:13:41.599Z"
-  },
-  {
     "titre": "NVIDIA Dynamo Recipes Bring Korea’s Leading Open Models to Production",
     "url": "https://blogs.nvidia.com/blog/nvidia-dynamo-korea-open-models/",
     "date": "2026-11-09T05:00:00.000Z",
     "score": 30,
     "ajoute": "2026-11-10T04:13:46.773Z"
-  },
-  {
-    "titre": "The Wizard of Open Weights: Chris Alexiuk Makes AI Easy With Open Models",
-    "url": "https://blogs.nvidia.com/blog/nvidia-life-chris-alexiuk/",
-    "date": "2026-11-05T16:00:05.000Z",
-    "score": 30,
-    "ajoute": "2026-11-06T04:13:41.599Z"
   },
   {
     "titre": "NVIDIA Expands Open Source Commitment With OpenShell Donation and New AI Infrastructure",
@@ -334,13 +292,6 @@
     "date": "2026-11-09T15:05:57.000Z",
     "score": 30,
     "ajoute": "2026-11-10T04:13:46.773Z"
-  },
-  {
-    "titre": "Egyptian and Nigerian English join the Open ASR Leaderboard",
-    "url": "https://huggingface.co/blog/open-asr-leaderboard-liva",
-    "date": "2026-11-06T00:00:00.000Z",
-    "score": 30,
-    "ajoute": "2026-11-06T13:13:41.259Z"
   },
   {
     "titre": "Work at the Frontier: AI’s effect on freelance work",
@@ -392,25 +343,11 @@
     "ajoute": "2026-11-10T13:13:46.313Z"
   },
   {
-    "titre": "Claude can now analyze your spending with its new Personal Finance tool",
-    "url": "https://techcrunch.com/2026/11/05/claude-can-now-analyze-your-spending-with-its-new-personal-finance-tool/",
-    "date": "2026-11-05T18:00:00.000Z",
-    "score": 26,
-    "ajoute": "2026-11-06T13:13:41.259Z"
-  },
-  {
     "titre": "WhatsApp étend vos photos grâce à l’IA sur iOS",
     "url": "https://www.01net.com/actualites/whatsapp-etend-vos-photos-grace-a-lia-sur-ios.html",
     "date": "2026-11-06T11:27:42.000Z",
     "score": 26,
     "ajoute": "2026-11-07T04:13:51.419Z"
-  },
-  {
-    "titre": "Amazon propose l’iPhone 17 Pro Max à un prix inédit pour le Black Friday (-230 €)",
-    "url": "https://www.frandroid.com/bons-plans/3145643_amazon-propose-liphone-17-pro-max-a-un-prix-inedit-pour-le-black-friday-230",
-    "date": "2026-11-05T15:17:43.000Z",
-    "score": 26,
-    "ajoute": "2026-11-06T04:13:41.599Z"
   },
   {
     "titre": "Nvidia : le scandale d’espionnage « révèle la face cachée de la guerre froide technologique à laquelle se livrent les Etats-Unis et la Chine »",
@@ -462,10 +399,38 @@
     "ajoute": "2026-11-11T13:13:46.612Z"
   },
   {
+    "titre": "From AI ambition to business impact",
+    "url": "https://blogs.microsoft.com/blog/2026/11/12/from-ai-ambition-to-business-impact/",
+    "date": "2026-11-12T17:00:03.000Z",
+    "score": 25,
+    "ajoute": "2026-11-13T04:13:19.176Z"
+  },
+  {
+    "titre": "LLMON: An LLM-Native Markup Language, now in Granite 4.1 3B and 8B",
+    "url": "https://huggingface.co/blog/ibm-granite/llmon-an-llm-native-markup-language-now-in-granite",
+    "date": "2026-11-12T19:07:35.000Z",
+    "score": 25,
+    "ajoute": "2026-11-13T04:13:19.176Z"
+  },
+  {
     "titre": "BotPsy: On-Device Personal Assistant with a Sub-Billion-Parameter Agentic Language Model",
     "url": "https://huggingface.co/blog/qvac/botpsy",
     "date": "2026-11-11T05:01:16.000Z",
     "score": 25,
     "ajoute": "2026-11-11T13:13:46.612Z"
+  },
+  {
+    "titre": "How Amplitude ships product improvements in 1–2 days with OpenAI",
+    "url": "https://openai.com/business/customer-stories/amplitude",
+    "date": "2026-11-12T20:00:00.000Z",
+    "score": 25,
+    "ajoute": "2026-11-13T04:13:19.176Z"
+  },
+  {
+    "titre": "Supporting research on AI and children’s safety",
+    "url": "https://openai.com/index/children-first-declaration",
+    "date": "2026-11-12T00:00:00.000Z",
+    "score": 25,
+    "ajoute": "2026-11-13T04:13:19.176Z"
   }
 ]

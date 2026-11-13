@@ -1,0 +1,140 @@
+[
+  {
+    "type": "draft",
+    "date": "2026-11-13T08:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb2y1q03efpg1c3j45vgui"
+        },
+        "value": [
+          {
+            "content": "Google Search passe sous Gemini 4 Hydrogen pour répondre aux questions complexes et créer des tableaux comparatifs directs.\n\nJe parie que d'ici six mois, plus personne ne cliquera sur cinq liens bleus pour comparer deux produits. Qui me contredit ?\n\nStatut : disponible.\nSource : Google\n\n#IA",
+            "image": [
+              {
+                "id": "7decdbce-01a0-4e1d-9cdf-1ad6e7993f59",
+                "path": "https://uploads.postiz.com/DdJxkyMkNH.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Source : Google The Keyword (https://blog.google/products-and-platforms/products/search/gemini-4-hydrogen-search-upgrade/). Disponible mondialement dans Google Search.",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "threads"
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-13T11:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsaogt206kfor1cddnosuhf"
+        },
+        "value": [
+          {
+            "content": "4e génération de Gemini dans Google Search : la recherche classique change de moteur 🤓\n\nGoogle déploie Gemini 4 Hydrogen pour tous les utilisateurs :\n→ Des questions complexes découpées en sous-recherches\n→ Des tableaux comparatifs directs sans ouvrir dix sites\n→ Une recherche simultanée sur plusieurs thèmes à la fois\n\nEnvoie-la à quelqu'un qui a toujours cinquante onglets ouverts ☝️\n\n#Google #Gemini #IA #vulgarisation #matou",
+            "image": [
+              {
+                "id": "7decdbce-01a0-4e1d-9cdf-1ad6e7993f59",
+                "path": "https://uploads.postiz.com/DdJxkyMkNH.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Source : Google The Keyword (https://blog.google/products-and-platforms/products/search/gemini-4-hydrogen-search-upgrade/). Disponible mondialement dans Google Search.",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "instagram-standalone",
+          "post_type": "post",
+          "is_trial_reel": false
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-13T11:30:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsakeo602wupg1crmgz7g9n"
+        },
+        "value": [
+          {
+            "content": "Google Search intègre Gemini 4 Hydrogen pour faire des tableaux directs. Team « adieu les 10 onglets » ou team « rendez-moi mes liens bleus » ?\n\n#Google #Gemini #IA #apprendresurtiktok #matou",
+            "image": [
+              {
+                "id": "7decdbce-01a0-4e1d-9cdf-1ad6e7993f59",
+                "path": "https://uploads.postiz.com/DdJxkyMkNH.mp4"
+              }
+            ]
+          }
+        ],
+        "settings": {
+          "__type": "tiktok-business",
+          "content_posting_method": "DIRECT_POST",
+          "privacy_level": "PUBLIC_TO_EVERYONE",
+          "duet": true,
+          "stitch": true,
+          "comment": true,
+          "autoAddMusic": "no",
+          "brand_content_toggle": false,
+          "brand_organic_toggle": false,
+          "video_made_with_ai": true
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-13T17:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb3xwh07l1or1cvp01pod9"
+        },
+        "value": [
+          {
+            "content": "Google déploie Gemini 4 Hydrogen mondialement : le moteur comprend les questions complexes, fouille plusieurs sujets en simultané et crée des tableaux comparatifs.\nStatut : disponible.\n\nSource : https://blog.google/products-and-platforms/products/search/gemini-4-hydrogen-search-upgrade/\n\n#shorts #Google #Gemini #IA",
+            "image": [
+              {
+                "id": "7decdbce-01a0-4e1d-9cdf-1ad6e7993f59",
+                "path": "https://uploads.postiz.com/DdJxkyMkNH.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Source : Google The Keyword (https://blog.google/products-and-platforms/products/search/gemini-4-hydrogen-search-upgrade/). Disponible mondialement dans Google Search.",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "youtube",
+          "type": "public",
+          "selfDeclaredMadeForKids": "no",
+          "title": "Pourquoi Google Search change tes résultats ?",
+          "thumbnail": {
+            "id": "4027de3e-8d01-45f5-a1d5-898c33a086ec",
+            "path": "https://uploads.postiz.com/jKJZ52Mzcf.png"
+          }
+        }
+      }
+    ]
+  }
+]
