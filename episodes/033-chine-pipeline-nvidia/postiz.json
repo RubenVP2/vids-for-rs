@@ -1,0 +1,140 @@
+[
+  {
+    "type": "draft",
+    "date": "2026-11-13T17:30:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsaogt206kfor1cddnosuhf"
+        },
+        "value": [
+          {
+            "content": "La guerre des puces d'IA continue loin de toi, mais elle conditionne tous tes futurs outils 🤓\n\nUne enquête Reuters révèle plus de 3 milliards de dollars de projets en Chine :\n→ Plus de 150 appels d'offres publics épluchés\n→ Des centres de calcul conçus pour les puces Nvidia interdites\n→ Des hangars construits avant même de recevoir le matériel\n\nEnvoie-la à quelqu'un qui suit l'actualité de la tech et des puces IA ☝️\n\n#Nvidia #Chine #IA #vulgarisation #matou",
+            "image": [
+              {
+                "id": "a9e274fd-5e9c-468a-a536-1c4fecc3beaf",
+                "path": "https://uploads.postiz.com/ZrZKGm3JNZ.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Source : Reuters (https://www.reuters.com/technology/chinas-3-billion-plus-pipeline-nvidia-powered-ai-data-centres-2026-11-13/). Analyse de plus de 150 marchés publics chinois.",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "instagram-standalone",
+          "post_type": "post",
+          "is_trial_reel": false
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-13T18:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsakeo602wupg1crmgz7g9n"
+        },
+        "value": [
+          {
+            "content": "Nvidia est bannie de Chine, mais le pays prévoit 3 milliards de dollars de centres IA. Tu lui mets combien sur 10, à ce coup de poker ?\n\n#Nvidia #Chine #IA #apprendresurtiktok #matou",
+            "image": [
+              {
+                "id": "a9e274fd-5e9c-468a-a536-1c4fecc3beaf",
+                "path": "https://uploads.postiz.com/ZrZKGm3JNZ.mp4"
+              }
+            ]
+          }
+        ],
+        "settings": {
+          "__type": "tiktok-business",
+          "content_posting_method": "DIRECT_POST",
+          "privacy_level": "PUBLIC_TO_EVERYONE",
+          "duet": true,
+          "stitch": true,
+          "comment": true,
+          "autoAddMusic": "no",
+          "brand_content_toggle": false,
+          "brand_organic_toggle": false,
+          "video_made_with_ai": true
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-13T18:30:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb2y1q03efpg1c3j45vgui"
+        },
+        "value": [
+          {
+            "content": "Tu construirais des hangars à plusieurs milliards sans savoir si tu auras les machines pour les remplir ?\n\nSelon Reuters, la Chine planifie pour plus de 3 milliards de dollars de centres de données d'IA conçus autour des processeurs Nvidia sous embargo américain. Bâtir des murs, c'est facile, mais sans puces livrées, ça reste du pur buzz.\n\nStatut : annoncé.\nSource : Reuters\n\n#IA",
+            "image": [
+              {
+                "id": "a9e274fd-5e9c-468a-a536-1c4fecc3beaf",
+                "path": "https://uploads.postiz.com/ZrZKGm3JNZ.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Source : Reuters (https://www.reuters.com/technology/chinas-3-billion-plus-pipeline-nvidia-powered-ai-data-centres-2026-11-13/). Analyse de plus de 150 marchés publics chinois.",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "threads"
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-13T19:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb3xwh07l1or1cvp01pod9"
+        },
+        "value": [
+          {
+            "content": "Une enquête de Reuters révèle 3 milliards de dollars de centres IA prévus en Chine avec des puces Nvidia sous embargo américain.\nStatut : annoncé.\n\nSource : https://www.reuters.com/technology/chinas-3-billion-plus-pipeline-nvidia-powered-ai-data-centres-2026-11-13/\n\n#shorts #Nvidia #Chine #IA",
+            "image": [
+              {
+                "id": "a9e274fd-5e9c-468a-a536-1c4fecc3beaf",
+                "path": "https://uploads.postiz.com/ZrZKGm3JNZ.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Source : Reuters (https://www.reuters.com/technology/chinas-3-billion-plus-pipeline-nvidia-powered-ai-data-centres-2026-11-13/). Analyse de plus de 150 marchés publics chinois.",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "youtube",
+          "type": "public",
+          "selfDeclaredMadeForKids": "no",
+          "title": "Nvidia : 3 milliards de puces interdites en Chine ?",
+          "thumbnail": {
+            "id": "fc2dc878-6dd5-4b1a-9ada-b057f7c908ea",
+            "path": "https://uploads.postiz.com/gxwz7wCbft.png"
+          }
+        }
+      }
+    ]
+  }
+]

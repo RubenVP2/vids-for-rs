@@ -28,6 +28,13 @@
     "ajoute": "2026-11-09T04:13:46.281Z"
   },
   {
+    "titre": "Panne mondiale d’Outlook : Microsoft écarte l’hypothèse d’une attaque de sa messagerie et constate de premiers « résultats positifs »",
+    "url": "https://www.lemonde.fr/pixels/article/2026/11/13/une-panne-mondiale-d-outlook-empeche-des-dizaines-de-milliers-d-utilisateurs-d-acceder-a-leurs-e-mails_6809171_4408996.html",
+    "date": "2026-11-12T23:36:49.000Z",
+    "score": 50,
+    "ajoute": "2026-11-13T13:13:19.097Z"
+  },
+  {
     "titre": "Marchés financiers: Nvidia met un coup d'arrêt au rebond des valeurs de l'IA",
     "url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxOUWt0ZXNzRHBxdDIyWHU3MlY2U3BOTUE3M1hlTDIyUkkyT2FuMHZIN3RmOGFpS3gzZHQxUlc1VlY1d3NCSl8zT0E2WGFKTlhYVDJMaFY1ZDVSUVc3UVF5X3I3eGtjNUFwN1J6SGFkMU1xUUVkSHVpaVJYV3kyaXExX1poTXBZd0thVU91LXpKRFR1NHBuZEw0b05LQ1ZDeVlqTzhpbVl5ZXBueHRIY2hlMEY0dnpQQmEtbVRVektXV0pGX185bHc4UEtDNnVLOTllaVE?oc=5",
     "date": "2026-11-12T09:11:25.000Z",
@@ -147,13 +154,6 @@
     "ajoute": "2026-11-11T04:13:46.318Z"
   },
   {
-    "titre": "« Critique » : OpenAI lance GPT-6 Cyber, son IA la plus dangereuse à ce jour",
-    "url": "https://www.01net.com/actualites/critique-openai-lance-gpt-6-cyber-son-ia-la-plus-dangereuse-a-ce-jour.html",
-    "date": "2026-11-06T09:00:56.000Z",
-    "score": 34,
-    "ajoute": "2026-11-07T04:13:51.419Z"
-  },
-  {
     "titre": "Muse Ember : le nouveau modèle de Meta pour concurrencer Claude Haiku 5.5 et GPT-6 Luna",
     "url": "https://www.blogdumoderateur.com/muse-ember-nouveau-modele-meta/",
     "date": "2026-11-10T09:44:23.000Z",
@@ -194,13 +194,6 @@
     "date": "2026-11-10T16:33:16.000Z",
     "score": 31,
     "ajoute": "2026-11-11T04:13:46.318Z"
-  },
-  {
-    "titre": "Amazon : voici le TOP 5 des meilleures offres pour le Black Friday",
-    "url": "https://www.frandroid.com/bons-plans/3313729_amazon-voici-le-top-5-des-meilleures-offres-pour-le-black-friday",
-    "date": "2026-11-06T11:41:16.000Z",
-    "score": 31,
-    "ajoute": "2026-11-06T13:13:41.259Z"
   },
   {
     "titre": "Une commission préconise de mieux encadrer les assistants IA en France, de ChatGPT à Gemini ou Grok",
@@ -329,25 +322,11 @@
     "ajoute": "2026-11-10T04:13:46.773Z"
   },
   {
-    "titre": "Partnering with Hacktron to find vulnerabilities in OpenAI’s systems",
-    "url": "https://openai.com/index/partnering-with-hacktron",
-    "date": "2026-11-06T08:00:00.000Z",
-    "score": 30,
-    "ajoute": "2026-11-07T04:13:51.419Z"
-  },
-  {
     "titre": "Sécurité de l’IA : l’Elysée fait signer un « appel de Paris » à huit pays ainsi qu’à Sam Altman, Dario Amodei et Arthur Mensch",
     "url": "https://www.lemonde.fr/economie/article/2026/11/09/securite-de-l-ia-l-elysee-fait-signer-un-appel-de-paris-a-huit-pays-ainsi-qu-a-sam-altman-dario-amodei-et-arthur-mensch_6808706_3234.html",
     "date": "2026-11-09T22:35:00.000Z",
     "score": 30,
     "ajoute": "2026-11-10T13:13:46.313Z"
-  },
-  {
-    "titre": "WhatsApp étend vos photos grâce à l’IA sur iOS",
-    "url": "https://www.01net.com/actualites/whatsapp-etend-vos-photos-grace-a-lia-sur-ios.html",
-    "date": "2026-11-06T11:27:42.000Z",
-    "score": 26,
-    "ajoute": "2026-11-07T04:13:51.419Z"
   },
   {
     "titre": "Nvidia : le scandale d’espionnage « révèle la face cachée de la guerre froide technologique à laquelle se livrent les Etats-Unis et la Chine »",
@@ -404,6 +383,13 @@
     "date": "2026-11-12T17:00:03.000Z",
     "score": 25,
     "ajoute": "2026-11-13T04:13:19.176Z"
+  },
+  {
+    "titre": "How AI Is Helping Care Teams Get Patients the Right Care, Sooner",
+    "url": "https://blogs.nvidia.com/blog/how-ai-is-helping-care-teams/",
+    "date": "2026-11-13T13:00:42.000Z",
+    "score": 25,
+    "ajoute": "2026-11-13T13:13:19.097Z"
   },
   {
     "titre": "LLMON: An LLM-Native Markup Language, now in Granite 4.1 3B and 8B",

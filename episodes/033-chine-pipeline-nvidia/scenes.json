@@ -1,0 +1,69 @@
+{
+  "numero": 33,
+  "slug": "chine-pipeline-nvidia",
+  "serie": "flash",
+  "source": {
+    "nom": "Reuters",
+    "url": "https://www.reuters.com/technology/chinas-3-billion-plus-pipeline-nvidia-powered-ai-data-centres-2026-11-13/",
+    "date": "2026-11-13",
+    "type": "article"
+  },
+  "statut": "annonce",
+  "verdict": "buzz",
+  "miniature": "Chine : ==3 milliards== sous embargo",
+  "musique": true,
+  "gabarit": {
+    "ouverture": "chiffre",
+    "corps": "liste"
+  },
+  "scenes": [
+    {
+      "type": "hook",
+      "texte": "La Chine prévoit trois milliards de dollars de centres aux puces interdites.",
+      "titre": "3 milliards pour des ==puces interdites==",
+      "icone": "cadenas",
+      "matou": "surpris",
+      "visuel": {
+        "type": "chiffre",
+        "valeur": "+3 Mds $"
+      }
+    },
+    {
+      "type": "liste",
+      "texte": "Une enquête de Reuters épluche cent cinquante appels d'offres en Chine. Des universités et des régions entières planifient des centres géants avec les puces {NVIDIA|Nvidia}.",
+      "titre": "Ce que révèle ==Reuters==",
+      "elements": [
+        {
+          "texte": "==150 marchés publics== épluchés",
+          "icone": "document",
+          "quand": "enquête"
+        },
+        {
+          "texte": "Puces sous ==embargo américain==",
+          "icone": "cadenas",
+          "quand": "universités"
+        }
+      ]
+    },
+    {
+      "type": "point",
+      "texte": "En fait, {NVIDIA|Nvidia} disait que les sanctions américaines l'avaient chassée de Chine. Pourtant, le pays bâtit déjà les bâtiments pour les accueillir.",
+      "titre": "Nvidia jurait être à ==zéro==",
+      "corps": "Mais la Chine ==construit quand même==",
+      "icone": "eclair",
+      "matou": "enFait",
+      "quand": "bâtiments"
+    },
+    {
+      "type": "verdict",
+      "texte": "Hype-mètre : pur buzz. Pour moi, bâtir des centres, c'est facile. Mais sans puces livrées, ça reste du vent.",
+      "raison": "Des hangars vides sans ==puces livrées==",
+      "matou": "verdict"
+    },
+    {
+      "type": "fin",
+      "texte": "Pas sûr que ces trois milliards suffisent à contourner l'embargo.",
+      "matou": "sceptique"
+    }
+  ]
+}
