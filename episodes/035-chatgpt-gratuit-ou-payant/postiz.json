@@ -1,0 +1,140 @@
+[
+  {
+    "type": "draft",
+    "date": "2026-11-14T17:30:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsaogt206kfor1cddnosuhf"
+        },
+        "value": [
+          {
+            "content": "ChatGPT gratuit ou payant : quelle différence pour ton usage ? 🤓\n\n→ Gratuit (0 €) : recherche web, fichiers et images, mais limité à une dizaine de messages toutes les 5 heures\n→ Go (8 €/mois) : plus de messages, mémoire étendue, dossiers Projets et rappels\n→ Plus (23 €/mois) : usage quotidien fluide, vidéo Sora et recherche sur des centaines de sources\n\nSource : Blog du Modérateur.\n\nEnvoie-la à quelqu'un qui hésite encore à payer un abonnement ChatGPT !\n\n#IA #chatgpt #tech #vulgarisation #matou",
+            "image": [
+              {
+                "id": "769ccd84-59b5-473a-91c8-8e4473fa86fa",
+                "path": "https://uploads.postiz.com/l7PmT1sAXp.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Sources : Blog du Modérateur https://www.blogdumoderateur.com/chatgpt-gratuit-payant-quelles-differences/",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "instagram-standalone",
+          "post_type": "post",
+          "is_trial_reel": false
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-14T18:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsakeo602wupg1crmgz7g9n"
+        },
+        "value": [
+          {
+            "content": "ChatGPT gratuit ou payant : quelle différence ? Qui s'est déjà retrouvé bloqué par la limite d'une dizaine de messages ?\n\n#IA #chatgpt #apprendresurtiktok #matou",
+            "image": [
+              {
+                "id": "769ccd84-59b5-473a-91c8-8e4473fa86fa",
+                "path": "https://uploads.postiz.com/l7PmT1sAXp.mp4"
+              }
+            ]
+          }
+        ],
+        "settings": {
+          "__type": "tiktok-business",
+          "content_posting_method": "DIRECT_POST",
+          "privacy_level": "PUBLIC_TO_EVERYONE",
+          "duet": true,
+          "stitch": true,
+          "comment": true,
+          "autoAddMusic": "no",
+          "brand_content_toggle": false,
+          "brand_organic_toggle": false,
+          "video_made_with_ai": true
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-14T18:30:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb2y1q03efpg1c3j45vgui"
+        },
+        "value": [
+          {
+            "content": "Mon avis : la version gratuite de ChatGPT suffit largement pour dépanner deux fois par semaine, mais la limite d'une dizaine de messages toutes les 5 heures rend vite fou dès qu'on s'en sert tous les jours. Et toi, quelle formule utilises-tu au quotidien ?\n\nSource : Blog du Modérateur.\n\n#IA",
+            "image": [
+              {
+                "id": "769ccd84-59b5-473a-91c8-8e4473fa86fa",
+                "path": "https://uploads.postiz.com/l7PmT1sAXp.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Sources : Blog du Modérateur https://www.blogdumoderateur.com/chatgpt-gratuit-payant-quelles-differences/",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "threads"
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-14T19:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb3xwh07l1or1cvp01pod9"
+        },
+        "value": [
+          {
+            "content": "La version gratuite de ChatGPT donne déjà accès au web et aux images, mais coupe après une dizaine de messages toutes les 5 heures.\nMatou et Plouf t'expliquent ce que changent les abonnements Go (8 €) et Plus (23 €).\n\nSource : https://www.blogdumoderateur.com/chatgpt-gratuit-payant-quelles-differences/\n\n#shorts #IA #chatgpt #matou",
+            "image": [
+              {
+                "id": "769ccd84-59b5-473a-91c8-8e4473fa86fa",
+                "path": "https://uploads.postiz.com/l7PmT1sAXp.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Sources : Blog du Modérateur https://www.blogdumoderateur.com/chatgpt-gratuit-payant-quelles-differences/",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "youtube",
+          "type": "public",
+          "selfDeclaredMadeForKids": "no",
+          "title": "Pourquoi payer ChatGPT : gratuit ou payant ?",
+          "thumbnail": {
+            "id": "47276571-680d-4d7c-ba1b-56c042d7a2d4",
+            "path": "https://uploads.postiz.com/N7HweJZAPM.png"
+          }
+        }
+      }
+    ]
+  }
+]

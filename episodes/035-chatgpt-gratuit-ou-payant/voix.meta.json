@@ -1,0 +1,12 @@
+{
+ "modele": "google/gemini-3.8-flash-tts",
+ "voix": "Puck",
+ "sha256": "492d0783a6c88b122794c66fa25b0cf1ecfc83ad0c24185667e944976fb853ed",
+ "sha256Matou": "face816f14f4374736c3c0af3575120eaf6cbae91c01638bab08490c9d06f3b3",
+ "plouf": {
+  "modele": "google/gemini-3.8-flash-tts",
+  "voix": "Sadachbia",
+  "texte": "Matou ! ChatGPT gratuit ou payant, c'est quoi la différence ? Et en payant, on gagne quoi ? Attends… c'était quoi la question, déjà ?",
+  "sha256": "6f3bd7f19329a62d46ad9828e181c54397d1d4c3bb65f5d77574666abe545b17"
+ }
+}

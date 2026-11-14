@@ -1,0 +1,80 @@
+{
+  "numero": 35,
+  "slug": "chatgpt-gratuit-ou-payant",
+  "serie": "flash",
+  "intemporel": "chatgpt-gratuit-ou-payant",
+  "source": {
+    "nom": "Blog du Modérateur",
+    "url": "https://www.blogdumoderateur.com/chatgpt-gratuit-payant-quelles-differences/",
+    "date": "2026-01-19",
+    "type": "article"
+  },
+  "statut": "disponible",
+  "verdict": "prometteur",
+  "decor": "bureau",
+  "miniature": "ChatGPT : ==gratuit== ou ==payant== ?",
+  "musique": true,
+  "gabarit": {
+    "ouverture": "question",
+    "corps": "comparaison"
+  },
+  "scenes": [
+    {
+      "type": "hook",
+      "plouf": "Matou ! ChatGPT gratuit ou payant, c'est quoi la différence ?",
+      "texte": "Le gratuit fait déjà presque tout, alors pourquoi ==payer== ?",
+      "titre": "ChatGPT : ==gratuit== ou ==payant== ?",
+      "icone": "ampoule",
+      "matou": "parle",
+      "ploufEtat": "surpris"
+    },
+    {
+      "type": "comparaison",
+      "texte": "D'après le Blog du Modérateur, en gratuit tu cherches sur le web et tu crées des images, mais ça coupe après une ==dizaine== de messages toutes les cinq heures.",
+      "avant": {
+        "titre": "Gratuit (0 €)",
+        "texte": "Web, fichiers et ==images=="
+      },
+      "apres": {
+        "titre": "La limite",
+        "texte": "Une ==dizaine== de messages",
+        "quand": "coupe"
+      },
+      "matou": "parle"
+    },
+    {
+      "type": "liste",
+      "plouf": "Et en payant, on gagne quoi ?",
+      "texte": "En fait, l'offre Go à ==huit euros== autorise plus de messages, et l'offre Plus à ==vingt-trois euros== débloque l'usage quotidien, la vidéo et l'analyse de centaines de sources.",
+      "titre": "Les abonnements mensuels",
+      "elements": [
+        {
+          "texte": "Go (8 €) : plus de messages",
+          "icone": "eclair",
+          "quand": "huit"
+        },
+        {
+          "texte": "Plus (23 €) : quotidien, vidéo",
+          "icone": "fusee",
+          "quand": "vingt-trois"
+        }
+      ],
+      "matou": "enFait",
+      "ploufEtat": "compris"
+    },
+    {
+      "type": "verdict",
+      "texte": "Hype-mètre : prometteur. Pour moi, le gratuit suffit pour dépanner, mais si tu t'en sers tous les jours, le blocage rend fou.",
+      "raison": "Gratuit ponctuel, payant au quotidien",
+      "matou": "verdict",
+      "ploufEtat": "neutre"
+    },
+    {
+      "type": "fin",
+      "plouf": "Attends… c'était quoi la question, déjà ?",
+      "texte": "ChatGPT gratuit ou payant : tout dépend de ton usage.",
+      "matou": "content",
+      "ploufEtat": "compris"
+    }
+  ]
+}
