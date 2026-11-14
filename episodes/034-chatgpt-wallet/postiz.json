@@ -1,0 +1,140 @@
+[
+  {
+    "type": "draft",
+    "date": "2026-11-14T08:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb2y1q03efpg1c3j45vgui"
+        },
+        "value": [
+          {
+            "content": "Tu confierais ta carte bancaire à une IA pour qu'elle fasse tes achats sur le web ?\n\nOpenAI lance ChatGPT Wallet pour laisser ses agents commander en ligne. C'est sécurisé avec des jetons temporaires et Face ID, mais réservé au forfait Pro à 200 $ par mois, et Amazon bloque déjà l'accès. Payer sans donner sa carte, c'est malin, mais à ce tarif ça reste très limité.\n\nStatut : disponible (États-Unis, abonnés Pro).\nSource : OpenAI\n\n#ChatGPT",
+            "image": [
+              {
+                "id": "d78b0f01-942d-4ace-8115-18b3cd90c6b3",
+                "path": "https://uploads.postiz.com/pwusS6jdpi.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Source : OpenAI (https://openai.com/index/introducing-chatgpt-wallet). Déploiement initial de ChatGPT Wallet pour les abonnés Pro aux États-Unis.",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "threads"
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-14T11:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsaogt206kfor1cddnosuhf"
+        },
+        "value": [
+          {
+            "content": "ChatGPT va pouvoir faire tes achats en ligne à ta place sans jamais dévoiler ta carte bancaire 🤓\n\nOpenAI lance ChatGPT Wallet pour ses agents IA :\n→ Numéro de carte bancaire masqué par un jeton temporaire\n→ Validation biométrique obligatoire par Face ID avant chaque achat\n→ Déjà bloqué par certains grands sites comme Amazon\n\nEnvoie-la à quelqu'un qui a hâte de déléguer ses courses en ligne ☝️\n\n#ChatGPT #OpenAI #IA #vulgarisation #matou",
+            "image": [
+              {
+                "id": "d78b0f01-942d-4ace-8115-18b3cd90c6b3",
+                "path": "https://uploads.postiz.com/pwusS6jdpi.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Source : OpenAI (https://openai.com/index/introducing-chatgpt-wallet). Déploiement initial de ChatGPT Wallet pour les abonnés Pro aux États-Unis.",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "instagram-standalone",
+          "post_type": "post",
+          "is_trial_reel": false
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-14T11:30:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsakeo602wupg1crmgz7g9n"
+        },
+        "value": [
+          {
+            "content": "ChatGPT peut désormais faire tes achats en ligne avec un portefeuille sécurisé. Tu lui mets combien sur 10, à cette idée ?\n\n#ChatGPT #OpenAI #IA #apprendresurtiktok #matou",
+            "image": [
+              {
+                "id": "d78b0f01-942d-4ace-8115-18b3cd90c6b3",
+                "path": "https://uploads.postiz.com/pwusS6jdpi.mp4"
+              }
+            ]
+          }
+        ],
+        "settings": {
+          "__type": "tiktok-business",
+          "content_posting_method": "DIRECT_POST",
+          "privacy_level": "PUBLIC_TO_EVERYONE",
+          "duet": true,
+          "stitch": true,
+          "comment": true,
+          "autoAddMusic": "no",
+          "brand_content_toggle": false,
+          "brand_organic_toggle": false,
+          "video_made_with_ai": true
+        }
+      }
+    ]
+  },
+  {
+    "type": "draft",
+    "date": "2026-11-14T17:00:00.000Z",
+    "shortLink": false,
+    "tags": [],
+    "posts": [
+      {
+        "integration": {
+          "id": "cmvsb3xwh07l1or1cvp01pod9"
+        },
+        "value": [
+          {
+            "content": "OpenAI déploie ChatGPT Wallet : ses agents peuvent régler des achats en ligne avec un jeton sécurisé et Face ID.\nStatut : disponible (déploiement progressif aux États-Unis).\n\nSource : https://openai.com/index/introducing-chatgpt-wallet\n\n#shorts #ChatGPT #OpenAI #IA",
+            "image": [
+              {
+                "id": "d78b0f01-942d-4ace-8115-18b3cd90c6b3",
+                "path": "https://uploads.postiz.com/pwusS6jdpi.mp4"
+              }
+            ]
+          },
+          {
+            "content": "Source : OpenAI (https://openai.com/index/introducing-chatgpt-wallet). Déploiement initial de ChatGPT Wallet pour les abonnés Pro aux États-Unis.",
+            "image": []
+          }
+        ],
+        "settings": {
+          "__type": "youtube",
+          "type": "public",
+          "selfDeclaredMadeForKids": "no",
+          "title": "ChatGPT Wallet : 0 numéro transmis pour tes achats",
+          "thumbnail": {
+            "id": "cc62f3a0-aa87-4d25-928c-04607677d73f",
+            "path": "https://uploads.postiz.com/S8pJmiga3O.png"
+          }
+        }
+      }
+    ]
+  }
+]

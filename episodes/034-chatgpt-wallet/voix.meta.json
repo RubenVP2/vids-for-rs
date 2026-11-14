@@ -1,0 +1,12 @@
+{
+ "modele": "google/gemini-3.8-flash-tts",
+ "voix": "Puck",
+ "sha256": "4bb473659eb469f83ad5fb03b34a96adc3dd7e09dc4fead02d2192fa233c5bec",
+ "sha256Matou": "614182041e8a17cc426c3a8319e02383a6a40c2bbb9c40daa2c0b56abfeda20e",
+ "plouf": {
+  "modele": "google/gemini-3.8-flash-tts",
+  "voix": "Sadachbia",
+  "texte": "Matou ! ChatGPT peut payer mes courses tout seul. C'est vrai ? Et il peut vider mon compte en douce ? Attends… c'était quoi la question, déjà ?",
+  "sha256": "bb2e6212b96d278e70dfa1d040d45dcc4270d03cc713cf16b40e6b214ec7f1e8"
+ }
+}

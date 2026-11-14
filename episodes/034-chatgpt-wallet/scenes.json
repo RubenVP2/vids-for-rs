@@ -1,0 +1,83 @@
+{
+  "numero": 34,
+  "slug": "chatgpt-wallet",
+  "serie": "flash",
+  "source": {
+    "nom": "OpenAI",
+    "url": "https://openai.com/index/introducing-chatgpt-wallet",
+    "date": "2026-11-13",
+    "type": "blog"
+  },
+  "statut": "disponible",
+  "verdict": "prometteur",
+  "decor": "bureau",
+  "miniature": "ChatGPT paye ==pour toi==",
+  "musique": true,
+  "gabarit": {
+    "ouverture": "chiffre",
+    "corps": "liste"
+  },
+  "scenes": [
+    {
+      "type": "hook",
+      "plouf": "Matou ! ChatGPT peut payer mes courses tout seul. C'est vrai ?",
+      "texte": "Oui. Il a son portefeuille, avec zéro numéro de carte transmis.",
+      "titre": "ChatGPT paye ==pour toi==",
+      "icone": "cadenas",
+      "matou": "parle",
+      "ploufEtat": "surpris",
+      "visuel": {
+        "type": "chiffre",
+        "valeur": "0 carte"
+      }
+    },
+    {
+      "type": "liste",
+      "texte": "Chez {OpenAI|Open A I}, l'agent prépare l'achat, et ta carte est masquée par un ==jeton==.",
+      "titre": "Ce que fait ==l'IA==",
+      "elements": [
+        {
+          "texte": "L'agent prépare le panier",
+          "icone": "ampoule",
+          "quand": "agent"
+        },
+        {
+          "texte": "Carte masquée par un jeton",
+          "icone": "cadenas",
+          "quand": "carte"
+        },
+        {
+          "texte": "Zéro numéro partagé",
+          "icone": "cadenas",
+          "quand": "jeton"
+        }
+      ],
+      "matou": "parle"
+    },
+    {
+      "type": "point",
+      "plouf": "Et il peut vider mon compte en douce ?",
+      "texte": "En fait non, l'achat exige ton visage. Mais Amazon bloque déjà ces agents.",
+      "titre": "Ton visage ==obligatoire==",
+      "corps": "Biométrie requise, mais Amazon bloque déjà",
+      "icone": "attention",
+      "quand": "Amazon",
+      "matou": "enFait",
+      "ploufEtat": "surpris"
+    },
+    {
+      "type": "verdict",
+      "texte": "Hype-mètre : prometteur. Payer sans donner sa carte, c'est propre. Mais pour moi, deux cents dollars par mois, c'est abusé.",
+      "raison": "Sécurisé, mais réservé aux abonnements chers",
+      "matou": "verdict",
+      "ploufEtat": "compris"
+    },
+    {
+      "type": "fin",
+      "plouf": "Attends… c'était quoi la question, déjà ?",
+      "texte": "Si ChatGPT peut faire tes courses. Oui, si ton visage et ton banquier valident !",
+      "matou": "content",
+      "ploufEtat": "compris"
+    }
+  ]
+}
